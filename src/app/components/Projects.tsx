@@ -163,19 +163,123 @@ export function Projects() {
           </div>
         </div>
 
-        <p
+        {/* Second project card */}
+        <div
+          className="flex flex-col md:flex-row gap-0 md:gap-8 overflow-hidden mt-8"
           style={{
             ...fadeUp(240),
-            fontFamily: "'Outfit', sans-serif",
-            fontWeight: 400,
-            fontSize: "14px",
-            color: "#AEAEA8",
-            textAlign: "center",
-            marginTop: "48px",
+            borderRadius: "12px",
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #E8E8E4",
+            transition: "transform 200ms ease, opacity 400ms ease-out 240ms",
+            cursor: "default",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "translateY(-4px)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = isVisible ? "translateY(0)" : "translateY(40px)";
           }}
         >
-          More projects coming soon.
-        </p>
+          <div
+            className="md:w-1/2 w-full flex items-center justify-center"
+            style={{
+              backgroundColor: "#EEEEEA",
+              minHeight: "280px",
+              borderRadius: "12px 12px 0 0",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 400,
+                fontSize: "14px",
+                color: "#AEAEA8",
+              }}
+            >
+              Project Thumbnail
+            </span>
+          </div>
+
+          <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-10">
+            <p
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 400,
+                fontSize: "12px",
+                color: "#6B6B6B",
+                marginBottom: "8px",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Icon Design & UI/UX &middot; 2025
+            </p>
+            <h3
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(24px, 3vw, 32px)",
+                color: "#1A1A1A",
+                marginBottom: "12px",
+                lineHeight: 1.3,
+              }}
+            >
+              BOB Rides
+            </h3>
+            <p
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 400,
+                fontSize: "clamp(15px, 1.5vw, 18px)",
+                color: "#6B6B6B",
+                lineHeight: 1.6,
+                marginBottom: "20px",
+              }}
+            >
+              Designing a 3D vehicle icon system and UI for a taxi aggregator
+              platform that consolidates Uber, Ola, and Rapido into one app.
+            </p>
+
+            <div className="flex flex-wrap gap-2 mb-6">
+              {[
+                "3D Icon System",
+                "Dark-mode Native",
+                "Multi-app Aggregation",
+              ].map((pill) => (
+                <span
+                  key={pill}
+                  style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 400,
+                    fontSize: "13px",
+                    color: "#6B6B6B",
+                    border: "1px solid #D5D5D0",
+                    borderRadius: "12px",
+                    padding: "5px 14px",
+                  }}
+                >
+                  {pill}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href="https://sohumbob.framer.website"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 500,
+                fontSize: "16px",
+                color: "#4A5240",
+                textDecoration: "none",
+                display: "inline-block",
+              }}
+            >
+              View Case Study &rarr;
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
