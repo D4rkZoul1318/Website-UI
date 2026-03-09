@@ -479,21 +479,7 @@ export default function CaseStudy() {
               >
                 Before — Original UUCMS
               </div>
-              <div
-                style={{
-                  backgroundColor: cardBg,
-                  borderRadius: radius,
-                  height: 320,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#B0B0B0',
-                  fontSize: 16,
-                  fontFamily: font,
-                }}
-              >
-                Original UUCMS Screenshot
-              </div>
+              <img src="/images/original-uucms.png" width="100%" style={{borderRadius: "12px", display: "block"}} />
               <div style={{ display: 'flex', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
                 {['Admin-centric navigation', 'No back button', 'Hover flyout menus'].map(
                   (tag) => (
@@ -530,21 +516,7 @@ export default function CaseStudy() {
               >
                 After — Redesigned Dashboard
               </div>
-              <div
-                style={{
-                  backgroundColor: cardBg,
-                  borderRadius: radius,
-                  height: 320,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#B0B0B0',
-                  fontSize: 16,
-                  fontFamily: font,
-                }}
-              >
-                Redesigned Dashboard Screenshot
-              </div>
+              <img src="/images/redesigned-dashboard.png" width="100%" style={{borderRadius: "12px", display: "block"}} />
               <div style={{ display: 'flex', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
                 {['Goal-oriented navigation', 'Breadcrumb wayfinding', '2-click to results'].map(
                   (tag) => (
@@ -668,21 +640,7 @@ export default function CaseStudy() {
           {['Dashboard', 'Results Page'].map((label, i) => (
             <FadeUp key={label} stagger={2 + i}>
               <div>
-                <div
-                  style={{
-                    backgroundColor: cardBg,
-                    borderRadius: radius,
-                    aspectRatio: '16 / 10',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#B0B0B0',
-                    fontSize: 16,
-                    fontFamily: font,
-                  }}
-                >
-                  {label} Screenshot
-                </div>
+                <img src={label === 'Dashboard' ? '/images/dashboard-screenshot.png' : '/images/results-page.png'} width="100%" style={{borderRadius: "12px", display: "block"}} />
                 <div
                   style={{
                     fontSize: 14,
