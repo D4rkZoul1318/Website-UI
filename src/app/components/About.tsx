@@ -118,7 +118,7 @@ export function About() {
                 Have a project in mind or just want to say hi?
               </p>
               <a
-                href="mailto:sohum1311@gmail.com"
+                href="/#chill"
                 style={{
                   display: "inline-block",
                   marginTop: 24,
@@ -139,6 +139,7 @@ export function About() {
                   e.currentTarget.style.backgroundColor = "transparent";
                   e.currentTarget.style.color = "#4A5240";
                 }}
+                onClick={(e) => { e.preventDefault(); window.location.href = '/#chill'; }}
               >
                 Send me an email
               </a>

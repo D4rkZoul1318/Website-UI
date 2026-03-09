@@ -148,7 +148,8 @@ export default function CaseStudy() {
         </a>
         <div style={{ display: 'flex', gap: 24 }}>
           <a
-            onClick={() => (window.location.href = '/')}
+            href="/#home"
+            onClick={(e) => { e.preventDefault(); window.location.href = '/#home'; }}
             style={{
               fontFamily: font,
               fontSize: '14px',
@@ -157,10 +158,37 @@ export default function CaseStudy() {
               cursor: 'pointer',
             }}
           >
-            ← Portfolio
+            Home
           </a>
           <a
-            onClick={() => (window.location.href = '/#projects')}
+            href="/#about"
+            onClick={(e) => { e.preventDefault(); window.location.href = '/#about'; }}
+            style={{
+              fontFamily: font,
+              fontSize: '14px',
+              color: nearBlack,
+              textDecoration: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            About
+          </a>
+          <a
+            href="/#chill"
+            onClick={(e) => { e.preventDefault(); window.location.href = '/#chill'; }}
+            style={{
+              fontFamily: font,
+              fontSize: '14px',
+              color: nearBlack,
+              textDecoration: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            Chill
+          </a>
+          <a
+            href="/#projects"
+            onClick={(e) => { e.preventDefault(); window.location.href = '/#projects'; }}
             style={{
               fontFamily: font,
               fontSize: '14px',

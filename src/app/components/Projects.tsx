@@ -264,9 +264,7 @@ export function Projects() {
             </div>
 
             <a
-              href="https://sohumbob.framer.website"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/bob-rides"
               style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontWeight: 500,

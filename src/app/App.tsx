@@ -6,6 +6,7 @@ import { About } from "./components/About";
 import { ChillSection } from "./components/ChillSection";
 import { Footer } from "./components/Footer";
 import CaseStudy from "./components/CaseStudy";
+import BobRides from "./components/BobRides";
 
 function MainSite() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainSite />} />
         <Route path="/case-study" element={<CaseStudy />} />
+        <Route path="/bob-rides" element={<BobRides />} />
       </Routes>
     </BrowserRouter>
   );
