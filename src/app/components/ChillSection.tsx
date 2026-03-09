@@ -62,7 +62,7 @@ export function ChillSection() {
             marginTop: "28px",
           }}
         >
-          sohuml311@gmail.com
+          sohum1311@gmail.com
         </a>
       </div>
     </section>
