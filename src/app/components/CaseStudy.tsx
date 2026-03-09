@@ -640,7 +640,7 @@ export default function CaseStudy() {
           {['Dashboard', 'Results Page'].map((label, i) => (
             <FadeUp key={label} stagger={2 + i}>
               <div>
-                <img src={label === 'Dashboard' ? '/images/dashboard-screenshot.png' : '/images/results-page.png'} width="100%" style={{borderRadius: "12px", display: "block"}} />
+                <img src={label === 'Dashboard' ? '/images/redesigned-dashboard.png' : '/images/results.png'} width="100%" style={{borderRadius: "12px", display: "block"}} />
                 <div
                   style={{
                     fontSize: 14,
