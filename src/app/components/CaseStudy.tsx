@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { Navbar } from './Navbar';
 import { Linkedin } from 'lucide-react';
 
 const font = 'Outfit, sans-serif';
@@ -118,7 +117,62 @@ export default function CaseStudy() {
 
   return (
     <div style={{ backgroundColor: bgColor, fontFamily: font, minHeight: '100vh' }}>
-      <Navbar />
+      {/* inline case-study navbar */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          backdropFilter: 'blur(10px)',
+          backgroundColor: 'rgba(249,249,247,0.8)',
+          zIndex: 1000,
+          padding: '16px 32px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontFamily: font,
+        }}
+      >
+        <a
+          onClick={() => (window.location.href = '/')}
+          style={{
+            fontSize: 24,
+            fontWeight: 700,
+            color: nearBlack,
+            textDecoration: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          SB
+        </a>
+        <div style={{ display: 'flex', gap: 24 }}>
+          <a
+            onClick={() => (window.location.href = '/')}
+            style={{
+              fontFamily: font,
+              fontSize: '14px',
+              color: nearBlack,
+              textDecoration: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            ← Portfolio
+          </a>
+          <a
+            onClick={() => (window.location.href = '/#projects')}
+            style={{
+              fontFamily: font,
+              fontSize: '14px',
+              color: nearBlack,
+              textDecoration: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            Projects
+          </a>
+        </div>
+      </div>
       <a
         href="/"
         style={{
@@ -761,7 +815,9 @@ export default function CaseStudy() {
         </span>
         <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{ color: grey, transition: 'color 200ms' }}
             onMouseEnter={(e) => (e.currentTarget.style.color = nearBlack)}
             onMouseLeave={(e) => (e.currentTarget.style.color = grey)}
@@ -770,7 +826,9 @@ export default function CaseStudy() {
             <Linkedin size={18} />
           </a>
           <a
-            href="#"
+            href="https://www.behance.net/sohumbhatnagar"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{ color: grey, transition: 'color 200ms' }}
             onMouseEnter={(e) => (e.currentTarget.style.color = nearBlack)}
             onMouseLeave={(e) => (e.currentTarget.style.color = grey)}
