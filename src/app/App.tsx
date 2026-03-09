@@ -1,20 +1,15 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Projects } from "./components/Projects";
 import { About } from "./components/About";
 import { ChillSection } from "./components/ChillSection";
 import { Footer } from "./components/Footer";
+import CaseStudy from "./components/CaseStudy";
 
-export default function App() {
+function MainSite() {
   return (
-    <div
-      style={{
-        fontFamily: "'Outfit', sans-serif",
-        backgroundColor: "#F9F9F7",
-        color: "#1A1A1A",
-        lineHeight: 1.6,
-      }}
-    >
+    <div style={{ fontFamily: "'Outfit', sans-serif", backgroundColor: "#F9F9F7", color: "#1A1A1A", lineHeight: 1.6 }}>
       <Navbar />
       <Hero />
       <Projects />
@@ -22,5 +17,16 @@ export default function App() {
       <ChillSection />
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainSite />} />
+        <Route path="/case-study" element={<CaseStudy />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
