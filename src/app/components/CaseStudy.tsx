@@ -479,7 +479,7 @@ export default function CaseStudy() {
               >
                 Before — Original UUCMS
               </div>
-              <img src="/images/original-uucms.png" width="100%" style={{borderRadius: "12px", display: "block"}} />
+              <img src="/images/original-uucms.png" width="100%" height="400px" style={{borderRadius: "12px", display: "block", objectFit: "cover", objectPosition: "top"}} />
               <div style={{ display: 'flex', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
                 {['Admin-centric navigation', 'No back button', 'Hover flyout menus'].map(
                   (tag) => (
@@ -516,7 +516,7 @@ export default function CaseStudy() {
               >
                 After — Redesigned Dashboard
               </div>
-              <img src="/images/redesigned-dashboard.png" width="100%" style={{borderRadius: "12px", display: "block"}} />
+              <img src="/images/redesigned-dashboard.png" width="100%" height="400px" style={{borderRadius: "12px", display: "block", objectFit: "cover", objectPosition: "top"}} />
               <div style={{ display: 'flex', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
                 {['Goal-oriented navigation', 'Breadcrumb wayfinding', '2-click to results'].map(
                   (tag) => (
