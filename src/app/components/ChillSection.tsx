@@ -50,7 +50,7 @@ export function ChillSection() {
           Want some?
         </p>
         <a
-          href="mailto:sohum@email.com"
+          href="mailto:sohum1311@gmail.com"
           style={{
             ...fadeUp(240),
             fontFamily: "'Outfit', sans-serif",
