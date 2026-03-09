@@ -148,7 +148,7 @@ export function Projects() {
             </div>
 
             <a
-              href="#"
+              href="/case-study"
               style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontWeight: 500,
