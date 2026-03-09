@@ -57,7 +57,9 @@ export function Footer() {
 
         <div className="flex items-center gap-5">
           <a
-            href="#"
+            href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="LinkedIn"
             style={{ color: "#6B6B6B", transition: "color 200ms ease" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}
@@ -66,7 +68,9 @@ export function Footer() {
             <Linkedin size={20} strokeWidth={1.5} />
           </a>
           <a
-            href="#"
+            href="https://www.behance.net/sohumbhatnagar"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="Behance"
             style={{ color: "#6B6B6B", transition: "color 200ms ease" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}

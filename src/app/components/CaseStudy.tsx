@@ -119,6 +119,21 @@ export default function CaseStudy() {
   return (
     <div style={{ backgroundColor: bgColor, fontFamily: font, minHeight: '100vh' }}>
       <Navbar />
+      <a
+        href="/"
+        style={{
+          fontFamily: font,
+          fontSize: "14px",
+          color: "#6B6B6B",
+          textDecoration: "none",
+          display: "inline-block",
+          padding: "24px 80px 0",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "#6B6B6B")}
+      >
+        ← Back to Portfolio
+      </a>
 
       {/* Section 1 — Hero */}
       <section
@@ -480,7 +495,7 @@ export default function CaseStudy() {
                 Before — Original UUCMS
               </div>
               <div style={{height: "520px", overflow: "hidden", borderRadius: "12px"}}>
-                <img src="/images/original-uucms.png" width="100%" height="100%" style={{objectFit: "cover", objectPosition: "top center", display: "block"}} />
+                <img src="/images/original-uucms.png" width="100%" height="100%" style={{objectFit: "cover", objectPosition: "top", display: "block"}} />
               </div>
               <div style={{ display: 'flex', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
                 {['Admin-centric navigation', 'No back button', 'Hover flyout menus'].map(
@@ -519,7 +534,7 @@ export default function CaseStudy() {
                 After — Redesigned Dashboard
               </div>
               <div style={{height: "520px", overflow: "hidden", borderRadius: "12px"}}>
-                <img src="/images/redesigned-dashboard.png" width="100%" height="100%" style={{objectFit: "cover", objectPosition: "top center", display: "block"}} />
+                <img src="/images/redesigned-dashboard.png" width="100%" height="100%" style={{objectFit: "cover", objectPosition: "top", display: "block"}} />
               </div>
               <div style={{ display: 'flex', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
                 {['Goal-oriented navigation', 'Breadcrumb wayfinding', '2-click to results'].map(

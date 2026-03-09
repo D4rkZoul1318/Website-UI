@@ -94,6 +94,55 @@ export function About() {
                 </span>
               ))}
             </div>
+
+            {/* Contact section */}
+            <div style={fadeUp(240)} className="mt-16 text-center">
+              <h2
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 32,
+                  color: "#1A1A1A",
+                }}
+              >
+                Get in touch
+              </h2>
+              <p
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 18,
+                  color: "#6B6B6B",
+                  marginTop: 8,
+                }}
+              >
+                Have a project in mind or just want to say hi?
+              </p>
+              <a
+                href="mailto:sohum1311@gmail.com"
+                style={{
+                  display: "inline-block",
+                  marginTop: 24,
+                  padding: "12px 24px",
+                  border: "1px solid #4A5240",
+                  color: "#4A5240",
+                  fontFamily: "'Outfit', sans-serif",
+                  fontWeight: 500,
+                  textDecoration: "none",
+                  borderRadius: "8px",
+                  transition: "background-color 200ms",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#4A5240";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = "#4A5240";
+                }}
+              >
+                Send me an email
+              </a>
+            </div>
           </div>
         </div>
       </div>
