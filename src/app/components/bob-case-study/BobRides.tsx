@@ -1,5 +1,5 @@
 import { Navbar } from "../Navbar";
-import { FadeUp, StaggerContainer, StaggerChild } from "./components/use-scroll-animation";
+import { FadeUp, StaggerContainer, StaggerChild } from "../useScrollReveal";
 
 // Import all images - using public web paths instead of Figma assets
 const imgIPhone35 = "/images/bob/iphone-home-screen.png";
