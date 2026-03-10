@@ -1610,3 +1610,30 @@ function PlaceholderImage({
     </div>
   );
 }
+
+export default function BobRides() {
+  return (
+    <div style={{ fontFamily: "'Outfit', sans-serif", backgroundColor: "#F9F9F7", color: "#1A1A1A" }}>
+      <Navbar />
+      <Hero />
+      <ProblemStatement />
+      <OurProcess />
+      <ObjectivesGoals />
+      <BusinessChallenges />
+      <ProductUsers />
+      <UserNeeds />
+      <FeaturesAndFunctionalities />
+      <ProductUserChallenges />
+      <CompetitorAnalysis />
+      <UniqueFeatures />
+      <UserPersona />
+      <TaskMapping />
+      <EisenhowerMatrix />
+      <FiveWhyAnalysis />
+      <RootCauseAnalysis />
+      <Sketches />
+      <MajorScreens />
+      <ThankYou />
+    </div>
+  );
+}
