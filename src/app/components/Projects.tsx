@@ -68,25 +68,9 @@ export function Projects() {
           }}
         >
           {/* Left — Thumbnail */}
-          <div
-            className="md:w-1/2 w-full flex items-center justify-center"
-            style={{
-              backgroundColor: "#EEEEEA",
-              minHeight: "280px",
-              borderRadius: "12px 12px 0 0",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 400,
-                fontSize: "14px",
-                color: "#AEAEA8",
-              }}
-            >
-              Project Thumbnail
-            </span>
-          </div>
+          <div className="md:w-1/2 w-full" style={{ minHeight: "280px", borderRadius: "12px 12px 0 0", overflow: "hidden" }}>
+              <img src="/images/uucms-thumbnail.png" alt="thumbnail" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", minHeight: "280px" }} />
+            </div>
 
           {/* Right — Details */}
           <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-10">
@@ -181,25 +165,9 @@ export function Projects() {
             e.currentTarget.style.transform = isVisible ? "translateY(0)" : "translateY(40px)";
           }}
         >
-          <div
-            className="md:w-1/2 w-full flex items-center justify-center"
-            style={{
-              backgroundColor: "#EEEEEA",
-              minHeight: "280px",
-              borderRadius: "12px 12px 0 0",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 400,
-                fontSize: "14px",
-                color: "#AEAEA8",
-              }}
-            >
-              Project Thumbnail
-            </span>
-          </div>
+          <div className="md:w-1/2 w-full" style={{ minHeight: "280px", borderRadius: "12px 12px 0 0", overflow: "hidden" }}>
+              <img src="/images/bob-thumbnail.png" alt="thumbnail" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", minHeight: "280px" }} />
+            </div>
 
           <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-10">
             <p
