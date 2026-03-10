@@ -1,4 +1,4 @@
-import { Navbar } from "./components/Navbar";
+import { Navbar } from "../Navbar";
 import { FadeUp, StaggerContainer, StaggerChild } from "./components/use-scroll-animation";
 
 // Import all images - using public web paths instead of Figma assets
