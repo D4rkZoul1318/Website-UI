@@ -1,38 +1,38 @@
 import { Navbar } from "./components/Navbar";
 import { FadeUp, StaggerContainer, StaggerChild } from "./components/use-scroll-animation";
 
-// Import all Figma assets
-import imgIPhone35 from "figma:asset/0ac555336b4df7ddae78bf95689f24a4abb868a8.png";
-import imgIPhone36 from "figma:asset/5c12f88df33ead10d645573ba32008fc5e9168b8.png";
-import imgIPhone39 from "figma:asset/40f5e50d1e42bd74764bcce768d99ec717a0a88b.png";
-import imgIPhone42 from "figma:asset/cc3a6110da57480a1eed77da83f0ae445b193db4.png";
-import imgDiscovery from "figma:asset/0a71c2e26ac3b427b86a3b60425a66c819959a36.png";
-import imgCopywriting from "figma:asset/51fb04d64d61d567a183fce361cabaa1e8d3e9d5.png";
-import imgIdea from "figma:asset/e2ea7519fda9c6a19caa126e38d0b72801043b99.png";
-import imgDesign from "figma:asset/82bfe0627c11a916c407b001270ace69ad91278f.png";
-import imgUser2 from "figma:asset/b816fe06b99545d4d72476ec25de9d8eb395b3f4.png";
-import imgCar from "figma:asset/cf238d029a8b663f05438a4686ec808a8d3de167.png";
-import imgWallet from "figma:asset/f38e3780f4de955c09f8d18228395d24d2dababc.png";
-import imgOlaShare from "figma:asset/0f3d8ec9ccde3b4aea3b243e9c84153a6cf7e20d.png";
-import imgImage5 from "figma:asset/a2ff3e8878939909c4136d4ea3a80a858468eb36.png";
-import imgImage4 from "figma:asset/e3ff67e5ea74b96e227f6652e3b5474c89395342.png";
-import imgImage6 from "figma:asset/d93dd322187bd4f5fdd838ec5ad59e1173e67582.png";
-import imgPersona from "figma:asset/80583f06c3399f9e87a0e1386eee577b7e1fcac0.png";
-import imgRCA from "figma:asset/a0e628abc12b64ac379c757ce4afe6b2732fd21f.png";
-import imgSketchCar from "figma:asset/738a1abb854f851749ade38e98f4de04f746d2f7.png";
-import imgSketchBike from "figma:asset/4cda351bed0931af6aaa7e271a04da71724b1135.png";
-import imgSketchAuto from "figma:asset/8fd9aac401a77b4be1cc01193b2e598761871d5e.png";
-import img3dCar from "figma:asset/91b0a2f5eb0c8117f627bcdaca46b022cb98de1e.png";
-import img3dBike from "figma:asset/9ef2be5f4d7ece2bb0f5262051e4b68ae6690eb6.png";
-import img3dAuto from "figma:asset/8f755937549c57bc251244cf87afa62750415e27.png";
-import imgScreen from "figma:asset/a8702e209ba153b2cc96449ab18f096dd5dd694b.png";
-import imgSphere from "figma:asset/60bdcb6c381abfc50debe0010ec3cda871fc67bd.png";
-import imgTorus from "figma:asset/1b4a9777c3b155f7460ffebe0bc3834306fa3ce6.png";
-import imgPlatonic from "figma:asset/1fe51862a9359538ab396c3d9ccbfd7cb60012ad.png";
-import imgCube from "figma:asset/d206e37d9be52b28b410d5dcb762360a48ca7c55.png";
-import imgEllipse26 from "figma:asset/e357b85f52f76c2682893c03177287cd581f1f4e.png";
-import imgEllipse27 from "figma:asset/e357b85f52f76c2682893c03177287cd581f1f4e.png";
-import imgEllipse28 from "figma:asset/0235024ac2c70190de08580f07f4d6dcbe5dacf0.png";
+// Import all images - using public web paths instead of Figma assets
+const imgIPhone35 = "/images/bob/iphone-home-screen.png";
+const imgIPhone36 = "/images/bob/iphone-screen-2.png";
+const imgIPhone39 = "/images/bob/iphone-ride-options.png";
+const imgIPhone42 = "/images/bob/iphone-checkout.png";
+const imgDiscovery = "/images/bob/icon-discovery.png";
+const imgCopywriting = "/images/bob/icon-copywriting.png";
+const imgIdea = "/images/bob/icon-idea.png";
+const imgDesign = "/images/bob/icon-design.png";
+const imgUser2 = "/images/bob/icon-user.png";
+const imgCar = "/images/bob/icon-car.png";
+const imgWallet = "/images/bob/icon-wallet.png";
+const imgOlaShare = "/images/bob/logo-ola.png";
+const imgImage5 = "/images/bob/logo-rapido.png";
+const imgImage4 = "/images/bob/logo-uber.png";
+const imgImage6 = "/images/bob/logo-namma-yatri.png";
+const imgPersona = "/images/bob/persona-rahul.png";
+const imgRCA = "/images/bob/diagram-rca.png";
+const imgSketchCar = "/images/bob/sketch-car.png";
+const imgSketchBike = "/images/bob/sketch-bike.png";
+const imgSketchAuto = "/images/bob/sketch-auto.png";
+const img3dCar = "/images/bob/3d-car.png";
+const img3dBike = "/images/bob/3d-bike.png";
+const img3dAuto = "/images/bob/3d-auto.png";
+const imgScreen = "/images/bob/screen.png";
+const imgSphere = "/images/bob/3d-sphere.png";
+const imgTorus = "/images/bob/3d-torus.png";
+const imgPlatonic = "/images/bob/3d-platonic.png";
+const imgCube = "/images/bob/3d-cube.png";
+const imgEllipse26 = "/images/bob/avatar-user-1.png";
+const imgEllipse27 = "/images/bob/avatar-user-2.png";
+const imgEllipse28 = "/images/bob/avatar-user-3.png";
 
 export default function App() {
   return (
@@ -97,45 +97,49 @@ function HeroSection() {
       {/* Floating phone mockups */}
       <div className="absolute top-16 right-0 w-[55%] h-full hidden lg:block">
         <div className="relative w-full h-full">
-          <img
-            src={imgIPhone35}
-            alt="BOB Rides Screen"
+          <PlaceholderImage
+            alt="iPhone Screen"
             className="absolute rounded-[20px] shadow-lg"
+            width="180px"
+            height="auto"
             style={{
-              width: "180px",
+              aspectRatio: "9/19.5",
               top: "15%",
               right: "25%",
               transform: "rotate(-30deg)",
             }}
           />
-          <img
-            src={imgIPhone36}
-            alt="BOB Rides Screen"
+          <PlaceholderImage
+            alt="iPhone Screen"
             className="absolute rounded-[20px] shadow-lg"
+            width="180px"
+            height="auto"
             style={{
-              width: "180px",
+              aspectRatio: "9/19.5",
               top: "5%",
               right: "5%",
               transform: "rotate(-30deg)",
             }}
           />
-          <img
-            src={imgIPhone39}
-            alt="BOB Rides Screen"
+          <PlaceholderImage
+            alt="iPhone Screen"
             className="absolute rounded-[20px] shadow-lg"
+            width="180px"
+            height="auto"
             style={{
-              width: "180px",
+              aspectRatio: "9/19.5",
               top: "30%",
               right: "45%",
               transform: "rotate(-30deg)",
             }}
           />
-          <img
-            src={imgIPhone42}
-            alt="BOB Rides Screen"
+          <PlaceholderImage
+            alt="iPhone Screen"
             className="absolute rounded-[20px] shadow-lg"
+            width="180px"
+            height="auto"
             style={{
-              width: "180px",
+              aspectRatio: "9/19.5",
               top: "40%",
               right: "15%",
               transform: "rotate(-30deg)",
@@ -207,7 +211,12 @@ function OurProcess() {
                   className="rounded-full flex items-center justify-center"
                   style={{ width: 140, height: 140, backgroundColor: step.color }}
                 >
-                  <img src={step.icon} alt={step.label} className="w-14 h-14 object-contain" />
+                  <PlaceholderImage
+                    alt={step.label}
+                    width="56px"
+                    height="56px"
+                    style={{ borderRadius: "8px" }}
+                  />
                 </div>
                 <p
                   className="mt-5 text-[#282D46]"
@@ -308,11 +317,11 @@ function ProductUsers() {
           {[imgEllipse26, imgEllipse27, imgEllipse28].map((img, i) => (
             <FadeUp key={i} delay={i * 80}>
               <div className="relative">
-                <img
-                  src={img}
+                <PlaceholderImage
                   alt={`User ${i + 1}`}
-                  className="rounded-full object-cover"
-                  style={{ width: i === 2 ? 120 : 160, height: i === 2 ? 120 : 160 }}
+                  width={i === 2 ? "120px" : "160px"}
+                  height={i === 2 ? "120px" : "160px"}
+                  style={{ borderRadius: "50%" }}
                 />
               </div>
             </FadeUp>
@@ -391,7 +400,12 @@ function FeaturesSection() {
                   className="rounded-full flex items-center justify-center bg-[#F6FAFE]"
                   style={{ width: 100, height: 100 }}
                 >
-                  <img src={f.icon} alt={f.title} className="w-10 h-10 object-contain" />
+                  <PlaceholderImage
+                    alt={f.title}
+                    width="40px"
+                    height="40px"
+                    style={{ borderRadius: "8px" }}
+                  />
                 </div>
                 <p
                   className="mt-5 text-[#1A1A1A]"
@@ -455,10 +469,10 @@ function CompetitorAnalysis() {
         {/* Competitor logos */}
         <FadeUp delay={80}>
           <div className="flex flex-wrap gap-6 items-center mt-10">
-            <img src={imgOlaShare} alt="Ola" className="h-16 object-contain" />
-            <img src={imgImage5} alt="Rapido" className="h-14 object-contain" />
-            <img src={imgImage4} alt="Uber" className="h-14 object-contain rounded-lg" />
-            <img src={imgImage6} alt="Namma Yatri" className="h-14 object-contain" />
+            <PlaceholderImage alt="Ola" width="100px" height="64px" style={{ borderRadius: "8px" }} />
+            <PlaceholderImage alt="Rapido" width="100px" height="56px" style={{ borderRadius: "8px" }} />
+            <PlaceholderImage alt="Uber" width="100px" height="56px" style={{ borderRadius: "8px" }} />
+            <PlaceholderImage alt="Namma Yatri" width="100px" height="56px" style={{ borderRadius: "8px" }} />
           </div>
         </FadeUp>
 
@@ -521,10 +535,11 @@ function UserPersona() {
           <FadeUp delay={80}>
             <div className="bg-white rounded-[12px] p-8 border border-[#E5E5E3]">
               <div className="flex flex-col items-center">
-                <img
-                  src={imgPersona}
+                <PlaceholderImage
                   alt="Rahul Kumar"
-                  className="w-32 h-32 rounded-full object-cover"
+                  width="128px"
+                  height="128px"
+                  style={{ borderRadius: "50%" }}
                 />
                 <p className="mt-4 text-[#1A1A1A]" style={{ fontSize: "20px", fontWeight: 500 }}>
                   Rahul Kumar
@@ -972,10 +987,11 @@ function RootCauseAnalysis() {
         </FadeUp>
         <FadeUp delay={80}>
           <div className="mt-10 flex justify-center">
-            <img
-              src={imgRCA}
+            <PlaceholderImage
               alt="Root Cause Analysis Diagram"
-              className="w-full max-w-[900px] rounded-[12px]"
+              width="900px"
+              height="500px"
+              style={{ borderRadius: "12px", maxWidth: "100%" }}
             />
           </div>
         </FadeUp>
@@ -1003,10 +1019,11 @@ function Sketches() {
             <FadeUp key={i} delay={i * 80}>
               <div className="text-center">
                 <div className="bg-[#F6FAFE] rounded-[12px] overflow-hidden aspect-square flex items-center justify-center">
-                  <img
-                    src={item.img}
+                  <PlaceholderImage
                     alt={item.label}
-                    className="w-3/4 h-3/4 object-contain"
+                    width="100%"
+                    height="100%"
+                    style={{ borderRadius: "12px" }}
                   />
                 </div>
                 <p
@@ -1136,10 +1153,10 @@ function MajorScreens() {
                       padding: 6,
                     }}
                   >
-                    <img
-                      src={screen.img}
+                    <PlaceholderImage
                       alt={screen.title}
-                      className="w-full h-full object-cover"
+                      width="100%"
+                      height="100%"
                       style={{ borderRadius: 30 }}
                     />
                   </div>
@@ -1206,26 +1223,86 @@ function ThankYou() {
   return (
     <section className="bg-[#EAF4FD] py-28 md:py-40 overflow-hidden relative">
       {/* 3D Elements */}
-      <img
-        src={imgSphere}
-        alt=""
+      <div
         className="absolute top-0 right-0 w-48 md:w-72 blur-[6px] opacity-80 pointer-events-none"
-      />
-      <img
-        src={imgTorus}
-        alt=""
+        style={{
+          backgroundColor: "#EEEEEA",
+          borderRadius: "12px",
+          aspectRatio: "1",
+        }}
+      >
+        <div style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#999999",
+          fontSize: "12px",
+        }}>
+          3D Sphere
+        </div>
+      </div>
+      <div
         className="absolute bottom-10 left-[-80px] w-48 md:w-72 blur-[6px] opacity-70 pointer-events-none -rotate-15"
-      />
-      <img
-        src={imgPlatonic}
-        alt=""
+        style={{
+          backgroundColor: "#EEEEEA",
+          borderRadius: "12px",
+          aspectRatio: "1",
+        }}
+      >
+        <div style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#999999",
+          fontSize: "12px",
+        }}>
+          3D Torus
+        </div>
+      </div>
+      <div
         className="absolute top-20 left-[15%] w-24 md:w-36 opacity-80 pointer-events-none"
-      />
-      <img
-        src={imgCube}
-        alt=""
+        style={{
+          backgroundColor: "#EEEEEA",
+          borderRadius: "12px",
+          aspectRatio: "1",
+        }}
+      >
+        <div style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#999999",
+          fontSize: "12px",
+        }}>
+          3D Platonic
+        </div>
+      </div>
+      <div
         className="absolute bottom-10 right-[5%] w-24 md:w-36 opacity-80 pointer-events-none"
-      />
+        style={{
+          backgroundColor: "#EEEEEA",
+          borderRadius: "12px",
+          aspectRatio: "1",
+        }}
+      >
+        <div style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#999999",
+          fontSize: "12px",
+        }}>
+          3D Cube
+        </div>
+      </div>
 
       <div className="max-w-[1000px] mx-auto px-6 md:px-12 text-center relative z-10">
         <FadeUp>
@@ -1277,5 +1354,49 @@ function SectionTitle({
     >
       {children}
     </h2>
+  );
+}
+
+/* ─── PLACEHOLDER COMPONENT ─── */
+interface PlaceholderImageProps {
+  alt: string;
+  width?: number | string;
+  height?: number | string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+function PlaceholderImage({
+  alt,
+  width = "100%",
+  height = "300px",
+  className = "",
+  style = {},
+}: PlaceholderImageProps) {
+  return (
+    <div
+      className={className}
+      style={{
+        backgroundColor: "#EEEEEA",
+        borderRadius: "12px",
+        width: width,
+        height: height,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        padding: "20px",
+        ...style,
+      }}
+    >
+      <div>
+        <p style={{ color: "#999999", fontSize: "14px", fontWeight: 500 }}>
+          {alt}
+        </p>
+        <p style={{ color: "#CCCCCC", fontSize: "12px", marginTop: "4px" }}>
+          Image placeholder
+        </p>
+      </div>
+    </div>
   );
 }
