@@ -1,5 +1,22 @@
 import React from "react";
-import { Navbar } from "../Navbar";
+/* ─── CASE STUDY NAVBAR ─── */
+function CaseStudyNav() {
+  return (
+    <nav style={{
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
+      backgroundColor: "rgba(249,249,247,0.9)", backdropFilter: "blur(16px)",
+      borderBottom: "1px solid #E5E5E3", height: "64px",
+      display: "flex", alignItems: "center",
+    }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px", width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: "20px", color: "#1A1A1A" }}>SB</span>
+        <a href="/" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 500, color: "#6B6B6B", textDecoration: "none", display: "flex", alignItems: "center", gap: "6px" }}>
+          ← Back to Portfolio
+        </a>
+      </div>
+    </nav>
+  );
+}
 
 // Image paths
 const imgIPhone35 = "/images/bob/major-screens.png";
@@ -76,7 +93,7 @@ export default function BobRides() {
           transform: translateY(0);
         }
       `}</style>
-      <Navbar />
+      <CaseStudyNav />
       <main>
         <HeroSection />
         <ProblemStatement />
