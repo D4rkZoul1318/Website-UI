@@ -1,7 +1,8 @@
-import { useScrollReveal } from '../useScrollReveal';
+import React from "react";
 import { Navbar } from "../Navbar";
 
-// Import all images - using public web paths instead of Figma assets
+
+// Import all Figma assets
 const imgIPhone35 = "/images/bob/iphone-home-screen.png";
 const imgIPhone36 = "/images/bob/iphone-screen-2.png";
 const imgIPhone39 = "/images/bob/iphone-ride-options.png";
@@ -34,17 +35,27 @@ const imgEllipse26 = "/images/bob/avatar-user-1.png";
 const imgEllipse27 = "/images/bob/avatar-user-2.png";
 const imgEllipse28 = "/images/bob/avatar-user-3.png";
 
-/* ─── SCROLL REVEAL WRAPPER COMPONENTS ─── */
-function FadeUpWrapper({ delay = 0, children }: { delay?: number; children: React.ReactNode }) {
-  const { ref, isVisible } = useScrollReveal(0.1);
+
+/* ─── ANIMATION COMPONENTS ─── */
+function FadeUp({ delay = 0, children }: { delay?: number; children: React.ReactNode }) {
+  const [ref, setRef] = React.useState<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = React.useState(false);
+  React.useEffect(() => {
+    if (!ref) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.1 }
+    );
+    observer.observe(ref);
+    return () => observer.disconnect();
+  }, [ref]);
   return (
     <div
-      ref={ref}
+      ref={setRef}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-        transition: `opacity 400ms ease-out, transform 400ms ease-out`,
-        transitionDelay: delay > 0 ? `${delay}ms` : '0ms',
+        transform: isVisible ? "translateY(0)" : "translateY(40px)",
+        transition: `opacity 400ms ease-out ${delay}ms, transform 400ms ease-out ${delay}ms`,
       }}
     >
       {children}
@@ -52,7 +63,7 @@ function FadeUpWrapper({ delay = 0, children }: { delay?: number; children: Reac
   );
 }
 
-export default function App() {
+export default function BobRides() {
   return (
     <div className="min-h-screen bg-[#F9F9F7]" style={{ lineHeight: 1.6 }}>
       <style>{`
@@ -94,18 +105,10 @@ export default function App() {
 
 /* ─── HERO ─── */
 function HeroSection() {
-  const { ref, isVisible } = useScrollReveal(0.1);
   return (
     <section className="relative bg-white overflow-hidden" style={{ minHeight: "90vh" }}>
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 pt-32 pb-20 relative z-10">
-        <div
-          ref={ref}
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <h1
             className="text-[#282D46] tracking-tight"
             style={{ fontSize: "clamp(36px, 5vw, 72px)", fontWeight: 600, lineHeight: 1.15 }}
@@ -118,54 +121,50 @@ function HeroSection() {
           >
             Icon Design & UI/UX<br />Case Study.
           </p>
-        </div>
+        </FadeUp>
       </div>
       {/* Floating phone mockups */}
       <div className="absolute top-16 right-0 w-[55%] h-full hidden lg:block">
         <div className="relative w-full h-full">
-          <PlaceholderImage
-            alt="iPhone Screen"
+          <img
+            src={imgIPhone35}
+            alt="BOB Rides Screen"
             className="absolute rounded-[20px] shadow-lg"
-            width="180px"
-            height="auto"
             style={{
-              aspectRatio: "9/19.5",
+              width: "180px",
               top: "15%",
               right: "25%",
               transform: "rotate(-30deg)",
             }}
           />
-          <PlaceholderImage
-            alt="iPhone Screen"
+          <img
+            src={imgIPhone36}
+            alt="BOB Rides Screen"
             className="absolute rounded-[20px] shadow-lg"
-            width="180px"
-            height="auto"
             style={{
-              aspectRatio: "9/19.5",
+              width: "180px",
               top: "5%",
               right: "5%",
               transform: "rotate(-30deg)",
             }}
           />
-          <PlaceholderImage
-            alt="iPhone Screen"
+          <img
+            src={imgIPhone39}
+            alt="BOB Rides Screen"
             className="absolute rounded-[20px] shadow-lg"
-            width="180px"
-            height="auto"
             style={{
-              aspectRatio: "9/19.5",
+              width: "180px",
               top: "30%",
               right: "45%",
               transform: "rotate(-30deg)",
             }}
           />
-          <PlaceholderImage
-            alt="iPhone Screen"
+          <img
+            src={imgIPhone42}
+            alt="BOB Rides Screen"
             className="absolute rounded-[20px] shadow-lg"
-            width="180px"
-            height="auto"
             style={{
-              aspectRatio: "9/19.5",
+              width: "180px",
               top: "40%",
               right: "15%",
               transform: "rotate(-30deg)",
@@ -179,30 +178,13 @@ function HeroSection() {
 
 /* ─── PROBLEM STATEMENT ─── */
 function ProblemStatement() {
-  const { ref: ref1, isVisible: isVisible1 } = useScrollReveal(0.1);
-  const { ref: ref2, isVisible: isVisible2 } = useScrollReveal(0.1);
   return (
     <section className="bg-[#F9F9F7] py-20 md:py-28">
       <div className="max-w-[900px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref1}
-          style={{
-            opacity: isVisible1 ? 1 : 0,
-            transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle>Problem Statement</SectionTitle>
-        </div>
-        <div
-          ref={ref2}
-          style={{
-            opacity: isVisible2 ? 1 : 0,
-            transform: isVisible2 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-            transitionDelay: '80ms',
-          }}
-        >
+        </FadeUp>
+        <FadeUp delay={80}>
           <div className="text-[#1A1A1A] space-y-6 mt-8" style={{ fontSize: "17px" }}>
             <p>
               Ride-hailing apps in the Indian market rely almost entirely on flat, generic vehicle
@@ -225,7 +207,7 @@ function ProblemStatement() {
               that the app they appear in could not be mistaken for any competitor?
             </p>
           </div>
-        </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -233,7 +215,6 @@ function ProblemStatement() {
 
 /* ─── OUR PROCESS ─── */
 function OurProcess() {
-  const { ref, isVisible } = useScrollReveal(0.1);
   const steps = [
     { label: "Discover", icon: imgDiscovery, color: "rgba(24,138,236,0.04)" },
     { label: "Define", icon: imgCopywriting, color: "#F6FAFE" },
@@ -244,30 +225,18 @@ function OurProcess() {
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref}
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle center>Our Process</SectionTitle>
-        </div>
+        </FadeUp>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
           {steps.map((step, i) => (
-            <FadeUpWrapper key={step.label} delay={i * 80}>
+            <FadeUp key={step.label} delay={i * 80}>
               <div className="flex flex-col items-center text-center">
                 <div
                   className="rounded-full flex items-center justify-center"
                   style={{ width: 140, height: 140, backgroundColor: step.color }}
                 >
-                  <PlaceholderImage
-                    alt={step.label}
-                    width="56px"
-                    height="56px"
-                    style={{ borderRadius: "8px" }}
-                  />
+                  <img src={step.icon} alt={step.label} className="w-14 h-14 object-contain" />
                 </div>
                 <p
                   className="mt-5 text-[#282D46]"
@@ -276,7 +245,7 @@ function OurProcess() {
                   {step.label}
                 </p>
               </div>
-            </FadeUpWrapper>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -286,32 +255,14 @@ function OurProcess() {
 
 /* ─── OBJECTIVES & GOALS ─── */
 function ObjectivesGoals() {
-  const { ref: ref1, isVisible: isVisible1 } = useScrollReveal(0.1);
-  const { ref: ref2, isVisible: isVisible2 } = useScrollReveal(0.1);
-  const { ref: ref3, isVisible: isVisible3 } = useScrollReveal(0.1);
   return (
     <section className="bg-[#F9F9F7] py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref1}
-          style={{
-            opacity: isVisible1 ? 1 : 0,
-            transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle>Objectives & Goals</SectionTitle>
-        </div>
+        </FadeUp>
         <div className="grid md:grid-cols-2 gap-10 mt-10">
-          <div
-            ref={ref2}
-            style={{
-              opacity: isVisible2 ? 1 : 0,
-              transform: isVisible2 ? 'translateY(0)' : 'translateY(40px)',
-              transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-              transitionDelay: '80ms',
-            }}
-          >
+          <FadeUp delay={80}>
             <ul className="list-disc pl-6 text-[#1A1A1A] space-y-2" style={{ fontSize: "17px" }}>
               <li>
                 Design a 3D vehicle icon system (bike, auto, cab) that is instantly legible at small
@@ -319,23 +270,15 @@ function ObjectivesGoals() {
                 market
               </li>
             </ul>
-          </div>
-          <div
-            ref={ref3}
-            style={{
-              opacity: isVisible3 ? 1 : 0,
-              transform: isVisible3 ? 'translateY(0)' : 'translateY(40px)',
-              transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-              transitionDelay: '160ms',
-            }}
-          >
+          </FadeUp>
+          <FadeUp delay={160}>
             <ul className="list-disc pl-6 text-[#1A1A1A] space-y-2" style={{ fontSize: "17px" }}>
               <li>
                 Build Icons for a dark-mode-native UI for a ride aggregator that consolidates
                 multiple taxi apps like Rapido, Uber, Ola into a single booking interface
               </li>
             </ul>
-          </div>
+          </FadeUp>
         </div>
       </div>
     </section>
@@ -344,7 +287,6 @@ function ObjectivesGoals() {
 
 /* ─── BUSINESS CHALLENGES ─── */
 function BusinessChallenges() {
-  const { ref, isVisible } = useScrollReveal(0.1);
   const challenges = [
     "Existing ride-hailing apps in India use flat, generic vehicle icons that offer no brand differentiation",
     "No established design reference for 3D vehicle icons in a dark-mode mobile context",
@@ -355,26 +297,19 @@ function BusinessChallenges() {
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref}
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle>Business Challenges</SectionTitle>
-        </div>
+        </FadeUp>
         <div className="mt-10 space-y-5">
           {challenges.map((c, i) => (
-            <FadeUpWrapper key={i} delay={i * 80}>
+            <FadeUp key={i} delay={i * 80}>
               <div className="flex items-start gap-4">
                 <span className="mt-2 block w-8 h-[2px] bg-[#F57878] shrink-0 rounded" />
                 <p className="text-[#1A1A1A]" style={{ fontSize: "17px" }}>
                   {c}
                 </p>
               </div>
-            </FadeUpWrapper>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -384,49 +319,32 @@ function BusinessChallenges() {
 
 /* ─── PRODUCT USERS ─── */
 function ProductUsers() {
-  const { ref: ref1, isVisible: isVisible1 } = useScrollReveal(0.1);
-  const { ref: ref2, isVisible: isVisible2 } = useScrollReveal(0.1);
   return (
     <section className="bg-[#F6FAFE] py-20 md:py-28 overflow-hidden">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12 relative">
-        <div
-          ref={ref1}
-          style={{
-            opacity: isVisible1 ? 1 : 0,
-            transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle center>Product Users</SectionTitle>
-        </div>
-        <div
-          ref={ref2}
-          style={{
-            opacity: isVisible2 ? 1 : 0,
-            transform: isVisible2 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-            transitionDelay: '80ms',
-          }}
-        >
+        </FadeUp>
+        <FadeUp delay={80}>
           <p
             className="text-center text-[#282D46] mt-4 max-w-[600px] mx-auto"
             style={{ fontSize: "18px" }}
           >
             Any user that uses taxi apps like OLA, Uber, Rapido, Namma Yatri
           </p>
-        </div>
+        </FadeUp>
         <div className="flex justify-center gap-8 md:gap-16 mt-12 flex-wrap">
           {[imgEllipse26, imgEllipse27, imgEllipse28].map((img, i) => (
-            <FadeUpWrapper key={i} delay={i * 80}>
+            <FadeUp key={i} delay={i * 80}>
               <div className="relative">
-                <PlaceholderImage
+                <img
+                  src={img}
                   alt={`User ${i + 1}`}
-                  width={i === 2 ? "120px" : "160px"}
-                  height={i === 2 ? "120px" : "160px"}
-                  style={{ borderRadius: "50%" }}
+                  className="rounded-full object-cover"
+                  style={{ width: i === 2 ? 120 : 160, height: i === 2 ? 120 : 160 }}
                 />
               </div>
-            </FadeUpWrapper>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -436,7 +354,6 @@ function ProductUsers() {
 
 /* ─── USER NEEDS ─── */
 function UserNeeds() {
-  const { ref, isVisible } = useScrollReveal(0.1);
   const needs = [
     "A single interface to compare ride prices across Rapido, Uber, and Ola without switching between apps",
     "Clear, instant visual identification of vehicle type (bike, auto, cab) at a glance, especially in low-light conditions",
@@ -446,26 +363,19 @@ function UserNeeds() {
   return (
     <section className="bg-[#F9F9F7] py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref}
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle>User Needs</SectionTitle>
-        </div>
+        </FadeUp>
         <div className="mt-10 space-y-5">
           {needs.map((n, i) => (
-            <FadeUpWrapper key={i} delay={i * 80}>
+            <FadeUp key={i} delay={i * 80}>
               <div className="flex items-start gap-4">
                 <span className="mt-2 block w-8 h-[2px] bg-[#188AEC] shrink-0 rounded" />
                 <p className="text-[#1A1A1A]" style={{ fontSize: "17px" }}>
                   {n}
                 </p>
               </div>
-            </FadeUpWrapper>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -475,8 +385,6 @@ function UserNeeds() {
 
 /* ─── FEATURES & FUNCTIONALITIES ─── */
 function FeaturesSection() {
-  const { ref: ref1, isVisible: isVisible1 } = useScrollReveal(0.1);
-  const { ref: ref2, isVisible: isVisible2 } = useScrollReveal(0.1);
   const features = [
     {
       icon: imgUser2,
@@ -498,33 +406,21 @@ function FeaturesSection() {
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref1}
-          style={{
-            opacity: isVisible1 ? 1 : 0,
-            transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle center>Features & Functionalities</SectionTitle>
           <p className="text-center text-[#6B6B6B] mt-2" style={{ fontSize: "18px" }}>
             To resolve user needs
           </p>
-        </div>
+        </FadeUp>
         <div className="grid md:grid-cols-3 gap-10 mt-14">
           {features.map((f, i) => (
-            <FadeUpWrapper key={i} delay={i * 80}>
+            <FadeUp key={i} delay={i * 80}>
               <div className="flex flex-col items-center text-center">
                 <div
                   className="rounded-full flex items-center justify-center bg-[#F6FAFE]"
                   style={{ width: 100, height: 100 }}
                 >
-                  <PlaceholderImage
-                    alt={f.title}
-                    width="40px"
-                    height="40px"
-                    style={{ borderRadius: "8px" }}
-                  />
+                  <img src={f.icon} alt={f.title} className="w-10 h-10 object-contain" />
                 </div>
                 <p
                   className="mt-5 text-[#1A1A1A]"
@@ -536,7 +432,7 @@ function FeaturesSection() {
                   {f.desc}
                 </p>
               </div>
-            </FadeUpWrapper>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -546,7 +442,6 @@ function FeaturesSection() {
 
 /* ─── PRODUCT USER CHALLENGES ─── */
 function ProductUserChallenges() {
-  const { ref, isVisible } = useScrollReveal(0.1);
   const challenges = [
     "Users switching between 3 or more apps to compare prices before booking, adding friction to every ride decision",
     "Flat, generic icons across existing apps make vehicle type selection feel utilitarian and unmemorable",
@@ -557,26 +452,19 @@ function ProductUserChallenges() {
   return (
     <section className="bg-[#F9F9F7] py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref}
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle>Product User Challenges</SectionTitle>
-        </div>
+        </FadeUp>
         <div className="mt-10 space-y-5">
           {challenges.map((c, i) => (
-            <FadeUpWrapper key={i} delay={i * 80}>
+            <FadeUp key={i} delay={i * 80}>
               <div className="flex items-start gap-4">
                 <span className="mt-2 block w-8 h-[2px] bg-[#188AEC] shrink-0 rounded" />
                 <p className="text-[#1A1A1A]" style={{ fontSize: "17px" }}>
                   {c}
                 </p>
               </div>
-            </FadeUpWrapper>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -586,72 +474,37 @@ function ProductUserChallenges() {
 
 /* ─── COMPETITOR ANALYSIS ─── */
 function CompetitorAnalysis() {
-  const { ref: ref1, isVisible: isVisible1 } = useScrollReveal(0.1);
-  const { ref: ref2, isVisible: isVisible2 } = useScrollReveal(0.1);
-  const { ref: ref3, isVisible: isVisible3 } = useScrollReveal(0.1);
-  const { ref: ref4, isVisible: isVisible4 } = useScrollReveal(0.1);
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="max-w-[1100px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref1}
-          style={{
-            opacity: isVisible1 ? 1 : 0,
-            transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle>Competitor Analysis</SectionTitle>
-        </div>
+        </FadeUp>
 
         {/* Competitor logos */}
-        <div
-          ref={ref2}
-          style={{
-            opacity: isVisible2 ? 1 : 0,
-            transform: isVisible2 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-            transitionDelay: '80ms',
-          }}
-        >
+        <FadeUp delay={80}>
           <div className="flex flex-wrap gap-6 items-center mt-10">
-            <PlaceholderImage alt="Ola" width="100px" height="64px" style={{ borderRadius: "8px" }} />
-            <PlaceholderImage alt="Rapido" width="100px" height="56px" style={{ borderRadius: "8px" }} />
-            <PlaceholderImage alt="Uber" width="100px" height="56px" style={{ borderRadius: "8px" }} />
-            <PlaceholderImage alt="Namma Yatri" width="100px" height="56px" style={{ borderRadius: "8px" }} />
+            <img src={imgOlaShare} alt="Ola" className="h-16 object-contain" />
+            <img src={imgImage5} alt="Rapido" className="h-14 object-contain" />
+            <img src={imgImage4} alt="Uber" className="h-14 object-contain rounded-lg" />
+            <img src={imgImage6} alt="Namma Yatri" className="h-14 object-contain" />
           </div>
-        </div>
+        </FadeUp>
 
-        <div
-          ref={ref3}
-          style={{
-            opacity: isVisible3 ? 1 : 0,
-            transform: isVisible3 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-            transitionDelay: '160ms',
-          }}
-        >
+        <FadeUp delay={160}>
           <p className="text-[#1A1A1A] mt-10" style={{ fontSize: "18px", fontWeight: 600 }}>
             Competitor's: OLA, Rapido, Uber, Namma Yatri
           </p>
-        </div>
+        </FadeUp>
 
-        <div
-          ref={ref4}
-          style={{
-            opacity: isVisible4 ? 1 : 0,
-            transform: isVisible4 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-            transitionDelay: '240ms',
-          }}
-        >
+        <FadeUp delay={240}>
           <p className="text-[#1A1A1A] mt-6" style={{ fontSize: "16px", fontWeight: 600 }}>
             Features:
           </p>
-        </div>
+        </FadeUp>
 
         {/* Comparison table */}
-        <FadeUpWrapper delay={320}>
+        <FadeUp delay={320}>
           <div className="mt-6 overflow-x-auto">
             <table className="w-full border-collapse" style={{ fontSize: "15px" }}>
               <thead>
@@ -678,7 +531,7 @@ function CompetitorAnalysis() {
               </tbody>
             </table>
           </div>
-        </FadeUpWrapper>
+        </FadeUp>
       </div>
     </section>
   );
@@ -686,42 +539,21 @@ function CompetitorAnalysis() {
 
 /* ─── USER PERSONA ─── */
 function UserPersona() {
-  const { ref: ref1, isVisible: isVisible1 } = useScrollReveal(0.1);
-  const { ref: ref2, isVisible: isVisible2 } = useScrollReveal(0.1);
-  const { ref: ref3, isVisible: isVisible3 } = useScrollReveal(0.1);
-  const { ref: ref4, isVisible: isVisible4 } = useScrollReveal(0.1);
-  const { ref: ref5, isVisible: isVisible5 } = useScrollReveal(0.1);
   return (
     <section className="bg-[#F9F9F7] py-20 md:py-28">
       <div className="max-w-[1100px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref1}
-          style={{
-            opacity: isVisible1 ? 1 : 0,
-            transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle>User Persona</SectionTitle>
-        </div>
+        </FadeUp>
         <div className="grid md:grid-cols-[320px_1fr] gap-10 mt-10">
           {/* Left - Profile card */}
-          <div
-            ref={ref2}
-            style={{
-              opacity: isVisible2 ? 1 : 0,
-              transform: isVisible2 ? 'translateY(0)' : 'translateY(40px)',
-              transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-              transitionDelay: '80ms',
-            }}
-          >
+          <FadeUp delay={80}>
             <div className="bg-white rounded-[12px] p-8 border border-[#E5E5E3]">
               <div className="flex flex-col items-center">
-                <PlaceholderImage
+                <img
+                  src={imgPersona}
                   alt="Rahul Kumar"
-                  width="128px"
-                  height="128px"
-                  style={{ borderRadius: "50%" }}
+                  className="w-32 h-32 rounded-full object-cover"
                 />
                 <p className="mt-4 text-[#1A1A1A]" style={{ fontSize: "20px", fontWeight: 500 }}>
                   Rahul Kumar
@@ -786,19 +618,11 @@ function UserPersona() {
                 </div>
               </div>
             </div>
-          </div>
+          </FadeUp>
 
           {/* Right - Details */}
           <div className="space-y-8">
-            <div
-              ref={ref3}
-              style={{
-                opacity: isVisible3 ? 1 : 0,
-                transform: isVisible3 ? 'translateY(0)' : 'translateY(40px)',
-                transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-                transitionDelay: '160ms',
-              }}
-            >
+            <FadeUp delay={160}>
               <div>
                 <p className="text-[#1A1A1A]" style={{ fontSize: "18px", fontWeight: 600 }}>
                   Description
@@ -809,17 +633,9 @@ function UserPersona() {
                   manually checks prices before every booking.
                 </p>
               </div>
-            </div>
+            </FadeUp>
 
-            <div
-              ref={ref4}
-              style={{
-                opacity: isVisible4 ? 1 : 0,
-                transform: isVisible4 ? 'translateY(0)' : 'translateY(40px)',
-                transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-                transitionDelay: '240ms',
-              }}
-            >
+            <FadeUp delay={240}>
               <div>
                 <p className="text-[#1A1A1A]" style={{ fontSize: "18px", fontWeight: 600 }}>
                   A day in their life
@@ -830,17 +646,9 @@ function UserPersona() {
                   <li>Uses dark mode across all his apps by default</li>
                 </ul>
               </div>
-            </div>
+            </FadeUp>
 
-            <div
-              ref={ref5}
-              style={{
-                opacity: isVisible5 ? 1 : 0,
-                transform: isVisible5 ? 'translateY(0)' : 'translateY(40px)',
-                transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-                transitionDelay: '320ms',
-              }}
-            >
+            <FadeUp delay={320}>
               <div>
                 <p className="text-[#1A1A1A]" style={{ fontSize: "18px", fontWeight: 600 }}>
                   Pain Points
@@ -851,16 +659,16 @@ function UserPersona() {
                   <li>Existing apps feel visually identical — no sense of which one he's actually on</li>
                 </ul>
               </div>
-            </div>
+            </FadeUp>
 
-            <FadeUpWrapper delay={400}>
+            <FadeUp delay={400}>
               <div className="bg-[#F6FAFE] rounded-[12px] p-6 border-l-4 border-[#188AEC]">
                 <p className="text-[#143D61] italic" style={{ fontSize: "16px" }}>
                   "I just want to see all my options in one place and book the cheapest one. Why do
                   I have to open three apps for that?"
                 </p>
               </div>
-            </FadeUpWrapper>
+            </FadeUp>
           </div>
         </div>
       </div>
@@ -870,7 +678,6 @@ function UserPersona() {
 
 /* ─── UNIQUE FEATURES ─── */
 function UniqueFeatures() {
-  const { ref, isVisible } = useScrollReveal(0.1);
   const features = [
     "Custom 3D vehicle icons rendered in Blender — the only ride app icon system in the Indian market built with dimensional 3D models rather than flat vectors",
     "Dark-mode-native design system built from the ground up, not adapted from a light-mode base",
@@ -880,26 +687,19 @@ function UniqueFeatures() {
   return (
     <section className="bg-[#F6FAFE] py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref}
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle center>Unique Features</SectionTitle>
-        </div>
+        </FadeUp>
         <div className="mt-10 space-y-6">
           {features.map((f, i) => (
-            <FadeUpWrapper key={i} delay={i * 80}>
+            <FadeUp key={i} delay={i * 80}>
               <div className="flex items-start gap-4">
                 <span className="mt-2 block w-8 h-[2px] bg-[#188AEC] shrink-0 rounded" />
                 <p className="text-[#1A1A1A]" style={{ fontSize: "17px" }}>
                   {f}
                 </p>
               </div>
-            </FadeUpWrapper>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -909,30 +709,13 @@ function UniqueFeatures() {
 
 /* ─── TASK MAPPING ─── */
 function TaskMapping() {
-  const { ref: ref1, isVisible: isVisible1 } = useScrollReveal(0.1);
-  const { ref: ref2, isVisible: isVisible2 } = useScrollReveal(0.1);
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="max-w-[1200px] mx-auto px-6 md:px-12">
-        <div
-          ref={ref1}
-          style={{
-            opacity: isVisible1 ? 1 : 0,
-            transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-          }}
-        >
+        <FadeUp>
           <SectionTitle>Task Mapping</SectionTitle>
-        </div>
-        <div
-          ref={ref2}
-          style={{
-            opacity: isVisible2 ? 1 : 0,
-            transform: isVisible2 ? 'translateY(0)' : 'translateY(40px)',
-            transition: 'opacity 400ms ease-out, transform 400ms ease-out',
-            transitionDelay: '80ms',
-          }}
-        >
+        </FadeUp>
+        <FadeUp delay={80}>
           <div className="mt-10 overflow-x-auto">
             <table className="w-full border-collapse min-w-[800px]" style={{ fontSize: "14px" }}>
               <thead>
@@ -1024,6 +807,7 @@ function TaskMapping() {
               </tbody>
             </table>
           </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -1034,7 +818,10 @@ function EisenhowerMatrix() {
   return (
     <section className="bg-[#F9F9F7] py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <SectionTitle>Eisenhower Matrix</SectionTitle>
+        <FadeUp>
+          <SectionTitle>Eisenhower Matrix</SectionTitle>
+        </FadeUp>
+        <FadeUp delay={80}>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Labels */}
             <div className="md:col-span-2 flex justify-between px-4">
@@ -1105,6 +892,7 @@ function EisenhowerMatrix() {
               </p>
             </div>
           </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -1115,24 +903,30 @@ function FiveWhyAnalysis() {
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="max-w-[1000px] mx-auto px-6 md:px-12">
-        <SectionTitle>5 Why Analysis</SectionTitle>
+        <FadeUp>
+          <SectionTitle>5 Why Analysis</SectionTitle>
+        </FadeUp>
         <div className="mt-10 space-y-6">
           {/* Problem */}
-          <div className="bg-[#188AEC] rounded-[12px] py-6 px-8 text-center">
-            <p className="text-white" style={{ fontSize: "15px", fontWeight: 500 }}>
-              Problem 1
-            </p>
-            <p className="text-white mt-1" style={{ fontSize: "16px" }}>
-              Users cannot distinguish BOB Rides from other ride apps at first glance.
-            </p>
-          </div>
+          <FadeUp delay={80}>
+            <div className="bg-[#188AEC] rounded-[12px] py-6 px-8 text-center">
+              <p className="text-white" style={{ fontSize: "15px", fontWeight: 500 }}>
+                Problem 1
+              </p>
+              <p className="text-white mt-1" style={{ fontSize: "16px" }}>
+                Users cannot distinguish BOB Rides from other ride apps at first glance.
+              </p>
+            </div>
+          </FadeUp>
 
           {/* Arrow */}
-          <div className="flex justify-center">
-            <svg width="2" height="40" viewBox="0 0 2 40">
-              <path d="M1 0V40" stroke="#EFEFEF" strokeWidth="3" />
-            </svg>
-          </div>
+          <FadeUp delay={120}>
+            <div className="flex justify-center">
+              <svg width="2" height="40" viewBox="0 0 2 40">
+                <path d="M1 0V40" stroke="#EFEFEF" strokeWidth="3" />
+              </svg>
+            </div>
+          </FadeUp>
 
           {/* Causes */}
           {[
@@ -1153,7 +947,7 @@ function FiveWhyAnalysis() {
               text: "The market had collectively prioritised development speed and functional clarity over visual brand differentiation, making flat icons the industry default.",
             },
           ].map((cause, i) => (
-            <div key={i}>
+            <FadeUp key={i} delay={160 + i * 80}>
               <div className="bg-[#EFEFEF] rounded-[12px] py-5 px-8 text-center">
                 <p className="text-[#1A1A1A]" style={{ fontSize: "14px", fontWeight: 600 }}>
                   {cause.label}
@@ -1169,11 +963,11 @@ function FiveWhyAnalysis() {
                   </svg>
                 </div>
               )}
-            </div>
+            </FadeUp>
           ))}
 
           {/* Root Cause */}
-          <div>
+          <FadeUp delay={560}>
             <div className="flex justify-center mt-2">
               <svg width="2" height="40" viewBox="0 0 2 40">
                 <path d="M1 0V40" stroke="#EFEFEF" strokeWidth="3" />
@@ -1190,7 +984,7 @@ function FiveWhyAnalysis() {
                 opportunity completely open.
               </p>
             </div>
-          </div>
+          </FadeUp>
         </div>
       </div>
     </section>
@@ -1202,15 +996,18 @@ function RootCauseAnalysis() {
   return (
     <section className="bg-[#F9F9F7] py-20 md:py-28">
       <div className="max-w-[1100px] mx-auto px-6 md:px-12">
-        <SectionTitle>Root Cause Analysis (RCA)</SectionTitle>
-        <div className="mt-10 flex justify-center">
-          <PlaceholderImage
-            alt="Root Cause Analysis Diagram"
-            width="900px"
-            height="500px"
-            style={{ borderRadius: "12px", maxWidth: "100%" }}
-          />
-        </div>
+        <FadeUp>
+          <SectionTitle>Root Cause Analysis (RCA)</SectionTitle>
+        </FadeUp>
+        <FadeUp delay={80}>
+          <div className="mt-10 flex justify-center">
+            <img
+              src={imgRCA}
+              alt="Root Cause Analysis Diagram"
+              className="w-full max-w-[900px] rounded-[12px]"
+            />
+          </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -1221,7 +1018,9 @@ function Sketches() {
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="max-w-[1100px] mx-auto px-6 md:px-12">
-        <SectionTitle>Sketches</SectionTitle>
+        <FadeUp>
+          <SectionTitle>Sketches</SectionTitle>
+        </FadeUp>
 
         {/* 3D Icon Renders */}
         <div className="grid grid-cols-3 gap-8 mt-10">
@@ -1230,14 +1029,13 @@ function Sketches() {
             { img: img3dBike, label: "Bike", sketch: imgSketchBike },
             { img: img3dAuto, label: "Auto", sketch: imgSketchAuto },
           ].map((item, i) => (
-            <div key={i}>
+            <FadeUp key={i} delay={i * 80}>
               <div className="text-center">
                 <div className="bg-[#F6FAFE] rounded-[12px] overflow-hidden aspect-square flex items-center justify-center">
-                  <PlaceholderImage
+                  <img
+                    src={item.img}
                     alt={item.label}
-                    width="100%"
-                    height="100%"
-                    style={{ borderRadius: "12px" }}
+                    className="w-3/4 h-3/4 object-contain"
                   />
                 </div>
                 <p
@@ -1247,7 +1045,7 @@ function Sketches() {
                   {item.label}
                 </p>
               </div>
-            </div>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -1305,11 +1103,13 @@ function MajorScreens() {
   return (
     <section className="bg-[#F9F9F7] py-20 md:py-28">
       <div className="max-w-[1100px] mx-auto px-6 md:px-12">
-        <SectionTitle>Major Screens</SectionTitle>
+        <FadeUp>
+          <SectionTitle>Major Screens</SectionTitle>
+        </FadeUp>
 
         <div className="mt-14 flex flex-col" style={{ gap: 80 }}>
           {screens.map((screen, idx) => (
-            <div key={screen.title}>
+            <FadeUp key={screen.title} delay={idx * 120}>
               {/* Title above */}
               <p
                 className="text-center text-[#1A1A1A] mb-8"
@@ -1365,10 +1165,10 @@ function MajorScreens() {
                       padding: 6,
                     }}
                   >
-                    <PlaceholderImage
+                    <img
+                      src={screen.img}
                       alt={screen.title}
-                      width="100%"
-                      height="100%"
+                      className="w-full h-full object-cover"
                       style={{ borderRadius: 30 }}
                     />
                   </div>
@@ -1422,7 +1222,7 @@ function MajorScreens() {
                   </span>
                 ))}
               </div>
-            </div>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -1435,110 +1235,52 @@ function ThankYou() {
   return (
     <section className="bg-[#EAF4FD] py-28 md:py-40 overflow-hidden relative">
       {/* 3D Elements */}
-      <div
+      <img
+        src={imgSphere}
+        alt=""
         className="absolute top-0 right-0 w-48 md:w-72 blur-[6px] opacity-80 pointer-events-none"
-        style={{
-          backgroundColor: "#EEEEEA",
-          borderRadius: "12px",
-          aspectRatio: "1",
-        }}
-      >
-        <div style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#999999",
-          fontSize: "12px",
-        }}>
-          3D Sphere
-        </div>
-      </div>
-      <div
+      />
+      <img
+        src={imgTorus}
+        alt=""
         className="absolute bottom-10 left-[-80px] w-48 md:w-72 blur-[6px] opacity-70 pointer-events-none -rotate-15"
-        style={{
-          backgroundColor: "#EEEEEA",
-          borderRadius: "12px",
-          aspectRatio: "1",
-        }}
-      >
-        <div style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#999999",
-          fontSize: "12px",
-        }}>
-          3D Torus
-        </div>
-      </div>
-      <div
+      />
+      <img
+        src={imgPlatonic}
+        alt=""
         className="absolute top-20 left-[15%] w-24 md:w-36 opacity-80 pointer-events-none"
-        style={{
-          backgroundColor: "#EEEEEA",
-          borderRadius: "12px",
-          aspectRatio: "1",
-        }}
-      >
-        <div style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#999999",
-          fontSize: "12px",
-        }}>
-          3D Platonic
-        </div>
-      </div>
-      <div
+      />
+      <img
+        src={imgCube}
+        alt=""
         className="absolute bottom-10 right-[5%] w-24 md:w-36 opacity-80 pointer-events-none"
-        style={{
-          backgroundColor: "#EEEEEA",
-          borderRadius: "12px",
-          aspectRatio: "1",
-        }}
-      >
-        <div style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#999999",
-          fontSize: "12px",
-        }}>
-          3D Cube
-        </div>
-      </div>
+      />
 
       <div className="max-w-[1000px] mx-auto px-6 md:px-12 text-center relative z-10">
-        <h2
-          className="text-[#282D46]"
-          style={{
-            fontSize: "clamp(48px, 8vw, 114px)",
-            fontWeight: 600,
-            lineHeight: 1.1,
-            letterSpacing: "-2px",
-          }}
-        >
-          Thank You
-        </h2>
-        <h2
-          className="text-[#282D46]"
-          style={{
-            fontSize: "clamp(48px, 8vw, 114px)",
-            fontWeight: 600,
-            lineHeight: 1.1,
-            letterSpacing: "-2px",
-          }}
-        >
-          For Watching
-        </h2>
+        <FadeUp>
+          <h2
+            className="text-[#282D46]"
+            style={{
+              fontSize: "clamp(48px, 8vw, 114px)",
+              fontWeight: 600,
+              lineHeight: 1.1,
+              letterSpacing: "-2px",
+            }}
+          >
+            Thank You
+          </h2>
+          <h2
+            className="text-[#282D46]"
+            style={{
+              fontSize: "clamp(48px, 8vw, 114px)",
+              fontWeight: 600,
+              lineHeight: 1.1,
+              letterSpacing: "-2px",
+            }}
+          >
+            For Watching
+          </h2>
+        </FadeUp>
       </div>
     </section>
   );
@@ -1564,76 +1306,5 @@ function SectionTitle({
     >
       {children}
     </h2>
-  );
-}
-
-/* ─── PLACEHOLDER COMPONENT ─── */
-interface PlaceholderImageProps {
-  alt: string;
-  width?: number | string;
-  height?: number | string;
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-function PlaceholderImage({
-  alt,
-  width = "100%",
-  height = "300px",
-  className = "",
-  style = {},
-}: PlaceholderImageProps) {
-  return (
-    <div
-      className={className}
-      style={{
-        backgroundColor: "#EEEEEA",
-        borderRadius: "12px",
-        width: width,
-        height: height,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        padding: "20px",
-        ...style,
-      }}
-    >
-      <div>
-        <p style={{ color: "#999999", fontSize: "14px", fontWeight: 500 }}>
-          {alt}
-        </p>
-        <p style={{ color: "#CCCCCC", fontSize: "12px", marginTop: "4px" }}>
-          Image placeholder
-        </p>
-      </div>
-    </div>
-  );
-}
-
-export default function BobRides() {
-  return (
-    <div style={{ fontFamily: "'Outfit', sans-serif", backgroundColor: "#F9F9F7", color: "#1A1A1A" }}>
-      <Navbar />
-      <Hero />
-      <ProblemStatement />
-      <OurProcess />
-      <ObjectivesGoals />
-      <BusinessChallenges />
-      <ProductUsers />
-      <UserNeeds />
-      <FeaturesAndFunctionalities />
-      <ProductUserChallenges />
-      <CompetitorAnalysis />
-      <UniqueFeatures />
-      <UserPersona />
-      <TaskMapping />
-      <EisenhowerMatrix />
-      <FiveWhyAnalysis />
-      <RootCauseAnalysis />
-      <Sketches />
-      <MajorScreens />
-      <ThankYou />
-    </div>
   );
 }
