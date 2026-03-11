@@ -61,7 +61,7 @@ function BehanceIcon() {
 function SectionImage({ src, alt }: { src: string; alt: string }) {
   return (
     <FadeUp>
-      <img src={src} alt={alt} style={{ width: '100%', maxWidth: '1000px', display: 'block', borderRadius: radius, margin: '0 auto' }} />
+      <img src={src} alt={alt} style={{ width: '100%', display: 'block', borderRadius: radius }} />
     </FadeUp>
   );
 }
@@ -121,7 +121,19 @@ export default function BobRides() {
       </section>
 
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <SectionImage src="/images/bob/problem-statement.png" alt="Problem Statement" />
+        <FadeUp>
+          <div style={{ backgroundColor: cardBg, borderRadius: radius, padding: '48px 56px' }}>
+            <p style={{ fontSize: 18, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: '0 0 24px' }}>
+              Ride-hailing apps in the Indian market rely almost entirely on flat, generic vehicle icons that prioritize function over identity. Across Uber, Rapido, Ola, and Namma Yatri, the visual language is interchangeable silhouettes that tell users what vehicle type they are booking, but communicate nothing about the brand they are booking with.
+            </p>
+            <p style={{ fontSize: 18, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: '0 0 24px' }}>
+              The challenge for BOB Rides was to design a vehicle icon system that solved two competing demands simultaneously: icons that are instantly recognisable and legible at small UI sizes, and icons that carry a distinct visual character strong enough to differentiate BOB Rides from every other player in the category. The additional constraint was that the entire system had to be built for a dark-mode-native interface — a context that most existing icon styles in the market were never designed for.
+            </p>
+            <p style={{ fontSize: 18, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: 0 }}>
+              The core design question was: how do you create 3D vehicle icons that feel familiar enough for a user to identify at a glance, while being visually distinctive enough that the app they appear in could not be mistaken for any competitor?
+            </p>
+          </div>
+        </FadeUp>
       </section>
 
       {/* Our Process */}
@@ -244,7 +256,20 @@ export default function BobRides() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <FadeUp><SectionLabel>Outcome</SectionLabel></FadeUp>
           <FadeUp stagger={1}><SectionHeading>Major Screens</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/major-screens.png" alt="Major Screens" /></div>
+          <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
+            {[
+              { src: 'https://www.figma.com/api/mcp/asset/019691f9-1e40-44ec-b6ff-d57103abf9d0', label: 'Home Screen' },
+              { src: 'https://www.figma.com/api/mcp/asset/dd4102e4-1903-4e67-aa36-0c71c0260082', label: 'Ride Options' },
+              { src: 'https://www.figma.com/api/mcp/asset/0db506ef-c2e3-4487-a7b9-a25b3bfb4626', label: 'Confirmation' },
+            ].map((screen, i) => (
+              <FadeUp key={screen.label} stagger={i}>
+                <div style={{ textAlign: 'center' }}>
+                  <img src={screen.src} alt={screen.label} style={{ width: '100%', borderRadius: 24, display: 'block' }} />
+                  <p style={{ fontSize: 14, color: grey, fontFamily: font, marginTop: 12 }}>{screen.label}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </section>
 
