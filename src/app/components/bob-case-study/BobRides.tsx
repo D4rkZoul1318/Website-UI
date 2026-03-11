@@ -115,7 +115,7 @@ export default function BobRides() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start', marginTop: 48 }}>
           <FadeUp><p style={{ fontSize: 18, color: grey, fontFamily: font, lineHeight: 1.7, fontWeight: 400, margin: 0 }}>Ride-hailing apps in India — Uber, Rapido, Ola, Namma Yatri — all use flat, generic vehicle silhouettes that offer zero brand differentiation. Users switch between 3 apps to compare prices, adding friction to every ride decision. BOB Rides needed a visual identity strong enough to stand apart, while keeping icons legible at 24px in a dark-mode-native interface.</p></FadeUp>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {[{ value: '3+', label: 'Apps users open before booking a ride' }, { value: '0', label: 'Indian ride apps with 3D icon systems' }, { value: '24px', label: 'Minimum icon size for tab navigation' }].map((stat, i) => (
+            {[{ value: '3+', label: 'Apps users open before booking a ride' }, { value: '<4', label: 'Indian ride apps with 3D icon systems' }, { value: '24px', label: 'Minimum icon size for tab navigation' }].map((stat, i) => (
               <FadeUp key={stat.label} stagger={i}><StatCard value={stat.value} label={stat.label} /></FadeUp>
             ))}
           </div>
@@ -219,7 +219,7 @@ export default function BobRides() {
               <p style={{ fontSize: 15, fontWeight: 600, color: grey, fontFamily: font, margin: '0 0 16px', letterSpacing: 1, textTransform: 'uppercase' }}>References from Competitors</p>
               <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden' }}>
                 <img
-                  src="/images/bob/competitor-analysis.png"
+                  src="https://www.figma.com/api/mcp/asset/b9bcc1dc-3744-4248-a516-7ff75978076d"
                   alt="Competitor screenshots"
                   style={{ width: '100%', display: 'block' }}
                 />
