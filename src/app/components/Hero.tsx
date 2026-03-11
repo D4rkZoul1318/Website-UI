@@ -53,7 +53,7 @@ export function Hero() {
             lineHeight: 1.6,
           }}
         >
-          Sohum Bhatnagar — UI/UX Designer
+          Sohum Bhatnagar — I design interfaces that feel obvious in hindsight.
         </p>
         <button
           onClick={scrollToProjects}
