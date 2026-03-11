@@ -216,7 +216,7 @@ export default function CaseStudy() {
         onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}
         onMouseLeave={(e) => (e.currentTarget.style.color = "#6B6B6B")}
       >
-        u2190 Back to Projects
+        ← Back to Projects
       </button>
       {/* Section 1 — Hero */}
       <section
