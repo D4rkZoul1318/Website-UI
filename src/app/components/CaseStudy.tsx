@@ -201,22 +201,23 @@ export default function CaseStudy() {
           </a>
         </div>
       </div>
-      <a
-        href="/"
+      <button
+        onClick={() => window.history.back()}
         style={{
           fontFamily: font,
           fontSize: "14px",
           color: "#6B6B6B",
-          textDecoration: "none",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
           display: "inline-block",
-          padding: "24px 80px 0",
+          padding: "80px 80px 0",
         }}
         onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}
         onMouseLeave={(e) => (e.currentTarget.style.color = "#6B6B6B")}
       >
-        ← Back to Portfolio
-      </a>
-
+        u2190 Back to Projects
+      </button>
       {/* Section 1 — Hero */}
       <section
         style={{

@@ -83,11 +83,11 @@ export default function BobRides() {
         </div>
       </div>
 
-      <a href="/#projects" style={{ fontFamily: font, fontSize: '14px', color: grey, textDecoration: 'none', display: 'inline-block', padding: '80px 80px 0', marginTop: 4 }}
+      <button onClick={() => window.history.back()} style={{ fontFamily: font, fontSize: '14px', color: grey, background: 'none', border: 'none', cursor: 'pointer', display: 'inline-block', padding: '80px 80px 0', marginTop: 4 }}
         onMouseEnter={(e) => (e.currentTarget.style.color = nearBlack)}
         onMouseLeave={(e) => (e.currentTarget.style.color = grey)}>
         ← Back to Projects
-      </a>
+      </button>
 
       {/* Hero */}
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '100px 32px 80px' }}>
