@@ -2,6 +2,14 @@ import { useScrollReveal } from "./useScrollReveal";
 
 const interests = ["UI/UX Design", "Gym", "Gaming"];
 
+const skills = [
+  { category: "Design", items: ["Figma", "Photoshop", "Maya"] },
+  { category: "Prototyping", items: ["Figma Make"] },
+  { category: "AI", items: ["Claude", "Gemini", "ChatGPT"] },
+  { category: "Dev", items: ["Git", "Vercel"] },
+  { category: "Methods", items: ["UX Research", "Wireframing", "3D Iconography"] },
+];
+
 export function About() {
   const { ref, isVisible } = useScrollReveal(0.1);
 
@@ -36,6 +44,7 @@ export function About() {
           ABOUT
         </p>
 
+        {/* Two-column: quote + bio */}
         <div className="flex flex-col md:flex-row gap-12 md:gap-16">
           {/* Left — Pull Quote */}
           <div className="md:w-1/2" style={fadeUp(80)}>
@@ -56,7 +65,7 @@ export function About() {
             </blockquote>
           </div>
 
-          {/* Right — Body */}
+          {/* Right — Body + interests */}
           <div className="md:w-1/2" style={fadeUp(160)}>
             <p
               style={{
@@ -97,8 +106,62 @@ export function About() {
           </div>
         </div>
 
-        {/* Get in touch */}
-        <div style={{ ...fadeUp(240), marginTop: 64 }} className="text-center">
+        {/* Skills Grid — full width, below two-column */}
+        <div style={{ marginTop: 80 }}>
+          <p
+            style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontWeight: 500,
+              fontSize: "12px",
+              letterSpacing: "3px",
+              color: "#6B6B6B",
+              textTransform: "uppercase" as const,
+              marginBottom: "32px",
+            }}
+          >
+            Skills
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            {skills.map(({ category, items }) => (
+              <div key={category} style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                <span
+                  style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 600,
+                    fontSize: "12px",
+                    color: "#6B6B6B",
+                    textTransform: "uppercase" as const,
+                    letterSpacing: "0.08em",
+                    minWidth: "120px",
+                  }}
+                >
+                  {category}
+                </span>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                  {items.map((skill) => (
+                    <span
+                      key={skill}
+                      style={{
+                        backgroundColor: "#E8E6E0",
+                        borderRadius: 999,
+                        padding: "6px 16px",
+                        fontSize: 13,
+                        color: "#1A1A1A",
+                        fontWeight: 500,
+                        fontFamily: "'Outfit', sans-serif",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Contact */}
+        <div style={{ ...fadeUp(240), marginTop: 80, textAlign: "center" }}>
           <h2
             style={{
               fontFamily: "'Outfit', sans-serif",
@@ -145,85 +208,6 @@ export function About() {
           >
             Send me an email
           </a>
-        </div>
-
-        {/* Skills Grid */}
-        <p
-          style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontWeight: 500,
-            fontSize: "12px",
-            letterSpacing: "0.08em",
-            color: "#6B6B6B",
-            textTransform: "uppercase" as const,
-            marginTop: "64px",
-            marginBottom: "24px",
-          }}
-        >
-          Skills
-        </p>
-        <div style={{ marginBottom: "48px", maxWidth: "100%" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-            {/* Design */}
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>Design</span>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {["Figma", "Photoshop", "Maya"].map((skill) => (
-                  <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Prototyping */}
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>Prototyping</span>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {["Figma Make"].map((skill) => (
-                  <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* AI */}
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>AI</span>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {["Claude", "Gemini", "ChatGPT"].map((skill) => (
-                  <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Dev */}
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>Dev</span>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {["Git", "Vercel"].map((skill) => (
-                  <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Methods */}
-            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>Methods</span>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {["UX Research", "Wireframing", "3D Iconography"].map((skill) => (
-                  <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
