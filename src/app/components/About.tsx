@@ -144,6 +144,71 @@ export function About() {
                 Send me an email
               </a>
             </div>
+
+            {/* Skills Grid */}
+            <div style={fadeUp(320)} className="mt-20">
+              <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                {/* Design */}
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>Design</span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {["Figma", "Photoshop", "Maya"].map((skill) => (
+                      <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Prototyping */}
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>Prototyping</span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {["Figma Make"].map((skill) => (
+                      <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* AI */}
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>AI</span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {["Claude", "Gemini", "ChatGPT"].map((skill) => (
+                      <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dev */}
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>Dev</span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {["Git", "Vercel"].map((skill) => (
+                      <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Methods */}
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "12px", color: "#1A1A1A", textTransform: "uppercase", minWidth: "100px" }}>Methods</span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {["UX Research", "Wireframing", "3D Iconography"].map((skill) => (
+                      <span key={skill} style={{ backgroundColor: "#E8E6E0", borderRadius: 999, padding: "6px 16px", fontSize: 13, color: "#1A1A1A", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
