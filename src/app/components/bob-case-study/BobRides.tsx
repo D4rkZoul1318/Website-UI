@@ -77,8 +77,8 @@ export default function BobRides() {
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, backdropFilter: 'blur(10px)', backgroundColor: 'rgba(249,249,247,0.8)', zIndex: 1000, padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontFamily: font }}>
         <a onClick={() => (window.location.href = '/')} style={{ fontSize: 24, fontWeight: 700, color: nearBlack, textDecoration: 'none', cursor: 'pointer' }}>SB</a>
         <div style={{ display: 'flex', gap: 24 }}>
-          {[['Home', '/'], ['About', '/#about'], ['Projects', '/#projects'], ['Chill', '/#chill']].map(([label, href]) => (
-            <a key={label} href={href} onClick={(e) => { e.preventDefault(); window.location.href = href; }} style={{ fontFamily: font, fontSize: '14px', color: nearBlack, textDecoration: 'none', cursor: 'pointer' }}>{label}</a>
+          {([['Home', '/'], ['Projects', '/#projects'], ['About', '/#about'], ['Chill', '/#chill']] as [string, string][]).map(([label, href]) => (
+            <a key={label} href={href} style={{ fontFamily: font, fontSize: '14px', color: nearBlack, textDecoration: 'none', cursor: 'pointer' }}>{label}</a>
           ))}
         </div>
       </div>
