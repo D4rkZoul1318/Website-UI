@@ -279,6 +279,19 @@ export default function CaseStudy() {
             </FadeUp>
           ))}
         </div>
+        <FadeUp stagger={6}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: grey, fontFamily: font, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Pipeline</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              {['Figma', 'Figma Make'].map((tool, i, arr) => (
+                <span key={tool} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ display: 'inline-block', padding: '6px 16px', backgroundColor: '#E8E6E0', borderRadius: 999, fontSize: 13, color: nearBlack, fontFamily: font, fontWeight: 500 }}>{tool}</span>
+                  {i < arr.length - 1 && <span style={{ color: '#C0C0C0', fontSize: 12 }}>→</span>}
+                </span>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
       </section>
 
       {/* Section 2 — Overview */}
