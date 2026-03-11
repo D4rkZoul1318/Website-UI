@@ -61,7 +61,7 @@ function BehanceIcon() {
 function SectionImage({ src, alt }: { src: string; alt: string }) {
   return (
     <FadeUp>
-      <img src={src} alt={alt} style={{ width: '100%', display: 'block', borderRadius: radius }} />
+      <img src={src} alt={alt} style={{ width: '100%', maxWidth: '1000px', display: 'block', borderRadius: radius, margin: '0 auto' }} />
     </FadeUp>
   );
 }
