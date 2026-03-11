@@ -450,41 +450,7 @@ export default function BobRides() {
 
       {/* Sketches */}
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Icon Sketches</SectionHeading></FadeUp>
-        <FadeUp stagger={2}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, marginTop: 48 }}>
-            {[
-              { src: 'https://www.figma.com/api/mcp/asset/6b49f92c-0bad-4e0a-84ba-e0d2e4a9a57e', label: 'Car' },
-              { src: 'https://www.figma.com/api/mcp/asset/4d9d8786-aa1e-444e-b14c-93a71b0bbbc3', label: 'Bike' },
-              { src: 'https://www.figma.com/api/mcp/asset/a1c4d1c0-6a30-4843-b0e9-965295b82478', label: 'Auto' },
-            ].map(({ src, label }) => (
-              <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ borderRadius: 10, overflow: 'hidden' }}>
-                  <img src={src} alt={label} style={{ width: '100%', display: 'block' }} />
-                </div>
-                <p style={{ marginTop: 16, fontSize: 32, fontWeight: 700, color: nearBlack, fontFamily: font }}>{label}</p>
-              </div>
-            ))}
-          </div>
-        </FadeUp>
-        <FadeUp stagger={3}>
-          <h3 style={{ fontSize: 40, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '64px 0 32px' }}>Wire Frame</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
-            {[
-              { src: 'https://www.figma.com/api/mcp/asset/ded307db-2381-4089-870c-85ac58fd9eca', label: 'Home Page' },
-              { src: 'https://www.figma.com/api/mcp/asset/ab2fcf3d-6dd9-4bb8-b4e8-5b7160374464', label: 'Ride Options' },
-              { src: 'https://www.figma.com/api/mcp/asset/136b9b46-9204-4ef3-81d7-2784f561b057', label: 'Confirmation' },
-            ].map(({ src, label }) => (
-              <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ borderRadius: 10, overflow: 'hidden', backgroundColor: cardBg }}>
-                  <img src={src} alt={label} style={{ width: '100%', display: 'block' }} />
-                </div>
-                <p style={{ marginTop: 16, fontSize: 20, fontWeight: 500, color: grey, fontFamily: font }}>{label}</p>
-              </div>
-            ))}
-          </div>
-        </FadeUp>
+        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/sketches.png" alt="Sketches" /></div>
       </section>
 
       {/* Final Icons */}
