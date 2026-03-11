@@ -1,4 +1,4 @@
-cat > /tmp/navbar_patch.py << 'EOF'
+python3 << 'EOF'
 content = open('src/app/components/Navbar.tsx').read()
 
 old = '''        <div className="flex items-center gap-8">
@@ -75,7 +75,10 @@ new = '''        <div className="flex items-center gap-8">
           </div>
         </div>'''
 
-open('src/app/components/Navbar.tsx', 'w').write(content.replace(old, new))
-print("done")
+result = content.replace(old, new)
+if result == content:
+    print("ERROR: pattern not found")
+else:
+    open('src/app/components/Navbar.tsx', 'w').write(result)
+    print("done")
 EOF
-python3 /tmp/navbar_patch.py
