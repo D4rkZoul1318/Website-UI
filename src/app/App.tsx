@@ -21,7 +21,22 @@ function MainSite() {
   );
 }
 
+import { useEffect } from "react";
+
+function useHashScroll() {
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const el = document.getElementById(hash.replace("#", ""));
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 200);
+    }
+  }, []);
+}
+
 export default function App() {
+  useHashScroll();
   return (
     <BrowserRouter>
       <Routes>
