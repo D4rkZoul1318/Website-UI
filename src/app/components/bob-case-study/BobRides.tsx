@@ -101,6 +101,19 @@ export default function BobRides() {
             </FadeUp>
           ))}
         </div>
+        <FadeUp stagger={6}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: grey, fontFamily: font, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Pipeline</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              {['Figma', 'Maya', 'Photoshop', 'AI'].map((tool, i, arr) => (
+                <span key={tool} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ display: 'inline-block', padding: '6px 16px', backgroundColor: cardBg, borderRadius: 999, fontSize: 13, color: nearBlack, fontFamily: font, fontWeight: 500 }}>{tool}</span>
+                  {i < arr.length - 1 && <span style={{ color: '#C0C0C0', fontSize: 12 }}>→</span>}
+                </span>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
       </section>
 
       {/* Hero image */}
@@ -450,6 +463,8 @@ export default function BobRides() {
 
       {/* Sketches */}
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
+        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
+        <FadeUp stagger={1}><SectionHeading>Sketches</SectionHeading></FadeUp>
         <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/sketches.png" alt="Sketches" /></div>
       </section>
 
