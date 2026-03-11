@@ -401,7 +401,43 @@ export default function BobRides() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <FadeUp><SectionLabel>Analysis</SectionLabel></FadeUp>
           <FadeUp stagger={1}><SectionHeading>5 Why Analysis</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/5-why-analysis.png" alt="5 Why Analysis" /></div>
+          <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+            {/* Problem */}
+            <FadeUp stagger={2}>
+              <div style={{ backgroundColor: '#188AEC', borderRadius: 15, padding: '26px 40px', width: '100%', maxWidth: 960, textAlign: 'center' }}>
+                <p style={{ fontSize: 16, fontWeight: 700, color: 'white', fontFamily: font, margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: 1 }}>Problem</p>
+                <p style={{ fontSize: 18, color: 'white', fontFamily: font, lineHeight: 1.7, margin: 0 }}>Users cannot distinguish BOB Rides from other ride apps at first glance.</p>
+              </div>
+            </FadeUp>
+            {/* Arrow */}
+            <div style={{ width: 2, height: 40, backgroundColor: '#CBD4DC', margin: '0 auto' }} />
+            {/* Causes */}
+            {[
+              { label: 'Cause 1', text: 'The icon system used standard flat 2D vehicle silhouettes, identical in style to Rapido, Uber, and Ola.' },
+              { label: 'Cause 2', text: 'The initial design direction referenced existing competitors as the baseline rather than as the benchmark to exceed.' },
+              { label: 'Cause 3', text: 'No Indian ride-hailing app had attempted 3D icons, so there was no category precedent — the design process defaulted to what already existed.' },
+              { label: 'Cause 4', text: 'The market had collectively prioritised development speed and functional clarity over visual brand differentiation, making flat icons the industry default.' },
+            ].map((cause, i) => (
+              <FadeUp key={i} stagger={3 + i}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ backgroundColor: '#EFEFEF', borderRadius: 15, padding: '28px 40px', width: '100%', maxWidth: 960, textAlign: 'center' }}>
+                    <p style={{ fontSize: 15, fontWeight: 700, color: '#888', fontFamily: font, margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: 1 }}>{cause.label}</p>
+                    <p style={{ fontSize: 18, color: nearBlack, fontFamily: font, lineHeight: 1.7, margin: 0 }}>{cause.text}</p>
+                  </div>
+                  {i < 3 && <div style={{ width: 2, height: 40, backgroundColor: '#CBD4DC' }} />}
+                </div>
+              </FadeUp>
+            ))}
+            {/* Arrow to root cause */}
+            <div style={{ width: 2, height: 40, backgroundColor: '#CBD4DC' }} />
+            {/* Root Cause */}
+            <FadeUp stagger={7}>
+              <div style={{ backgroundColor: '#EDF6FE', borderRadius: 15, padding: '32px 40px', width: '100%', maxWidth: 960, textAlign: 'center' }}>
+                <p style={{ fontSize: 15, fontWeight: 700, color: '#188AEC', fontFamily: font, margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: 1 }}>Root Cause</p>
+                <p style={{ fontSize: 18, color: '#283264', fontFamily: font, lineHeight: 1.7, margin: 0 }}>The icon design brief across the entire ride-hailing category was defined as "communicate vehicle type" — never "communicate vehicle type AND brand identity simultaneously." No one had challenged that constraint, leaving the design opportunity completely open.</p>
+              </div>
+            </FadeUp>
+          </div>
         </div>
       </section>
 
