@@ -181,7 +181,51 @@ export default function BobRides() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
           <FadeUp stagger={1}><SectionHeading>Competitor Analysis</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/competitor-analysis.png" alt="Competitor Analysis" /></div>
+          <FadeUp stagger={2}>
+            <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: '1fr 280px', gap: 64, alignItems: 'start' }}>
+              {/* Left — features list */}
+              <div>
+                <p style={{ fontSize: 18, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '0 0 24px' }}>
+                  Competitors: OLA, Rapido, Uber, Namma Yatri
+                </p>
+                <p style={{ fontSize: 15, fontWeight: 600, color: grey, fontFamily: font, margin: '0 0 16px', letterSpacing: 1, textTransform: 'uppercase' }}>Features</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                  {[
+                    "Icon style: Flat 2D silhouettes across most competitors vs BOB Rides' 3 Dimensional renders.",
+                    'Dark mode support: None native in Rapido or Ola; partial in Uber vs BOB Rides fully dark-mode-native.',
+                    'Price comparison: Hidden or single-app only across all competitors vs cross-app real-time comparison in BOB.',
+                    'Visual identity: Generic, interchangeable across category vs distinct, brand-coded in BOB.',
+                    'Aggregation: Single service each vs multi-service in a single interface.',
+                  ].map((text, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
+                      <span style={{ color: '#188AEC', fontSize: 20, fontWeight: 700, flexShrink: 0, marginTop: 2 }}>→</span>
+                      <p style={{ fontSize: 18, color: nearBlack, fontFamily: font, lineHeight: 1.7, margin: 0, fontWeight: 400 }}>{text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Right — logos */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, alignItems: 'center' }}>
+                <img src="https://www.figma.com/api/mcp/asset/1b193ea8-87d2-4e6b-9242-09a2af002bbd" alt="OLA" style={{ width: '100%', borderRadius: 8 }} />
+                <img src="https://www.figma.com/api/mcp/asset/f4f6b490-f62d-401e-bd6c-f81f1b3029f0" alt="Rapido" style={{ width: '100%', borderRadius: 8 }} />
+                <img src="https://www.figma.com/api/mcp/asset/f0848239-000f-46b6-a978-c34b51349987" alt="Uber" style={{ width: '100%', borderRadius: 8 }} />
+                <img src="https://www.figma.com/api/mcp/asset/eb203260-202b-4289-9c5c-2d2fafed7c93" alt="Namma Yatri" style={{ width: '100%', borderRadius: 8 }} />
+              </div>
+            </div>
+          </FadeUp>
+          {/* Competitor screenshots */}
+          <FadeUp stagger={3}>
+            <div style={{ marginTop: 48 }}>
+              <p style={{ fontSize: 15, fontWeight: 600, color: grey, fontFamily: font, margin: '0 0 16px', letterSpacing: 1, textTransform: 'uppercase' }}>References from Competitors</p>
+              <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden' }}>
+                <img
+                  src="/images/bob/competitor-analysis.png"
+                  alt="Competitor screenshots"
+                  style={{ width: '100%', display: 'block' }}
+                />
+              </div>
+            </div>
+          </FadeUp>
         </div>
       </section>
 
