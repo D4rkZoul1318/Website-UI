@@ -61,7 +61,9 @@ function BehanceIcon() {
 function SectionImage({ src, alt }: { src: string; alt: string }) {
   return (
     <FadeUp>
-      <img src={src} alt={alt} style={{ width: '100%', display: 'block', borderRadius: radius }} />
+      <div style={{ width: '100%', overflow: 'hidden', borderRadius: radius }}>
+        <img src={src} alt={alt} style={{ width: '100%', height: 'auto', display: 'block' }} />
+      </div>
     </FadeUp>
   );
 }
@@ -123,13 +125,14 @@ export default function BobRides() {
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
         <FadeUp>
           <div style={{ backgroundColor: cardBg, borderRadius: radius, padding: '48px 56px' }}>
-            <p style={{ fontSize: 18, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: '0 0 24px' }}>
+            <h3 style={{ fontSize: 32, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '0 0 32px', lineHeight: 1.2 }}>Problem Statement</h3>
+            <p style={{ fontSize: 20, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: '0 0 24px' }}>
               Ride-hailing apps in the Indian market rely almost entirely on flat, generic vehicle icons that prioritize function over identity. Across Uber, Rapido, Ola, and Namma Yatri, the visual language is interchangeable silhouettes that tell users what vehicle type they are booking, but communicate nothing about the brand they are booking with.
             </p>
-            <p style={{ fontSize: 18, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: '0 0 24px' }}>
+            <p style={{ fontSize: 20, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: '0 0 24px' }}>
               The challenge for BOB Rides was to design a vehicle icon system that solved two competing demands simultaneously: icons that are instantly recognisable and legible at small UI sizes, and icons that carry a distinct visual character strong enough to differentiate BOB Rides from every other player in the category. The additional constraint was that the entire system had to be built for a dark-mode-native interface — a context that most existing icon styles in the market were never designed for.
             </p>
-            <p style={{ fontSize: 18, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: 0 }}>
+            <p style={{ fontSize: 20, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: 0 }}>
               The core design question was: how do you create 3D vehicle icons that feel familiar enough for a user to identify at a glance, while being visually distinctive enough that the app they appear in could not be mistaken for any competitor?
             </p>
           </div>
