@@ -107,7 +107,7 @@ export default function BobRides() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
               {['Figma', 'Maya', 'Photoshop', 'AI'].map((tool, i, arr) => (
                 <span key={tool} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ display: 'inline-block', padding: '6px 16px', backgroundColor: cardBg, borderRadius: 999, fontSize: 13, color: nearBlack, fontFamily: font, fontWeight: 500 }}>{tool}</span>
+                  <span style={{ display: 'inline-block', padding: '6px 16px', backgroundColor: '#E8E6E0', borderRadius: 999, fontSize: 13, color: nearBlack, fontFamily: font, fontWeight: 500 }}>{tool}</span>
                   {i < arr.length - 1 && <span style={{ color: '#C0C0C0', fontSize: 12 }}>→</span>}
                 </span>
               ))}
