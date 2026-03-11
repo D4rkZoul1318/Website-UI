@@ -95,58 +95,22 @@ export function About() {
               ))}
             </div>
 
-            {/* Contact section */}
-            <div style={fadeUp(240)} className="mt-16 text-center">
-              <h2
-                style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 32,
-                  color: "#1A1A1A",
-                }}
-              >
-                Get in touch
-              </h2>
-              <p
-                style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: 18,
-                  color: "#6B6B6B",
-                  marginTop: 8,
-                }}
-              >
-                Have a project in mind or just want to say hi?
-              </p>
-              <a
-                href="/#chill"
-                style={{
-                  display: "inline-block",
-                  marginTop: 24,
-                  padding: "12px 24px",
-                  border: "1px solid #4A5240",
-                  color: "#4A5240",
-                  fontFamily: "'Outfit', sans-serif",
-                  fontWeight: 500,
-                  textDecoration: "none",
-                  borderRadius: "8px",
-                  transition: "background-color 200ms",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#4A5240";
-                  e.currentTarget.style.color = "#fff";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.color = "#4A5240";
-                }}
-                onClick={(e) => { e.preventDefault(); window.location.href = '/#chill'; }}
-              >
-                Send me an email
-              </a>
-            </div>
-
             {/* Skills Grid */}
-            <div style={fadeUp(320)} className="mt-20">
+            <p
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 500,
+                fontSize: "12px",
+                letterSpacing: "0.08em",
+                color: "#6B6B6B",
+                textTransform: "uppercase" as const,
+                marginTop: "48px",
+                marginBottom: "24px",
+              }}
+            >
+              Skills
+            </p>
+            <div style={{ marginBottom: "48px" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
                 {/* Design */}
                 <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
@@ -208,6 +172,56 @@ export function About() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Contact section */}
+            <div style={fadeUp(240)} className="mt-16 text-center">
+              <h2
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 32,
+                  color: "#1A1A1A",
+                }}
+              >
+                Get in touch
+              </h2>
+              <p
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 18,
+                  color: "#6B6B6B",
+                  marginTop: 8,
+                }}
+              >
+                Have a project in mind or just want to say hi?
+              </p>
+              <a
+                href="/#chill"
+                style={{
+                  display: "inline-block",
+                  marginTop: 24,
+                  padding: "12px 24px",
+                  border: "1px solid #4A5240",
+                  color: "#4A5240",
+                  fontFamily: "'Outfit', sans-serif",
+                  fontWeight: 500,
+                  textDecoration: "none",
+                  borderRadius: "8px",
+                  transition: "background-color 200ms",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#4A5240";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = "#4A5240";
+                }}
+                onClick={(e) => { e.preventDefault(); window.location.href = '/#chill'; }}
+              >
+                Send me an email
+              </a>
             </div>
           </div>
         </div>
