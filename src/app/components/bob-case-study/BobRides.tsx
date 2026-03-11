@@ -159,7 +159,21 @@ export default function BobRides() {
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
         <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
         <FadeUp stagger={1}><SectionHeading>Business Challenges</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/business-challenges.png" alt="Business Challenges" /></div>
+        <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 24 }}>
+          {[
+            'Existing ride-hailing apps in India use flat, generic vehicle icons that offer no brand differentiation',
+            'No established design reference for 3D vehicle icons in a dark-mode mobile context',
+            'Icons had to remain legible at 24px (tab navigation size) while retaining dimensional depth',
+            'The aggregator model required a single visual system that could represent competing brands (Rapido, Uber, Ola) without visual conflict',
+          ].map((text, i) => (
+            <FadeUp key={i} stagger={2 + i}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
+                <span style={{ color: '#188AEC', fontSize: 24, fontWeight: 700, marginTop: 2, flexShrink: 0 }}>→</span>
+                <p style={{ fontSize: 20, color: nearBlack, fontFamily: font, lineHeight: 1.8, margin: 0, fontWeight: 400 }}>{text}</p>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
       </section>
 
       {/* Competitor Analysis */}
