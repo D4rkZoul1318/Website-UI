@@ -106,57 +106,60 @@ export function About() {
           </div>
         </div>
 
-        {/* Skills Grid — full width, below two-column */}
-        <div style={{ marginTop: 80 }}>
-          <p
-            style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontWeight: 500,
-              fontSize: "12px",
-              letterSpacing: "3px",
-              color: "#6B6B6B",
-              textTransform: "uppercase" as const,
-              marginBottom: "32px",
-            }}
-          >
-            Skills
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            {skills.map(({ category, items }) => (
-              <div key={category} style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-                <span
-                  style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontWeight: 600,
-                    fontSize: "12px",
-                    color: "#6B6B6B",
-                    textTransform: "uppercase" as const,
-                    letterSpacing: "0.08em",
-                    minWidth: "120px",
-                  }}
-                >
-                  {category}
-                </span>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {items.map((skill) => (
-                    <span
-                      key={skill}
-                      style={{
-                        backgroundColor: "#E8E6E0",
-                        borderRadius: 999,
-                        padding: "6px 16px",
-                        fontSize: 13,
-                        color: "#1A1A1A",
-                        fontWeight: 500,
-                        fontFamily: "'Outfit', sans-serif",
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
+        {/* Skills Grid — aligned with right column */}
+        <div style={{ marginTop: 80, display: 'flex', flexDirection: 'column' }} className="md:flex-row md:gap-16">
+          <div className="md:w-1/2" style={{ flexShrink: 0 }} />
+          <div className="md:w-1/2">
+            <p
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 500,
+                fontSize: "12px",
+                letterSpacing: "3px",
+                color: "#6B6B6B",
+                textTransform: "uppercase" as const,
+                marginBottom: "32px",
+              }}
+            >
+              Skills
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              {skills.map(({ category, items }) => (
+                <div key={category} style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                  <span
+                    style={{
+                      fontFamily: "'Outfit', sans-serif",
+                      fontWeight: 600,
+                      fontSize: "12px",
+                      color: "#6B6B6B",
+                      textTransform: "uppercase" as const,
+                      letterSpacing: "0.08em",
+                      minWidth: "120px",
+                    }}
+                  >
+                    {category}
+                  </span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {items.map((skill) => (
+                      <span
+                        key={skill}
+                        style={{
+                          backgroundColor: "#E8E6E0",
+                          borderRadius: 999,
+                          padding: "6px 16px",
+                          fontSize: 13,
+                          color: "#1A1A1A",
+                          fontWeight: 500,
+                          fontFamily: "'Outfit', sans-serif",
+                        }}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
