@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 
+const font = "'Outfit', sans-serif";
+const nearBlack = "#1A1A1A";
+const grey = "#6B6B6B";
+const accent = "#4A5240";
+
 const navLinks = ["Home", "Work", "Chill"];
 
 export function Navbar() {
@@ -7,23 +12,29 @@ export function Navbar() {
   const [active, setActive] = useState("Home");
   const [visible, setVisible] = useState(false);
 
+  const isHomePage = window.location.pathname === "/";
+  const currentPage = window.location.pathname;
+
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100);
+
+    // Set active based on current page
+    if (currentPage === "/about") setActive("About");
+    else if (currentPage === "/explorations") setActive("Explorations");
+    else if (currentPage === "/case-study" || currentPage === "/bob-rides") setActive("Work");
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
+      if (!isHomePage) return;
       const sections = navLinks.map((link) => {
         const elId = link === "Work" ? "projects" : link.toLowerCase();
         const el = document.getElementById(elId);
-        if (!el) return { link, top: 0 };
-        return { link, top: el.getBoundingClientRect().top };
+        if (!el) return { link, top: Infinity };
+        return { link, top: Math.abs(el.getBoundingClientRect().top) };
       });
-
-      const current = sections.reduce((closest, section) => {
-        return Math.abs(section.top) < Math.abs(closest.top)
-          ? section
-          : closest;
-      });
+      const current = sections.reduce((closest, section) =>
+        section.top < closest.top ? section : closest
+      );
       setActive(current.link);
     };
 
@@ -34,10 +45,14 @@ export function Navbar() {
     };
   }, []);
 
-  const scrollTo = (id: string) => {
-    const targetId = id === "Work" ? "projects" : id.toLowerCase();
-    const el = document.getElementById(targetId);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  const handleNavClick = (link: string) => {
+    const targetId = link === "Work" ? "projects" : link.toLowerCase();
+    if (isHomePage) {
+      const el = document.getElementById(targetId);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = `/#${targetId}`;
+    }
   };
 
   return (
@@ -51,83 +66,125 @@ export function Navbar() {
           ? "rgba(249, 249, 247, 0.85)"
           : "rgba(249, 249, 247, 0.01)",
         borderBottom: scrolled ? "1px solid #E5E5E3" : "1px solid transparent",
+        transition: "opacity 300ms ease, background-color 300ms ease, border-color 300ms ease",
       }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex items-center justify-between"
+      <div
+        className="max-w-[1200px] mx-auto px-6 md:px-10 flex items-center justify-between"
         style={{ height: "64px" }}
       >
-        <span
+        {/* Logo */}
+        <a
+          href="/"
           style={{
-            fontFamily: "'Outfit', sans-serif",
+            fontFamily: font,
             fontWeight: 500,
             fontSize: "20px",
-            color: "#1A1A1A",
+            color: nearBlack,
+            textDecoration: "none",
           }}
         >
           SB
-        </span>
+        </a>
+
+        {/* Links */}
         <div className="flex items-center gap-8">
-  {navLinks.map((link) => (
-    <button
-      key={link}
-      onClick={() => scrollTo(link)}
-      className="relative cursor-pointer bg-transparent border-none"
-      style={{
-        fontFamily: "'Outfit', sans-serif",
-        fontWeight: 400,
-        fontSize: "16px",
-        color: active === link ? "#1A1A1A" : "#6B6B6B",
-        transition: "color 200ms ease",
-      }}
-    >
-      {link}
-      <span
-        className="absolute left-0 right-0 bottom-[-4px]"
-        style={{
-          height: "1.5px",
-          backgroundColor: "#4A5240",
-          transform: active === link ? "scaleX(1)" : "scaleX(0)",
-          transition: "transform 200ms ease",
-        }}
-      />
-    </button>
-  ))}
-    <a href="/explorations"
-    style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 400, fontSize: "16px", color: "#6B6B6B", textDecoration: "none", position: "relative", paddingBottom: "4px", transition: "color 200ms ease" }}
-    onMouseEnter={(e) => { e.currentTarget.style.color = "#1A1A1A"; (e.currentTarget.querySelector("span") as HTMLElement).style.transform = "scaleX(1)"; }}
-    onMouseLeave={(e) => { e.currentTarget.style.color = "#6B6B6B"; (e.currentTarget.querySelector("span") as HTMLElement).style.transform = "scaleX(0)"; }}
-  >
-    Explorations
-    <span style={{ position: "absolute", left: 0, right: 0, bottom: "-2px", height: "1.5px", backgroundColor: "#4A5240", transform: "scaleX(0)", transition: "transform 200ms ease", display: "block" }} />
-  </a>
-  <a href="/about"
-    style={{
-      fontFamily: "'Outfit', sans-serif",
-      fontWeight: 400,
-      fontSize: "16px",
-      color: "#6B6B6B",
-      textDecoration: "none",
-      cursor: "pointer",
-      transition: "color 200ms ease",
-    }}
-    onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}
-    onMouseLeave={(e) => (e.currentTarget.style.color = "#6B6B6B")}
-  >
-    About
-  </a>  
-       <div style={{ display: "flex", gap: "16px", alignItems: "center", marginLeft: "8px", borderLeft: "1px solid #E5E5E3", paddingLeft: "16px" }}>
+
+          {/* Home / Work / Chill scroll links */}
+          {navLinks.map((link) => (
+            <button
+              key={link}
+              onClick={() => handleNavClick(link)}
+              className="relative cursor-pointer bg-transparent border-none"
+              style={{
+                fontFamily: font,
+                fontWeight: 400,
+                fontSize: "16px",
+                color: active === link ? nearBlack : grey,
+                transition: "color 200ms ease",
+                padding: 0,
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
+              onMouseLeave={e => (e.currentTarget.style.color = active === link ? nearBlack : grey)}
+            >
+              {link}
+              <span
+                className="absolute left-0 right-0 bottom-[-4px]"
+                style={{
+                  height: "1.5px",
+                  backgroundColor: accent,
+                  transform: active === link ? "scaleX(1)" : "scaleX(0)",
+                  transition: "transform 200ms ease",
+                  display: "block",
+                }}
+              />
+            </button>
+          ))}
+
+          {/* Explorations */}
+          <a
+            href="/explorations"
+            style={{
+              fontFamily: font,
+              fontWeight: 400,
+              fontSize: "16px",
+              color: active === "Explorations" ? nearBlack : grey,
+              textDecoration: "none",
+              position: "relative",
+              paddingBottom: "4px",
+              transition: "color 200ms ease",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = nearBlack; (e.currentTarget.querySelector("span") as HTMLElement).style.transform = "scaleX(1)"; }}
+            onMouseLeave={e => { e.currentTarget.style.color = active === "Explorations" ? nearBlack : grey; (e.currentTarget.querySelector("span") as HTMLElement).style.transform = active === "Explorations" ? "scaleX(1)" : "scaleX(0)"; }}
+          >
+            Explorations
+            <span style={{
+              position: "absolute", left: 0, right: 0, bottom: "-2px",
+              height: "1.5px", backgroundColor: accent,
+              transform: active === "Explorations" ? "scaleX(1)" : "scaleX(0)",
+              transition: "transform 200ms ease", display: "block",
+            }} />
+          </a>
+
+          {/* About */}
+          <a
+            href="/about"
+            style={{
+              fontFamily: font,
+              fontWeight: 400,
+              fontSize: "16px",
+              color: active === "About" ? nearBlack : grey,
+              textDecoration: "none",
+              position: "relative",
+              paddingBottom: "4px",
+              transition: "color 200ms ease",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = nearBlack; (e.currentTarget.querySelector("span") as HTMLElement).style.transform = "scaleX(1)"; }}
+            onMouseLeave={e => { e.currentTarget.style.color = active === "About" ? nearBlack : grey; (e.currentTarget.querySelector("span") as HTMLElement).style.transform = active === "About" ? "scaleX(1)" : "scaleX(0)"; }}
+          >
+            About
+            <span style={{
+              position: "absolute", left: 0, right: 0, bottom: "-2px",
+              height: "1.5px", backgroundColor: accent,
+              transform: active === "About" ? "scaleX(1)" : "scaleX(0)",
+              transition: "transform 200ms ease", display: "block",
+            }} />
+          </a>
+
+          {/* Social icons */}
+          <div style={{ display: "flex", gap: "16px", alignItems: "center", marginLeft: "8px", borderLeft: "1px solid #E5E5E3", paddingLeft: "16px" }}>
             <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer"
-              style={{ color: "#6B6B6B", transition: "color 200ms", display: "flex", alignItems: "center" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#6B6B6B")}>
+              style={{ color: grey, transition: "color 200ms", display: "flex", alignItems: "center" }}
+              onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
+              onMouseLeave={e => (e.currentTarget.style.color = grey)}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
               </svg>
             </a>
             <a href="https://www.behance.net/sohumbhatnagar" target="_blank" rel="noopener noreferrer"
-              style={{ color: "#6B6B6B", transition: "color 200ms", display: "flex", alignItems: "center" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#6B6B6B")}>
+              style={{ color: grey, transition: "color 200ms", display: "flex", alignItems: "center" }}
+              onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
+              onMouseLeave={e => (e.currentTarget.style.color = grey)}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 9h5a2 2 0 0 1 0 4H3V9z"/><path d="M3 13h5.5a2.5 2.5 0 0 1 0 5H3v-5z"/><path d="M15 7h6"/><path d="M21 13.5a4 4 0 1 0-1 2.5h-5"/>
               </svg>
