@@ -151,6 +151,7 @@ export function ExplorationsPage() {
           hoverScale={0.97}
           blurToFocus={true}
           stagger={0.06}
+          onItemClick={(item) => item.url ? window.open(item.url, '_blank', 'noopener') : setLightbox(item.img)}
         />
       </section>
 

@@ -55,6 +55,7 @@ interface MasonryProps {
   hoverScale?: number;
   blurToFocus?: boolean;
   colorShiftOnHover?: boolean;
+  onItemClick?: (item: MasonryItem) => void;
 }
 
 const Masonry = ({
@@ -66,6 +67,7 @@ const Masonry = ({
   scaleOnHover = true,
   hoverScale = 0.95,
   blurToFocus = true,
+  onItemClick,
 }: MasonryProps) => {
   const columns = useMedia(
     ['(min-width:1500px)', '(min-width:1000px)', '(min-width:600px)', '(min-width:400px)'],
@@ -149,7 +151,7 @@ const Masonry = ({
           key={item.id}
           data-key={item.id}
           className="item-wrapper"
-          onClick={() => item.url && window.open(item.url, '_blank', 'noopener')}
+          onClick={() => onItemClick ? onItemClick(item) : item.url && window.open(item.url, '_blank', 'noopener')}
           onMouseEnter={e => handleMouseEnter(e, item)}
           onMouseLeave={e => handleMouseLeave(e, item)}
         >
