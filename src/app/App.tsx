@@ -8,6 +8,7 @@ import { Footer } from "./components/Footer";
 import CaseStudy from "./components/CaseStudy";
 import BobRides from "./components/bob-case-study/BobRides";
 import { AboutPage } from "./components/AboutPage";
+import { ExplorationsPage } from "./components/ExplorationsPage";
 
 function MainSite() {
   return (
@@ -54,6 +55,7 @@ export default function App() {
         <Route path="/case-study" element={<CaseStudy />} />
         <Route path="/bob-rides" element={<BobRides />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/explorations" element={<ExplorationsPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -91,7 +91,14 @@ export function Navbar() {
       />
     </button>
   ))}
-  
+    <a href="/explorations"
+    style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 400, fontSize: "16px", color: "#6B6B6B", textDecoration: "none", position: "relative", paddingBottom: "4px", transition: "color 200ms ease" }}
+    onMouseEnter={(e) => { e.currentTarget.style.color = "#1A1A1A"; (e.currentTarget.querySelector("span") as HTMLElement).style.transform = "scaleX(1)"; }}
+    onMouseLeave={(e) => { e.currentTarget.style.color = "#6B6B6B"; (e.currentTarget.querySelector("span") as HTMLElement).style.transform = "scaleX(0)"; }}
+  >
+    Explorations
+    <span style={{ position: "absolute", left: 0, right: 0, bottom: "-2px", height: "1.5px", backgroundColor: "#4A5240", transform: "scaleX(0)", transition: "transform 200ms ease", display: "block" }} />
+  </a>
   <a href="/about"
     style={{
       fontFamily: "'Outfit', sans-serif",
@@ -106,7 +113,7 @@ export function Navbar() {
     onMouseLeave={(e) => (e.currentTarget.style.color = "#6B6B6B")}
   >
     About
-  </a>
+  </a>  
        <div style={{ display: "flex", gap: "16px", alignItems: "center", marginLeft: "8px", borderLeft: "1px solid #E5E5E3", paddingLeft: "16px" }}>
             <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer"
               style={{ color: "#6B6B6B", transition: "color 200ms", display: "flex", alignItems: "center" }}
