@@ -54,7 +54,7 @@ void main() {
     vec2 cellSize = vec2(1.0) / vec2(float(cellsPerRow));
     vec2 cellOffset = vec2(float(cellX), float(cellY)) * cellSize;
 
-    vec2 st = vUvs;
+    vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
     st = st * cellSize + cellOffset;
 
     outColor = texture(uTex, st);
