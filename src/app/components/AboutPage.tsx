@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import InfiniteMenu from './InfiniteMenu';
-import { Navbar } from './Navbar';
 
 const font = 'Outfit, sans-serif';
 const nearBlack = '#1A1A1A';
@@ -92,7 +91,51 @@ export function AboutPage() {
   return (
     <div style={{ backgroundColor: bgColor, minHeight: '100vh', fontFamily: font }}>
 
-      <Navbar />
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        backgroundColor: 'rgba(249, 249, 247, 0.85)',
+        borderBottom: '1px solid #E5E5E3',
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <a href="/" style={{ fontFamily: font, fontWeight: 500, fontSize: '20px', color: nearBlack, textDecoration: 'none' }}>SB</a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <a href="/#projects"
+              style={{ fontFamily: font, fontWeight: 400, fontSize: '16px', color: grey, textDecoration: 'none', position: 'relative', paddingBottom: '4px', transition: 'color 200ms ease' }}
+              onMouseEnter={e => { e.currentTarget.style.color = nearBlack; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(1)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = grey; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(0)'; }}
+            >
+              Work
+              <span style={{ position: 'absolute', left: 0, right: 0, bottom: '-2px', height: '1.5px', backgroundColor: '#4A5240', transform: 'scaleX(0)', transition: 'transform 200ms ease', display: 'block' }} />
+            </a>
+            <a href="/about"
+              style={{ fontFamily: font, fontWeight: 400, fontSize: '16px', color: nearBlack, textDecoration: 'none', position: 'relative', paddingBottom: '4px' }}
+            >
+              About
+              <span style={{ position: 'absolute', left: 0, right: 0, bottom: '-2px', height: '1.5px', backgroundColor: '#4A5240', transform: 'scaleX(1)', transition: 'transform 200ms ease', display: 'block' }} />
+            </a>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginLeft: '8px', borderLeft: '1px solid #E5E5E3', paddingLeft: '16px' }}>
+              <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer"
+                style={{ color: grey, transition: 'color 200ms', display: 'flex', alignItems: 'center' }}
+                onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
+                onMouseLeave={e => (e.currentTarget.style.color = grey)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                </svg>
+              </a>
+              <a href="https://www.behance.net/sohumbhatnagar" target="_blank" rel="noopener noreferrer"
+                style={{ color: grey, transition: 'color 200ms', display: 'flex', alignItems: 'center' }}
+                onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
+                onMouseLeave={e => (e.currentTarget.style.color = grey)}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 9h5a2 2 0 0 1 0 4H3V9z"/><path d="M3 13h5.5a2.5 2.5 0 0 1 0 5H3v-5z"/><path d="M15 7h6"/><path d="M21 13.5a4 4 0 1 0-1 2.5h-5"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
 
       {/* Hero */}
       <section style={{ paddingTop: '140px', paddingBottom: '80px', paddingLeft: '48px', paddingRight: '48px', maxWidth: '960px', margin: '0 auto' }}>
