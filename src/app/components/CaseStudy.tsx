@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Linkedin } from 'lucide-react';
+import Carousel from './Carousel';
 
 const font = 'Outfit, sans-serif';
 const nearBlack = '#1A1A1A';
@@ -744,34 +745,31 @@ export default function CaseStudy() {
         <FadeUp stagger={1}>
           <SectionHeading>The Redesign</SectionHeading>
         </FadeUp>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 32,
-            marginTop: 48,
-          }}
-        >
-          {['Dashboard', 'Results Page'].map((label, i) => (
-            <FadeUp key={label} stagger={2 + i}>
-              <div>
-                <img src={label === 'Dashboard' ? '/images/redesigned-dashboard.png' : '/images/results.png'} width="100%" style={{borderRadius: "12px", display: "block"}} />
-                <div
-                  style={{
-                    fontSize: 14,
-                    color: grey,
-                    fontFamily: font,
-                    marginTop: 12,
-                    textAlign: 'center',
-                    fontWeight: 400,
-                  }}
-                >
-                  {label}
-                </div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
+        <FadeUp stagger={2}>
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '40px 0' }}>
+            <Carousel
+              baseWidth={700}
+              autoplay={true}
+              autoplayDelay={3500}
+              pauseOnHover={true}
+              loop={true}
+              items={[
+                {
+                  id: 1,
+                  title: 'Redesigned Dashboard',
+                  description: 'Simplified navigation with clear hierarchy and quick access to key student actions.',
+                  image: '/images/redesigned-dashboard.png',
+                },
+                {
+                  id: 2,
+                  title: 'Results & Outcomes',
+                  description: 'Measurable improvement in task completion time and user satisfaction scores.',
+                  image: '/images/results.png',
+                },
+              ]}
+            />
+          </div>
+        </FadeUp>
         <FadeUp stagger={4}>
           <p
             style={{
