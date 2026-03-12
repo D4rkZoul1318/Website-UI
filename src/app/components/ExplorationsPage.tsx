@@ -107,7 +107,7 @@ export function ExplorationsPage() {
               <span style={{ position: 'absolute', left: 0, right: 0, bottom: '-2px', height: '1.5px', backgroundColor: accent, transform: 'scaleX(0)', transition: 'transform 200ms ease', display: 'block' }} />
             </a>
             <a href="/explorations"
-              style={{ fontFamily: font, fontSize: '16px', color: nearBlack, fontWeight: 600, textDecoration: 'none', position: 'relative', paddingBottom: '4px' }}>
+              style={{ fontFamily: font, fontSize: '16px', color: nearBlack, fontWeight: 400, textDecoration: 'none', position: 'relative', paddingBottom: '4px' }}>
               Explorations
               <span style={{ position: 'absolute', left: 0, right: 0, bottom: '-2px', height: '1.5px', backgroundColor: accent, transform: 'scaleX(1)', transition: 'transform 200ms ease', display: 'block' }} />
             </a>
@@ -130,7 +130,25 @@ export function ExplorationsPage() {
           </div>
         </div>
       </nav>
-
+{/* Back button */}
+      <div style={{ position: 'fixed', top: '80px', left: '40px', zIndex: 99 }}>
+        <button
+          onClick={() => window.history.back()}
+          style={{
+            display: 'flex', alignItems: 'center', gap: '6px',
+            fontFamily: font, fontSize: '14px', color: grey,
+            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+            transition: 'color 200ms',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
+          onMouseLeave={e => (e.currentTarget.style.color = grey)}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Back
+        </button>
+      </div>
       {/* Hero */}
       <section style={{ paddingTop: '140px', paddingBottom: '60px', paddingLeft: '48px', paddingRight: '48px', maxWidth: '1200px', margin: '0 auto' }}>
         <p style={{
