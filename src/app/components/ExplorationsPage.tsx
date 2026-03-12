@@ -96,7 +96,7 @@ export function ExplorationsPage() {
               style={{ fontFamily: font, fontSize: '16px', color: grey, textDecoration: 'none', position: 'relative', paddingBottom: '4px', transition: 'color 200ms' }}
               onMouseEnter={e => { e.currentTarget.style.color = nearBlack; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(1)'; }}
               onMouseLeave={e => { e.currentTarget.style.color = grey; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(0)'; }}>
-              Work
+              Home
               <span style={{ position: 'absolute', left: 0, right: 0, bottom: '-2px', height: '1.5px', backgroundColor: accent, transform: 'scaleX(0)', transition: 'transform 200ms ease', display: 'block' }} />
             </a>
             <a href="/about"
