@@ -551,7 +551,7 @@ class InfiniteGridMenu {
 
 const defaultItems: MenuItem[] = [{ image: 'https://picsum.photos/900/900?grayscale', link: '', title: '', description: '' }];
 
-export default function InfiniteMenu({ items = [], scale = 1.0 }: { items?: MenuItem[]; scale?: number }) {
+export default function InfiniteMenu({ items = [], scale = 1.0, onItemClick }: { items?: MenuItem[]; scale?: number; onItemClick?: (item: MenuItem) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [isMoving, setIsMoving] = useState(false);
@@ -580,7 +580,7 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }: { items?: Menu
         <>
           <h2 className={`face-title ${isMoving ? 'inactive' : 'active'}`}>{activeItem.title}</h2>
           <p className={`face-description ${isMoving ? 'inactive' : 'active'}`}>{activeItem.description}</p>
-          <div onClick={() => activeItem.link && window.open(activeItem.link, '_blank')} className={`action-button ${isMoving ? 'inactive' : 'active'}`}>
+          <div onClick={() => onItemClick && activeItem && onItemClick(activeItem)} className={`action-button ${isMoving ? 'inactive' : 'active'}`}>
             <p className="action-button-icon">&#x2197;</p>
           </div>
         </>

@@ -7,6 +7,7 @@ import { ChillSection } from "./components/ChillSection";
 import { Footer } from "./components/Footer";
 import CaseStudy from "./components/CaseStudy";
 import BobRides from "./components/bob-case-study/BobRides";
+import { AboutPage } from "./components/AboutPage";
 
 function MainSite() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/" element={<MainSite />} />
         <Route path="/case-study" element={<CaseStudy />} />
         <Route path="/bob-rides" element={<BobRides />} />
+          <Route path="/about" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>
   );
