@@ -103,17 +103,45 @@ export function AboutPage() {
         <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
           <a
             href="/"
-            style={{ fontFamily: font, fontSize: '14px', color: grey, textDecoration: 'none', transition: 'color 200ms ease' }}
-            onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
-            onMouseLeave={e => (e.currentTarget.style.color = grey)}
+            style={{ fontFamily: font, fontSize: '14px', color: grey, textDecoration: 'none', transition: 'color 200ms ease', position: 'relative', paddingBottom: '4px' }}
+            onMouseEnter={e => {
+              e.currentTarget.style.color = nearBlack;
+              (e.currentTarget.querySelector('.underline') as HTMLElement).style.transform = 'scaleX(1)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.color = grey;
+              (e.currentTarget.querySelector('.underline') as HTMLElement).style.transform = 'scaleX(0)';
+            }}
           >
             Work
+            <span className="underline" style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: '-2px',
+              height: '1.5px',
+              backgroundColor: '#4A5240',
+              transform: 'scaleX(0)',
+              transition: 'transform 200ms ease',
+              display: 'block',
+            }} />
           </a>
           <a
             href="/about"
-            style={{ fontFamily: font, fontSize: '14px', color: nearBlack, fontWeight: 600, textDecoration: 'none', transition: 'color 200ms ease' }}
+            style={{ fontFamily: font, fontSize: '14px', color: nearBlack, fontWeight: 600, textDecoration: 'none', position: 'relative', paddingBottom: '4px' }}
           >
             About
+            <span style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: '-2px',
+              height: '1.5px',
+              backgroundColor: '#4A5240',
+              transform: 'scaleX(1)',
+              transition: 'transform 200ms ease',
+              display: 'block',
+            }} />
           </a>
         </div>
       </nav>
