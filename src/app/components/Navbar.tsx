@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const navLinks = ["Home", "Projects", "About", "Chill"];
+const navLinks = ["Home", "Projects", "Chill"];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -65,31 +65,47 @@ export function Navbar() {
           SB
         </span>
         <div className="flex items-center gap-8">
-          {navLinks.map((link) => (
-            <button
-              key={link}
-              onClick={() => scrollTo(link)}
-              className="relative cursor-pointer bg-transparent border-none"
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 400,
-                fontSize: "16px",
-                color: active === link ? "#1A1A1A" : "#6B6B6B",
-                transition: "color 200ms ease",
-              }}
-            >
-              {link}
-              <span
-                className="absolute left-0 right-0 bottom-[-4px]"
-                style={{
-                  height: "1.5px",
-                  backgroundColor: "#4A5240",
-                  transform: active === link ? "scaleX(1)" : "scaleX(0)",
-                  transition: "transform 200ms ease",
-                }}
-              />
-            </button>
-          ))}
+  {navLinks.map((link) => (
+    <button
+      key={link}
+      onClick={() => scrollTo(link)}
+      className="relative cursor-pointer bg-transparent border-none"
+      style={{
+        fontFamily: "'Outfit', sans-serif",
+        fontWeight: 400,
+        fontSize: "16px",
+        color: active === link ? "#1A1A1A" : "#6B6B6B",
+        transition: "color 200ms ease",
+      }}
+    >
+      {link}
+      <span
+        className="absolute left-0 right-0 bottom-[-4px]"
+        style={{
+          height: "1.5px",
+          backgroundColor: "#4A5240",
+          transform: active === link ? "scaleX(1)" : "scaleX(0)",
+          transition: "transform 200ms ease",
+        }}
+      />
+    </button>
+  ))}
+  
+    href="/about"
+    style={{
+      fontFamily: "'Outfit', sans-serif",
+      fontWeight: 400,
+      fontSize: "16px",
+      color: "#6B6B6B",
+      textDecoration: "none",
+      cursor: "pointer",
+      transition: "color 200ms ease",
+    }}
+    onMouseEnter={(e) => (e.currentTarget.style.color = "#1A1A1A")}
+    onMouseLeave={(e) => (e.currentTarget.style.color = "#6B6B6B")}
+  >
+    About
+  </a>
        <div style={{ display: "flex", gap: "16px", alignItems: "center", marginLeft: "8px", borderLeft: "1px solid #E5E5E3", paddingLeft: "16px" }}>
             <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer"
               style={{ color: "#6B6B6B", transition: "color 200ms", display: "flex", alignItems: "center" }}
