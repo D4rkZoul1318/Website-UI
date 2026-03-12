@@ -53,9 +53,10 @@ void main() {
     int cellY = itemIndex / cellsPerRow;
     vec2 cellSize = vec2(1.0) / vec2(float(cellsPerRow));
     vec2 cellOffset = vec2(float(cellX), float(cellY)) * cellSize;
-    vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
-    st = clamp(st, 0.0, 1.0);
+
+    vec2 st = vUvs;
     st = st * cellSize + cellOffset;
+
     outColor = texture(uTex, st);
     outColor.a *= vAlpha;
 }`;
@@ -571,15 +572,6 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onItemClick }: {
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
-      {activeItem && (
-        <>
-          <h2 className={`face-title ${isMoving ? 'inactive' : 'active'}`}>{activeItem.title}</h2>
-          <p className={`face-description ${isMoving ? 'inactive' : 'active'}`}>{activeItem.description}</p>
-          <div onClick={() => onItemClick && activeItem && onItemClick(activeItem)} className={`action-button ${isMoving ? 'inactive' : 'active'}`}>
-            <p className="action-button-icon">&#x2197;</p>
-          </div>
-        </>
-      )}
     </div>
   );
 }

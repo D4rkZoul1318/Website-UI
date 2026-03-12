@@ -88,7 +88,7 @@ export function AboutPage() {
 
       {/* Hero */}
       <section style={{ paddingTop: '140px', paddingBottom: '80px', paddingLeft: '48px', paddingRight: '48px', maxWidth: '960px', margin: '0 auto' }}>
-        <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '24px' }}>About</p>
+        <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '24px' }}>About</p>
         <h1 style={{ fontFamily: font, fontWeight: 700, fontSize: 'clamp(36px, 5vw, 64px)', color: nearBlack, lineHeight: 1.1, margin: '0 0 32px 0' }}>
           Designer by training.<br />Naturalist by instinct.
         </h1>
@@ -99,7 +99,7 @@ export function AboutPage() {
 
       {/* Experience */}
       <section style={{ padding: '80px 48px', maxWidth: '960px', margin: '0 auto' }}>
-        <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
+        <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
           Experience
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
@@ -124,7 +124,7 @@ export function AboutPage() {
 
       {/* Education */}
       <section style={{ padding: '64px 48px 80px', maxWidth: '960px', margin: '0 auto', borderTop: '1px solid #E8E6E0' }}>
-        <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
+        <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
           Education
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -145,7 +145,7 @@ export function AboutPage() {
 
       {/* Skills */}
       <section style={{ padding: '64px 48px 80px', maxWidth: '960px', margin: '0 auto', borderTop: '1px solid #E8E6E0' }}>
-        <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '40px' }}>
+        <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '40px' }}>
           Skills & Tools
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -168,7 +168,7 @@ export function AboutPage() {
 
       {/* Photography — InfiniteMenu */}
       <section style={{ backgroundColor: warmBg, padding: '80px 0' }}>
-        <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>
+        <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>
           Through the lens
         </p>
         <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, textAlign: 'center', marginBottom: '40px' }}>
@@ -185,7 +185,7 @@ export function AboutPage() {
 
       {/* Contact */}
       <section style={{ padding: '64px 48px 80px', textAlign: 'center', borderTop: '1px solid #E8E6E0', backgroundColor: warmBg }}>
-        <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '32px' }}>
+        <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '32px' }}>
           Get in touch
         </p>
         <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
