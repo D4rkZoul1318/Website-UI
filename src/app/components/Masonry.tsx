@@ -161,11 +161,10 @@ const Masonry = ({
               style={{
                 position: 'absolute', inset: 0, borderRadius: '10px',
                 background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)',
-                opacity: 0, transition: 'opacity 300ms ease',
+                opacity: 0, transition: 'opacity 300ms ease', pointerEvents: 'none',
                 display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '16px',
               }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '0')}
+
             >
               <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>
                 {item.category}
