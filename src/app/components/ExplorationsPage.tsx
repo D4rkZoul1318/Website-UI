@@ -73,6 +73,7 @@ const categories = ['All', '3D', 'Graphic Design', 'Catalogue'];
 export function ExplorationsPage() {
   const [active, setActive] = useState('All');
   const [loaded, setLoaded] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 100);
@@ -154,6 +155,45 @@ export function ExplorationsPage() {
       </section>
 
       <ScrollToTop />
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          onClick={() => setLightbox(null)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 1000,
+            backgroundColor: 'rgba(0,0,0,0.92)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'zoom-out',
+            animation: 'fadeIn 200ms ease',
+          }}
+        >
+          <img
+            src={lightbox}
+            alt="Preview"
+            style={{
+              maxWidth: '90vw', maxHeight: '90vh',
+              borderRadius: '12px',
+              boxShadow: '0 32px 80px rgba(0,0,0,0.5)',
+              objectFit: 'contain',
+            }}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            onClick={() => setLightbox(null)}
+            style={{
+              position: 'absolute', top: '24px', right: '32px',
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: '#FFFFFF', fontSize: '28px', lineHeight: 1,
+              fontFamily: font, opacity: 0.7, transition: 'opacity 200ms',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '0.7')}
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </div>
   );
 }
