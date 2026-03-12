@@ -130,44 +130,19 @@ export function ExplorationsPage() {
           </div>
         </div>
       </nav>
-{/* Back button */}
-      <div style={{ position: 'fixed', top: '80px', left: '40px', zIndex: 99 }}>
-        <button
-          onClick={() => window.history.back()}
-          style={{
-            display: 'flex', alignItems: 'center', gap: '6px',
-            fontFamily: font, fontSize: '14px', color: grey,
-            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-            transition: 'color 200ms',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
-          onMouseLeave={e => (e.currentTarget.style.color = grey)}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Back
-        </button>
-      </div>
-      {/* Back button */}
-      <div style={{ position: 'fixed', top: '80px', left: '40px', zIndex: 99 }}>
-        <button
-          onClick={() => window.history.back()}
-          style={{
-            display: 'flex', alignItems: 'center', gap: '6px',
-            fontFamily: font, fontSize: '14px', color: grey,
-            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-            transition: 'color 200ms',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
-          onMouseLeave={e => (e.currentTarget.style.color = grey)}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Back
-        </button>
-      </div>
+      <button
+        onClick={() => window.history.back()}
+        style={{
+          position: 'fixed', top: '80px', left: '40px', zIndex: 99,
+          fontFamily: font, fontSize: '14px', color: grey,
+          background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+          transition: 'color 200ms',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
+        onMouseLeave={e => (e.currentTarget.style.color = grey)}
+      >
+        ← Back
+      </button>
       {/* Hero */}
       <section style={{ paddingTop: '140px', paddingBottom: '60px', paddingLeft: '48px', paddingRight: '48px', maxWidth: '1200px', margin: '0 auto' }}>
         <p style={{
