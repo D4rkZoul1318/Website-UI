@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Projects } from "./components/Projects";
-import { About } from "./components/About";
 import { ChillSection } from "./components/ChillSection";
 import { Footer } from "./components/Footer";
 import CaseStudy from "./components/CaseStudy";
@@ -16,7 +15,6 @@ function MainSite() {
       <Navbar />
       <Hero />
       <Projects />
-      <About />
       <ChillSection />
       <Footer />
     </div>
