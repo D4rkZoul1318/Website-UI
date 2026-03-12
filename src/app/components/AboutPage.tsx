@@ -112,11 +112,8 @@ export function AboutPage() {
             <a href="/#projects"
               onClick={e => {
                 e.preventDefault();
+                sessionStorage.setItem('scrollTo', 'projects');
                 window.location.href = '/';
-                setTimeout(() => {
-                  const el = document.getElementById('projects');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }, 300);
               }}
               style={{ fontFamily: font, fontWeight: 400, fontSize: '16px', color: grey, textDecoration: 'none', position: 'relative', paddingBottom: '4px', transition: 'color 200ms ease' }}
               onMouseEnter={e => { e.currentTarget.style.color = nearBlack; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(1)'; }}

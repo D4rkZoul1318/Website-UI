@@ -26,11 +26,20 @@ import { useEffect } from "react";
 
 function useHashScroll() {
   useEffect(() => {
+    const scrollTarget = sessionStorage.getItem('scrollTo');
+    if (scrollTarget) {
+      sessionStorage.removeItem('scrollTo');
+      setTimeout(() => {
+        const el = document.getElementById(scrollTarget);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return;
+    }
     const hash = window.location.hash;
     if (hash) {
       setTimeout(() => {
-        const el = document.getElementById(hash.replace("#", ""));
-        if (el) el.scrollIntoView({ behavior: "smooth" });
+        const el = document.getElementById(hash.replace('#', ''));
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 200);
     }
   }, []);
