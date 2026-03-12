@@ -13,7 +13,8 @@ export function Navbar() {
       setScrolled(window.scrollY > 20);
 
       const sections = navLinks.map((link) => {
-        const el = document.getElementById(link.toLowerCase());
+        const elId = link === "Work" ? "projects" : link.toLowerCase();
+        const el = document.getElementById(elId);
         if (!el) return { link, top: 0 };
         return { link, top: el.getBoundingClientRect().top };
       });
