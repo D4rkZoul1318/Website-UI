@@ -97,23 +97,6 @@ export function AboutPage() {
         </p>
       </section>
 
-      {/* Photography — InfiniteMenu */}
-      <section style={{ backgroundColor: warmBg, padding: '80px 0' }}>
-        <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>
-          Through the lens
-        </p>
-        <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, textAlign: 'center', marginBottom: '40px' }}>
-          Drag to explore · Click to open
-        </p>
-        <div style={{ height: '700px', width: '100%', position: 'relative' }}>
-          <InfiniteMenu
-            items={photoItems}
-            scale={1.2}
-            onItemClick={(item: PhotoItem) => setLightbox(item)}
-          />
-        </div>
-      </section>
-
       {/* Experience */}
       <section style={{ padding: '80px 48px', maxWidth: '960px', margin: '0 auto' }}>
         <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
@@ -136,6 +119,23 @@ export function AboutPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Photography — InfiniteMenu */}
+      <section style={{ backgroundColor: warmBg, padding: '80px 0' }}>
+        <p style={{ fontFamily: font, fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>
+          Through the lens
+        </p>
+        <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, textAlign: 'center', marginBottom: '40px' }}>
+          Drag to explore · Click to open
+        </p>
+        <div style={{ height: '700px', width: '100%', position: 'relative' }}>
+          <InfiniteMenu
+            items={photoItems}
+            scale={1.2}
+            onItemClick={(item: PhotoItem) => setLightbox(item)}
+          />
         </div>
       </section>
 
