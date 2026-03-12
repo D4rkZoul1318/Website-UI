@@ -110,6 +110,14 @@ export function AboutPage() {
               <span style={{ position: 'absolute', left: 0, right: 0, bottom: '-2px', height: '1.5px', backgroundColor: '#4A5240', transform: 'scaleX(0)', transition: 'transform 200ms ease', display: 'block' }} />
             </a>
             <a href="/#projects"
+              onClick={e => {
+                e.preventDefault();
+                window.location.href = '/';
+                setTimeout(() => {
+                  const el = document.getElementById('projects');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+              }}
               style={{ fontFamily: font, fontWeight: 400, fontSize: '16px', color: grey, textDecoration: 'none', position: 'relative', paddingBottom: '4px', transition: 'color 200ms ease' }}
               onMouseEnter={e => { e.currentTarget.style.color = nearBlack; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(1)'; }}
               onMouseLeave={e => { e.currentTarget.style.color = grey; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(0)'; }}
