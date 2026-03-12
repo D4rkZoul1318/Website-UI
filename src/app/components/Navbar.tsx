@@ -91,7 +91,7 @@ export function Navbar() {
     </button>
   ))}
   
-    href="/about"
+  <a href="/about"
     style={{
       fontFamily: "'Outfit', sans-serif",
       fontWeight: 400,
