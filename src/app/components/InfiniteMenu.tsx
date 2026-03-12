@@ -572,6 +572,14 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onItemClick }: {
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
+      {activeItem && (
+        <div
+          onClick={() => onItemClick && activeItem && onItemClick(activeItem)}
+          className={`action-button ${isMoving ? 'inactive' : 'active'}`}
+        >
+          <p className="action-button-icon">&#x2197;</p>
+        </div>
+      )}
     </div>
   );
 }
