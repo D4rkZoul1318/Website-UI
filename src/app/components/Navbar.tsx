@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const navLinks = ["Home", "Projects", "Chill"];
+const navLinks = ["Home", "Work", "Chill"];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,7 +34,8 @@ export function Navbar() {
   }, []);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id.toLowerCase());
+    const targetId = id === "Work" ? "projects" : id.toLowerCase();
+    const el = document.getElementById(targetId);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
