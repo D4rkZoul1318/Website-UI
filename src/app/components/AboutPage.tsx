@@ -101,6 +101,14 @@ export function AboutPage() {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <a href="/" style={{ fontFamily: font, fontWeight: 500, fontSize: '20px', color: nearBlack, textDecoration: 'none' }}>SB</a>
           <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <a href="/"
+              style={{ fontFamily: font, fontWeight: 400, fontSize: '16px', color: grey, textDecoration: 'none', position: 'relative', paddingBottom: '4px', transition: 'color 200ms ease' }}
+              onMouseEnter={e => { e.currentTarget.style.color = nearBlack; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(1)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = grey; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(0)'; }}
+            >
+              Home
+              <span style={{ position: 'absolute', left: 0, right: 0, bottom: '-2px', height: '1.5px', backgroundColor: '#4A5240', transform: 'scaleX(0)', transition: 'transform 200ms ease', display: 'block' }} />
+            </a>
             <a href="/#projects"
               style={{ fontFamily: font, fontWeight: 400, fontSize: '16px', color: grey, textDecoration: 'none', position: 'relative', paddingBottom: '4px', transition: 'color 200ms ease' }}
               onMouseEnter={e => { e.currentTarget.style.color = nearBlack; (e.currentTarget.querySelector('span') as HTMLElement).style.transform = 'scaleX(1)'; }}
