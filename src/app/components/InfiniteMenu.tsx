@@ -621,7 +621,10 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onItemClick }: {
           onClick={() => onItemClick && activeItem && onItemClick(activeItem)}
           className={`action-button ${isMoving ? 'inactive' : 'active'}`}
         >
-          <p className="action-button-icon">&#x2197;</p>
+          <svg className="action-button-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+  <line x1="7" y1="17" x2="17" y2="7"/>
+  <polyline points="7 7 17 7 17 17"/>
+</svg>
         </div>
       )}
     </div>
