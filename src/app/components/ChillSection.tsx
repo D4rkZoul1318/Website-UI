@@ -123,9 +123,9 @@ function CoffeeMachine() {
         <rect x="84" y="195" width="32" height="9" rx="4" fill="#3a5230"/>
         <rect x="91" y="204" width="3" height="20" rx="1.5" fill="#d9d9d9"/>
         <rect x="106" y="204" width="3" height="20" rx="1.5" fill="#d9d9d9"/>
+        <rect x="46" y="226" width="108" height="58" rx="10" fill="#405e33"/>
         <line ref={s1Ref} x1="92.5" y1="224" x2="92.5" y2="258" stroke="#4a1e08" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="34" strokeDashoffset="34"/>
         <line ref={s2Ref} x1="107.5" y1="224" x2="107.5" y2="258" stroke="#7B4A2A" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="34" strokeDashoffset="34"/>
-        <rect x="46" y="226" width="108" height="58" rx="10" fill="#405e33"/>
         <ellipse cx="100" cy="277" rx="46" ry="6" fill="#c0aa88"/>
         <path d="M60 250 Q57 250 56 258 L56 272 Q56 278 63 278 L137 278 Q144 278 144 272 L144 258 Q143 250 140 250 Z" fill="#E8DCC8"/>
         <path d="M64 254 Q61 254 60 260 L60 270 Q60 275 66 275 L134 275 Q140 275 140 270 L140 260 Q139 254 136 254 Z" fill="#DDD0B8"/>
