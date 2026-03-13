@@ -201,33 +201,11 @@ export function AboutPage() {
         );
       })()}
 
-      {/* Photography — InfiniteMenu */}
+      {/* Contact — moved above Photography */}
       {(() => {
         const { ref, visible } = useFadeIn();
         return (
-          <section ref={ref} style={{ backgroundColor: warmBg, padding: '80px 0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
-            <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>
-              Through the lens
-            </p>
-            <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, textAlign: 'center', marginBottom: '40px' }}>
-              Drag to explore · Click to open
-            </p>
-            <div style={{ height: '700px', width: '100%', position: 'relative' }}>
-              <InfiniteMenu
-                items={photoItems}
-                scale={1.2}
-                onItemClick={(item: PhotoItem) => setLightbox(item)}
-              />
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* Contact */}
-      {(() => {
-        const { ref, visible } = useFadeIn();
-        return (
-          <section ref={ref} style={{ padding: '64px 48px 80px', textAlign: 'center', borderTop: '1px solid #E8E6E0', backgroundColor: warmBg, opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
+          <section ref={ref} style={{ padding: '64px 48px 80px', textAlign: 'center', borderTop: '1px solid #E8E6E0', backgroundColor: bgColor, opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
             <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '32px' }}>
               Get in touch
             </p>
@@ -259,6 +237,28 @@ export function AboutPage() {
                 </svg>
                 Behance
               </a>
+            </div>
+          </section>
+        );
+      })()}
+
+      {/* Photography — InfiniteMenu — moved below Contact */}
+      {(() => {
+        const { ref, visible } = useFadeIn();
+        return (
+          <section ref={ref} style={{ backgroundColor: warmBg, padding: '80px 0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
+            <p style={{ fontFamily: font, fontSize: '16px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>
+              Through the lens
+            </p>
+            <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, textAlign: 'center', marginBottom: '40px' }}>
+              Drag to explore · Click to open
+            </p>
+            <div style={{ height: '700px', width: '100%', position: 'relative' }}>
+              <InfiniteMenu
+                items={photoItems}
+                scale={1.2}
+                onItemClick={(item: PhotoItem) => setLightbox(item)}
+              />
             </div>
           </section>
         );
