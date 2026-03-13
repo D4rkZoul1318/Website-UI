@@ -68,11 +68,18 @@ type PhotoItem = typeof photoItems[0];
 
 export function AboutPage() {
   const [lightbox, setLightbox] = useState<PhotoItem | null>(null);
-
   const [loaded, setLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 100);
-    return () => clearTimeout(timer);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   const useFadeIn = () => {
@@ -81,7 +88,7 @@ export function AboutPage() {
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-        { threshold: 0.15 }
+        { threshold: 0.1 }
       );
       if (ref.current) observer.observe(ref.current);
       return () => observer.disconnect();
@@ -89,29 +96,23 @@ export function AboutPage() {
     return { ref, visible };
   };
 
+  const px = isMobile ? '20px' : '48px';
+
   return (
     <div style={{ backgroundColor: bgColor, minHeight: '100vh', fontFamily: font }}>
 
       <Navbar />
 
       {/* Hero */}
-      <section style={{ paddingTop: '140px', paddingBottom: '80px', paddingLeft: '48px', paddingRight: '48px', maxWidth: '960px', margin: '0 auto' }}>
+      <section style={{ paddingTop: '140px', paddingBottom: '80px', paddingLeft: px, paddingRight: px, maxWidth: '960px', margin: '0 auto' }}>
         <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '24px' }}>About</p>
-        <div style={{
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? 'translateY(0)' : 'translateY(32px)',
-          transition: 'opacity 500ms ease, transform 500ms ease',
-        }}>
-          <h1 style={{ fontFamily: font, fontWeight: 700, fontSize: 'clamp(36px, 5vw, 64px)', color: nearBlack, lineHeight: 1.1, margin: '0 0 32px 0' }}>
+        <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
+          <h1 style={{ fontFamily: font, fontWeight: 700, fontSize: isMobile ? '36px' : 'clamp(36px, 5vw, 64px)', color: nearBlack, lineHeight: 1.1, margin: '0 0 32px 0' }}>
             Designer by training.<br />Naturalist by instinct.
           </h1>
         </div>
-        <div style={{
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? 'translateY(0)' : 'translateY(32px)',
-          transition: 'opacity 500ms ease, transform 500ms ease, transitionDelay 150ms',
-        }}>
-          <p style={{ fontFamily: font, fontWeight: 300, fontSize: 'clamp(16px, 2vw, 20px)', color: grey, lineHeight: 1.8, maxWidth: '640px', margin: 0 }}>
+        <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease 150ms, transform 500ms ease 150ms' }}>
+          <p style={{ fontFamily: font, fontWeight: 300, fontSize: isMobile ? '16px' : 'clamp(16px, 2vw, 20px)', color: grey, lineHeight: 1.8, maxWidth: '640px', margin: 0 }}>
             Multidisciplinary creative with 4+ years spanning UI/UX, 3D visual production, brand design, and AI-assisted workflows. My process starts with real problems and ends with interfaces that feel obvious in hindsight. When I'm not in Figma, I'm somewhere quiet with a 600mm lens.
           </p>
         </div>
@@ -121,19 +122,19 @@ export function AboutPage() {
       {(() => {
         const { ref, visible } = useFadeIn();
         return (
-          <section ref={ref} style={{ padding: '80px 48px', maxWidth: '960px', margin: '0 auto', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
+          <section ref={ref} style={{ padding: `80px ${px}`, maxWidth: '960px', margin: '0 auto', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
             <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
               Experience
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
               {experience.map((exp) => (
-                <div key={exp.role} style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
-                  <div style={{ minWidth: '200px', flex: '0 0 200px' }}>
+                <div key={exp.role} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '8px' : '48px' }}>
+                  <div style={{ minWidth: isMobile ? 'unset' : '200px', flex: isMobile ? 'unset' : '0 0 200px' }}>
                     <p style={{ fontFamily: font, fontSize: '13px', color: grey, margin: '0 0 4px 0' }}>{exp.duration}</p>
                     <p style={{ fontFamily: font, fontSize: '13px', color: grey, margin: 0 }}>{exp.company}</p>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ fontFamily: font, fontWeight: 600, fontSize: '16px', color: nearBlack, margin: '0 0 16px 0' }}>{exp.role}</p>
+                    <p style={{ fontFamily: font, fontWeight: 600, fontSize: '16px', color: nearBlack, margin: isMobile ? '8px 0 16px 0' : '0 0 16px 0' }}>{exp.role}</p>
                     <ul style={{ margin: 0, padding: '0 0 0 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       {exp.bullets.map((b, i) => (
                         <li key={i} style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, lineHeight: 1.7 }}>{b}</li>
@@ -151,18 +152,18 @@ export function AboutPage() {
       {(() => {
         const { ref, visible } = useFadeIn();
         return (
-          <section ref={ref} style={{ padding: '64px 48px 80px', maxWidth: '960px', margin: '0 auto', borderTop: '1px solid #E8E6E0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
+          <section ref={ref} style={{ padding: `64px ${px} 80px`, maxWidth: '960px', margin: '0 auto', borderTop: '1px solid #E8E6E0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
             <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
               Education
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               {education.map((ed) => (
-                <div key={ed.institution} style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
-                  <div style={{ minWidth: '200px', flex: '0 0 200px' }}>
+                <div key={ed.institution} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '4px' : '48px' }}>
+                  <div style={{ minWidth: isMobile ? 'unset' : '200px', flex: isMobile ? 'unset' : '0 0 200px' }}>
                     <p style={{ fontFamily: font, fontSize: '13px', color: grey, margin: 0 }}>{ed.year}</p>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ fontFamily: font, fontWeight: 600, fontSize: '16px', color: nearBlack, margin: '0 0 4px 0' }}>{ed.degree}</p>
+                    <p style={{ fontFamily: font, fontWeight: 600, fontSize: '16px', color: nearBlack, margin: isMobile ? '4px 0 4px 0' : '0 0 4px 0' }}>{ed.degree}</p>
                     {ed.major && <p style={{ fontFamily: font, fontSize: '14px', color: grey, margin: '0 0 4px 0' }}>{ed.major}</p>}
                     <p style={{ fontFamily: font, fontSize: '14px', color: grey, margin: 0 }}>{ed.institution}</p>
                   </div>
@@ -177,14 +178,14 @@ export function AboutPage() {
       {(() => {
         const { ref, visible } = useFadeIn();
         return (
-          <section ref={ref} style={{ padding: '64px 48px 80px', maxWidth: '960px', margin: '0 auto', borderTop: '1px solid #E8E6E0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
+          <section ref={ref} style={{ padding: `64px ${px} 80px`, maxWidth: '960px', margin: '0 auto', borderTop: '1px solid #E8E6E0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
             <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '40px' }}>
               Skills & Tools
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {skills.map(skill => (
-                <div key={skill.category} style={{ display: 'flex', alignItems: 'flex-start', gap: '24px' }}>
-                  <span style={{ fontFamily: font, fontSize: '12px', color: grey, textTransform: 'uppercase', letterSpacing: '0.08em', minWidth: '120px', paddingTop: '6px' }}>
+                <div key={skill.category} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? '8px' : '24px' }}>
+                  <span style={{ fontFamily: font, fontSize: '12px', color: grey, textTransform: 'uppercase', letterSpacing: '0.08em', minWidth: '120px', paddingTop: isMobile ? '0' : '6px' }}>
                     {skill.category}
                   </span>
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -201,24 +202,24 @@ export function AboutPage() {
         );
       })()}
 
-      {/* Contact — moved above Photography */}
+      {/* Contact */}
       {(() => {
         const { ref, visible } = useFadeIn();
         return (
-          <section ref={ref} style={{ padding: '64px 48px 80px', textAlign: 'center', borderTop: '1px solid #E8E6E0', backgroundColor: bgColor, opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
+          <section ref={ref} style={{ padding: `64px ${px} 80px`, textAlign: 'center', borderTop: '1px solid #E8E6E0', backgroundColor: bgColor, opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
             <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '32px' }}>
               Get in touch
             </p>
-            <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
               <a href="mailto:sohum1311@gmail.com"
-                style={{ fontFamily: font, fontSize: '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: '10px 24px', textDecoration: 'none', display: 'inline-block', transition: 'background 200ms' }}
+                style={{ fontFamily: font, fontSize: isMobile ? '13px' : '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: isMobile ? '9px 18px' : '10px 24px', textDecoration: 'none', display: 'inline-block', transition: 'background 200ms' }}
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = accent; e.currentTarget.style.color = '#fff'; }}
                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = accent; }}
               >
                 sohum1311@gmail.com
               </a>
               <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer"
-                style={{ fontFamily: font, fontSize: '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: '10px 24px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 200ms' }}
+                style={{ fontFamily: font, fontSize: isMobile ? '13px' : '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: isMobile ? '9px 18px' : '10px 24px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 200ms' }}
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = accent; e.currentTarget.style.color = '#fff'; }}
                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = accent; }}
               >
@@ -228,7 +229,7 @@ export function AboutPage() {
                 LinkedIn
               </a>
               <a href="https://www.behance.net/sohumbhatnagar" target="_blank" rel="noopener noreferrer"
-                style={{ fontFamily: font, fontSize: '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: '10px 24px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 200ms' }}
+                style={{ fontFamily: font, fontSize: isMobile ? '13px' : '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: isMobile ? '9px 18px' : '10px 24px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 200ms' }}
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = accent; e.currentTarget.style.color = '#fff'; }}
                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = accent; }}
               >
@@ -242,21 +243,21 @@ export function AboutPage() {
         );
       })()}
 
-      {/* Photography — InfiniteMenu — moved below Contact */}
+      {/* Photography — InfiniteMenu */}
       {(() => {
         const { ref, visible } = useFadeIn();
         return (
-          <section ref={ref} style={{ backgroundColor: warmBg, padding: '80px 0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
+          <section ref={ref} style={{ backgroundColor: warmBg, padding: isMobile ? '60px 0' : '80px 0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
             <p style={{ fontFamily: font, fontSize: '16px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>
               Through the lens
             </p>
-            <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, textAlign: 'center', marginBottom: '40px' }}>
-              Drag to explore · Click to open
+            <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, textAlign: 'center', marginBottom: '40px', padding: '0 20px' }}>
+              {isMobile ? 'Tap to open' : 'Drag to explore · Click to open'}
             </p>
-            <div style={{ height: '700px', width: '100%', position: 'relative' }}>
+            <div style={{ height: isMobile ? '400px' : '700px', width: '100%', position: 'relative' }}>
               <InfiniteMenu
                 items={photoItems}
-                scale={1.2}
+                scale={isMobile ? 0.8 : 1.2}
                 onItemClick={(item: PhotoItem) => setLightbox(item)}
               />
             </div>
@@ -270,11 +271,11 @@ export function AboutPage() {
           position: 'fixed', inset: 0, zIndex: 999,
           backgroundColor: 'rgba(0,0,0,0.9)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          cursor: 'zoom-out', padding: '40px',
+          cursor: 'zoom-out', padding: isMobile ? '20px' : '40px',
         }}>
-          <img src={lightbox.image} alt={lightbox.title} style={{ maxWidth: '90vw', maxHeight: '78vh', objectFit: 'contain', borderRadius: '8px' }} />
-          <h3 style={{ fontFamily: font, fontWeight: 600, fontSize: '20px', color: '#FFFFFF', marginTop: '28px', marginBottom: '8px' }}>{lightbox.title}</h3>
-          <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: 'rgba(255,255,255,0.65)' }}>{lightbox.description}</p>
+          <img src={lightbox.image} alt={lightbox.title} style={{ maxWidth: '90vw', maxHeight: '70vh', objectFit: 'contain', borderRadius: '8px' }} />
+          <h3 style={{ fontFamily: font, fontWeight: 600, fontSize: isMobile ? '16px' : '20px', color: '#FFFFFF', marginTop: '20px', marginBottom: '8px', textAlign: 'center' }}>{lightbox.title}</h3>
+          <p style={{ fontFamily: font, fontWeight: 300, fontSize: isMobile ? '13px' : '15px', color: 'rgba(255,255,255,0.65)', textAlign: 'center', padding: '0 20px' }}>{lightbox.description}</p>
         </div>
       )}
     </div>

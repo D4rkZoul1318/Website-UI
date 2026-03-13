@@ -5,8 +5,8 @@ const pills = ["2-click navigation", "Student-first IA", "Figma Prototype"];
 const CardImage = ({ src, alt }: { src: string; alt: string }) => {
   return (
     <div
-      className="md:w-1/2 w-full"
-      style={{ minHeight: "280px", overflow: "hidden", position: "relative" }}
+      className="w-full md:w-1/2"
+      style={{ aspectRatio: "16/9", overflow: "hidden", position: "relative" }}
     >
       <img
         src={src}
@@ -17,7 +17,6 @@ const CardImage = ({ src, alt }: { src: string; alt: string }) => {
           objectFit: "cover",
           objectPosition: "top",
           display: "block",
-          minHeight: "280px",
           transition: "transform 400ms ease",
         }}
         onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.04)"; }}
@@ -41,6 +40,7 @@ export function Projects() {
     borderRadius: "12px",
     backgroundColor: "#FFFFFF",
     border: "1px solid #E8E8E4",
+    overflow: "hidden",
     transition: "transform 300ms ease, box-shadow 300ms ease, opacity 400ms ease-out",
     cursor: "pointer",
   });
@@ -67,21 +67,21 @@ export function Projects() {
 
         {/* Card 1 — UUCMS */}
         <div
-          className="flex flex-col md:flex-row gap-0 md:gap-8 overflow-hidden"
+          className="flex flex-col md:flex-row"
           style={cardStyle(160)}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
           onClick={() => window.location.href = '/case-study'}
         >
           <CardImage src="/images/uucms-thumbnail.png" alt="UUCMS thumbnail" />
-          <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-10">
+          <div className="w-full md:w-1/2 flex flex-col justify-center p-6 md:p-10">
             <p style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 400, fontSize: "12px", color: "#6B6B6B", marginBottom: "8px", letterSpacing: "0.5px" }}>
               UI/UX Redesign &middot; 2025
             </p>
-            <h3 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "clamp(24px, 3vw, 32px)", color: "#1A1A1A", marginBottom: "12px", lineHeight: 1.3 }}>
+            <h3 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "clamp(22px, 3vw, 32px)", color: "#1A1A1A", marginBottom: "12px", lineHeight: 1.3 }}>
               UUCMS Student Portal
             </h3>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 400, fontSize: "clamp(15px, 1.5vw, 18px)", color: "#6B6B6B", lineHeight: 1.6, marginBottom: "20px" }}>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.5vw, 18px)", color: "#6B6B6B", lineHeight: 1.6, marginBottom: "20px" }}>
               Redesigning a government university portal to reduce task completion time from 15 minutes to under 60 seconds.
             </p>
             <div className="flex flex-wrap gap-2 mb-6">
@@ -99,21 +99,21 @@ export function Projects() {
 
         {/* Card 2 — BOB Rides */}
         <div
-          className="flex flex-col md:flex-row gap-0 md:gap-8 overflow-hidden mt-8"
+          className="flex flex-col md:flex-row mt-8"
           style={cardStyle(240)}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
           onClick={() => window.location.href = '/bob-rides'}
         >
           <CardImage src="/images/bob-thumbnail.png" alt="BOB Rides thumbnail" />
-          <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-10">
+          <div className="w-full md:w-1/2 flex flex-col justify-center p-6 md:p-10">
             <p style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 400, fontSize: "12px", color: "#6B6B6B", marginBottom: "8px", letterSpacing: "0.5px" }}>
               Icon Design & UI/UX &middot; 2025
             </p>
-            <h3 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "clamp(24px, 3vw, 32px)", color: "#1A1A1A", marginBottom: "12px", lineHeight: 1.3 }}>
+            <h3 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "clamp(22px, 3vw, 32px)", color: "#1A1A1A", marginBottom: "12px", lineHeight: 1.3 }}>
               BOB Rides
             </h3>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 400, fontSize: "clamp(15px, 1.5vw, 18px)", color: "#6B6B6B", lineHeight: 1.6, marginBottom: "20px" }}>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.5vw, 18px)", color: "#6B6B6B", lineHeight: 1.6, marginBottom: "20px" }}>
               Designing a 3D vehicle icon system and UI for a taxi aggregator platform that consolidates Uber, Ola, and Rapido into one app.
             </p>
             <div className="flex flex-wrap gap-2 mb-6">

@@ -53,10 +53,8 @@ void main() {
     int cellY = itemIndex / cellsPerRow;
     vec2 cellSize = vec2(1.0) / vec2(float(cellsPerRow));
     vec2 cellOffset = vec2(float(cellX), float(cellY)) * cellSize;
-
     vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
     st = st * cellSize + cellOffset;
-
     outColor = texture(uTex, st);
     outColor.a *= vAlpha;
 }`;
@@ -192,9 +190,12 @@ function makeVertexArray(gl: WebGL2RenderingContext, bufLocNumElmPairs: [WebGLBu
   return va;
 }
 
+// Cap DPR at 1 on mobile for performance
 function resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
-  const dpr = Math.min(2, window.devicePixelRatio);
-  const w = Math.round(canvas.clientWidth*dpr), h = Math.round(canvas.clientHeight*dpr);
+  const isMobile = window.innerWidth < 768;
+  const dpr = isMobile ? 1 : Math.min(2, window.devicePixelRatio);
+  const w = Math.round(canvas.clientWidth * dpr);
+  const h = Math.round(canvas.clientHeight * dpr);
   if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; return true; }
   return false;
 }
@@ -341,17 +342,31 @@ class InfiniteGridMenu {
   tex!: WebGLTexture;
   atlasSize!: number;
   control!: ArcballControl;
+  isMobile: boolean;
+  rafId: number | null = null;
+  isDestroyed = false;
+  // Frame throttle for mobile — target 30fps
+  lastFrameTime = 0;
 
   constructor(canvas: HTMLCanvasElement, items: MenuItem[], onActiveItemChange: (i: number) => void, onMovementChange: (m: boolean) => void, onInit: ((s: any) => void) | null = null, scale = 1.0) {
-    this.canvas = canvas; this.items = items;
+    this.canvas = canvas;
+    this.items = items;
     this.onActiveItemChange = onActiveItemChange;
     this.onMovementChange = onMovementChange;
     this.scaleFactor = scale;
-    this.camera = { matrix: mat4.create(), near: 0.1, far: 40, fov: Math.PI/4, aspect: 1, position: vec3.fromValues(0,0,3*scale), up: vec3.fromValues(0,1,0), matrices: { view: mat4.create(), projection: mat4.create(), inversProjection: mat4.create() } };
+    this.isMobile = window.innerWidth < 768;
+    // Target 30fps on mobile to save battery and improve smoothness
+    this.TARGET_FRAME_DURATION = this.isMobile ? 1000/30 : 1000/60;
+    this.camera = {
+      matrix: mat4.create(), near: 0.1, far: 40, fov: Math.PI/4, aspect: 1,
+      position: vec3.fromValues(0, 0, 3*scale), up: vec3.fromValues(0,1,0),
+      matrices: { view: mat4.create(), projection: mat4.create(), inversProjection: mat4.create() }
+    };
     this.init(onInit);
   }
 
   resize() {
+    this.isMobile = window.innerWidth < 768;
     this.viewportSize = vec2.set(this.viewportSize||vec2.create(), this.canvas.clientWidth, this.canvas.clientHeight);
     const gl = this.gl;
     if (resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement)) gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight);
@@ -359,17 +374,36 @@ class InfiniteGridMenu {
   }
 
   run(time = 0) {
-    this.#deltaTime = Math.min(32, time-this.#time);
+    if (this.isDestroyed) return;
+    // Throttle to target FPS on mobile
+    if (this.isMobile) {
+      const elapsed = time - this.lastFrameTime;
+      if (elapsed < this.TARGET_FRAME_DURATION - 1) {
+        this.rafId = requestAnimationFrame(t => this.run(t));
+        return;
+      }
+      this.lastFrameTime = time;
+    }
+    this.#deltaTime = Math.min(32, time - this.#time);
     this.#time = time;
-    this.#deltaFrames = this.#deltaTime/this.TARGET_FRAME_DURATION;
+    this.#deltaFrames = this.#deltaTime / this.TARGET_FRAME_DURATION;
     this.#frames += this.#deltaFrames;
     this.animate(this.#deltaTime);
     this.render();
-    requestAnimationFrame(t => this.run(t));
+    this.rafId = requestAnimationFrame(t => this.run(t));
+  }
+
+  destroy() {
+    this.isDestroyed = true;
+    if (this.rafId !== null) cancelAnimationFrame(this.rafId);
   }
 
   init(onInit: ((s: any) => void) | null) {
-    this.gl = this.canvas.getContext('webgl2', { antialias: true, alpha: false }) as WebGL2RenderingContext;
+    // Use lower power mode on mobile
+    const contextOptions = this.isMobile
+      ? { antialias: false, alpha: false, powerPreference: 'low-power' as WebGLPowerPreference }
+      : { antialias: true, alpha: false, powerPreference: 'high-performance' as WebGLPowerPreference };
+    this.gl = this.canvas.getContext('webgl2', contextOptions) as WebGL2RenderingContext;
     const gl = this.gl;
     if (!gl) throw new Error('No WebGL 2 context!');
     this.viewportSize = vec2.fromValues(this.canvas.clientWidth, this.canvas.clientHeight);
@@ -390,7 +424,9 @@ class InfiniteGridMenu {
       uItemCount: gl.getUniformLocation(this.discProgram, 'uItemCount'),
       uAtlasSize: gl.getUniformLocation(this.discProgram, 'uAtlasSize'),
     };
-    this.discGeo = new DiscGeometry(56, 1);
+    // Reduce disc geometry complexity on mobile (32 steps vs 56)
+    const discSteps = this.isMobile ? 32 : 56;
+    this.discGeo = new DiscGeometry(discSteps, 1);
     this.discBuffers = this.discGeo.data;
     this.discVAO = makeVertexArray(gl, [
       [makeBuffer(gl, this.discBuffers.vertices, gl.STATIC_DRAW), this.discLocations.aModelPosition, 3],
@@ -417,18 +453,21 @@ class InfiniteGridMenu {
     this.atlasSize = Math.ceil(Math.sqrt(itemCount));
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d')!;
-    const cellSize = 512;
-    canvas.width = this.atlasSize*cellSize;
-    canvas.height = this.atlasSize*cellSize;
+    // Smaller atlas on mobile to reduce GPU memory pressure
+    const cellSize = this.isMobile ? 256 : 512;
+    canvas.width = this.atlasSize * cellSize;
+    canvas.height = this.atlasSize * cellSize;
     Promise.all(this.items.map(item => new Promise<HTMLImageElement>(resolve => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
       img.onload = () => resolve(img);
+      img.onerror = () => resolve(img); // resolve even on error to not block
       img.src = item.image;
     }))).then(images => {
       images.forEach((img, i) => {
-        const x = (i%this.atlasSize)*cellSize, y = Math.floor(i/this.atlasSize)*cellSize;
-        ctx.drawImage(img, x, y, cellSize, cellSize);
+        const x = (i % this.atlasSize) * cellSize;
+        const y = Math.floor(i / this.atlasSize) * cellSize;
+        if (img.complete && img.naturalWidth > 0) ctx.drawImage(img, x, y, cellSize, cellSize);
       });
       gl.bindTexture(gl.TEXTURE_2D, this.tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
@@ -549,6 +588,7 @@ const defaultItems: MenuItem[] = [{ image: 'https://picsum.photos/900/900?graysc
 
 export default function InfiniteMenu({ items = [], scale = 1.0, onItemClick }: { items?: MenuItem[]; scale?: number; onItemClick?: (item: MenuItem) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sketchRef = useRef<InfiniteGridMenu | null>(null);
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [isMoving, setIsMoving] = useState(false);
 
@@ -563,10 +603,14 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onItemClick }: {
       sk => sk.run(),
       scale
     );
+    sketchRef.current = sketch;
     const handleResize = () => sketch.resize();
     window.addEventListener('resize', handleResize);
     handleResize();
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      sketch.destroy(); // Cancel rAF loop on unmount
+    };
   }, [items, scale]);
 
   return (
