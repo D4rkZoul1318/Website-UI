@@ -29,6 +29,14 @@ const skills = [
 
 const experience = [
   {
+    role: 'Icon Designer — Freelance',
+    company: 'Bob Rides',
+    duration: '4 weeks',
+    bullets: [
+      'Redesigned icons for the Bob Rides platform, focusing on creating a unique yet highly user-friendly visual language.',
+    ],
+  },
+  {
     role: '3D Modeler — Intern',
     company: 'UC Riverside, Dept. of Paleontology',
     duration: '6 months',
@@ -40,7 +48,7 @@ const experience = [
   {
     role: '3D Generalist',
     company: 'Academic & Freelance',
-    duration: '2021 – Present',
+    duration: '2021 – 2025',
     bullets: [
       'Designed game-ready PBR assets in Unreal Engine for modular environments.',
       'Produced hard-surface assets in Maya/Substance Painter for academic films and short projects.',
