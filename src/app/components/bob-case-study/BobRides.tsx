@@ -118,7 +118,7 @@ export default function BobRides() {
 
       {/* Hero image */}
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <SectionImage src="/images/bob/hero.png" alt="BOB Rides Hero" />
+        <SectionImage src="/images/bob-images/hero.png" alt="BOB Rides Hero" />
       </section>
 
       {/* Problem */}
@@ -157,7 +157,7 @@ export default function BobRides() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <FadeUp><SectionLabel>Process</SectionLabel></FadeUp>
           <FadeUp stagger={1}><SectionHeading>How We Got There</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/our-process.png" alt="Our Process" /></div>
+          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/our-process.png" alt="Our Process" /></div>
         </div>
       </section>
 
@@ -165,7 +165,7 @@ export default function BobRides() {
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
         <FadeUp><SectionLabel>Strategy</SectionLabel></FadeUp>
         <FadeUp stagger={1}><SectionHeading>Objectives & Goals</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/objectives-goals.png" alt="Objectives and Goals" /></div>
+        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/objectives-goals.png" alt="Objectives and Goals" /></div>
       </section>
 
       {/* Business Challenges */}
@@ -232,7 +232,7 @@ export default function BobRides() {
               <p style={{ fontSize: 15, fontWeight: 600, color: grey, fontFamily: font, margin: '0 0 16px', letterSpacing: 1, textTransform: 'uppercase' }}>References from Competitors</p>
               <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden' }}>
                 <img
-                  src="https://www.figma.com/api/mcp/asset/b9bcc1dc-3744-4248-a516-7ff75978076d"
+                  src="/images/bob/competitor-analysis.png"
                   alt="Competitor screenshots"
                   style={{ width: '100%', display: 'block' }}
                 />
@@ -246,7 +246,7 @@ export default function BobRides() {
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
         <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
         <FadeUp stagger={1}><SectionHeading>Product Users</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/product-users.png" alt="Product Users" /></div>
+        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/product-users.png" alt="Product Users" /></div>
       </section>
 
       {/* User Persona */}
@@ -305,7 +305,7 @@ export default function BobRides() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
           <FadeUp stagger={1}><SectionHeading>User Needs</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/user-needs.png" alt="User Needs" /></div>
+          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/user-needs.png" alt="User Needs" /></div>
         </div>
       </section>
 
@@ -318,9 +318,9 @@ export default function BobRides() {
         </FadeUp>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 40, marginTop: 0 }}>
           {[
-            { icon: 'https://www.figma.com/api/mcp/asset/35275b22-0618-4a92-89f9-ca5dc1bb4776', bg: 'https://www.figma.com/api/mcp/asset/2d92ec1a-4cdf-4145-8555-28b7b46674ca', text: 'Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen' },
-            { icon: 'https://www.figma.com/api/mcp/asset/a7686ee2-675e-465b-b8f9-0c7504a9c597', bg: 'https://www.figma.com/api/mcp/asset/a92f5f29-0581-485a-99eb-caf579c81a26', text: '3D vehicle icon system — custom bike, auto, and cab icons across all booking states' },
-            { icon: 'https://www.figma.com/api/mcp/asset/03d16072-95f5-47af-9d20-4a076a12d59b', bg: 'https://www.figma.com/api/mcp/asset/9c92d5ff-02e9-4013-9297-0d2ba1ba5312', text: 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing' },
+            { icon: '/images/bob/features-functionalities.png', bg: '/images/bob/features-functionalities.png', text: 'Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen' },
+            { icon: '/images/bob/features-functionalities.png', bg: '/images/bob/features-functionalities.png', text: '3D vehicle icon system — custom bike, auto, and cab icons across all booking states' },
+            { icon: '/images/bob/features-functionalities.png', bg: '/images/bob/features-functionalities.png', text: 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing' },
           ].map((f, i) => (
             <FadeUp key={i} stagger={3 + i}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, textAlign: 'center' }}>
@@ -339,7 +339,7 @@ export default function BobRides() {
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
         <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
         <FadeUp stagger={1}><SectionHeading>Product User Challenges</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/product-user-challenges.png" alt="Product User Challenges" /></div>
+        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/product-user-challenges.png" alt="Product User Challenges" /></div>
       </section>
 
       {/* Unique Features */}
@@ -406,7 +406,7 @@ export default function BobRides() {
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
         <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
         <FadeUp stagger={1}><SectionHeading>Eisenhower Matrix</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/eisen-hover-matrix.png" alt="Eisenhower Matrix" /></div>
+        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/eisen-hover-matrix.png" alt="Eisenhower Matrix" /></div>
       </section>
 
       {/* 5 Why */}
@@ -458,14 +458,14 @@ export default function BobRides() {
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
         <FadeUp><SectionLabel>Analysis</SectionLabel></FadeUp>
         <FadeUp stagger={1}><SectionHeading>Root Cause Analysis</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/root-cause-analysis.png" alt="Root Cause Analysis" /></div>
+        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/root-cause-analysis.png" alt="Root Cause Analysis" /></div>
       </section>
 
       {/* Sketches */}
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
         <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
         <FadeUp stagger={1}><SectionHeading>Sketches</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob/sketches.png" alt="Sketches" /></div>
+        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/sketches.png" alt="Sketches" /></div>
       </section>
 
       {/* Final Icons */}
@@ -475,7 +475,7 @@ export default function BobRides() {
           <FadeUp stagger={1}><SectionHeading>Final Icons</SectionHeading></FadeUp>
           <FadeUp stagger={2}>
             <div style={{ marginTop: 48, borderRadius: radius, overflow: 'hidden' }}>
-              <img src="/images/bob/final-icons.png" alt="Final 3D Icons" style={{ width: '100%', display: 'block' }} />
+              <img src="/images/bob-images/final-icons.png" alt="Final 3D Icons" style={{ width: '100%', display: 'block' }} />
             </div>
           </FadeUp>
         </div>
@@ -488,9 +488,9 @@ export default function BobRides() {
           <FadeUp stagger={1}><SectionHeading>Major Screens</SectionHeading></FadeUp>
           <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
             {[
-              { src: 'https://www.figma.com/api/mcp/asset/019691f9-1e40-44ec-b6ff-d57103abf9d0', label: 'Home Screen' },
-              { src: 'https://www.figma.com/api/mcp/asset/dd4102e4-1903-4e67-aa36-0c71c0260082', label: 'Ride Options' },
-              { src: 'https://www.figma.com/api/mcp/asset/0db506ef-c2e3-4487-a7b9-a25b3bfb4626', label: 'Confirmation' },
+              { src: '/images/bob/major-screens.png', label: 'Home Screen' },
+              { src: '/images/bob/major-screens.png', label: 'Ride Options' },
+              { src: '/images/bob/major-screens.png', label: 'Confirmation' },
             ].map((screen, i) => (
               <FadeUp key={screen.label} stagger={i}>
                 <div style={{ textAlign: 'center' }}>
@@ -515,7 +515,7 @@ export default function BobRides() {
 
       {/* Thank You */}
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <SectionImage src="/images/bob/thank-you.png" alt="Thank You" />
+        <SectionImage src="/images/bob-images/thank-you.png" alt="Thank You" />
       </section>
 
       {/* Footer */}
