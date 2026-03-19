@@ -482,24 +482,17 @@ export default function BobRides() {
       </section>
 
       {/* Major Screens */}
-      <section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <FadeUp><SectionLabel>Outcome</SectionLabel></FadeUp>
-          <FadeUp stagger={1}><SectionHeading>Major Screens</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32 }}>
-            {[
-              { src: '/images/bob/major-screens.png', label: 'Home Screen' },
-              { src: '/images/bob/major-screens.png', label: 'Ride Options' },
-              { src: '/images/bob/major-screens.png', label: 'Confirmation' },
-            ].map((screen, i) => (
-              <FadeUp key={screen.label} stagger={i}>
-                <div style={{ textAlign: 'center' }}>
-                  <img src={screen.src} alt={screen.label} style={{ width: '100%', borderRadius: 24, display: 'block' }} />
-                  <p style={{ fontSize: 14, color: grey, fontFamily: font, marginTop: 12 }}>{screen.label}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
+      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
+        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
+        <FadeUp stagger={1}><SectionHeading>Major Screens</SectionHeading></FadeUp>
+        <div style={{ marginTop: 48 }}>
+          <FadeUp stagger={0}>
+            <img
+              src="/images/bob/major-screens.png"
+              alt="Major Screens"
+              style={{ width: '100%', borderRadius: 24, display: 'block' }}
+            />
+          </FadeUp>
         </div>
       </section>
 
