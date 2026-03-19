@@ -316,22 +316,17 @@ export default function BobRides() {
         <FadeUp stagger={2}>
           <p style={{ fontSize: 20, color: grey, fontFamily: font, textAlign: 'center', marginTop: 8, marginBottom: 48 }}>To resolve user needs</p>
         </FadeUp>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 40, marginTop: 0 }}>
-          {[
-            { icon: '/images/bob/features-functionalities.png', bg: '/images/bob/features-functionalities.png', text: 'Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen' },
-            { icon: '/images/bob/features-functionalities.png', bg: '/images/bob/features-functionalities.png', text: '3D vehicle icon system — custom bike, auto, and cab icons across all booking states' },
-            { icon: '/images/bob/features-functionalities.png', bg: '/images/bob/features-functionalities.png', text: 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing' },
-          ].map((f, i) => (
-            <FadeUp key={i} stagger={3 + i}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, textAlign: 'center' }}>
-                <div style={{ position: 'relative', width: 130, height: 130 }}>
-                  <img src={f.bg} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
-                  <img src={f.icon} alt="" style={{ position: 'absolute', width: 48, height: 48, top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-                </div>
-                <p style={{ fontSize: 18, color: nearBlack, fontFamily: font, lineHeight: 1.7, margin: 0, fontWeight: 400 }}>{f.text}</p>
-              </div>
-            </FadeUp>
-          ))}
+        <div style={{ marginTop: 0 }}>
+          <FadeUp stagger={0}>
+            <img src="/images/bob/features-functionalities.png" alt="Features and Functionalities" style={{ width: '100%', borderRadius: 24, display: 'block', marginBottom: 48 }} />
+          </FadeUp>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 40 }}>
+            {['Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen', '3D vehicle icon system — custom bike, auto, and cab icons across all booking states', 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing'].map((text, i) => (
+              <FadeUp key={i} stagger={3 + i}>
+                <p style={{ fontSize: 18, color: nearBlack, fontFamily: font, lineHeight: 1.7, margin: 0, fontWeight: 400, textAlign: 'center' }}>{text}</p>
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </section>
 
