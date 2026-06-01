@@ -216,14 +216,7 @@ export default function BobRides() {
                     </div>
                   ))}
                 </div>
-              </div>
-              {/* Right — logos */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, alignItems: 'center' }}>
-                <img src="https://www.figma.com/api/mcp/asset/1b193ea8-87d2-4e6b-9242-09a2af002bbd" alt="OLA" style={{ width: '100%', borderRadius: 8 }} />
-                <img src="https://www.figma.com/api/mcp/asset/f4f6b490-f62d-401e-bd6c-f81f1b3029f0" alt="Rapido" style={{ width: '100%', borderRadius: 8 }} />
-                <img src="https://www.figma.com/api/mcp/asset/f0848239-000f-46b6-a978-c34b51349987" alt="Uber" style={{ width: '100%', borderRadius: 8 }} />
-                <img src="https://www.figma.com/api/mcp/asset/eb203260-202b-4289-9c5c-2d2fafed7c93" alt="Namma Yatri" style={{ width: '100%', borderRadius: 8 }} />
-              </div>
+git add . && git commit -m "Add icon system design system section and fix Maya tool credit" && git push              </div>
             </div>
           </FadeUp>
           {/* Competitor screenshots */}
