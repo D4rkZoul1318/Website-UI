@@ -476,6 +476,42 @@ export default function BobRides() {
         </div>
       </section>
 
+      {/* Design System */}
+<section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
+  <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+    <FadeUp><SectionLabel>Design System</SectionLabel></FadeUp>
+    <FadeUp stagger={1}><SectionHeading>Icon System</SectionHeading></FadeUp>
+    <FadeUp stagger={2}>
+      <p style={{ fontSize: 20, color: grey, fontFamily: font, lineHeight: 1.7, maxWidth: 680, margin: '24px 0 0' }}>
+        The icon system spans two production generations — flat 2D isometric to full-colour 3D with cast shadows. View the full version history, evolution rationale, and spec documentation in Figma.
+      </p>
+    </FadeUp>
+    <FadeUp stagger={3}>
+      <a
+        href="https://www.figma.com/design/6doJgq0YhHNlCkv7mLwwLy/bob-UI-Sohum?node-id=732-1630"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: 'inline-block',
+          marginTop: 36,
+          padding: '14px 32px',
+          backgroundColor: nearBlack,
+          color: '#FFFFFF',
+          borderRadius: 999,
+          fontSize: 15,
+          fontFamily: font,
+          fontWeight: 500,
+          textDecoration: 'none',
+          letterSpacing: '0.02em',
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#333333')}
+        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = nearBlack)}
+      >
+        View Icon System in Figma →
+      </a>
+    </FadeUp>
+  </div>
+</section>
       {/* Major Screens */}
       <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
         <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
