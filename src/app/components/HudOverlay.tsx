@@ -49,7 +49,7 @@ export function HudOverlay() {
 
       <div className="fixed inset-0 pointer-events-none z-50 p-4 md:p-6">
         <div className="absolute top-4 left-4 md:top-6 md:left-6">
-          <span style={{ fontFamily: "var(--font-mono)" }} className="text-[11px] uppercase tracking-widest text-[#4A4A4A]">
+          <span style={{ fontFamily: "var(--font-mono)" }} className="text-[11px] uppercase tracking-widest text-[#737373]">
             Sohum Bhatnagar // Portfolio v3.0
           </span>
         </div>
@@ -59,14 +59,14 @@ export function HudOverlay() {
             href="#work"
             onClick={handleWorkClick}
             style={{ fontFamily: "var(--font-mono)" }}
-            className="text-[11px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8E4DF] transition-colors"
+            className="text-[11px] uppercase tracking-widest text-[#737373] hover:text-[#F0EDE8] transition-colors"
           >
             Work
           </a>
           <Link
             to="/about"
             style={{ fontFamily: "var(--font-mono)" }}
-            className="text-[11px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8E4DF] transition-colors"
+            className="text-[11px] uppercase tracking-widest text-[#737373] hover:text-[#F0EDE8] transition-colors"
           >
             About
           </Link>
@@ -75,20 +75,20 @@ export function HudOverlay() {
             target="_blank"
             rel="noopener noreferrer"
             style={{ fontFamily: "var(--font-mono)" }}
-            className="text-[11px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8E4DF] transition-colors"
+            className="text-[11px] uppercase tracking-widest text-[#737373] hover:text-[#F0EDE8] transition-colors"
           >
             Resume
           </a>
         </div>
 
         <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6">
-          <span style={{ fontFamily: "var(--font-mono)" }} className="text-[11px] uppercase tracking-widest text-[#4A4A4A]">
+          <span style={{ fontFamily: "var(--font-mono)" }} className="text-[11px] uppercase tracking-widest text-[#737373]">
             {sectionLabel}
           </span>
         </div>
 
         <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 text-right">
-          <span style={{ fontFamily: "var(--font-mono)" }} className="text-[11px] uppercase tracking-widest text-[#4A4A4A]">
+          <span style={{ fontFamily: "var(--font-mono)" }} className="text-[11px] uppercase tracking-widest text-[#737373]">
             Bengaluru, IN // Available
           </span>
         </div>

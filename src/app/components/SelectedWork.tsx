@@ -3,16 +3,16 @@ import { ProjectCard } from "./ProjectCard";
 export function SelectedWork() {
   return (
     <section id="work" className="px-6 md:px-16 lg:px-24 py-32 max-w-[1400px] mx-auto">
-      <div className="flex justify-between items-baseline mb-16 border-b border-[#262626] pb-4">
+      <div className="flex justify-between items-baseline mb-16 border-b border-[#333333] pb-4">
         <span
           style={{ fontFamily: "var(--font-mono)" }}
-          className="text-[11px] uppercase tracking-[0.2em] text-[#4A4A4A]"
+          className="text-[11px] uppercase tracking-[0.2em] text-[#737373]"
         >
           Selected Work
         </span>
         <span
           style={{ fontFamily: "var(--font-mono)" }}
-          className="text-[11px] uppercase tracking-[0.2em] text-[#4A4A4A]"
+          className="text-[11px] uppercase tracking-[0.2em] text-[#737373]"
         >
           03 Projects
         </span>

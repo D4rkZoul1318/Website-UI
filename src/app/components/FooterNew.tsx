@@ -3,10 +3,10 @@ export function FooterNew() {
     <footer className="px-6 md:px-16 lg:px-24 py-24 max-w-[1400px] mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
-          <p className="text-2xl md:text-3xl font-medium tracking-tight text-[#E8E4DF]">
+          <p className="text-2xl md:text-3xl font-medium tracking-tight text-[#F0EDE8]">
             Let's work together.
           </p>
-          <p className="mt-3 text-[#8A8A8A] text-sm">
+          <p className="mt-3 text-[#A3A3A3] text-sm">
             Open to product design roles and apprenticeships.
           </p>
         </div>
@@ -14,7 +14,7 @@ export function FooterNew() {
           <a
             href="mailto:sohum1311@gmail.com"
             style={{ fontFamily: "var(--font-mono)" }}
-            className="text-[12px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8734A] transition-colors"
+            className="text-[12px] uppercase tracking-widest text-[#737373] hover:text-[#E8734A] transition-colors"
           >
             sohum1311@gmail.com ↗
           </a>
@@ -23,23 +23,23 @@ export function FooterNew() {
             target="_blank"
             rel="noopener noreferrer"
             style={{ fontFamily: "var(--font-mono)" }}
-            className="text-[12px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8734A] transition-colors"
+            className="text-[12px] uppercase tracking-widest text-[#737373] hover:text-[#E8734A] transition-colors"
           >
             LinkedIn ↗
           </a>
         </div>
       </div>
 
-      <div className="mt-16 pt-4 border-t border-[#262626] flex justify-between">
+      <div className="mt-16 pt-4 border-t border-[#333333] flex justify-between">
         <span
           style={{ fontFamily: "var(--font-mono)" }}
-          className="text-[10px] uppercase tracking-widest text-[#4A4A4A]"
+          className="text-[10px] uppercase tracking-widest text-[#737373]"
         >
           &copy; 2026 Sohum Bhatnagar
         </span>
         <span
           style={{ fontFamily: "var(--font-mono)" }}
-          className="text-[10px] uppercase tracking-widest text-[#4A4A4A]"
+          className="text-[10px] uppercase tracking-widest text-[#737373]"
         >
           Designed & Built in Bengaluru
         </span>
