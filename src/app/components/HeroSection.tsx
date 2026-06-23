@@ -1,86 +1,106 @@
 import { motion } from "motion/react";
+import PixelGrid from "./PixelGrid";
 
 export function HeroSection() {
   return (
-    <section id="hero" className="min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 relative">
+    <section id="hero" className="min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
-            "linear-gradient(#E8E4DF 1px, transparent 1px), linear-gradient(90deg, #E8E4DF 1px, transparent 1px)",
+            "linear-gradient(#F0EDE8 1px, transparent 1px), linear-gradient(90deg, #F0EDE8 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
 
-      <div className="relative z-10 max-w-[1200px]">
-        <motion.p
-          style={{ fontFamily: "var(--font-mono)" }}
-          className="text-[11px] uppercase tracking-[0.2em] text-[#4A4A4A] mb-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          Product Designer // Mobile UX // Creative Tech
-        </motion.p>
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-[1400px] mx-auto w-full">
+        <div>
+          <motion.p
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            Product Designer // Mobile UX // Creative Tech
+          </motion.p>
 
-        <motion.h1
-          className="font-semibold text-[#E8E4DF]"
-          style={{
-            fontSize: "clamp(3rem, 8vw, 8rem)",
-            letterSpacing: "-0.05em",
-            lineHeight: 0.85,
-          }}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-        >
-          Sohum
-          <br />
-          Bhatnagar
-        </motion.h1>
+          <motion.h1
+            className="font-semibold text-[#F0EDE8]"
+            style={{
+              fontSize: "clamp(3rem, 8vw, 8rem)",
+              letterSpacing: "-0.05em",
+              lineHeight: 0.85,
+            }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+          >
+            Sohum
+            <br />
+            Bhatnagar
+          </motion.h1>
 
-        <motion.p
-          className="mt-8 text-base md:text-lg text-[#8A8A8A] max-w-[480px] leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          Designing interfaces for mobility and sound. Currently the sole
-          designer at Bob Rides, building ride-hailing UX used on Indian roads
-          daily.
-        </motion.p>
+          <motion.p
+            className="mt-8 text-base md:text-lg text-[#A3A3A3] max-w-[480px] leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            Designing interfaces for mobility and sound. Currently the sole
+            designer at Bob Rides, building ride-hailing UX used on Indian roads
+            daily.
+          </motion.p>
+
+          <motion.div
+            className="mt-8 flex gap-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <a
+              href="https://linkedin.com/in/sohumbhatnagar"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-[12px] uppercase tracking-widest text-[#737373] hover:text-[#E8734A] transition-colors duration-300"
+            >
+              LinkedIn ↗
+            </a>
+            <a
+              href="mailto:sohum1311@gmail.com"
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-[12px] uppercase tracking-widest text-[#737373] hover:text-[#E8734A] transition-colors duration-300"
+            >
+              Email
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-[12px] uppercase tracking-widest text-[#737373] hover:text-[#E8734A] transition-colors duration-300"
+            >
+              Resume ↗
+            </a>
+          </motion.div>
+        </div>
 
         <motion.div
-          className="mt-8 flex gap-6"
+          className="hidden lg:block h-[500px] relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          transition={{ duration: 1.2, delay: 0.4 }}
         >
-          <a
-            href="https://linkedin.com/in/sohumbhatnagar"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontFamily: "var(--font-mono)" }}
-            className="text-[12px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8734A] transition-colors duration-300"
-          >
-            LinkedIn ↗
-          </a>
-          <a
-            href="mailto:sohum1311@gmail.com"
-            style={{ fontFamily: "var(--font-mono)" }}
-            className="text-[12px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8734A] transition-colors duration-300"
-          >
-            Email
-          </a>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontFamily: "var(--font-mono)" }}
-            className="text-[12px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8734A] transition-colors duration-300"
-          >
-            Resume ↗
-          </a>
+          <PixelGrid />
+          <div className="absolute bottom-8 right-8 text-right">
+            <span
+              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-[10px] uppercase tracking-widest text-[#737373]"
+            >
+              32 × 24 // Active
+            </span>
+          </div>
         </motion.div>
       </div>
 
@@ -91,11 +111,11 @@ export function HeroSection() {
       >
         <span
           style={{ fontFamily: "var(--font-mono)" }}
-          className="text-[10px] uppercase tracking-widest text-[#4A4A4A]"
+          className="text-[10px] uppercase tracking-widest text-[#737373]"
         >
           Scroll
         </span>
-        <div className="w-[1px] h-8 bg-gradient-to-b from-[#4A4A4A] to-transparent" />
+        <div className="w-[1px] h-8 bg-gradient-to-b from-[#737373] to-transparent" />
       </motion.div>
     </section>
   );
