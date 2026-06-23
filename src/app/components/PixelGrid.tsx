@@ -21,8 +21,8 @@ export default function PixelGrid() {
     resize();
     window.addEventListener("resize", resize);
 
-    const cols = 32;
-    const rows = 24;
+    const cols = 64;
+    const rows = 32;
     const dotSize = 2;
 
     const draw = () => {

@@ -4,16 +4,11 @@ import PixelGrid from "./PixelGrid";
 export function HeroSection() {
   return (
     <section id="hero" className="min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#F0EDE8 1px, transparent 1px), linear-gradient(90deg, #F0EDE8 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+      <div className="absolute inset-0">
+        <PixelGrid />
+      </div>
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-[1400px] mx-auto w-full">
+      <div className="relative z-10 max-w-[1400px] mx-auto w-full">
         <div>
           <motion.p
             style={{ fontFamily: "var(--font-mono)" }}
@@ -86,22 +81,6 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        <motion.div
-          className="hidden lg:block h-[500px] relative"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.4 }}
-        >
-          <PixelGrid />
-          <div className="absolute bottom-8 right-8 text-right">
-            <span
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="text-[10px] uppercase tracking-widest text-[#737373]"
-            >
-              32 × 24 // Active
-            </span>
-          </div>
-        </motion.div>
       </div>
 
       <motion.div
