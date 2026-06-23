@@ -7,7 +7,6 @@ const projects = [
       "Sole designer on a ride aggregator. Built the comparison UI, vehicle icon system, and design tokens from scratch.",
     tags: ["Ride-hailing", "Mobile UX", "Design system"],
     videoSrc: "/videos/bob-rides-preview.mp4",
-    videoScale: 25,
     badge: "Live product",
     link: "/bob-rides",
   },

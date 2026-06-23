@@ -5,7 +5,6 @@ interface ProjectCardProps {
   description: string;
   tags: string[];
   videoSrc?: string;
-  videoScale?: number;
   badge?: string;
   link: string;
   external?: boolean;
@@ -17,7 +16,6 @@ export function ProjectCard({
   description,
   tags,
   videoSrc,
-  videoScale,
   badge,
   link,
   external,
@@ -34,15 +32,14 @@ export function ProjectCard({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
     >
-      <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-100 flex items-center justify-center">
+      <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-100">
         {videoSrc ? (
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="object-cover"
-            style={videoScale ? { width: `${videoScale}%`, height: `${videoScale}%` } : { width: '100%', height: '100%' }}
+            className="w-full h-full object-contain"
           >
             <source src={videoSrc} type="video/mp4" />
           </video>
