@@ -1,54 +1,62 @@
 :root {
-  --font-size: 16px;
-  --background: #F8F7F4;
-  --foreground: #18181B;
-  --surface: #FFFFFF;
-  --border: #E4E4E7;
-  --text: #18181B;
-  --text-muted: #71717A;
-  --text-subtle: #A1A1AA;
-  --accent: #18181B;
-  --badge-bg: #F4F4F5;
-  --badge-text: #52525B;
+  --bg-primary: #0C0C0C;
+  --bg-secondary: #141414;
+  --bg-elevated: #1A1A1A;
+  --border: #262626;
+  --border-hover: #404040;
+  --text-primary: #E8E4DF;
+  --text-secondary: #8A8A8A;
+  --text-tertiary: #4A4A4A;
+  --accent: #E8734A;
+  --accent-dim: rgba(232, 115, 74, 0.15);
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-elevated: var(--bg-elevated);
   --color-border: var(--border);
-  --color-text: var(--text);
-  --color-text-muted: var(--text-muted);
-  --color-text-subtle: var(--text-subtle);
+  --color-border-hover: var(--border-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
   --color-accent: var(--accent);
-  --color-badge-bg: var(--badge-bg);
-  --color-badge-text: var(--badge-text);
+  --color-accent-dim: var(--accent-dim);
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   html {
-    font-size: var(--font-size);
     scroll-behavior: smooth;
   }
 
   body {
-    background: #F8F7F4;
-    color: #18181B;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #0C0C0C;
+    color: #E8E4DF;
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-}
 
-.project-card {
-  cursor: pointer;
-}
-.project-card:hover {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2318181B' opacity='0.9'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='white' font-size='10' font-family='system-ui'%3EView%3C/text%3E%3C/svg%3E") 16 16, pointer;
+  ::selection {
+    background: rgba(232, 115, 74, 0.3);
+    color: #E8E4DF;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0C0C0C;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

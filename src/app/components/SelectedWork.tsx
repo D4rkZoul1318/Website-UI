@@ -2,46 +2,57 @@ import { ProjectCard } from "./ProjectCard";
 
 export function SelectedWork() {
   return (
-    <section id="work" className="pb-20 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20">
-      <p className="text-xs uppercase tracking-widest text-neutral-400 mb-12">
-        Selected work
-      </p>
+    <section id="work" className="px-6 md:px-16 lg:px-24 py-32 max-w-[1400px] mx-auto">
+      <div className="flex justify-between items-baseline mb-16 border-b border-[#262626] pb-4">
+        <span
+          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[11px] uppercase tracking-[0.2em] text-[#4A4A4A]"
+        >
+          Selected Work
+        </span>
+        <span
+          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[11px] uppercase tracking-[0.2em] text-[#4A4A4A]"
+        >
+          03 Projects
+        </span>
+      </div>
 
-      <div className="space-y-16">
+      <div className="space-y-24">
         <ProjectCard
+          number="01"
           title="Bob Rides"
-          description="Sole designer on a ride aggregator. Built the comparison UI, vehicle icon system, and design tokens from scratch."
-          tags={["Ride-hailing", "Mobile UX", "Design system"]}
+          description="Sole designer on a live ride-hailing aggregator. Built the comparison UI, vehicle icon evolution across 3 generations, and a complete design token system."
+          tags={["Ride-hailing", "Mobile UX", "Design System", "Production"]}
           videoSrc="/videos/bob-rides-preview.mp4"
           videoOrientation="portrait"
-          badge="Live product"
-          badgeStyle="light"
+          badge="Live Product"
           link="/bob-rides"
-          index={0}
+          status="Shipped"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProjectCard
-            title="UUCMS Redesign"
-            description="Redesigned a university campus management portal to reduce student task completion from 12 steps to 4."
-            tags={["EdTech", "Responsive web", "Accessibility"]}
-            link="/uucms"
-            compact
-            index={1}
-          />
-          <ProjectCard
-            title="REWIND"
-            description="A nostalgic audio experience built for Figma Config Makeathon 2026. Hardware-inspired UI meets spatial audio processing."
-            tags={["Figma Config", "Web Audio", "Creative tech"]}
-            videoSrc="/videos/rewind-preview.mp4"
-            badge="Makeathon 2026"
-            badgeStyle="dark"
-            link="https://rewind-tau.vercel.app"
-            external
-            compact
-            index={2}
-          />
-        </div>
+        <ProjectCard
+          number="02"
+          title="UUCMS Redesign"
+          description="Redesigned a university campus management portal. Reduced student task completion from 12 steps to 4 through information architecture restructuring."
+          tags={["EdTech", "Responsive Web", "Accessibility", "IA"]}
+          badge="Case Study"
+          link="/uucms"
+          status="Completed"
+        />
+
+        <ProjectCard
+          number="03"
+          title="REWIND"
+          description="A nostalgic audio experience for Figma Config Makeathon 2026. Hardware-inspired interface with spatial audio processing, built with Web Audio API."
+          tags={["Figma Config", "Web Audio", "Creative Tech", "React"]}
+          videoSrc="/videos/rewind-preview.mp4"
+          videoOrientation="landscape"
+          badge="Makeathon 2026"
+          link="https://rewind-tau.vercel.app"
+          external
+          status="Submitted"
+        />
       </div>
     </section>
   );
