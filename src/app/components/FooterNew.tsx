@@ -1,35 +1,48 @@
 export function FooterNew() {
   return (
-    <footer className="mt-32 mb-16 px-6 md:px-12 lg:px-20 max-w-[1400px] mx-auto">
-      <div className="border-t border-neutral-200 pt-12">
-        <p className="text-2xl md:text-3xl font-medium tracking-tight text-neutral-900">
-          Let's work together.
-        </p>
-        <div className="mt-4 flex gap-6">
+    <footer className="px-6 md:px-16 lg:px-24 py-24 max-w-[1400px] mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+          <p className="text-2xl md:text-3xl font-medium tracking-tight text-[#E8E4DF]">
+            Let's work together.
+          </p>
+          <p className="mt-3 text-[#8A8A8A] text-sm">
+            Open to product design roles and apprenticeships.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3 md:items-end md:justify-center">
           <a
             href="mailto:sohum1311@gmail.com"
-            className="text-neutral-500 hover:text-neutral-900 transition-colors underline underline-offset-4"
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[12px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8734A] transition-colors"
           >
-            Email
+            sohum1311@gmail.com ↗
           </a>
           <a
             href="https://linkedin.com/in/sohumbhatnagar"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-neutral-500 hover:text-neutral-900 transition-colors underline underline-offset-4"
+            style={{ fontFamily: "var(--font-mono)" }}
+            className="text-[12px] uppercase tracking-widest text-[#4A4A4A] hover:text-[#E8734A] transition-colors"
           >
-            LinkedIn
-          </a>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-neutral-500 hover:text-neutral-900 transition-colors underline underline-offset-4"
-          >
-            Resume
+            LinkedIn ↗
           </a>
         </div>
-        <p className="mt-8 text-xs text-neutral-300">&copy; 2026 Sohum Bhatnagar</p>
+      </div>
+
+      <div className="mt-16 pt-4 border-t border-[#262626] flex justify-between">
+        <span
+          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[10px] uppercase tracking-widest text-[#4A4A4A]"
+        >
+          &copy; 2026 Sohum Bhatnagar
+        </span>
+        <span
+          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[10px] uppercase tracking-widest text-[#4A4A4A]"
+        >
+          Designed & Built in Bengaluru
+        </span>
       </div>
     </footer>
   );

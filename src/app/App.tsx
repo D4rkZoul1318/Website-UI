@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { NavBar } from "./components/NavBar";
+import { HudOverlay } from "./components/HudOverlay";
 import { HeroSection } from "./components/HeroSection";
 import { SelectedWork } from "./components/SelectedWork";
 import { FooterNew } from "./components/FooterNew";
@@ -10,8 +10,8 @@ import { useEffect } from "react";
 
 function HomePage() {
   return (
-    <div className="min-h-screen" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-      <NavBar />
+    <div className="min-h-screen" style={{ background: "#0C0C0C", color: "#E8E4DF" }}>
+      <HudOverlay />
       <HeroSection />
       <SelectedWork />
       <FooterNew />
