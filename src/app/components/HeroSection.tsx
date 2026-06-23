@@ -6,11 +6,11 @@ export function HeroSection() {
     <section id="hero" className="min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 relative overflow-hidden">
       <div className="absolute inset-0 flex items-center justify-center">
         <MagnetLines
-          rows={12}
-          columns={16}
+          rows={20}
+          columns={30}
           containerSize="100%"
-          lineWidth="0.6vmin"
-          lineHeight="4vmin"
+          lineWidth="0.3vmin"
+          lineHeight="1.8vmin"
           baseAngle={0}
           style={{ width: "100%", height: "100%" }}
         />

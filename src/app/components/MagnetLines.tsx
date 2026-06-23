@@ -60,12 +60,12 @@ export default function MagnetLines({
     };
   }, [rows, columns]);
 
-  const warmWhite = "#F0EDE8";
-  const accentOrange = "#E8734A";
+  const neonCyan = "#00FFD1";
+  const neonOrange = "#FF6B35";
 
   const total = rows * columns;
   const spans = Array.from({ length: total }, (_, i) => {
-    const color = i % 2 === 0 ? warmWhite : accentOrange;
+    const color = i % 2 === 0 ? neonCyan : neonOrange;
     return (
       <span
         key={i}
@@ -74,7 +74,7 @@ export default function MagnetLines({
           backgroundColor: color,
           width: lineWidth,
           height: lineHeight,
-          opacity: i % 2 === 0 ? 0.25 : 0.4,
+          opacity: i % 2 === 0 ? 0.12 : 0.15,
         } as React.CSSProperties}
       />
     );
