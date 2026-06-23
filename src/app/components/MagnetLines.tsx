@@ -74,7 +74,7 @@ export default function MagnetLines({
           backgroundColor: color,
           width: lineWidth,
           height: lineHeight,
-          opacity: i % 2 === 0 ? 0.12 : 0.15,
+          opacity: i % 2 === 0 ? 0.35 : 0.4,
         } as React.CSSProperties}
       />
     );
