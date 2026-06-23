@@ -1,11 +1,19 @@
 import { motion } from "motion/react";
-import PixelGrid from "./PixelGrid";
+import MagnetLines from "./MagnetLines";
 
 export function HeroSection() {
   return (
     <section id="hero" className="min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      <div className="absolute inset-0">
-        <PixelGrid />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <MagnetLines
+          rows={12}
+          columns={16}
+          containerSize="100%"
+          lineWidth="0.6vmin"
+          lineHeight="4vmin"
+          baseAngle={0}
+          style={{ width: "100%", height: "100%" }}
+        />
       </div>
 
       <div className="relative z-10 max-w-[1400px] mx-auto w-full">
