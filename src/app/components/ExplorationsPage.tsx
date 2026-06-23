@@ -66,9 +66,17 @@ const allItems = [
     category: 'Graphic Design',
     height: 700,
   },
+  {
+    id: 8,
+    img: '/images/explorations/rewind-01.png',
+    url: 'https://rewind-it.vercel.app',
+    title: 'Rewind',
+    category: 'UI/UX',
+    height: 550,
+  },
 ];
 
-const categories = ['All', '3D', 'Graphic Design', 'Catalogue'];
+const categories = ['All', '3D', 'Graphic Design', 'Catalogue', 'UI/UX'];
 
 export function ExplorationsPage() {
   const [active, setActive] = useState('All');
