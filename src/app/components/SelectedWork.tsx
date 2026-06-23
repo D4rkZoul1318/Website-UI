@@ -7,7 +7,9 @@ const projects = [
       "Sole designer on a ride aggregator. Built the comparison UI, vehicle icon system, and design tokens from scratch.",
     tags: ["Ride-hailing", "Mobile UX", "Design system"],
     videoSrc: "/videos/bob-rides-preview.mp4",
+    videoOrientation: "portrait" as const,
     badge: "Live product",
+    badgeStyle: "light" as const,
     link: "/bob-rides",
   },
   {
@@ -24,6 +26,7 @@ const projects = [
     tags: ["Figma Config", "Web Audio", "Creative tech"],
     videoSrc: "/videos/rewind-preview.mp4",
     badge: "Makeathon 2026",
+    badgeStyle: "dark" as const,
     link: "https://rewind-tau.vercel.app",
     external: true,
   },

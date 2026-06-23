@@ -6,8 +6,10 @@ interface ProjectCardProps {
   tags: string[];
   videoSrc?: string;
   badge?: string;
+  badgeStyle?: "light" | "dark";
   link: string;
   external?: boolean;
+  videoOrientation?: "landscape" | "portrait";
   index: number;
 }
 
@@ -17,13 +19,30 @@ export function ProjectCard({
   tags,
   videoSrc,
   badge,
+  badgeStyle = "dark",
   link,
   external,
+  videoOrientation = "landscape",
   index,
 }: ProjectCardProps) {
   const linkProps = external
     ? { href: link, target: "_blank", rel: "noopener noreferrer" }
     : { href: link };
+
+  const isPortrait = videoOrientation === "portrait";
+
+  const containerClass = isPortrait
+    ? "relative bg-neutral-950 rounded-xl overflow-hidden h-[480px] md:h-[560px] flex items-center justify-center"
+    : "relative bg-neutral-100 rounded-xl overflow-hidden aspect-video";
+
+  const videoClass = isPortrait
+    ? "h-full w-auto object-contain mx-auto block"
+    : "w-full h-full object-cover";
+
+  const badgeClass =
+    badgeStyle === "light"
+      ? "absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-neutral-900 text-xs font-medium px-3 py-1 rounded-full z-10"
+      : "absolute top-3 right-3 bg-neutral-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full z-10";
 
   return (
     <motion.div
@@ -32,26 +51,24 @@ export function ProjectCard({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
     >
-      <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-100">
+      <div className={containerClass}>
+        {badge && <span className={badgeClass}>{badge}</span>}
         {videoSrc ? (
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="w-full h-full object-contain"
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen noremoteplayback"
+            className={videoClass}
           >
             <source src={videoSrc} type="video/mp4" />
           </video>
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <span className="text-sm text-neutral-400">Case study coming soon</span>
+            <span className="text-sm text-neutral-400">Case study in progress</span>
           </div>
-        )}
-        {badge && (
-          <span className="absolute top-3 right-3 bg-neutral-900 text-white text-xs px-3 py-1 rounded-full">
-            {badge}
-          </span>
         )}
       </div>
 
