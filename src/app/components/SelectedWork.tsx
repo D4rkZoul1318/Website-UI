@@ -22,6 +22,7 @@ const projects = [
     description:
       "A nostalgic audio experience built for Figma Config Makeathon 2026. Hardware-inspired UI meets spatial audio processing.",
     tags: ["Figma Config", "Web Audio", "Creative tech"],
+    videoSrc: "/videos/rewind-preview.mp4",
     badge: "Makeathon 2026",
     link: "https://rewind-tau.vercel.app",
     external: true,
