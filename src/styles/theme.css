@@ -1,6 +1,6 @@
 :root {
   --font-size: 16px;
-  --background: #FAFAFA;
+  --background: #F8F7F4;
   --foreground: #18181B;
   --surface: #FFFFFF;
   --border: #E4E4E7;
@@ -36,11 +36,19 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    background: #F8F7F4;
+    color: #18181B;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+}
+
+.project-card {
+  cursor: pointer;
+}
+.project-card:hover {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2318181B' opacity='0.9'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='white' font-size='10' font-family='system-ui'%3EView%3C/text%3E%3C/svg%3E") 16 16, pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {
