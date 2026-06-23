@@ -1,23 +1,18 @@
 import { motion } from "motion/react";
-import MagnetLines from "./MagnetLines";
+import PixelGrid from "./PixelGrid";
 
 export function HeroSection() {
   return (
     <section id="hero" className="min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      <div className="absolute inset-0 flex items-center justify-center">
-        <MagnetLines
-          rows={20}
-          columns={30}
-          containerSize="100%"
-          lineWidth="0.3vmin"
-          lineHeight="1.8vmin"
-          baseAngle={0}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </div>
+      <div className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(240,237,232,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(240,237,232,0.5) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }}
+      />
 
-      <div className="relative z-10 max-w-[1400px] mx-auto w-full">
-        <div>
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-0 items-center max-w-[1400px] mx-auto w-full">
+        <div className="relative z-20">
           <motion.p
             style={{ fontFamily: "var(--font-mono)" }}
             className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-6"
@@ -89,6 +84,10 @@ export function HeroSection() {
           </motion.div>
         </div>
 
+        <div className="hidden lg:block h-[600px] relative -mr-16">
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0C0C0C] to-transparent z-10 pointer-events-none" />
+          <PixelGrid />
+        </div>
       </div>
 
       <motion.div
