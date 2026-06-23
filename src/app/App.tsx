@@ -1,44 +1,40 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Navbar } from "./components/Navbar";
-import { Hero } from "./components/Hero";
-import { Projects } from "./components/Projects";
-import { ChillSection } from "./components/ChillSection";
-import { Footer } from "./components/Footer";
-import CaseStudy from "./components/CaseStudy";
+import { NavBar } from "./components/NavBar";
+import { HeroSection } from "./components/HeroSection";
+import { SelectedWork } from "./components/SelectedWork";
+import { FooterNew } from "./components/FooterNew";
 import BobRides from "./components/bob-case-study/BobRides";
 import { AboutPage } from "./components/AboutPage";
-import { ExplorationsPage } from "./components/ExplorationsPage";
+import CaseStudy from "./components/CaseStudy";
+import { useEffect } from "react";
 
-function MainSite() {
+function HomePage() {
   return (
-    <div style={{ fontFamily: "'Outfit', sans-serif", backgroundColor: "#F9F9F7", color: "#1A1A1A", lineHeight: 1.6 }}>
-      <Navbar />
-      <Hero />
-      <Projects />
-      <ChillSection />
-      <Footer />
+    <div className="min-h-screen" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+      <NavBar />
+      <HeroSection />
+      <SelectedWork />
+      <FooterNew />
     </div>
   );
 }
 
-import { useEffect } from "react";
-
 function useHashScroll() {
   useEffect(() => {
-    const scrollTarget = sessionStorage.getItem('scrollTo');
+    const scrollTarget = sessionStorage.getItem("scrollTo");
     if (scrollTarget) {
-      sessionStorage.removeItem('scrollTo');
+      sessionStorage.removeItem("scrollTo");
       setTimeout(() => {
         const el = document.getElementById(scrollTarget);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (el) el.scrollIntoView({ behavior: "smooth" });
       }, 100);
       return;
     }
     const hash = window.location.hash;
     if (hash) {
       setTimeout(() => {
-        const el = document.getElementById(hash.replace('#', ''));
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        const el = document.getElementById(hash.replace("#", ""));
+        if (el) el.scrollIntoView({ behavior: "smooth" });
       }, 200);
     }
   }, []);
@@ -49,11 +45,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainSite />} />
-        <Route path="/case-study" element={<CaseStudy />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/bob-rides" element={<BobRides />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/explorations" element={<ExplorationsPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/case-study" element={<CaseStudy />} />
       </Routes>
     </BrowserRouter>
   );
