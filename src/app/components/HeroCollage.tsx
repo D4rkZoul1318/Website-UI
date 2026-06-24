@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'motion/react'
+import DebugControls, { DEFAULT_CONFIG, type HeroConfig } from './DebugControls'
 
 function PixelPhoto({
   src,
@@ -137,6 +138,7 @@ function PixelPhoto({
 }
 
 export default function HeroCollage() {
+  const [config, setConfig] = useState<HeroConfig>(DEFAULT_CONFIG)
   const { scrollY } = useScroll()
 
   const vh = typeof window !== 'undefined' ? window.innerHeight : 800
@@ -147,7 +149,7 @@ export default function HeroCollage() {
 
   const textOpacity = useTransform(scrollY, [0, vh * 0.5], [1, 0])
 
-  const bgPixelSize = useTransform(scrollY, [0, vh * 0.6], [12, 1])
+  const bgPixelSize = useTransform(scrollY, [0, vh * 0.6], [config.bgPixelSize, 1])
   const bgCanvasRef = useRef<HTMLCanvasElement>(null)
   const bgImgRef = useRef<HTMLImageElement | null>(null)
 
@@ -192,7 +194,7 @@ export default function HeroCollage() {
     img.src = '/images/hero/photo-forest.jpg'
     img.onload = () => {
       bgImgRef.current = img
-      drawBg(12)
+      drawBg(config.bgPixelSize)
     }
   }, [drawBg])
 
@@ -209,7 +211,7 @@ export default function HeroCollage() {
       const rect = canvas.getBoundingClientRect()
       canvas.width = Math.round(rect.width * window.devicePixelRatio)
       canvas.height = Math.round(rect.height * window.devicePixelRatio)
-      drawBg(12)
+      drawBg(config.bgPixelSize)
     })
     ro.observe(canvas)
     return () => ro.disconnect()
@@ -241,14 +243,14 @@ export default function HeroCollage() {
 
           <PixelPhoto
             src="/images/hero/photo-portrait.jpg"
-            pixelSize={7}
+            pixelSize={config.portraitPixelSize}
             objectPosition="center top"
             style={{
               position: 'absolute',
-              left: '6%',
-              top: '5%',
-              width: '30%',
-              height: '82%',
+              left: config.portraitLeft + '%',
+              top: config.portraitTop + '%',
+              width: config.portraitWidth + '%',
+              height: config.portraitHeight + '%',
               zIndex: 3,
               borderRadius: '10px',
               boxShadow: '0 0 0 1px rgba(240,237,232,0.08), 0 24px 48px rgba(0,0,0,0.5)',
@@ -257,14 +259,14 @@ export default function HeroCollage() {
 
           <PixelPhoto
             src="/images/hero/photo-temple.jpg"
-            pixelSize={7}
+            pixelSize={config.templePixelSize}
             objectPosition="center top"
             style={{
               position: 'absolute',
-              right: '3%',
-              top: '8%',
-              width: '44%',
-              height: '66%',
+              right: config.templeRight + '%',
+              top: config.templeTop + '%',
+              width: config.templeWidth + '%',
+              height: config.templeHeight + '%',
               zIndex: 3,
               borderRadius: '10px',
               boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
@@ -273,14 +275,14 @@ export default function HeroCollage() {
 
           <PixelPhoto
             src="/images/hero/photo-bird.jpg"
-            pixelSize={7}
+            pixelSize={config.birdPixelSize}
             objectPosition="center center"
             style={{
               position: 'absolute',
-              right: '5%',
-              bottom: '7%',
-              width: '24%',
-              height: '34%',
+              right: config.birdRight + '%',
+              bottom: config.birdBottom + '%',
+              width: config.birdWidth + '%',
+              height: config.birdHeight + '%',
               zIndex: 4,
               borderRadius: '8px',
               boxShadow: '0 0 0 1px rgba(240,237,232,0.08), 0 16px 32px rgba(0,0,0,0.6)',
@@ -288,8 +290,12 @@ export default function HeroCollage() {
           />
 
           <motion.div
-            className="absolute bottom-0 left-0 z-[5] p-8 md:p-14 pointer-events-none"
-            style={{ opacity: textOpacity }}
+            className="absolute z-[5] pointer-events-none"
+            style={{
+              opacity: textOpacity,
+              bottom: config.textBottom + '%',
+              left: config.textLeft + '%',
+            }}
           >
             <div
               style={{
@@ -371,6 +377,7 @@ export default function HeroCollage() {
           }} />
         </motion.div>
 
+        <DebugControls config={config} onChange={setConfig} />
       </div>
     </div>
   )
