@@ -10,69 +10,71 @@ const PHOTOS = [
       inset: 0,
       width: '100%',
       height: '100%',
-      objectFit: 'cover' as const,
-      objectPosition: 'center',
       zIndex: 1,
     },
-    basePixelSize: 12,
-    hoverPixelSize: 4,
+    basePixelSize: 14,
+    hoverPixelSize: 14,
     canHoverSharpen: false,
+    objectPosition: 'center center',
   },
   {
     id: 'portrait',
     src: '/images/hero/photo-portrait.jpg',
     style: {
       position: 'absolute' as const,
-      left: '8%',
-      top: '10%',
-      width: '28%',
-      height: '78%',
-      objectFit: 'cover' as const,
-      objectPosition: 'center top',
+      left: '6%',
+      top: '6%',
+      width: '30%',
+      height: '82%',
       zIndex: 3,
       borderRadius: '12px',
     },
-    basePixelSize: 8,
+    basePixelSize: 7,
     hoverPixelSize: 1,
     canHoverSharpen: true,
+    objectPosition: 'center top',
   },
   {
     id: 'temple',
     src: '/images/hero/photo-temple.jpg',
     style: {
       position: 'absolute' as const,
-      right: '4%',
-      top: '5%',
-      width: '38%',
-      height: '60%',
-      objectFit: 'cover' as const,
-      objectPosition: 'center top',
+      right: '3%',
+      top: '0',
+      width: '44%',
+      height: '68%',
       zIndex: 3,
-      borderRadius: '12px',
+      borderRadius: '0 0 12px 12px',
     },
-    basePixelSize: 8,
+    basePixelSize: 7,
     hoverPixelSize: 1,
     canHoverSharpen: true,
+    objectPosition: 'center top',
   },
   {
     id: 'bird',
     src: '/images/hero/photo-bird.jpg',
     style: {
       position: 'absolute' as const,
-      right: '6%',
-      bottom: '6%',
-      width: '26%',
-      height: '36%',
-      objectFit: 'cover' as const,
-      objectPosition: 'center',
+      right: '5%',
+      bottom: '5%',
+      width: '24%',
+      height: '34%',
       zIndex: 4,
       borderRadius: '10px',
     },
-    basePixelSize: 8,
+    basePixelSize: 7,
     hoverPixelSize: 1,
     canHoverSharpen: true,
+    objectPosition: 'center center',
   },
 ]
+
+const getSourceY = (img: HTMLImageElement, sh: number, position: string) => {
+  if (position.includes('top')) return 0
+  if (position.includes('bottom')) return img.naturalHeight - sh
+  return (img.naturalHeight - sh) / 2
+}
 
 const PixelatedPhoto = ({
   src,
@@ -80,12 +82,14 @@ const PixelatedPhoto = ({
   basePixelSize,
   hoverPixelSize,
   canHoverSharpen,
+  objectPosition,
 }: {
   src: string
   photoStyle: React.CSSProperties
   basePixelSize: number
   hoverPixelSize: number
   canHoverSharpen: boolean
+  objectPosition: string
   containerRef: React.RefObject<HTMLDivElement | null>
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -95,33 +99,59 @@ const PixelatedPhoto = ({
   const animFrameRef = useRef<number>()
   const [isHovered, setIsHovered] = useState(false)
 
-  const breatheRef = useRef({ phase: Math.random() * Math.PI * 2 })
-
   const drawPixelated = useCallback((pixelSize: number) => {
     const canvas = canvasRef.current
     if (!canvas || !imgRef.current) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const w = canvas.width
-    const h = canvas.height
+    const cw = canvas.width
+    const ch = canvas.height
+    const img = imgRef.current
+
+    const imgAspect = img.naturalWidth / img.naturalHeight
+    const canvasAspect = cw / ch
+
+    let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight
+
+    if (imgAspect > canvasAspect) {
+      sw = img.naturalHeight * canvasAspect
+      sx = (img.naturalWidth - sw) / 2
+    } else {
+      sh = img.naturalWidth / canvasAspect
+      sy = getSourceY(img, sh, objectPosition)
+    }
 
     if (pixelSize <= 1.2) {
       ctx.imageSmoothingEnabled = true
       ctx.imageSmoothingQuality = 'high'
-      ctx.drawImage(imgRef.current, 0, 0, w, h)
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch)
       return
     }
 
-    const pw = Math.max(1, Math.floor(w / pixelSize))
-    const ph = Math.max(1, Math.floor(h / pixelSize))
+    const pw = Math.max(1, Math.floor(cw / pixelSize))
+    const ph = Math.max(1, Math.floor(ch / pixelSize))
 
     ctx.imageSmoothingEnabled = false
-    ctx.drawImage(imgRef.current, 0, 0, pw, ph)
-
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, pw, ph)
     ctx.imageSmoothingEnabled = false
-    ctx.drawImage(canvas, 0, 0, pw, ph, 0, 0, w, h)
-  }, [])
+    ctx.drawImage(canvas, 0, 0, pw, ph, 0, 0, cw, ch)
+  }, [objectPosition])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const observer = new ResizeObserver(() => {
+      const rect = canvas.getBoundingClientRect()
+      canvas.width = Math.floor(rect.width * window.devicePixelRatio)
+      canvas.height = Math.floor(rect.height * window.devicePixelRatio)
+      drawPixelated(pixelSizeRef.current)
+    })
+
+    observer.observe(canvas)
+    return () => observer.disconnect()
+  }, [drawPixelated])
 
   useEffect(() => {
     const img = new Image()
@@ -137,17 +167,14 @@ const PixelatedPhoto = ({
       canvas.height = Math.floor(rect.height * window.devicePixelRatio)
 
       const animate = () => {
-        breatheRef.current.phase += 0.015
+        const diff = targetPixelSizeRef.current - pixelSizeRef.current
 
-        if (!isHovered) {
-          const breath = Math.sin(breatheRef.current.phase) * 1.5
-          targetPixelSizeRef.current = basePixelSize + breath
+        if (Math.abs(diff) > 0.05) {
+          const ease = 0.08
+          pixelSizeRef.current += diff * ease
+          drawPixelated(pixelSizeRef.current)
         }
 
-        const ease = isHovered ? 0.08 : 0.04
-        pixelSizeRef.current += (targetPixelSizeRef.current - pixelSizeRef.current) * ease
-
-        drawPixelated(pixelSizeRef.current)
         animFrameRef.current = requestAnimationFrame(animate)
       }
 
@@ -157,7 +184,7 @@ const PixelatedPhoto = ({
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
     }
-  }, [src, basePixelSize, drawPixelated, isHovered])
+  }, [src, basePixelSize, drawPixelated])
 
   useEffect(() => {
     if (canHoverSharpen) {
@@ -211,6 +238,7 @@ export default function HeroCollage() {
                 basePixelSize={photo.basePixelSize}
                 hoverPixelSize={photo.hoverPixelSize}
                 canHoverSharpen={photo.canHoverSharpen}
+                objectPosition={photo.objectPosition}
                 containerRef={containerRef}
               />
             ))}
