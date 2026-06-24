@@ -160,8 +160,6 @@ export default function HeroCollage() {
               className="w-full h-full object-cover"
               style={{
                 imageRendering: 'pixelated',
-                filter: 'brightness(0.35)',
-                transform: 'scale(1.08)',
               }}
             />
           </div>
@@ -192,7 +190,7 @@ export default function HeroCollage() {
           <PixelPhoto
             src="/images/hero/photo-temple.jpg"
             pixelSize={7}
-            objectPosition="center top"
+            objectPosition="center bottom"
             style={{
               position: 'absolute',
               right: '3%',
