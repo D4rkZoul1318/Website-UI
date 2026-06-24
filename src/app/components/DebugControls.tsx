@@ -28,26 +28,26 @@ export interface HeroConfig {
 export const DEFAULT_CONFIG: HeroConfig = {
   portraitLeft: 11,
   portraitTop: 17,
-  portraitWidth: 27,
+  portraitWidth: 22.5,
   portraitHeight: 62,
-  portraitPixelSize: 4,
+  portraitPixelSize: 3,
 
-  templeRight: 2,
-  templeTop: 6,
-  templeWidth: 36,
-  templeHeight: 91.5,
-  templePixelSize: 3,
+  templeRight: 1.5,
+  templeTop: 5.5,
+  templeWidth: 37.5,
+  templeHeight: 93,
+  templePixelSize: 2,
 
   birdRight: 34,
   birdBottom: 5,
   birdWidth: 12,
   birdHeight: 16,
-  birdPixelSize: 5,
+  birdPixelSize: 2,
 
-  bgPixelSize: 6,
+  bgPixelSize: 2,
 
-  textBottom: 1.5,
-  textLeft: 5.5,
+  textBottom: 1,
+  textLeft: 9.5,
 }
 
 function Slider({
