@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HudOverlay } from "./components/HudOverlay";
-import { HeroSection } from "./components/HeroSection";
+import HeroCollage from "./components/HeroCollage";
 import { SelectedWork } from "./components/SelectedWork";
 import { FooterNew } from "./components/FooterNew";
 import BobRides from "./components/bob-case-study/BobRides";
@@ -12,7 +12,7 @@ function HomePage() {
   return (
     <div className="min-h-screen" style={{ background: "#0C0C0C", color: "#E8E4DF" }}>
       <HudOverlay />
-      <HeroSection />
+      <HeroCollage />
       <SelectedWork />
       <FooterNew />
     </div>
