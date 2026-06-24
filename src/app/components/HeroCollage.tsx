@@ -147,6 +147,74 @@ export default function HeroCollage() {
 
   const textOpacity = useTransform(scrollY, [0, vh * 0.5], [1, 0])
 
+  const bgPixelSize = useTransform(scrollY, [0, vh * 0.6], [12, 1])
+  const bgCanvasRef = useRef<HTMLCanvasElement>(null)
+  const bgImgRef = useRef<HTMLImageElement | null>(null)
+
+  const drawBg = useCallback((px: number) => {
+    const canvas = bgCanvasRef.current
+    const img = bgImgRef.current
+    if (!canvas || !img) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const cw = canvas.width
+    const ch = canvas.height
+    if (!cw || !ch) return
+
+    const imgRatio = img.naturalWidth / img.naturalHeight
+    const canvasRatio = cw / ch
+    let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight
+    if (imgRatio > canvasRatio) {
+      sw = img.naturalHeight * canvasRatio
+      sx = (img.naturalWidth - sw) / 2
+    } else {
+      sh = img.naturalWidth / canvasRatio
+      sy = (img.naturalHeight - sh) / 2
+    }
+
+    ctx.imageSmoothingEnabled = false
+    if (px <= 1.5) {
+      ctx.imageSmoothingEnabled = true
+      ctx.imageSmoothingQuality = 'high'
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch)
+      return
+    }
+    const pw = Math.max(1, Math.round(cw / px))
+    const ph = Math.max(1, Math.round(ch / px))
+    ctx.clearRect(0, 0, cw, ch)
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, pw, ph)
+    ctx.drawImage(canvas, 0, 0, pw, ph, 0, 0, cw, ch)
+  }, [])
+
+  useEffect(() => {
+    const img = new Image()
+    img.src = '/images/hero/photo-forest.jpg'
+    img.onload = () => {
+      bgImgRef.current = img
+      drawBg(12)
+    }
+  }, [drawBg])
+
+  useEffect(() => {
+    return bgPixelSize.on('change', (px: number) => {
+      drawBg(px)
+    })
+  }, [bgPixelSize, drawBg])
+
+  useEffect(() => {
+    const canvas = bgCanvasRef.current
+    if (!canvas) return
+    const ro = new ResizeObserver(() => {
+      const rect = canvas.getBoundingClientRect()
+      canvas.width = Math.round(rect.width * window.devicePixelRatio)
+      canvas.height = Math.round(rect.height * window.devicePixelRatio)
+      drawBg(12)
+    })
+    ro.observe(canvas)
+    return () => ro.disconnect()
+  }, [drawBg])
+
   return (
     <div style={{ height: '200vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#0C0C0C]">
@@ -154,12 +222,12 @@ export default function HeroCollage() {
         <motion.div className="absolute inset-0" style={{ clipPath }}>
 
           <div className="absolute inset-0 z-[1]">
-            <img
-              src="/images/hero/photo-forest.jpg"
-              alt=""
-              className="w-full h-full object-cover"
+            <canvas
+              ref={bgCanvasRef}
               style={{
-                imageRendering: 'pixelated',
+                display: 'block',
+                width: '100%',
+                height: '100%',
               }}
             />
           </div>
@@ -190,15 +258,15 @@ export default function HeroCollage() {
           <PixelPhoto
             src="/images/hero/photo-temple.jpg"
             pixelSize={7}
-            objectPosition="center bottom"
+            objectPosition="center top"
             style={{
               position: 'absolute',
               right: '3%',
-              top: '0',
+              top: '8%',
               width: '44%',
               height: '66%',
               zIndex: 3,
-              borderRadius: '0 0 10px 10px',
+              borderRadius: '10px',
               boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
             }}
           />
