@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'motion/react'
+import DebugControls, { DEFAULT_CONFIG, type HeroConfig } from './DebugControls'
 
 function PixelPhoto({
   src,
@@ -7,12 +8,14 @@ function PixelPhoto({
   style,
   pixelSize = 7,
   objectPosition = 'center top',
+  objectFit = 'cover',
 }: {
   src: string
   className?: string
   style?: React.CSSProperties
   pixelSize?: number
   objectPosition?: string
+  objectFit?: 'cover' | 'contain'
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imgRef = useRef<HTMLImageElement | null>(null)
@@ -34,33 +37,48 @@ function PixelPhoto({
 
     const imgRatio = img.naturalWidth / img.naturalHeight
     const canvasRatio = cw / ch
-    let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight
 
-    if (imgRatio > canvasRatio) {
-      sw = img.naturalHeight * canvasRatio
-      sx = (img.naturalWidth - sw) / 2
+    let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight
+    let dx = 0, dy = 0, dw = cw, dh = ch
+
+    if (objectFit === 'contain') {
+      sx = 0; sy = 0; sw = img.naturalWidth; sh = img.naturalHeight
+      if (imgRatio > canvasRatio) {
+        dw = cw
+        dh = Math.round(cw / imgRatio)
+        dy = Math.round((ch - dh) / 2)
+      } else {
+        dh = ch
+        dw = Math.round(ch * imgRatio)
+        dx = Math.round((cw - dw) / 2)
+      }
     } else {
-      sh = img.naturalWidth / canvasRatio
-      if (objectPosition.includes('top')) sy = 0
-      else if (objectPosition.includes('bottom')) sy = img.naturalHeight - sh
-      else sy = (img.naturalHeight - sh) / 2
+      if (imgRatio > canvasRatio) {
+        sw = img.naturalHeight * canvasRatio
+        sx = (img.naturalWidth - sw) / 2
+      } else {
+        sh = img.naturalWidth / canvasRatio
+        if (objectPosition.includes('top')) sy = 0
+        else if (objectPosition.includes('bottom')) sy = img.naturalHeight - sh
+        else sy = (img.naturalHeight - sh) / 2
+      }
     }
 
     ctx.imageSmoothingEnabled = false
+    ctx.clearRect(0, 0, cw, ch)
 
     if (px <= 1.5) {
       ctx.imageSmoothingEnabled = true
       ctx.imageSmoothingQuality = 'high'
-      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch)
+      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
       return
     }
 
-    const pw = Math.max(1, Math.round(cw / px))
-    const ph = Math.max(1, Math.round(ch / px))
-    ctx.clearRect(0, 0, cw, ch)
-    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, pw, ph)
-    ctx.drawImage(canvas, 0, 0, pw, ph, 0, 0, cw, ch)
-  }, [objectPosition])
+    const scaleW = Math.max(1, Math.round(dw / px))
+    const scaleH = Math.max(1, Math.round(dh / px))
+    ctx.drawImage(img, sx, sy, sw, sh, dx, dy, scaleW, scaleH)
+    ctx.drawImage(canvas, dx, dy, scaleW, scaleH, dx, dy, dw, dh)
+  }, [objectPosition, objectFit])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -137,6 +155,7 @@ function PixelPhoto({
 }
 
 export default function HeroCollage() {
+  const [config, setConfig] = useState<HeroConfig>(DEFAULT_CONFIG)
   const { scrollY } = useScroll()
 
   const vh = typeof window !== 'undefined' ? window.innerHeight : 800
@@ -147,9 +166,13 @@ export default function HeroCollage() {
 
   const textOpacity = useTransform(scrollY, [0, vh * 0.5], [1, 0])
 
-  const bgPixelSize = useTransform(scrollY, [0, vh * 0.6], [12, 1])
+  const bgPixelSize = useTransform(scrollY, [0, vh * 0.6], [config.bgPixelSize, 1])
   const bgCanvasRef = useRef<HTMLCanvasElement>(null)
   const bgImgRef = useRef<HTMLImageElement | null>(null)
+  const bgCurrentPxRef = useRef(config.bgPixelSize)
+  const bgTargetPxRef = useRef(config.bgPixelSize)
+  const bgRafRef = useRef<number>()
+  const bgHoveringRef = useRef(false)
 
   const drawBg = useCallback((px: number) => {
     const canvas = bgCanvasRef.current
@@ -192,15 +215,46 @@ export default function HeroCollage() {
     img.src = '/images/hero/photo-forest.jpg'
     img.onload = () => {
       bgImgRef.current = img
-      drawBg(12)
+      drawBg(config.bgPixelSize)
     }
   }, [drawBg])
 
   useEffect(() => {
     return bgPixelSize.on('change', (px: number) => {
-      drawBg(px)
+      if (!bgHoveringRef.current) {
+        bgCurrentPxRef.current = px
+        drawBg(px)
+      }
     })
   }, [bgPixelSize, drawBg])
+
+  const startBgAnim = useCallback(() => {
+    if (bgRafRef.current) cancelAnimationFrame(bgRafRef.current)
+    const loop = () => {
+      const diff = bgTargetPxRef.current - bgCurrentPxRef.current
+      if (Math.abs(diff) < 0.05) {
+        bgCurrentPxRef.current = bgTargetPxRef.current
+        drawBg(bgCurrentPxRef.current)
+        return
+      }
+      bgCurrentPxRef.current += diff * 0.1
+      drawBg(bgCurrentPxRef.current)
+      bgRafRef.current = requestAnimationFrame(loop)
+    }
+    bgRafRef.current = requestAnimationFrame(loop)
+  }, [drawBg])
+
+  const handleBgMouseEnter = useCallback(() => {
+    bgHoveringRef.current = true
+    bgTargetPxRef.current = 1
+    startBgAnim()
+  }, [startBgAnim])
+
+  const handleBgMouseLeave = useCallback(() => {
+    bgHoveringRef.current = false
+    bgTargetPxRef.current = bgPixelSize.get()
+    startBgAnim()
+  }, [startBgAnim, bgPixelSize])
 
   useEffect(() => {
     const canvas = bgCanvasRef.current
@@ -209,7 +263,7 @@ export default function HeroCollage() {
       const rect = canvas.getBoundingClientRect()
       canvas.width = Math.round(rect.width * window.devicePixelRatio)
       canvas.height = Math.round(rect.height * window.devicePixelRatio)
-      drawBg(12)
+      drawBg(config.bgPixelSize)
     })
     ro.observe(canvas)
     return () => ro.disconnect()
@@ -228,7 +282,10 @@ export default function HeroCollage() {
                 display: 'block',
                 width: '100%',
                 height: '100%',
+                cursor: 'zoom-in',
               }}
+              onMouseEnter={handleBgMouseEnter}
+              onMouseLeave={handleBgMouseLeave}
             />
           </div>
 
@@ -241,14 +298,14 @@ export default function HeroCollage() {
 
           <PixelPhoto
             src="/images/hero/photo-portrait.jpg"
-            pixelSize={7}
+            pixelSize={config.portraitPixelSize}
             objectPosition="center top"
             style={{
               position: 'absolute',
-              left: '6%',
-              top: '5%',
-              width: '30%',
-              height: '82%',
+              left: config.portraitLeft + '%',
+              top: config.portraitTop + '%',
+              width: config.portraitWidth + '%',
+              height: config.portraitHeight + '%',
               zIndex: 3,
               borderRadius: '10px',
               boxShadow: '0 0 0 1px rgba(240,237,232,0.08), 0 24px 48px rgba(0,0,0,0.5)',
@@ -257,14 +314,14 @@ export default function HeroCollage() {
 
           <PixelPhoto
             src="/images/hero/photo-temple.jpg"
-            pixelSize={7}
-            objectPosition="center top"
+            pixelSize={config.templePixelSize}
+            objectFit="contain"
             style={{
               position: 'absolute',
-              right: '3%',
-              top: '8%',
-              width: '44%',
-              height: '66%',
+              right: config.templeRight + '%',
+              top: config.templeTop + '%',
+              width: config.templeWidth + '%',
+              height: config.templeHeight + '%',
               zIndex: 3,
               borderRadius: '10px',
               boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
@@ -273,14 +330,14 @@ export default function HeroCollage() {
 
           <PixelPhoto
             src="/images/hero/photo-bird.jpg"
-            pixelSize={7}
+            pixelSize={config.birdPixelSize}
             objectPosition="center center"
             style={{
               position: 'absolute',
-              right: '5%',
-              bottom: '7%',
-              width: '24%',
-              height: '34%',
+              right: config.birdRight + '%',
+              bottom: config.birdBottom + '%',
+              width: config.birdWidth + '%',
+              height: config.birdHeight + '%',
               zIndex: 4,
               borderRadius: '8px',
               boxShadow: '0 0 0 1px rgba(240,237,232,0.08), 0 16px 32px rgba(0,0,0,0.6)',
@@ -288,8 +345,12 @@ export default function HeroCollage() {
           />
 
           <motion.div
-            className="absolute bottom-0 left-0 z-[5] p-8 md:p-14 pointer-events-none"
-            style={{ opacity: textOpacity }}
+            className="absolute z-[5] pointer-events-none"
+            style={{
+              opacity: textOpacity,
+              bottom: config.textBottom + '%',
+              left: config.textLeft + '%',
+            }}
           >
             <div
               style={{
@@ -371,6 +432,7 @@ export default function HeroCollage() {
           }} />
         </motion.div>
 
+        <DebugControls config={config} onChange={setConfig} />
       </div>
     </div>
   )
