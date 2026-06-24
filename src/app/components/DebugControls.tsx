@@ -46,7 +46,7 @@ export const DEFAULT_CONFIG: HeroConfig = {
 
   bgPixelSize: 6,
 
-  textBottom: 8,
+  textBottom: 1.5,
   textLeft: 5.5,
 }
 
