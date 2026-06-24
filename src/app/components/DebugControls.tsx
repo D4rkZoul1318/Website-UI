@@ -33,15 +33,15 @@ export const DEFAULT_CONFIG: HeroConfig = {
   portraitPixelSize: 7,
 
   templeRight: 3,
-  templeTop: 8,
-  templeWidth: 44,
-  templeHeight: 66,
+  templeTop: 5,
+  templeWidth: 32,
+  templeHeight: 82,
   templePixelSize: 7,
 
   birdRight: 5,
   birdBottom: 7,
-  birdWidth: 24,
-  birdHeight: 34,
+  birdWidth: 16,
+  birdHeight: 24,
   birdPixelSize: 7,
 
   bgPixelSize: 12,
