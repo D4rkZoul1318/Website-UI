@@ -121,6 +121,8 @@ export default function DebugControls({
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
 
+  if (import.meta.env.PROD) return null
+
   const set = (key: keyof HeroConfig) => (v: number) =>
     onChange({ ...config, [key]: v })
 
