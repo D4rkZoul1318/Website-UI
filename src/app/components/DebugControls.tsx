@@ -118,11 +118,8 @@ export default function DebugControls({
   config: HeroConfig
   onChange: (c: HeroConfig) => void
 }) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-
-  const debugParam = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug')
-  if (import.meta.env.PROD && !debugParam) return null
 
   const set = (key: keyof HeroConfig) => (v: number) =>
     onChange({ ...config, [key]: v })
