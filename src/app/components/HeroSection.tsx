@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import PixelGrid from "./PixelGrid";
+import Cubes from "./Cubes";
 
 export function HeroSection() {
   return (
@@ -86,7 +86,17 @@ export function HeroSection() {
 
         <div className="hidden lg:block h-[600px] relative -mr-16">
           <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0C0C0C] to-transparent z-10 pointer-events-none" />
-          <PixelGrid />
+          <Cubes
+            gridSize={10}
+            maxAngle={120}
+            radius={4}
+            borderStyle="1px solid #333333"
+            faceColor="#0C0C0C"
+            rippleColor="#E8734A"
+            rippleSpeed={1.5}
+            autoAnimate={true}
+            rippleOnClick={true}
+          />
         </div>
       </div>
 
