@@ -377,34 +377,17 @@ export default function HeroCollage() {
               >
                 SOHUM<br />BHATNAGAR
               </h1>
-              <div
-                style={{
+              <p style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: '12px',
+                  color: 'rgba(240,237,232,0.5)',
+                  letterSpacing: '0.02em',
                   marginTop: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                }}
-              >
-                <span style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '12px',
-                  color: 'rgba(240,237,232,0.5)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.15em',
+                  maxWidth: '360px',
+                  lineHeight: 1.5,
                 }}>
-                  Designer
-                </span>
-                <span style={{ color: '#E8734A', fontFamily: "'Space Mono', monospace", fontSize: '12px' }}>—</span>
-                <span style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '12px',
-                  color: 'rgba(240,237,232,0.5)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.15em',
-                }}>
-                  Photographer
-                </span>
-              </div>
+                  Designer, photographer and storyteller interested in how people interact with systems.
+              </p>
             </div>
           </motion.div>
 
