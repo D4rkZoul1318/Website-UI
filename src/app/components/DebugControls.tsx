@@ -26,22 +26,22 @@ export interface HeroConfig {
 }
 
 export const DEFAULT_CONFIG: HeroConfig = {
-  portraitLeft: 6,
-  portraitTop: 5,
-  portraitWidth: 30,
-  portraitHeight: 82,
+  portraitLeft: 5,
+  portraitTop: 14,
+  portraitWidth: 27,
+  portraitHeight: 62,
   portraitPixelSize: 7,
 
-  templeRight: 3,
-  templeTop: 5,
-  templeWidth: 32,
-  templeHeight: 82,
+  templeRight: 0,
+  templeTop: 2,
+  templeWidth: 36,
+  templeHeight: 88,
   templePixelSize: 7,
 
-  birdRight: 5,
-  birdBottom: 7,
-  birdWidth: 16,
-  birdHeight: 24,
+  birdRight: 18,
+  birdBottom: 5,
+  birdWidth: 12,
+  birdHeight: 16,
   birdPixelSize: 7,
 
   bgPixelSize: 12,
