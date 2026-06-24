@@ -87,15 +87,15 @@ export function HeroSection() {
         <div className="hidden lg:block h-[600px] relative -mr-16">
           <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0C0C0C] to-transparent z-10 pointer-events-none" />
           <Cubes
-            gridSize={10}
+            gridSize={11}
             maxAngle={120}
-            radius={4}
-            borderStyle="1px solid #333333"
-            faceColor="#0C0C0C"
-            rippleColor="#E8734A"
+            radius={3}
+            borderStyle="2px dashed #B497CF"
+            faceColor="#1a1a2e"
+            rippleColor="#ff6b6b"
             rippleSpeed={1.5}
-            autoAnimate={true}
-            rippleOnClick={true}
+            autoAnimate
+            rippleOnClick
           />
         </div>
       </div>
