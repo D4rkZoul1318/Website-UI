@@ -8,12 +8,14 @@ function PixelPhoto({
   style,
   pixelSize = 7,
   objectPosition = 'center top',
+  objectFit = 'cover',
 }: {
   src: string
   className?: string
   style?: React.CSSProperties
   pixelSize?: number
   objectPosition?: string
+  objectFit?: 'cover' | 'contain'
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imgRef = useRef<HTMLImageElement | null>(null)
@@ -35,33 +37,48 @@ function PixelPhoto({
 
     const imgRatio = img.naturalWidth / img.naturalHeight
     const canvasRatio = cw / ch
-    let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight
 
-    if (imgRatio > canvasRatio) {
-      sw = img.naturalHeight * canvasRatio
-      sx = (img.naturalWidth - sw) / 2
+    let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight
+    let dx = 0, dy = 0, dw = cw, dh = ch
+
+    if (objectFit === 'contain') {
+      sx = 0; sy = 0; sw = img.naturalWidth; sh = img.naturalHeight
+      if (imgRatio > canvasRatio) {
+        dw = cw
+        dh = Math.round(cw / imgRatio)
+        dy = Math.round((ch - dh) / 2)
+      } else {
+        dh = ch
+        dw = Math.round(ch * imgRatio)
+        dx = Math.round((cw - dw) / 2)
+      }
     } else {
-      sh = img.naturalWidth / canvasRatio
-      if (objectPosition.includes('top')) sy = 0
-      else if (objectPosition.includes('bottom')) sy = img.naturalHeight - sh
-      else sy = (img.naturalHeight - sh) / 2
+      if (imgRatio > canvasRatio) {
+        sw = img.naturalHeight * canvasRatio
+        sx = (img.naturalWidth - sw) / 2
+      } else {
+        sh = img.naturalWidth / canvasRatio
+        if (objectPosition.includes('top')) sy = 0
+        else if (objectPosition.includes('bottom')) sy = img.naturalHeight - sh
+        else sy = (img.naturalHeight - sh) / 2
+      }
     }
 
     ctx.imageSmoothingEnabled = false
+    ctx.clearRect(0, 0, cw, ch)
 
     if (px <= 1.5) {
       ctx.imageSmoothingEnabled = true
       ctx.imageSmoothingQuality = 'high'
-      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch)
+      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
       return
     }
 
-    const pw = Math.max(1, Math.round(cw / px))
-    const ph = Math.max(1, Math.round(ch / px))
-    ctx.clearRect(0, 0, cw, ch)
-    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, pw, ph)
-    ctx.drawImage(canvas, 0, 0, pw, ph, 0, 0, cw, ch)
-  }, [objectPosition])
+    const scaleW = Math.max(1, Math.round(dw / px))
+    const scaleH = Math.max(1, Math.round(dh / px))
+    ctx.drawImage(img, sx, sy, sw, sh, dx, dy, scaleW, scaleH)
+    ctx.drawImage(canvas, dx, dy, scaleW, scaleH, dx, dy, dw, dh)
+  }, [objectPosition, objectFit])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -152,6 +169,10 @@ export default function HeroCollage() {
   const bgPixelSize = useTransform(scrollY, [0, vh * 0.6], [config.bgPixelSize, 1])
   const bgCanvasRef = useRef<HTMLCanvasElement>(null)
   const bgImgRef = useRef<HTMLImageElement | null>(null)
+  const bgCurrentPxRef = useRef(config.bgPixelSize)
+  const bgTargetPxRef = useRef(config.bgPixelSize)
+  const bgRafRef = useRef<number>()
+  const bgHoveringRef = useRef(false)
 
   const drawBg = useCallback((px: number) => {
     const canvas = bgCanvasRef.current
@@ -200,9 +221,40 @@ export default function HeroCollage() {
 
   useEffect(() => {
     return bgPixelSize.on('change', (px: number) => {
-      drawBg(px)
+      if (!bgHoveringRef.current) {
+        bgCurrentPxRef.current = px
+        drawBg(px)
+      }
     })
   }, [bgPixelSize, drawBg])
+
+  const startBgAnim = useCallback(() => {
+    if (bgRafRef.current) cancelAnimationFrame(bgRafRef.current)
+    const loop = () => {
+      const diff = bgTargetPxRef.current - bgCurrentPxRef.current
+      if (Math.abs(diff) < 0.05) {
+        bgCurrentPxRef.current = bgTargetPxRef.current
+        drawBg(bgCurrentPxRef.current)
+        return
+      }
+      bgCurrentPxRef.current += diff * 0.1
+      drawBg(bgCurrentPxRef.current)
+      bgRafRef.current = requestAnimationFrame(loop)
+    }
+    bgRafRef.current = requestAnimationFrame(loop)
+  }, [drawBg])
+
+  const handleBgMouseEnter = useCallback(() => {
+    bgHoveringRef.current = true
+    bgTargetPxRef.current = 1
+    startBgAnim()
+  }, [startBgAnim])
+
+  const handleBgMouseLeave = useCallback(() => {
+    bgHoveringRef.current = false
+    bgTargetPxRef.current = bgPixelSize.get()
+    startBgAnim()
+  }, [startBgAnim, bgPixelSize])
 
   useEffect(() => {
     const canvas = bgCanvasRef.current
@@ -230,7 +282,10 @@ export default function HeroCollage() {
                 display: 'block',
                 width: '100%',
                 height: '100%',
+                cursor: 'zoom-in',
               }}
+              onMouseEnter={handleBgMouseEnter}
+              onMouseLeave={handleBgMouseLeave}
             />
           </div>
 
@@ -260,7 +315,7 @@ export default function HeroCollage() {
           <PixelPhoto
             src="/images/hero/photo-temple.jpg"
             pixelSize={config.templePixelSize}
-            objectPosition="center top"
+            objectFit="contain"
             style={{
               position: 'absolute',
               right: config.templeRight + '%',
