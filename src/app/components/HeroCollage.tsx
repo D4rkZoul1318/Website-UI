@@ -141,11 +141,11 @@ export default function HeroCollage() {
 
   const vh = typeof window !== 'undefined' ? window.innerHeight : 800
 
-  const rawClip = useTransform(scrollY, [0, vh * 0.85], [0, 51])
-  const smoothClip = useSpring(rawClip, { stiffness: 60, damping: 20 })
-  const clipPath = useTransform(smoothClip, (v: number) => `inset(${v}% round 2px)`)
+  const rawClip = useTransform(scrollY, [0, vh * 0.85], [0, 100])
+  const smoothClip = useSpring(rawClip, { stiffness: 50, damping: 18 })
+  const clipPath = useTransform(smoothClip, (v: number) => `inset(0 0 ${v}% 0)`)
 
-  const textOpacity = useTransform(scrollY, [0, vh * 0.35], [1, 0])
+  const textOpacity = useTransform(scrollY, [0, vh * 0.5], [1, 0])
 
   return (
     <div style={{ height: '200vh' }}>
