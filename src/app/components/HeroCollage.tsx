@@ -315,7 +315,7 @@ export default function HeroCollage() {
           <PixelPhoto
             src="/images/hero/photo-temple.jpg"
             pixelSize={config.templePixelSize}
-            objectFit="contain"
+            objectPosition="center top"
             style={{
               position: 'absolute',
               right: config.templeRight + '%',
