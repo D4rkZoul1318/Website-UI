@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 const skills = ["UI/UX", "3D Modeling", "Graphic Design", "Photography"];
 
-const SKILLS_DEFAULTS = { paddingTop: 4, paddingBottom: 64, gap: 24, fontSize: 5 };
+const SKILLS_DEFAULTS = { paddingTop: 0, paddingBottom: 64, gap: 24, fontSize: 5 };
 
 function SkillsEditor({ config, onChange }: { config: typeof SKILLS_DEFAULTS; onChange: (c: typeof SKILLS_DEFAULTS) => void }) {
   const [open, setOpen] = useState(false);
@@ -42,7 +42,7 @@ function SkillsEditor({ config, onChange }: { config: typeof SKILLS_DEFAULTS; on
       {open && (
         <div style={{ padding: '8px 12px 12px' }}>
           {([
-            { key: 'paddingTop', label: 'top padding (px)', min: 0, max: 200 },
+            { key: 'paddingTop', label: 'top offset (px)', min: -200, max: 200 },
             { key: 'paddingBottom', label: 'bottom padding (px)', min: 0, max: 200 },
             { key: 'gap', label: 'gap (px)', min: 0, max: 80 },
             { key: 'fontSize', label: 'font size (rem)', min: 1, max: 10 },
@@ -94,7 +94,7 @@ function SkillsSection() {
         className="flex flex-col items-center"
         style={{
           background: "#0C0C0C",
-          paddingTop: config.paddingTop + 'px',
+          marginTop: config.paddingTop + 'px',
           paddingBottom: config.paddingBottom + 'px',
           gap: config.gap + 'px',
         }}
