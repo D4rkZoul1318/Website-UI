@@ -270,7 +270,7 @@ export default function HeroCollage() {
   }, [drawBg])
 
   return (
-    <div style={{ height: '200vh' }}>
+    <div style={{ height: '150vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#0C0C0C]">
 
         <motion.div className="absolute inset-0" style={{ clipPath }}>
