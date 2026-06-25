@@ -14,7 +14,7 @@ const skills = ["UI/UX", "3D Modeling", "Graphic Design", "Photography"];
 function SkillsSection() {
   return (
     <section
-      className="flex flex-col items-center justify-center gap-6 py-32 md:py-40"
+      className="flex flex-col items-center justify-center gap-6 py-12"
       style={{ background: "#0C0C0C" }}
     >
       {skills.map((skill) => (

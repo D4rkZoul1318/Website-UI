@@ -57,7 +57,7 @@ const SplitText = ({
   useGSAP(
     () => {
       if (!ref.current || !text || !fontsLoaded) return;
-      if (animationCompletedRef.current) return;
+      animationCompletedRef.current = false;
       const el = ref.current;
 
       if ((el as any)._rbsplitInstance) {
@@ -110,9 +110,8 @@ const SplitText = ({
               scrollTrigger: {
                 trigger: el,
                 start,
-                once: true,
+                toggleActions: 'play reverse play reverse',
                 fastScrollEnd: true,
-                anticipatePin: 0.4
               },
               onComplete: () => {
                 animationCompletedRef.current = true;
