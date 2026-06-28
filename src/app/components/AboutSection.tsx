@@ -58,7 +58,7 @@ function AboutEditor({ config, onChange }: { config: Config; onChange: (c: Confi
 
   return (
     <div style={{
-      position: 'fixed', bottom: 12, left: 12, zIndex: 9999, width: 240,
+      position: 'fixed', top: '50%', right: 12, transform: 'translateY(-50%)', zIndex: 9999, width: 240,
       background: 'rgba(12,12,12,0.95)', border: '1px solid #333', borderRadius: 8,
       backdropFilter: 'blur(12px)', fontFamily: 'Space Mono, monospace',
       boxShadow: '0 8px 32px rgba(0,0,0,0.8)', userSelect: 'none',
