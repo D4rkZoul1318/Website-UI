@@ -19,15 +19,17 @@ export default function AboutSection() {
           />
         </div>
 
-        <div className="torn-frame relative bg-white p-10 md:p-14">
-          <p className="font-caveat text-[#1a1a1a] text-center text-[22px] md:text-[26px] leading-[1.6] italic">
-            <span className="block text-[24px] md:text-[28px] font-semibold mb-4 not-italic">
-              I am Sohum.
-            </span>
-            I spend most of my time designing digital experiences and bringing ideas to life.
-            <br /><br />
-            When I&apos;m away from my desk, I&apos;m usually behind a camera, exploring somewhere new, or on a basketball court.
-          </p>
+        <div className="torn-border p-3">
+          <div className="relative bg-white p-10 md:p-14">
+            <p className="font-caveat text-[#1a1a1a] text-center text-[22px] md:text-[26px] leading-[1.6] italic">
+              <span className="block text-[24px] md:text-[28px] font-semibold mb-4 not-italic">
+                I am Sohum.
+              </span>
+              I spend most of my time designing digital experiences and bringing ideas to life.
+              <br /><br />
+              When I&apos;m away from my desk, I&apos;m usually behind a camera, exploring somewhere new, or on a basketball court.
+            </p>
+          </div>
         </div>
       </div>
     </section>
