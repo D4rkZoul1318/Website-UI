@@ -1,8 +1,32 @@
+import { useRef, useState, useEffect } from 'react';
+
+const DESIGN_WIDTH = 420;
+
 export default function AboutSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const availableWidth = entry.contentRect.width;
+        const maxCardWidth = availableWidth - 80;
+        const newScale = Math.min(maxCardWidth / DESIGN_WIDTH, 1);
+        setScale(newScale);
+      }
+    });
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="relative w-full bg-[#0C0C0C] pt-16 pb-24">
 
-      {/* === ABOUT ME TITLE === */}
+      {/* Section title */}
       <div className="text-center mb-16 px-6">
         <h2
           style={{ fontFamily: 'Space Mono, monospace' }}
@@ -12,53 +36,68 @@ export default function AboutSection() {
         </h2>
       </div>
 
-      {/* === BASKETBALL COURT BACKGROUND === */}
-      <div className="relative w-full mx-auto px-6">
-        <div className="relative w-full overflow-hidden flex items-center justify-center">
+      {/* Court background */}
+      <div ref={containerRef} className="relative w-full mx-auto px-6">
+        <div className="relative w-full overflow-hidden">
           <img
             src="/images/court-bg.png"
             alt=""
             className="w-full h-auto object-contain"
           />
+        </div>
 
-          {/* === TORN FRAME CARD — centered on the court image === */}
-          <div className="absolute max-w-[320px] z-10">
+        {/* Scaled card unit — everything inside is fixed px, scales uniformly */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div
+            style={{
+              width: DESIGN_WIDTH,
+              transform: `scale(${scale})`,
+              transformOrigin: 'center center',
+            }}
+          >
+            <div className="relative">
+              {/* Cat sticker */}
+              <div className="absolute -top-[44px] -right-[44px] z-20 w-[88px] h-[88px] animate-waddle-a">
+                <img
+                  src="/stickers/cat.png"
+                  alt=""
+                  width={88}
+                  height={88}
+                  className="w-full h-full object-contain drop-shadow-lg"
+                />
+              </div>
 
-            {/* Cat sticker - top right */}
-            <div className="absolute -top-8 -right-8 z-20 w-[70px] h-[70px] animate-waddle-a">
-              <img
-                src="/stickers/cat.png"
-                alt=""
-                width={70}
-                height={70}
-                className="w-full h-full object-contain drop-shadow-lg"
-              />
-            </div>
+              {/* Frog sticker */}
+              <div className="absolute -bottom-[32px] -left-[40px] z-20 w-[76px] h-[76px] animate-waddle-b">
+                <img
+                  src="/stickers/frog.png"
+                  alt=""
+                  width={76}
+                  height={76}
+                  className="w-full h-full object-contain drop-shadow-lg"
+                />
+              </div>
 
-            {/* Frog sticker - bottom left */}
-            <div className="absolute -bottom-5 -left-8 z-20 w-[60px] h-[60px] animate-waddle-b">
-              <img
-                src="/stickers/frog.png"
-                alt=""
-                width={60}
-                height={60}
-                className="w-full h-full object-contain drop-shadow-lg"
-              />
-            </div>
+              {/* Torn frame border */}
+              <div className="torn-border absolute -inset-[12px] z-0" />
 
-            {/* Torn frame border */}
-            <div className="torn-border absolute -inset-3 z-0" />
-
-            {/* White paper */}
-            <div className="relative z-10 bg-white p-8 md:p-10">
-              <p className="font-caveat text-[#1a1a1a] text-center text-[18px] md:text-[21px] leading-[1.6] italic">
-                <span className="block text-[20px] md:text-[24px] font-semibold mb-3 not-italic">
-                  I am Sohum.
-                </span>
-                I spend most of my time designing digital experiences and bringing ideas to life.
-                <br /><br />
-                When I&apos;m away from my desk, I&apos;m usually behind a camera, exploring somewhere new, or on a basketball court.
-              </p>
+              {/* White paper */}
+              <div className="relative z-10 bg-white px-[48px] py-[44px]">
+                <p
+                  className="font-caveat text-[#1a1a1a] text-center italic"
+                  style={{ fontSize: 24, lineHeight: 1.6 }}
+                >
+                  <span
+                    className="block font-semibold not-italic"
+                    style={{ fontSize: 28, marginBottom: 16 }}
+                  >
+                    I am Sohum.
+                  </span>
+                  I spend most of my time designing digital experiences and bringing ideas to life.
+                  <br /><br />
+                  When I&apos;m away from my desk, I&apos;m usually behind a camera, exploring somewhere new, or on a basketball court.
+                </p>
+              </div>
             </div>
           </div>
         </div>
