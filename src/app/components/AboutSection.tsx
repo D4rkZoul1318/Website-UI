@@ -1,25 +1,25 @@
 import { useState } from 'react';
 
 const DEFAULTS = {
-  bgMaxWidth: 960,
-  bgOverlay: 15,
-  cardW: 420,
+  bgMaxWidth: 1600,
+  bgOverlay: 21,
+  cardW: 360,
   cardH: 480,
-  cardScale: 1,
+  cardScale: 1.5,
   cardOffsetX: 0,
   cardOffsetY: 0,
   borderInset: 12,
-  catSize: 88,
-  catTop: -44,
+  catSize: 100,
+  catTop: -53,
   catRight: -44,
-  frogSize: 76,
-  frogBottom: -28,
-  frogLeft: -36,
-  titleSize: 28,
-  bodySize: 24,
+  frogSize: 128,
+  frogBottom: -51,
+  frogLeft: -69,
+  titleSize: 32,
+  bodySize: 23,
   lineHeight: 1.6,
-  padX: 48,
-  padY: 40,
+  padX: 50,
+  padY: 50,
 };
 
 type Config = typeof DEFAULTS;
