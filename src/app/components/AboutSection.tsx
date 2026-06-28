@@ -22,45 +22,45 @@ export default function AboutSection() {
           />
 
           {/* === TORN FRAME CARD — centered on the court image === */}
-          <div className="absolute w-[90%] max-w-[500px] h-[85%] z-10">
+          <div className="absolute max-w-[320px] z-10">
 
-          {/* Cat sticker - top right */}
-          <div className="absolute -top-10 -right-10 z-20 w-[90px] h-[90px] animate-waddle-a">
-            <img
-              src="/stickers/cat.png"
-              alt=""
-              width={90}
-              height={90}
-              className="w-full h-full object-contain drop-shadow-lg"
-            />
+            {/* Cat sticker - top right */}
+            <div className="absolute -top-8 -right-8 z-20 w-[70px] h-[70px] animate-waddle-a">
+              <img
+                src="/stickers/cat.png"
+                alt=""
+                width={70}
+                height={70}
+                className="w-full h-full object-contain drop-shadow-lg"
+              />
+            </div>
+
+            {/* Frog sticker - bottom left */}
+            <div className="absolute -bottom-5 -left-8 z-20 w-[60px] h-[60px] animate-waddle-b">
+              <img
+                src="/stickers/frog.png"
+                alt=""
+                width={60}
+                height={60}
+                className="w-full h-full object-contain drop-shadow-lg"
+              />
+            </div>
+
+            {/* Torn frame border */}
+            <div className="torn-border absolute -inset-3 z-0" />
+
+            {/* White paper */}
+            <div className="relative z-10 bg-white p-8 md:p-10">
+              <p className="font-caveat text-[#1a1a1a] text-center text-[18px] md:text-[21px] leading-[1.6] italic">
+                <span className="block text-[20px] md:text-[24px] font-semibold mb-3 not-italic">
+                  I am Sohum.
+                </span>
+                I spend most of my time designing digital experiences and bringing ideas to life.
+                <br /><br />
+                When I&apos;m away from my desk, I&apos;m usually behind a camera, exploring somewhere new, or on a basketball court.
+              </p>
+            </div>
           </div>
-
-          {/* Frog sticker - bottom left */}
-          <div className="absolute -bottom-6 -left-10 z-20 w-[80px] h-[80px] animate-waddle-b">
-            <img
-              src="/stickers/frog.png"
-              alt=""
-              width={80}
-              height={80}
-              className="w-full h-full object-contain drop-shadow-lg"
-            />
-          </div>
-
-          {/* Torn frame border */}
-          <div className="torn-border absolute -inset-3 z-0" />
-
-          {/* White paper */}
-          <div className="relative z-10 bg-white p-10 md:p-14 h-full flex items-center justify-center">
-            <p className="font-caveat text-[#1a1a1a] text-center text-[24px] md:text-[28px] leading-[1.6] italic">
-              <span className="block text-[26px] md:text-[32px] font-semibold mb-4 not-italic">
-                I am Sohum.
-              </span>
-              I spend most of my time designing digital experiences and bringing ideas to life.
-              <br /><br />
-              When I&apos;m away from my desk, I&apos;m usually behind a camera, exploring somewhere new, or on a basketball court.
-            </p>
-          </div>
-        </div>
         </div>
       </div>
     </section>
