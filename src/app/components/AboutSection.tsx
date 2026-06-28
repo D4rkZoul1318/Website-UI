@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 
 const DESIGN_WIDTH = 420;
+const MAX_SCALE = 1.35;
 
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -14,8 +15,7 @@ export default function AboutSection() {
       for (const entry of entries) {
         const availableWidth = entry.contentRect.width;
         const maxCardWidth = availableWidth - 80;
-        const newScale = Math.min(maxCardWidth / DESIGN_WIDTH, 1);
-        setScale(newScale);
+        setScale(Math.min(maxCardWidth / DESIGN_WIDTH, MAX_SCALE));
       }
     });
 
@@ -25,8 +25,6 @@ export default function AboutSection() {
 
   return (
     <section className="relative w-full bg-[#0C0C0C] pt-16 pb-24">
-
-      {/* Section title */}
       <div className="text-center mb-16 px-6">
         <h2
           style={{ fontFamily: 'Space Mono, monospace' }}
@@ -36,26 +34,30 @@ export default function AboutSection() {
         </h2>
       </div>
 
-      {/* Court background */}
-      <div ref={containerRef} className="relative w-full mx-auto px-6">
-        <div className="relative w-full overflow-hidden">
+      <div ref={containerRef} className="relative w-full max-w-[900px] mx-auto px-6">
+        <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
           <img
             src="/images/court-bg.png"
             alt=""
-            className="w-full h-auto object-contain"
+            className="absolute inset-0 w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-black/20" />
         </div>
 
-        {/* Scaled card unit — everything inside is fixed px, scales uniformly */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ pointerEvents: 'none' }}
+        >
           <div
             style={{
               width: DESIGN_WIDTH,
+              height: 520,
               transform: `scale(${scale})`,
               transformOrigin: 'center center',
+              pointerEvents: 'auto',
             }}
           >
-            <div className="relative">
+            <div className="relative w-full h-full">
               {/* Cat sticker */}
               <div className="absolute -top-[44px] -right-[44px] z-20 w-[88px] h-[88px] animate-waddle-a">
                 <img
@@ -82,7 +84,7 @@ export default function AboutSection() {
               <div className="torn-border absolute -inset-[12px] z-0" />
 
               {/* White paper */}
-              <div className="relative z-10 bg-white px-[48px] py-[44px]">
+              <div className="relative z-10 bg-white px-[48px] py-[44px] h-full flex items-center justify-center">
                 <p
                   className="font-caveat text-[#1a1a1a] text-center italic"
                   style={{ fontSize: 24, lineHeight: 1.6 }}
