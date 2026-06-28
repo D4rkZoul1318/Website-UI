@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HudOverlay } from "./components/HudOverlay";
 import HeroCollage from "./components/HeroCollage";
+import AboutSection from "./components/AboutSection";
 import SplitText from "./components/SplitText";
 import { SelectedWork } from "./components/SelectedWork";
 import { FooterNew } from "./components/FooterNew";
@@ -129,6 +130,7 @@ function HomePage() {
       <HudOverlay />
       <HeroCollage />
       <SkillsSection />
+      <AboutSection />
       <SelectedWork />
       <FooterNew />
     </div>
