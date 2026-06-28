@@ -1,14 +1,6 @@
-/* ---- TORN PAPER FRAME ---- */
-.torn-frame {
-  position: relative;
-}
-
-.torn-frame::before {
-  content: '';
-  position: absolute;
-  inset: -12px;
+/* ---- TORN PAPER BORDER ---- */
+.torn-border {
   background: #c4c0b8;
-  z-index: -1;
   clip-path: polygon(
     0.5% 1.2%, 2% 0.3%, 4% 1%, 6% 0.1%, 8% 0.8%, 10% 0.2%,
     13% 1.1%, 16% 0.4%, 19% 0.9%, 22% 0%, 25% 0.7%, 28% 0.2%,
@@ -37,35 +29,18 @@
 }
 
 /* ---- WADDLE ANIMATIONS ---- */
-
 @keyframes waddle-a {
-  0%, 100% {
-    transform: rotate(-4deg) translateY(0);
-  }
-  25% {
-    transform: rotate(3deg) translateY(-3px);
-  }
-  50% {
-    transform: rotate(-3deg) translateY(0);
-  }
-  75% {
-    transform: rotate(4deg) translateY(-2px);
-  }
+  0%, 100% { transform: rotate(-4deg) translateY(0); }
+  25% { transform: rotate(3deg) translateY(-3px); }
+  50% { transform: rotate(-3deg) translateY(0); }
+  75% { transform: rotate(4deg) translateY(-2px); }
 }
 
 @keyframes waddle-b {
-  0%, 100% {
-    transform: rotate(3deg) translateY(0);
-  }
-  25% {
-    transform: rotate(-4deg) translateY(-2px);
-  }
-  50% {
-    transform: rotate(2deg) translateY(-1px);
-  }
-  75% {
-    transform: rotate(-3deg) translateY(-3px);
-  }
+  0%, 100% { transform: rotate(3deg) translateY(0); }
+  25% { transform: rotate(-4deg) translateY(-2px); }
+  50% { transform: rotate(2deg) translateY(-1px); }
+  75% { transform: rotate(-3deg) translateY(-3px); }
 }
 
 .animate-waddle-a {
