@@ -14,16 +14,15 @@ export default function AboutSection() {
 
       {/* === BASKETBALL COURT BACKGROUND === */}
       <div className="relative w-full mx-auto px-6">
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden flex items-center justify-center">
           <img
             src="/images/court-bg.png"
             alt=""
             className="w-full h-auto object-contain"
           />
-        </div>
 
-        {/* === TORN FRAME CARD — overlaps the court image === */}
-        <div className="relative mx-auto max-w-[380px] -mt-32 md:-mt-40 z-10">
+          {/* === TORN FRAME CARD — centered on the court image === */}
+          <div className="absolute mx-auto max-w-[380px] z-10">
 
           {/* Cat sticker - top right */}
           <div className="absolute -top-10 -right-10 z-20 w-[90px] h-[90px] animate-waddle-a">
@@ -61,6 +60,7 @@ export default function AboutSection() {
               When I&apos;m away from my desk, I&apos;m usually behind a camera, exploring somewhere new, or on a basketball court.
             </p>
           </div>
+        </div>
         </div>
       </div>
     </section>
