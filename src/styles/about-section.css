@@ -81,5 +81,5 @@
 
 /* ---- CAVEAT FONT CLASS ---- */
 .font-caveat {
-  font-family: var(--font-caveat), 'Caveat', cursive;
+  font-family: 'Caveat', cursive;
 }
