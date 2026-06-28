@@ -13,16 +13,13 @@ export default function AboutSection() {
       </div>
 
       {/* === BASKETBALL COURT BACKGROUND === */}
-      <div className="relative w-full max-w-[900px] mx-auto px-6">
-        <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
+      <div className="relative w-full mx-auto px-6">
+        <div className="relative w-full overflow-hidden">
           <img
             src="/images/court-bg.png"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover"
+            className="w-full h-auto object-contain"
           />
-
-          {/* Dark overlay for readability */}
-          <div className="absolute inset-0 bg-black/30" />
         </div>
 
         {/* === TORN FRAME CARD — overlaps the court image === */}
