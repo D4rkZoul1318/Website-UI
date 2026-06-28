@@ -5,7 +5,7 @@ export default function AboutSection() {
 
         <div className="absolute -top-10 -right-12 z-10 w-[100px] h-[100px] animate-waddle-a">
           <img
-            src="/stickers/cat.png"
+            src="/cat.png"
             alt="Cat sticker"
             className="w-full h-full object-contain drop-shadow-lg"
           />
@@ -13,7 +13,7 @@ export default function AboutSection() {
 
         <div className="absolute -bottom-8 -left-12 z-10 w-[90px] h-[90px] animate-waddle-b">
           <img
-            src="/stickers/frog.png"
+            src="/frog.png"
             alt="Frog sticker"
             className="w-full h-full object-contain drop-shadow-lg"
           />
