@@ -1,28 +1,62 @@
 export default function AboutSection() {
   return (
-    <section className="relative w-full bg-[#0C0C0C] py-24 px-6 md:px-12 lg:px-20">
-      <div className="relative mx-auto max-w-[420px]">
+    <section className="relative w-full bg-[#0C0C0C] pt-16 pb-24">
 
-        <div className="absolute -top-10 -right-12 z-10 w-[100px] h-[100px] animate-waddle-a">
+      {/* === ABOUT ME TITLE === */}
+      <div className="text-center mb-16 px-6">
+        <h2
+          style={{ fontFamily: 'Space Mono, monospace' }}
+          className="text-[#E8734A] text-xs tracking-[4px] uppercase"
+        >
+          About Me
+        </h2>
+      </div>
+
+      {/* === BASKETBALL COURT BACKGROUND === */}
+      <div className="relative w-full max-w-[900px] mx-auto px-6">
+        <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
           <img
-            src="/stickers/cat.png"
-            alt="Cat sticker"
-            className="w-full h-full object-contain drop-shadow-lg"
+            src="/images/court-bg.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
           />
+
+          {/* Dark overlay for readability */}
+          <div className="absolute inset-0 bg-black/30" />
         </div>
 
-        <div className="absolute -bottom-8 -left-12 z-10 w-[90px] h-[90px] animate-waddle-b">
-          <img
-            src="/stickers/frog.png"
-            alt="Frog sticker"
-            className="w-full h-full object-contain drop-shadow-lg"
-          />
-        </div>
+        {/* === TORN FRAME CARD — overlaps the court image === */}
+        <div className="relative mx-auto max-w-[380px] -mt-32 md:-mt-40 z-10">
 
-        <div className="torn-border p-3">
-          <div className="relative bg-white p-10 md:p-14">
-            <p className="font-caveat text-[#1a1a1a] text-center text-[22px] md:text-[26px] leading-[1.6] italic">
-              <span className="block text-[24px] md:text-[28px] font-semibold mb-4 not-italic">
+          {/* Cat sticker - top right */}
+          <div className="absolute -top-10 -right-10 z-20 w-[90px] h-[90px] animate-waddle-a">
+            <img
+              src="/stickers/cat.png"
+              alt=""
+              width={90}
+              height={90}
+              className="w-full h-full object-contain drop-shadow-lg"
+            />
+          </div>
+
+          {/* Frog sticker - bottom left */}
+          <div className="absolute -bottom-6 -left-10 z-20 w-[80px] h-[80px] animate-waddle-b">
+            <img
+              src="/stickers/frog.png"
+              alt=""
+              width={80}
+              height={80}
+              className="w-full h-full object-contain drop-shadow-lg"
+            />
+          </div>
+
+          {/* Torn frame border */}
+          <div className="torn-border absolute -inset-3 z-0" />
+
+          {/* White paper */}
+          <div className="relative z-10 bg-white p-10 md:p-12">
+            <p className="font-caveat text-[#1a1a1a] text-center text-[20px] md:text-[24px] leading-[1.6] italic">
+              <span className="block text-[22px] md:text-[26px] font-semibold mb-4 not-italic">
                 I am Sohum.
               </span>
               I spend most of my time designing digital experiences and bringing ideas to life.
