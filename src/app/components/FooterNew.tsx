@@ -19,7 +19,7 @@ export function FooterNew() {
             sohum1311@gmail.com ↗
           </a>
           <a
-            href="https://linkedin.com/in/sohumbhatnagar"
+            href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/"
             target="_blank"
             rel="noopener noreferrer"
             style={{ fontFamily: "var(--font-mono)" }}
