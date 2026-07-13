@@ -60,10 +60,16 @@
 .camera-theme .wrap-wide { max-width: 1100px; margin: 0 auto; padding-inline: var(--space-6); }
 
 /* ---- Chapter chrome — sticky topbar + progress bar ------------------ */
+/* backdrop-filter dropped: on a sticky/fixed bar repainted every scroll
+   frame, it was crashing the GPU compositor after repeated full-page
+   navigations between camera-theme pages (reproduced consistently in
+   testing — a known class of Chromium backdrop-filter stability issues).
+   Near-opaque solid background keeps the same "floating pill" look
+   without the compositor risk. */
 .camera-theme .topbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--space-4) var(--space-6);
-  background: rgba(226, 224, 220, 0.82); backdrop-filter: blur(8px);
+  background: rgba(226, 224, 220, 0.97);
   border-bottom: 1px solid var(--line-soft); position: sticky; top: 0; z-index: 10;
 }
 .camera-theme .topbar .mark { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--ink); font-weight: 500; }

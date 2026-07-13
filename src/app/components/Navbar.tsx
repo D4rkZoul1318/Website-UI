@@ -63,8 +63,6 @@ export function Navbar() {
         className="fixed top-0 left-0 right-0 z-50"
         style={{
           opacity: visible ? 1 : 0,
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
           backgroundColor: scrolled || menuOpen
             ? "rgba(249, 249, 247, 0.95)"
             : "rgba(249, 249, 247, 0.01)",

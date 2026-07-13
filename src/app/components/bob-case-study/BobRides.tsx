@@ -371,7 +371,7 @@ export default function BobRides() {
               <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
               <Reveal as="h2">Root Cause Analysis</Reveal>
             </div>
-            <Reveal variant="zoom" className="media-frame" style={{ maxWidth: 760, marginTop: 'var(--space-7)', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
+            <Reveal variant="zoom" className="media-frame" style={{ maxWidth: '100%', width: 1040, marginTop: 'var(--space-7)', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--paper)' }}>
               <img src="/images/bob-images/root-cause-analysis.png" alt="Root Cause Analysis" loading="lazy" />
             </Reveal>
           </div>

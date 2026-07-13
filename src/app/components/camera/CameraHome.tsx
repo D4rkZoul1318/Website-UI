@@ -909,9 +909,6 @@ export default function CameraHome() {
             </Reveal>
             <Reveal variant="clip" className="about-portrait">
               <div className="cycle-frame">
-                <video src="/videos/rewind-preview.mp4" autoPlay muted loop playsInline aria-label="Behind-the-scenes footage" />
-              </div>
-              <div className="cycle-frame">
                 <div className="cycle-stage">
                   <div className="ball-rig">
                     <div className="ball-shadow"></div>
