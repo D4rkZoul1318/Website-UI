@@ -238,11 +238,13 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
 #notes.section { align-items: stretch; }
 .camera-home .notes-head { max-width: 640px; margin-bottom: var(--space-7); }
 .camera-home .notes-head h2 { margin-top: var(--space-3); }
-.camera-home .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-8); align-items: start; }
+.camera-home .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-8); }
 .camera-home .about-body p { color: var(--ink-soft); line-height: 1.75; font-size: 1.05rem; margin-bottom: var(--space-5); max-width: 62ch; }
 .camera-home .about-body p:last-of-type { margin-bottom: var(--space-7); }
+/* Stretches to match the text column's natural height instead of a fixed
+   aspect-ratio, so the panel ends where the description ends. */
 .camera-home .about-portrait-wrap { display: flex; flex-direction: column; gap: var(--space-3); }
-.camera-home .about-portrait { aspect-ratio: 4/5; position: relative; background: var(--screen-bg); }
+.camera-home .about-portrait { position: relative; background: var(--screen-bg); flex: 1; min-height: 320px; }
 .camera-home .about-portrait-caption { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-faint); text-align: center; }
 .camera-home .ascii-video {
   width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
@@ -256,6 +258,7 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
 @media (max-width: 860px) {
   .camera-home .about-grid { grid-template-columns: 1fr; }
   .camera-home .about-portrait-wrap { max-width: 320px; margin: 0 auto var(--space-6); order: -1; }
+  .camera-home .about-portrait { flex: none; aspect-ratio: 4/5; min-height: 0; }
 }
 .camera-home .about-facts { display: flex; flex-wrap: wrap; gap: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); }
 
