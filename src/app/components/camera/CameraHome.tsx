@@ -909,59 +909,7 @@ export default function CameraHome() {
               </div>
             </Reveal>
             <Reveal variant="clip" className="about-portrait">
-              <div className="cycle-frame">
-                <div className="cycle-stage">
-                  <div className="ball-rig">
-                    <div className="ball-shadow"></div>
-                    <svg className="ball-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                        <radialGradient id="ballShade" cx="38%" cy="32%" r="75%">
-                          <stop offset="0%" stopColor="#ff8a5c" />
-                          <stop offset="55%" stopColor="var(--accent)" />
-                          <stop offset="100%" stopColor="#b23600" />
-                        </radialGradient>
-                      </defs>
-                      <circle cx={32} cy={32} r={30} fill="url(#ballShade)" />
-                      <g fill="none" stroke="#1a1a1a" strokeWidth={1.4} strokeOpacity={0.55}>
-                        <path d="M2 32 H62" />
-                        <path d="M32 2 V62" />
-                        <path d="M8 10 C20 22, 20 42, 8 54" />
-                        <path d="M56 10 C44 22, 44 42, 56 54" />
-                      </g>
-                    </svg>
-                  </div>
-                  <span className="stage-label">Basketball — illustrated study</span>
-                </div>
-              </div>
-              <div className="cycle-frame">
-                <div className="cycle-stage">
-                  <div className="dslr-rig">
-                    <svg className="dslr-svg" viewBox="0 0 180 130" xmlns="http://www.w3.org/2000/svg">
-                      <g fill="none" stroke="rgba(244,243,240,0.85)" strokeWidth={2} strokeLinejoin="round">
-                        <rect x={18} y={38} width={102} height={66} rx={8} />
-                        <rect x={8} y={52} width={14} height={36} rx={4} />
-                        <path d="M46 38 V24 C46 20 49 17 53 17 H79 C83 17 86 20 86 24 V38" />
-                        <circle cx={66} cy={70} r={27} fill="rgba(20,20,20,0.6)" />
-                        <circle cx={66} cy={70} r={19} className="dslr-sheen" fill="rgba(244,243,240,1)" />
-                        <circle cx={66} cy={70} r={11} fill="none" />
-                        <rect x={30} y={46} width={14} height={9} rx={2} />
-                        <circle cx={150} cy={50} r={9} />
-                        <path d="M147 44 L153 56 M153 44 L147 56" />
-                      </g>
-                      <g fill="rgba(255,77,0,0.9)">
-                        <circle cx={108} cy={47} r={3} />
-                      </g>
-                    </svg>
-                  </div>
-                  <span className="stage-label">DSLR — turntable study</span>
-                </div>
-              </div>
-              <div className="cycle-frame">
-                <div className="cycle-stage">
-                  <AsciiVideo src="/videos/aboutbird.mp4" label="Bird in flight, rendered as live ASCII" />
-                  <span className="stage-label">Field footage — ASCII render</span>
-                </div>
-              </div>
+              <AsciiVideo src="/videos/aboutbird.mp4" label="Bird in flight, rendered as live ASCII" />
             </Reveal>
           </div>
         </section>
