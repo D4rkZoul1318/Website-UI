@@ -553,7 +553,7 @@ export default function CameraHome() {
       const thumbPos = p.thumbPosition || 'center';
       let thumbInner: string;
       if (p.thumbAnimated) {
-        thumbInner = '<div class="bob-anim-thumb"><div class="bob-anim-base"></div><span class="bob-anim-logo" aria-hidden="true" style="position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);z-index:2;font-family:var(--font-mono);font-weight:700;font-size:20px;letter-spacing:0.08em;color:rgba(255,255,255,0.92);text-shadow:0 2px 8px rgba(0,0,0,0.4);">bob</span></div>';
+        thumbInner = '<div class="bob-anim-thumb"><div class="bob-anim-base"></div><img class="bob-anim-logo" src="/images/bob/bob-wordmark.png" alt="bob" /></div>';
       } else if (p.thumbVideo) {
         thumbInner = '<video class="polaroid-photo-inner" src="' + p.thumbVideo + '" poster="' + (p.image || '') + '" autoplay muted loop playsinline style="transform:scale(' + thumbZoom + ');transform-origin:' + thumbPos + ';object-position:' + thumbPos + ';"></video>';
       } else {
