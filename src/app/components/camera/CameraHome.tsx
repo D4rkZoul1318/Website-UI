@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Reveal } from './Reveal';
+import AsciiVideo from './AsciiVideo';
 import { ROUTES } from '../../routes';
 
 type Project = {
@@ -953,6 +954,12 @@ export default function CameraHome() {
                     </svg>
                   </div>
                   <span className="stage-label">DSLR — turntable study</span>
+                </div>
+              </div>
+              <div className="cycle-frame">
+                <div className="cycle-stage">
+                  <AsciiVideo src="/videos/aboutbird.mp4" label="Bird in flight, rendered as live ASCII" />
+                  <span className="stage-label">Field footage — ASCII render</span>
                 </div>
               </div>
             </Reveal>

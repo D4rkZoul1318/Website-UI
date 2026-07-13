@@ -242,18 +242,18 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
 .camera-home .about-body p { color: var(--ink-soft); line-height: 1.75; font-size: 1.05rem; margin-bottom: var(--space-5); max-width: 62ch; }
 .camera-home .about-body p:last-of-type { margin-bottom: var(--space-7); }
 .camera-home .about-portrait { aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; position: relative; background: var(--screen-bg); border: 1px solid var(--line); }
-/* Two-beat cycle (basketball, DSLR) — the bird-video beat is removed for
-   now pending a real asset; timing rebalanced from the original 3-way
-   12s split to a 2-way 8s split, same crossfade shape. */
-.camera-home .about-portrait .cycle-frame { position: absolute; inset: 0; opacity: 0; animation: cycleFade 8s var(--ease-in-out) infinite; }
+/* Three-beat cycle (basketball, DSLR, ASCII bird) — 12s loop, each beat gets
+   an equal third with a short crossfade at the seams. */
+.camera-home .about-portrait .cycle-frame { position: absolute; inset: 0; opacity: 0; animation: cycleFade 12s var(--ease-in-out) infinite; }
 .camera-home .about-portrait .cycle-frame video, .camera-home .about-portrait .cycle-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .camera-home .about-portrait .cycle-frame:nth-child(1) { animation-delay: 0s; }
 .camera-home .about-portrait .cycle-frame:nth-child(2) { animation-delay: 4s; }
+.camera-home .about-portrait .cycle-frame:nth-child(3) { animation-delay: 8s; }
 @keyframes cycleFade {
   0% { opacity: 0; }
-  6% { opacity: 1; }
-  44% { opacity: 1; }
-  50% { opacity: 0; }
+  4% { opacity: 1; }
+  29% { opacity: 1; }
+  33% { opacity: 0; }
   100% { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -299,6 +299,15 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .camera-home .ball-svg, .camera-home .ball-shadow, .camera-home .dslr-svg, .camera-home .dslr-sheen { animation: none; }
+}
+.camera-home .ascii-video {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  background: var(--screen-bg); overflow: hidden;
+}
+.camera-home .ascii-video__output {
+  margin: 0; font-family: var(--font-mono); letter-spacing: 0; white-space: pre;
+  color: rgba(244, 243, 240, 0.92); user-select: none; pointer-events: none;
+  font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0;
 }
 @media (max-width: 860px) {
   .camera-home .about-grid { grid-template-columns: 1fr; }
