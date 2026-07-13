@@ -422,16 +422,28 @@ export default function BobRides() {
             <Reveal as="h2">Major Screens</Reveal>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)', marginTop: 'var(--space-7)', maxWidth: 1800, marginInline: 'auto', paddingInline: 'var(--space-5)' }}>
-            {['home-screen-1', 'home-screen-2', 'home-screen-3'].map((name, i) => (
-              <Reveal
-                key={name}
-                variant="zoom"
-                delay={staggerDelay(i)}
-                className="media-frame"
-                style={{ flex: '1 1 480px', maxWidth: 560, borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}
-              >
-                <img src={`/images/bob-images/major-screens-${name}.png`} alt={`Major Screens — ${i + 1}`} loading="lazy" />
-              </Reveal>
+            {[
+              { name: 'home-screen-1', label: 'Home Screen' },
+              { name: 'home-screen-2', label: 'Ride Selection' },
+              { name: 'home-screen-3', label: 'Ride Details' },
+            ].map(({ name, label }, i) => (
+              <div key={name} style={{ flex: '1 1 480px', maxWidth: 560 }}>
+                <Reveal
+                  as="p"
+                  delay={staggerDelay(i)}
+                  style={{ textAlign: 'center', fontWeight: 600, color: 'var(--cream)', marginBottom: 'var(--space-4)' }}
+                >
+                  {label}
+                </Reveal>
+                <Reveal
+                  variant="zoom"
+                  delay={staggerDelay(i)}
+                  className="media-frame"
+                  style={{ borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}
+                >
+                  <img src={`/images/bob-images/major-screens-${name}.png`} alt={label} loading="lazy" />
+                </Reveal>
+              </div>
             ))}
           </div>
         </section>
