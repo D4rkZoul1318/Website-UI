@@ -1,551 +1,465 @@
-import { useEffect, useRef, useState } from 'react';
-import { Linkedin } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Reveal, staggerDelay } from '../camera/Reveal';
 import { ROUTES } from '../../routes';
 
-const font = 'Outfit, sans-serif';
-const nearBlack = '#1A1A1A';
-const grey = '#6B6B6B';
-const bgColor = '#F9F9F7';
-const cardBg = '#EEEEEA';
-const warmBg = '#F2F0EB';
-const radius = 12;
-
-function FadeUp({ children, stagger = 0 }: { children: React.ReactNode; stagger?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+function useScrollProgress() {
+  const [pct, setPct] = useState(0);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) { setIsVisible(true); observer.disconnect(); }
-        },
-        { threshold: 0.1 }
-      );
-      if (ref.current) observer.observe(ref.current);
-      return () => observer.disconnect();
-    }, stagger * 100);
-    return () => clearTimeout(timer);
-  }, [stagger]);
-  return (
-    <div ref={ref} style={{ opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.6s ease, transform 0.6s ease' }}>
-      {children}
-    </div>
-  );
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return pct;
 }
 
-function SectionLabel({ children }: { children: string }) {
-  return <span style={{ fontSize: 12, color: grey, letterSpacing: 3, textTransform: 'uppercase' as const, fontFamily: font, fontWeight: 400 }}>{children}</span>;
-}
+const businessChallenges = [
+  'Existing ride-hailing apps in India use flat, generic vehicle icons that offer no brand differentiation',
+  'No established design reference for 3D vehicle icons in a dark-mode mobile context',
+  'Icons had to remain legible at 24px (tab navigation size) while retaining dimensional depth',
+  'The aggregator model required a single visual system that could represent competing brands (Rapido, Uber, Ola) without visual conflict',
+];
 
-function SectionHeading({ children }: { children: string }) {
-  return <h2 style={{ fontSize: 48, fontWeight: 700, color: nearBlack, fontFamily: font, lineHeight: 1.15, margin: 0 }}>{children}</h2>;
-}
+const competitorPoints = [
+  "Icon style: Flat 2D silhouettes across most competitors vs BOB Rides' 3 Dimensional renders.",
+  'Dark mode support: None native in Rapido or Ola; partial in Uber vs BOB Rides fully dark-mode-native.',
+  'Price comparison: Hidden or single-app only across all competitors vs cross-app real-time comparison in BOB.',
+  'Visual identity: Generic, interchangeable across category vs distinct, brand-coded in BOB.',
+  'Aggregation: Single service each vs multi-service in a single interface.',
+];
 
-function StatCard({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ backgroundColor: cardBg, borderRadius: radius, padding: '32px 28px', fontFamily: font }}>
-      <div style={{ fontSize: 40, fontWeight: 700, color: nearBlack, lineHeight: 1.1 }}>{value}</div>
-      <div style={{ fontSize: 14, color: grey, marginTop: 8, fontWeight: 400 }}>{label}</div>
-    </div>
-  );
-}
+const userNeeds = [
+  'Compare fares across providers without switching between apps',
+  'Clear, instant visual identification of vehicle type (bike, auto, cab) at a glance, especially in low-light conditions',
+  'A booking experience that feels reliable and premium, not just functional',
+];
 
-function BehanceIcon() {
-  return (
-    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 9h5a2 2 0 0 1 0 4H3V9z" /><path d="M3 13h5.5a2.5 2.5 0 0 1 0 5H3v-5z" />
-      <path d="M15 7h6" /><path d="M21 13.5a4 4 0 1 0-1 2.5h-5" />
-    </svg>
-  );
-}
+const features = [
+  { ord: '01', text: 'Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen' },
+  { ord: '02', text: '3D vehicle icon system — custom bike, auto, and cab icons across all booking states' },
+  { ord: '03', text: 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing' },
+];
 
-function SectionImage({ src, alt }: { src: string; alt: string }) {
-  return (
-    <FadeUp>
-      <div style={{ width: '100%', overflow: 'hidden', borderRadius: radius }}>
-        <img src={src} alt={alt} style={{ width: '100%', height: 'auto', display: 'block' }} />
-      </div>
-    </FadeUp>
-  );
-}
+const uniqueFeatures = [
+  'Custom 3D vehicle icons rendered in Blender — the only ride app icon system in the Indian market built with dimensional 3D models rather than flat vectors',
+  'Dark-mode-native design system built from the ground up, not adapted from a light-mode base',
+  'Cross-app price aggregation with a real-time "Best Price" indicator showing exact savings compared to individual app pricing',
+];
+
+const taskMappingRows: { label: string; cells: string[] }[] = [
+  { label: 'Task', cells: ['User opens BOB Rides and sees home screen with recent destinations and Ride With selector', 'User enters destination, app fetches live prices from Rapido, Uber, and Ola simultaneously', 'User browses Available Rides screen, identifies vehicle type by icon, selects Best Price option', 'User tracks ride in activity screen, journey completes, fare is charged'] },
+  { label: 'Challenges', cells: ['Remembering which app offers the best price today', 'Too many options displayed simultaneously; icons must communicate vehicle type instantly without reading labels', 'Distinguishing between providers (Rapido, Uber, Ola) and vehicle tiers (bike vs auto vs cab) at a glance', 'Confirming the right ride was booked — provider, vehicle type, and ETA must be immediately clear'] },
+  { label: 'Environment', cells: ['Mobile, indoors or commuting, often in a hurry', 'Mobile, standing or seated, may be in low light or outdoor glare', 'Mobile, quick decision context, 10–30 seconds to choose', 'Mobile, background task, app open but user not actively interacting'] },
+  { label: 'Emotions', cells: ['Mild impatience, wants to book fast and move on', 'Cautious scanning for the cheapest fare without missing a better option', 'Decisive but uncertain — does the icon match what they expect to get?', 'Relieved — Booking is done, needs passive confirmation'] },
+  { label: 'Thoughts', cells: ['"Is this faster than opening three apps separately?"', '"Which one is actually cheapest right now?"', '"Is that icon a bike or an auto? Is Best Price actually the best?"', '"Did it book the right vehicle? When does it arrive?"'] },
+  { label: 'Urgency Level', cells: ['Medium — user has a destination in mind and is ready to book', 'High — fare comparison is time-sensitive due to surge pricing', 'High — selection decision happens in under 30 seconds', 'Low — passive monitoring state'] },
+  { label: 'Design Opportunity', cells: ['Home screen icons (bike, auto, cab) must communicate vehicle category at 48px without any label', 'Available Rides screen is the primary icon performance test — all three vehicle types appear simultaneously at 32px', 'Best Price badge and icon must work together to guide the decision without requiring the user to read every row', 'Activity screen must clearly confirm vehicle type icon and provider — same icon system, confirmation context'] },
+];
+
+const fiveWhy = [
+  { label: 'Cause 1', text: 'The icon system used standard flat 2D vehicle silhouettes, identical in style to Rapido, Uber, and Ola.' },
+  { label: 'Cause 2', text: 'The initial design direction referenced existing competitors as the baseline rather than as the benchmark to exceed.' },
+  { label: 'Cause 3', text: 'No Indian ride-hailing app had attempted 3D icons, so there was no category precedent — the design process defaulted to what already existed.' },
+  { label: 'Cause 4', text: 'The market had collectively prioritised development speed and functional clarity over visual brand differentiation, making flat icons the industry default.' },
+];
 
 export default function BobRides() {
   useEffect(() => { document.title = 'BOB Rides — Sohum Bhatnagar'; }, []);
+  const scrollPct = useScrollProgress();
+
   return (
-    <div style={{ backgroundColor: bgColor, fontFamily: font, minHeight: '100vh' }}>
+    <div className="camera-theme">
+      <header className="topbar">
+        <span className="mark">BOB RIDES — Case Study</span>
+        <a className="focus-cue" href={`${ROUTES.home}#sheet`}>
+          <span className="arrow" aria-hidden="true">←</span><span>Back to Projects</span>
+        </a>
+      </header>
+      <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
 
-      {/* Navbar */}
-      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, backdropFilter: 'blur(10px)', backgroundColor: 'rgba(249,249,247,0.8)', zIndex: 1000, padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontFamily: font }}>
-        <a onClick={() => (window.location.href = ROUTES.home)} style={{ fontSize: 24, fontWeight: 700, color: nearBlack, textDecoration: 'none', cursor: 'pointer' }}>SB</a>
-        <div style={{ display: 'flex', gap: 24 }}>
-          {([['Home', ROUTES.home], ['Projects', '/#projects'], ['About', '/#about'], ['Chill', '/#chill']] as [string, string][]).map(([label, href]) => (
-            <a key={label} href={href} style={{ fontFamily: font, fontSize: '14px', color: nearBlack, textDecoration: 'none', cursor: 'pointer' }}>{label}</a>
-          ))}
-        </div>
-      </div>
+      <main>
+        {/* SEC.00 — HERO */}
+        <section className="section bg-paper">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>00</b> — Icon Design &amp; UI/UX · 2025</Reveal>
+            <Reveal as="h1">BOB Rides</Reveal>
+            <Reveal as="p" className="lede">Designing a 3D vehicle icon system and dark-mode UI for a taxi aggregator that consolidates Uber, Ola, and Rapido into one app.</Reveal>
+            <Reveal className="hero-tags">
+              <span>3D icon system</span><span>Dark-mode native</span><span>Multi-app aggregator</span>
+            </Reveal>
+            <Reveal className="pipeline-row">
+              <span className="pipeline-label">Pipeline</span>
+              <span className="pipeline-tool">Figma</span><span className="pipeline-arrow" aria-hidden="true">→</span>
+              <span className="pipeline-tool">Maya</span><span className="pipeline-arrow" aria-hidden="true">→</span>
+              <span className="pipeline-tool">Photoshop</span><span className="pipeline-arrow" aria-hidden="true">→</span>
+              <span className="pipeline-tool">AI</span>
+            </Reveal>
+          </div>
+          <div className="wrap-wide" style={{ marginTop: 'var(--space-8)' }}>
+            <Reveal variant="zoom" className="media-frame">
+              <img src="/images/bob-images/hero.png" alt="BOB Rides Hero" />
+            </Reveal>
+          </div>
+        </section>
 
-      <button onClick={() => window.history.back()} style={{ fontFamily: font, fontSize: '14px', color: grey, background: 'none', border: 'none', cursor: 'pointer', display: 'inline-block', padding: '80px 80px 0', marginTop: 4 }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = nearBlack)}
-        onMouseLeave={(e) => (e.currentTarget.style.color = grey)}>
-        ← Back to Projects
-      </button>
+        {/* SEC.01 — PROBLEM */}
+        <section className="section bg-soft">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>01</b> — PROBLEM</Reveal>
+            <Reveal as="h2">The Challenge</Reveal>
+            <div className="problem-composition">
+              <Reveal className="problem-copy">
+                <p>Ride-hailing apps in India — Uber, Rapido, Ola, Namma Yatri — all use flat, generic vehicle silhouettes that offer zero brand differentiation. Users switch between 3 apps to compare prices, adding friction to every ride decision. BOB Rides needed a visual identity strong enough to stand apart, while keeping icons legible at 24px in a dark-mode-native interface.</p>
+              </Reveal>
+              <Reveal variant="scale" className="spec-plate">
+                <div className="spec-row"><span className="spec-label">Apps users open before booking a ride</span><span className="spec-value">3+</span></div>
+                <div className="spec-row"><span className="spec-label">Indian ride apps with 3D icon systems</span><span className="spec-value">&lt;4</span></div>
+                <div className="spec-row"><span className="spec-label">Minimum icon size for tab navigation</span><span className="spec-value">24px</span></div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
 
-      {/* Hero */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '100px 32px 80px' }}>
-        <FadeUp stagger={0}><SectionLabel>Icon Design & UI/UX · 2025</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><h1 style={{ fontSize: 64, fontWeight: 700, color: nearBlack, fontFamily: font, lineHeight: 1.1, margin: '20px 0 0' }}>BOB Rides</h1></FadeUp>
-        <FadeUp stagger={2}><p style={{ fontSize: 24, fontWeight: 300, color: grey, fontFamily: font, maxWidth: 700, lineHeight: 1.5, margin: '24px 0 0' }}>Designing a 3D vehicle icon system and dark-mode UI for a taxi aggregator that consolidates Uber, Ola, and Rapido into one app.</p></FadeUp>
-        <div style={{ display: 'flex', gap: 16, marginTop: 40, flexWrap: 'wrap' }}>
-          {['3D icon system', 'Dark-mode native', 'Multi-app aggregator'].map((pill, i) => (
-            <FadeUp key={pill} stagger={3 + i}>
-              <span style={{ display: 'inline-block', padding: '10px 24px', border: '1px solid #B0B0B0', borderRadius: 999, fontSize: 14, color: grey, fontFamily: font, fontWeight: 400 }}>{pill}</span>
-            </FadeUp>
-          ))}
-        </div>
-        <FadeUp stagger={6}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: grey, fontFamily: font, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Pipeline</span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-              {['Figma', 'Maya', 'Photoshop', 'AI'].map((tool, i, arr) => (
-                <span key={tool} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ display: 'inline-block', padding: '6px 16px', backgroundColor: '#E8E6E0', borderRadius: 999, fontSize: 13, color: nearBlack, fontFamily: font, fontWeight: 500 }}>{tool}</span>
-                  {i < arr.length - 1 && <span style={{ color: '#C0C0C0', fontSize: 12 }}>→</span>}
-                </span>
+        {/* SEC.02 — PROBLEM STATEMENT */}
+        <section className="section">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>02</b> — PROBLEM</Reveal>
+            <Reveal as="h2">Problem Statement</Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>Ride-hailing apps in the Indian market rely almost entirely on flat, generic vehicle icons that prioritize function over identity. Across Uber, Rapido, Ola, and Namma Yatri, the visual language is interchangeable silhouettes that tell users what vehicle type they are booking, but communicate nothing about the brand they are booking with.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>The challenge for BOB Rides was to design a vehicle icon system that solved two competing demands simultaneously: icons that are instantly recognisable and legible at small UI sizes, and icons that carry a distinct visual character strong enough to differentiate BOB Rides from every other player in the category. The additional constraint was that the entire system had to be built for a dark-mode-native interface — a context that most existing icon styles in the market were never designed for.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>The core design question was: how do you create 3D vehicle icons that feel familiar enough for a user to identify at a glance, while being visually distinctive enough that the app they appear in could not be mistaken for any competitor?</p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.03 — PROCESS */}
+        <section className="section band bg-dark">
+          <div className="band-inner wrap-wide">
+            <Reveal className="section-index">SEC.<b>03</b> — PROCESS</Reveal>
+            <Reveal as="h2">How We Got There</Reveal>
+            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-7)', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
+              <img src="/images/bob-images/our-process.png" alt="Our Process" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.04 — STRATEGY */}
+        <section className="section bg-paper">
+          <div className="wrap-wide">
+            <Reveal className="section-index">SEC.<b>04</b> — STRATEGY</Reveal>
+            <Reveal as="h2">Objectives &amp; Goals</Reveal>
+            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
+              <img src="/images/bob-images/objectives-goals.png" alt="Objectives and Goals" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.05 — RESEARCH: Business Challenges */}
+        <section className="section">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>05</b> — RESEARCH</Reveal>
+            <Reveal as="h2">Business Challenges</Reveal>
+            {businessChallenges.map((text, i) => (
+              <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
+                <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* SEC.06 — RESEARCH: Competitor Analysis */}
+        <section className="section section--roomy bg-soft">
+          <div className="wrap-wide" style={{ textAlign: 'center' }}>
+            <Reveal className="section-index">SEC.<b>06</b> — RESEARCH</Reveal>
+            <Reveal as="h2">Competitor Analysis</Reveal>
+            <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>Competitors: OLA, Rapido, Uber, Namma Yatri</Reveal>
+          </div>
+          <div className="wrap" style={{ marginTop: 'var(--space-7)' }}>
+            {competitorPoints.map((text, i) => (
+              <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 0 : 'var(--space-5)' }}>
+                <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
+              </Reveal>
+            ))}
+          </div>
+          <div className="wrap-wide" style={{ marginTop: 'var(--space-7)' }}>
+            <Reveal as="span" className="meta-label">References from competitors</Reveal>
+            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-3)' }}>
+              <img src="/images/bob-images/competitor-analysis.png" alt="Competitor screenshots" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.07 — RESEARCH: Product Users */}
+        <section className="section section--tight">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>07</b> — RESEARCH</Reveal>
+            <Reveal as="h2">Product Users</Reveal>
+            <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
+              <img src="/images/bob-images/product-users.png" alt="Product Users" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.08 — RESEARCH: User Persona */}
+        <section className="section bg-paper">
+          <div className="wrap-wide">
+            <Reveal className="section-index">SEC.<b>08</b> — RESEARCH</Reveal>
+            <Reveal as="h2">User Persona</Reveal>
+            <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
+              <img src="/images/bob-redesign/user-persona-rahul.png" alt="User Persona — Rahul Kumar" loading="lazy" />
+            </Reveal>
+            <div style={{ marginTop: 'var(--space-7)', maxWidth: 640 }}>
+              <Reveal as="h3" style={{ fontSize: '1.15rem', fontWeight: 700, letterSpacing: '-0.005em' }}>Rahul Kumar</Reveal>
+              <Reveal as="p" style={{ fontFamily: 'var(--font-mono)', fontSize: '10.5px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginTop: 4 }}>Community Manager</Reveal>
+              <Reveal as="span" className="meta-label" style={{ marginTop: 'var(--space-5)' }}>About</Reveal>
+              <Reveal className="hero-tags" style={{ marginTop: 'var(--space-2)' }}><span>35</span><span>Bangalore</span><span>MBA</span><span>Employee</span></Reveal>
+              <Reveal as="span" className="meta-label" style={{ marginTop: 'var(--space-6)' }}>Description</Reveal>
+              <Reveal className="problem-copy"><p style={{ fontSize: '0.96rem' }}>Rahul commutes daily across Bengaluru using a mix of bike taxis and autos depending on traffic and time of day. He has Rapido, Uber, and Ola installed and manually checks prices before every booking.</p></Reveal>
+              <Reveal as="span" className="meta-label" style={{ marginTop: 'var(--space-6)' }}>A day in their life</Reveal>
+              <Reveal className="problem-copy">
+                <p style={{ fontSize: '0.96rem' }}>Opens 2–3 different ride apps every morning to compare prices before booking</p>
+                <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Regularly switches between bike and auto depending on availability and surge pricing</p>
+                <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Uses dark mode across all his apps by default</p>
+              </Reveal>
+              <Reveal as="span" className="meta-label" style={{ marginTop: 'var(--space-6)' }}>Pain points</Reveal>
+              <Reveal className="problem-copy">
+                <p style={{ fontSize: '0.96rem' }}>Wastes 3–5 minutes every commute switching between apps to find the best fare</p>
+                <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Can't tell which vehicle icon belongs to which service tier without reading the label</p>
+                <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Existing apps feel visually identical — no sense of which one he's actually on</p>
+              </Reveal>
+              <Reveal as="p" style={{ fontStyle: 'italic', color: 'var(--ink-soft)', lineHeight: 1.6, fontSize: '1.05rem', maxWidth: '36ch', marginTop: 'var(--space-6)' }}>
+                "I just want to see all my options in one place and book the cheapest one. Why do I have to open three apps for that?"
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* SEC.09 — RESEARCH: User Needs */}
+        <section className="section section--tight">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>09</b> — RESEARCH</Reveal>
+            <Reveal as="h2">User Needs</Reveal>
+            {userNeeds.map((text, i) => (
+              <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
+                <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* SEC.10 — DESIGN: Features & Functionalities */}
+        <section className="section bg-soft">
+          <div className="wrap-wide">
+            <Reveal className="section-index">SEC.<b>10</b> — DESIGN</Reveal>
+            <Reveal as="h2">Features &amp; Functionalities</Reveal>
+            <Reveal as="p" className="sheet-subtitle">To resolve user needs</Reveal>
+            <div className="feature-grid">
+              {features.map((f, i) => (
+                <Reveal key={f.ord} delay={staggerDelay(i)} className="feature-cell">
+                  <span className="ord">{f.ord}</span><p>{f.text}</p>
+                </Reveal>
               ))}
             </div>
+            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-7)' }}>
+              <img src="/images/bob-redesign/features-functionalities-v2.png" alt="Features and Functionalities" loading="lazy" />
+            </Reveal>
           </div>
-        </FadeUp>
-      </section>
+        </section>
 
-      {/* Hero image */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <SectionImage src="/images/bob-images/hero.png" alt="BOB Rides Hero" />
-      </section>
+        {/* SEC.11 — DESIGN: Product User Challenges */}
+        <section className="section">
+          <div className="wrap-wide">
+            <Reveal className="section-index">SEC.<b>11</b> — DESIGN</Reveal>
+            <Reveal as="h2">Product User Challenges</Reveal>
+            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
+              <img src="/images/bob-images/product-user-challenges.png" alt="Product User Challenges" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
 
-      {/* Problem */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
-        <FadeUp><SectionLabel>Problem</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>The Challenge</SectionHeading></FadeUp>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start', marginTop: 48 }}>
-          <FadeUp><p style={{ fontSize: 18, color: grey, fontFamily: font, lineHeight: 1.7, fontWeight: 400, margin: 0 }}>Ride-hailing apps in India — Uber, Rapido, Ola, Namma Yatri — all use flat, generic vehicle silhouettes that offer zero brand differentiation. Users switch between 3 apps to compare prices, adding friction to every ride decision. BOB Rides needed a visual identity strong enough to stand apart, while keeping icons legible at 24px in a dark-mode-native interface.</p></FadeUp>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {[{ value: '3+', label: 'Apps users open before booking a ride' }, { value: '<4', label: 'Indian ride apps with 3D icon systems' }, { value: '24px', label: 'Minimum icon size for tab navigation' }].map((stat, i) => (
-              <FadeUp key={stat.label} stagger={i}><StatCard value={stat.value} label={stat.label} /></FadeUp>
+        {/* SEC.12 — DESIGN: Unique Features */}
+        <section className="section bg-paper">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>12</b> — DESIGN</Reveal>
+            <Reveal as="h2">Unique Features</Reveal>
+            {uniqueFeatures.map((text, i) => (
+              <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
+                <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
+              </Reveal>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <FadeUp>
-          <div style={{ backgroundColor: cardBg, borderRadius: radius, padding: '48px 56px' }}>
-            <h3 style={{ fontSize: 32, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '0 0 32px', lineHeight: 1.2 }}>Problem Statement</h3>
-            <p style={{ fontSize: 20, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: '0 0 24px' }}>
-              Ride-hailing apps in the Indian market rely almost entirely on flat, generic vehicle icons that prioritize function over identity. Across Uber, Rapido, Ola, and Namma Yatri, the visual language is interchangeable silhouettes that tell users what vehicle type they are booking, but communicate nothing about the brand they are booking with.
-            </p>
-            <p style={{ fontSize: 20, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: '0 0 24px' }}>
-              The challenge for BOB Rides was to design a vehicle icon system that solved two competing demands simultaneously: icons that are instantly recognisable and legible at small UI sizes, and icons that carry a distinct visual character strong enough to differentiate BOB Rides from every other player in the category. The additional constraint was that the entire system had to be built for a dark-mode-native interface — a context that most existing icon styles in the market were never designed for.
-            </p>
-            <p style={{ fontSize: 20, color: grey, fontFamily: font, lineHeight: 1.8, fontWeight: 400, margin: 0 }}>
-              The core design question was: how do you create 3D vehicle icons that feel familiar enough for a user to identify at a glance, while being visually distinctive enough that the app they appear in could not be mistaken for any competitor?
-            </p>
+        {/* SEC.13 — DESIGN: Task Mapping */}
+        <section className="section">
+          <div className="wrap-wide cinema-head">
+            <Reveal className="section-index">SEC.<b>13</b> — DESIGN</Reveal>
+            <Reveal as="h2">Task Mapping</Reveal>
+            <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
+              <img src="/images/bob-redesign/task-mapping-v2.png" alt="Task Mapping" loading="lazy" />
+            </Reveal>
           </div>
-        </FadeUp>
-      </section>
-
-      {/* Our Process */}
-      <section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <FadeUp><SectionLabel>Process</SectionLabel></FadeUp>
-          <FadeUp stagger={1}><SectionHeading>How We Got There</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/our-process.png" alt="Our Process" /></div>
-        </div>
-      </section>
-
-      {/* Objectives */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
-        <FadeUp><SectionLabel>Strategy</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Objectives & Goals</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/objectives-goals.png" alt="Objectives and Goals" /></div>
-      </section>
-
-      {/* Business Challenges */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Business Challenges</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 24 }}>
-          {[
-            'Existing ride-hailing apps in India use flat, generic vehicle icons that offer no brand differentiation',
-            'No established design reference for 3D vehicle icons in a dark-mode mobile context',
-            'Icons had to remain legible at 24px (tab navigation size) while retaining dimensional depth',
-            'The aggregator model required a single visual system that could represent competing brands (Rapido, Uber, Ola) without visual conflict',
-          ].map((text, i) => (
-            <FadeUp key={i} stagger={2 + i}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
-                <span style={{ color: '#188AEC', fontSize: 24, fontWeight: 700, marginTop: 2, flexShrink: 0 }}>→</span>
-                <p style={{ fontSize: 20, color: nearBlack, fontFamily: font, lineHeight: 1.8, margin: 0, fontWeight: 400 }}>{text}</p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-      {/* Competitor Analysis */}
-      <section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
-          <FadeUp stagger={1}><SectionHeading>Competitor Analysis</SectionHeading></FadeUp>
-          <FadeUp stagger={2}>
-            <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: '1fr 280px', gap: 64, alignItems: 'start' }}>
-              {/* Left — features list */}
-              <div>
-                <p style={{ fontSize: 18, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '0 0 24px' }}>
-                  Competitors: OLA, Rapido, Uber, Namma Yatri
-                </p>
-                <p style={{ fontSize: 15, fontWeight: 600, color: grey, fontFamily: font, margin: '0 0 16px', letterSpacing: 1, textTransform: 'uppercase' }}>Features</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                  {[
-                    "Icon style: Flat 2D silhouettes across most competitors vs BOB Rides' 3 Dimensional renders.",
-                    'Dark mode support: None native in Rapido or Ola; partial in Uber vs BOB Rides fully dark-mode-native.',
-                    'Price comparison: Hidden or single-app only across all competitors vs cross-app real-time comparison in BOB.',
-                    'Visual identity: Generic, interchangeable across category vs distinct, brand-coded in BOB.',
-                    'Aggregation: Single service each vs multi-service in a single interface.',
-                  ].map((text, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-                      <span style={{ color: '#188AEC', fontSize: 20, fontWeight: 700, flexShrink: 0, marginTop: 2 }}>→</span>
-                      <p style={{ fontSize: 18, color: nearBlack, fontFamily: font, lineHeight: 1.7, margin: 0, fontWeight: 400 }}>{text}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </FadeUp>
-          {/* Competitor screenshots */}
-          <FadeUp stagger={3}>
-            <div style={{ marginTop: 48 }}>
-              <p style={{ fontSize: 15, fontWeight: 600, color: grey, fontFamily: font, margin: '0 0 16px', letterSpacing: 1, textTransform: 'uppercase' }}>References from Competitors</p>
-              <div style={{ width: '100%', borderRadius: 10, overflow: 'hidden' }}>
-                <img
-                  src="/images/bob/competitor-analysis.png"
-                  alt="Competitor screenshots"
-                  style={{ width: '100%', display: 'block' }}
-                />
-              </div>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* Product Users */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
-        <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Product Users</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/product-users.png" alt="Product Users" /></div>
-      </section>
-
-      {/* User Persona */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>User Persona</SectionHeading></FadeUp>
-        <FadeUp stagger={2}>
-          <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: '280px 1fr', gap: 64, backgroundColor: cardBg, borderRadius: radius, padding: '48px' }}>
-            {/* Left col */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
-              <img src="https://www.figma.com/api/mcp/asset/20287be6-d9f9-4a91-88db-69bbff43d4f8" alt="Rahul Kumar" style={{ width: 148, height: 148, borderRadius: '50%', objectFit: 'cover' }} />
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ fontSize: 20, fontWeight: 700, color: nearBlack, fontFamily: font, margin: 0 }}>Rahul Kumar</p>
-                <p style={{ fontSize: 16, color: '#188AEC', fontFamily: font, margin: '4px 0 0' }}>Community Manager</p>
-              </div>
-              <div style={{ width: '100%', marginTop: 8 }}>
-                <p style={{ fontSize: 16, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '0 0 12px' }}>About</p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, fontSize: 15, color: grey, fontFamily: font }}>
-                  <span>35</span><span>Bangalore</span>
-                  <span>MBA</span><span>Employee</span>
-                </div>
-              </div>
-            </div>
-            {/* Right col */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '0 0 8px' }}>Description</p>
-                <p style={{ fontSize: 17, color: grey, fontFamily: font, lineHeight: 1.7, margin: 0 }}>Arjun commutes daily across Bengaluru using a mix of bike taxis and autos depending on traffic and time of day. He has Rapido, Uber, and Ola installed and manually checks prices before every booking.</p>
-              </div>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '0 0 8px' }}>A day in their life</p>
-                <ul style={{ paddingLeft: 20, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  {['Opens 2–3 different ride apps every morning to compare prices before booking', 'Regularly switches between bike and auto depending on availability and surge pricing', 'Uses dark mode across all his apps by default'].map(t => (
-                    <li key={t} style={{ fontSize: 17, color: grey, fontFamily: font, lineHeight: 1.6 }}>{t}</li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 700, color: nearBlack, fontFamily: font, margin: '0 0 8px' }}>Pain points</p>
-                <ul style={{ paddingLeft: 20, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  {['Wastes 3–5 minutes every commute switching between apps to find the best fare', "Can't tell which vehicle icon belongs to which service tier without reading the label", "Existing apps feel visually identical — no sense of which one he's actually on"].map(t => (
-                    <li key={t} style={{ fontSize: 17, color: grey, fontFamily: font, lineHeight: 1.6 }}>{t}</li>
-                  ))}
-                </ul>
-              </div>
-              <div style={{ backgroundColor: '#F6FAFE', borderRadius: 12, padding: '20px 24px' }}>
-                <p style={{ fontSize: 17, color: '#143D61', fontFamily: font, lineHeight: 1.7, margin: 0, fontStyle: 'italic' }}>"I just want to see all my options in one place and book the cheapest one. Why do I have to open three apps for that?"</p>
-              </div>
-            </div>
-          </div>
-        </FadeUp>
-      </section>
-
-      {/* User Needs */}
-      <section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <FadeUp><SectionLabel>Research</SectionLabel></FadeUp>
-          <FadeUp stagger={1}><SectionHeading>User Needs</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/user-needs.png" alt="User Needs" /></div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
-        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Features & Functionalities</SectionHeading></FadeUp>
-        <FadeUp stagger={2}>
-          <p style={{ fontSize: 20, color: grey, fontFamily: font, textAlign: 'center', marginTop: 8, marginBottom: 48 }}>To resolve user needs</p>
-        </FadeUp>
-        <div style={{ marginTop: 0 }}>
-          <FadeUp stagger={0}>
-            <img src="/images/bob/features-functionalities.png" alt="Features and Functionalities" style={{ width: '100%', borderRadius: 24, display: 'block', marginBottom: 48 }} />
-          </FadeUp>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 40 }}>
-            {['Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen', '3D vehicle icon system — custom bike, auto, and cab icons across all booking states', 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing'].map((text, i) => (
-              <FadeUp key={i} stagger={3 + i}>
-                <p style={{ fontSize: 18, color: nearBlack, fontFamily: font, lineHeight: 1.7, margin: 0, fontWeight: 400, textAlign: 'center' }}>{text}</p>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Product User Challenges */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Product User Challenges</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/product-user-challenges.png" alt="Product User Challenges" /></div>
-      </section>
-
-      {/* Unique Features */}
-      <section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-          <FadeUp stagger={1}><SectionHeading>Unique Features</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 32 }}>
-            {[
-              'Custom 3D vehicle icons rendered in Blender — the only ride app icon system in the Indian market built with dimensional 3D models rather than flat vectors',
-              'Dark-mode-native design system built from the ground up, not adapted from a light-mode base',
-              'Cross-app price aggregation with a real-time "Best Price" indicator showing exact savings compared to individual app pricing',
-            ].map((text, i) => (
-              <FadeUp key={i} stagger={2 + i}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
-                  <span style={{ color: '#188AEC', fontSize: 24, fontWeight: 700, marginTop: 2, flexShrink: 0 }}>→</span>
-                  <p style={{ fontSize: 20, color: nearBlack, fontFamily: font, lineHeight: 1.8, margin: 0, fontWeight: 400 }}>{text}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Task Mapping */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
-        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Task Mapping</SectionHeading></FadeUp>
-        <FadeUp stagger={2}>
-          <div style={{ marginTop: 48, overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: font, fontSize: 15 }}>
-              <thead>
-                <tr style={{ backgroundColor: '#E8E6E1' }}>
-                  <th style={{ padding: '16px 20px', textAlign: 'left', fontWeight: 700, color: nearBlack, width: '12%' }}></th>
-                  {['Step 1 — Open App', 'Step 2 — Find a Ride', 'Step 3 — Select & Book', 'Step 4 — Complete Ride'].map(s => (
-                    <th key={s} style={{ padding: '16px 20px', textAlign: 'left', fontWeight: 700, color: nearBlack }}>{s}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { label: 'Task', cells: ['User opens BOB Rides and sees home screen with recent destinations and Ride With selector', 'User enters destination, app fetches live prices from Rapido, Uber, and Ola simultaneously', 'User browses Available Rides screen, identifies vehicle type by icon, selects Best Price option', 'User tracks ride in activity screen, journey completes, fare is charged'] },
-                  { label: 'Challenges', cells: ['Remembering which app offers the best price today', 'Too many options displayed simultaneously; icons must communicate vehicle type instantly without reading labels', 'Distinguishing between providers (Rapido, Uber, Ola) and vehicle tiers (bike vs auto vs cab) at a glance', 'Confirming the right ride was booked — provider, vehicle type, and ETA must be immediately clear'] },
-                  { label: 'Environment', cells: ['Mobile, indoors or commuting, often in a hurry', 'Mobile, standing or seated, may be in low light or outdoor glare', 'Mobile, quick decision context, 10–30 seconds to choose', 'Mobile, background task, app open but user not actively interacting'] },
-                  { label: 'Emotions', cells: ['Mild impatience, wants to book fast and move on', 'Cautious scanning for the cheapest fare without missing a better option', 'Decisive but uncertain — does the icon match what they expect to get?', 'Relieved — Booking is done, needs passive confirmation'] },
-                  { label: 'Thoughts', cells: ['"Is this faster than opening three apps separately?"', '"Which one is actually cheapest right now?"', '"Is that icon a bike or an auto? Is Best Price actually the best?"', '"Did it book the right vehicle? When does it arrive?"'] },
-                  { label: 'Urgency Level', cells: ['Medium — user has a destination in mind and is ready to book', 'High — fare comparison is time-sensitive due to surge pricing', 'High — selection decision happens in under 30 seconds', 'Low — passive monitoring state'] },
-                  { label: 'Design Opportunity', cells: ['Home screen icons (bike, auto, cab) must communicate vehicle category at 48px without any label', 'Available Rides screen is the primary icon performance test — all three vehicle types appear simultaneously at 32px', 'Best Price badge and icon must work together to guide the decision without requiring the user to read every row', 'Activity screen must clearly confirm vehicle type icon and provider — same icon system, confirmation context'] },
-                ].map((row, ri) => (
-                  <tr key={row.label} style={{ backgroundColor: ri % 2 === 1 ? warmBg : 'transparent' }}>
-                    <td style={{ padding: '16px 20px', fontWeight: 700, color: nearBlack, borderBottom: '1px solid rgba(0,0,0,0.06)', verticalAlign: 'top' }}>{row.label}</td>
-                    {row.cells.map((cell, ci) => (
-                      <td key={ci} style={{ padding: '16px 20px', color: grey, borderBottom: '1px solid rgba(0,0,0,0.06)', verticalAlign: 'top', lineHeight: 1.6 }}>{cell}</td>
-                    ))}
+          <div className="wrap-wide">
+            <Reveal style={{ overflowX: 'auto', marginTop: 'var(--space-7)' }}>
+              <table className="ed">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Step 1 — Open App</th>
+                    <th scope="col">Step 2 — Find a Ride</th>
+                    <th scope="col">Step 3 — Select &amp; Book</th>
+                    <th scope="col">Step 4 — Complete Ride</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {taskMappingRows.map((row) => (
+                    <tr key={row.label}>
+                      <td>{row.label}</td>
+                      {row.cells.map((cell, ci) => <td key={ci}>{cell}</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Reveal>
           </div>
-        </FadeUp>
-      </section>
+        </section>
 
-      {/* Eisenhower Matrix */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Eisenhower Matrix</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/eisen-hover-matrix.png" alt="Eisenhower Matrix" /></div>
-      </section>
+        {/* SEC.14 — DESIGN: Eisenhower Matrix */}
+        <section className="section bg-soft">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>14</b> — DESIGN</Reveal>
+            <Reveal as="h2">Eisenhower Matrix</Reveal>
+            <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
+              <img src="/images/bob-images/eisen-hover-matrix.png" alt="Eisenhower Matrix" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
 
-      {/* 5 Why */}
-      <section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <FadeUp><SectionLabel>Analysis</SectionLabel></FadeUp>
-          <FadeUp stagger={1}><SectionHeading>5 Why Analysis</SectionHeading></FadeUp>
-          <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
-            {/* Problem */}
-            <FadeUp stagger={2}>
-              <div style={{ backgroundColor: '#188AEC', borderRadius: 15, padding: '26px 40px', width: '100%', maxWidth: 960, textAlign: 'center' }}>
-                <p style={{ fontSize: 16, fontWeight: 700, color: 'white', fontFamily: font, margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: 1 }}>Problem</p>
-                <p style={{ fontSize: 18, color: 'white', fontFamily: font, lineHeight: 1.7, margin: 0 }}>Users cannot distinguish BOB Rides from other ride apps at first glance.</p>
-              </div>
-            </FadeUp>
-            {/* Arrow */}
-            <div style={{ width: 2, height: 40, backgroundColor: '#CBD4DC', margin: '0 auto' }} />
-            {/* Causes */}
-            {[
-              { label: 'Cause 1', text: 'The icon system used standard flat 2D vehicle silhouettes, identical in style to Rapido, Uber, and Ola.' },
-              { label: 'Cause 2', text: 'The initial design direction referenced existing competitors as the baseline rather than as the benchmark to exceed.' },
-              { label: 'Cause 3', text: 'No Indian ride-hailing app had attempted 3D icons, so there was no category precedent — the design process defaulted to what already existed.' },
-              { label: 'Cause 4', text: 'The market had collectively prioritised development speed and functional clarity over visual brand differentiation, making flat icons the industry default.' },
-            ].map((cause, i) => (
-              <FadeUp key={i} stagger={3 + i}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <div style={{ backgroundColor: '#EFEFEF', borderRadius: 15, padding: '28px 40px', width: '100%', maxWidth: 960, textAlign: 'center' }}>
-                    <p style={{ fontSize: 15, fontWeight: 700, color: '#888', fontFamily: font, margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: 1 }}>{cause.label}</p>
-                    <p style={{ fontSize: 18, color: nearBlack, fontFamily: font, lineHeight: 1.7, margin: 0 }}>{cause.text}</p>
-                  </div>
-                  {i < 3 && <div style={{ width: 2, height: 40, backgroundColor: '#CBD4DC' }} />}
+        {/* SEC.15 — ANALYSIS: 5 Why */}
+        <section className="section">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>15</b> — ANALYSIS</Reveal>
+            <Reveal as="h2">5 Why Analysis</Reveal>
+            <div className="flow-chart">
+              <Reveal className="flow-node flow-node--accent">
+                <span className="flow-label">Problem</span><p>Users cannot distinguish BOB Rides from other ride apps at first glance.</p>
+              </Reveal>
+              {fiveWhy.map((c, i) => (
+                <div key={c.label} style={{ display: 'contents' }}>
+                  <div className="flow-connector" />
+                  <Reveal delay={staggerDelay(i)} className="flow-node">
+                    <span className="flow-label">{c.label}</span><p>{c.text}</p>
+                  </Reveal>
                 </div>
-              </FadeUp>
-            ))}
-            {/* Arrow to root cause */}
-            <div style={{ width: 2, height: 40, backgroundColor: '#CBD4DC' }} />
-            {/* Root Cause */}
-            <FadeUp stagger={7}>
-              <div style={{ backgroundColor: '#EDF6FE', borderRadius: 15, padding: '32px 40px', width: '100%', maxWidth: 960, textAlign: 'center' }}>
-                <p style={{ fontSize: 15, fontWeight: 700, color: '#188AEC', fontFamily: font, margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: 1 }}>Root Cause</p>
-                <p style={{ fontSize: 18, color: '#283264', fontFamily: font, lineHeight: 1.7, margin: 0 }}>The icon design brief across the entire ride-hailing category was defined as "communicate vehicle type" — never "communicate vehicle type AND brand identity simultaneously." No one had challenged that constraint, leaving the design opportunity completely open.</p>
-              </div>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
-      {/* RCA */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px' }}>
-        <FadeUp><SectionLabel>Analysis</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Root Cause Analysis</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/root-cause-analysis.png" alt="Root Cause Analysis" /></div>
-      </section>
-
-      {/* Sketches */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Sketches</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}><SectionImage src="/images/bob-images/sketches.png" alt="Sketches" /></div>
-      </section>
-
-      {/* Final Icons */}
-      <section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-          <FadeUp stagger={1}><SectionHeading>Final Icons</SectionHeading></FadeUp>
-          <FadeUp stagger={2}>
-            <div style={{ marginTop: 48, borderRadius: radius, overflow: 'hidden' }}>
-              <img src="/images/bob-images/final-icons.png" alt="Final 3D Icons" style={{ width: '100%', display: 'block' }} />
+              ))}
+              <div className="flow-connector" />
+              <Reveal delay={staggerDelay(fiveWhy.length)} className="flow-node flow-node--accent">
+                <span className="flow-label">Root Cause</span>
+                <p>The icon design brief across the entire ride-hailing category was defined as "communicate vehicle type" — never "communicate vehicle type AND brand identity simultaneously." No one had challenged that constraint, leaving the design opportunity completely open.</p>
+              </Reveal>
             </div>
-          </FadeUp>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Design System */}
-<section style={{ backgroundColor: warmBg, padding: '80px 32px' }}>
-  <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-    <FadeUp><SectionLabel>Design System</SectionLabel></FadeUp>
-    <FadeUp stagger={1}><SectionHeading>Icon System</SectionHeading></FadeUp>
-    <FadeUp stagger={2}>
-      <p style={{ fontSize: 20, color: grey, fontFamily: font, lineHeight: 1.7, maxWidth: 680, margin: '24px 0 0' }}>
-        The icon system spans two production generations — flat 2D isometric to full-colour 3D with cast shadows. View the full version history, evolution rationale, and spec documentation in Figma.
-      </p>
-    </FadeUp>
-    <FadeUp stagger={3}>
-      <a
-        href="https://www.figma.com/design/6doJgq0YhHNlCkv7mLwwLy/bob-UI-Sohum?node-id=732-1630"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          display: 'inline-block',
-          marginTop: 36,
-          padding: '14px 32px',
-          backgroundColor: nearBlack,
-          color: '#FFFFFF',
-          borderRadius: 999,
-          fontSize: 15,
-          fontFamily: font,
-          fontWeight: 500,
-          textDecoration: 'none',
-          letterSpacing: '0.02em',
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#333333')}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = nearBlack)}
-      >
-        View Icon System in Figma →
-      </a>
-    </FadeUp>
-  </div>
-</section>
-      {/* Major Screens */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <FadeUp><SectionLabel>Design</SectionLabel></FadeUp>
-        <FadeUp stagger={1}><SectionHeading>Major Screens</SectionHeading></FadeUp>
-        <div style={{ marginTop: 48 }}>
-          <FadeUp stagger={0}>
-            <img
-              src="/images/bob/major-screens.png"
-              alt="Major Screens"
-              style={{ width: '100%', borderRadius: 24, display: 'block' }}
-            />
-          </FadeUp>
-        </div>
-      </section>
+        {/* SEC.16 — ANALYSIS: Root Cause Analysis */}
+        <section className="section band bg-dark">
+          <div className="band-inner wrap-wide" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ alignSelf: 'flex-start' }}>
+              <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
+              <Reveal as="h2">Root Cause Analysis</Reveal>
+            </div>
+            <Reveal variant="zoom" className="media-frame" style={{ maxWidth: 760, marginTop: 'var(--space-7)', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
+              <img src="/images/bob-images/root-cause-analysis.png" alt="Root Cause Analysis" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
 
-      {/* Outcome stats */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 32px', textAlign: 'center' }}>
-        <FadeUp><SectionHeading>What We Built</SectionHeading></FadeUp>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginTop: 48, textAlign: 'left' }}>
-          {[{ value: '3D', label: 'First Indian ride app with 3D icon system' }, { value: 'Dark', label: 'Native dark-mode UI built from ground up' }, { value: '1 app', label: 'Uber, Ola & Rapido compared in one screen' }].map((stat, i) => (
-            <FadeUp key={stat.label} stagger={1 + i}><StatCard value={stat.value} label={stat.label} /></FadeUp>
-          ))}
-        </div>
-      </section>
+        {/* SEC.17 — DESIGN: Sketches */}
+        <section className="section bg-paper">
+          <div className="wrap-wide">
+            <Reveal className="section-index">SEC.<b>17</b> — DESIGN</Reveal>
+            <Reveal as="h2">Sketches</Reveal>
+            <Reveal variant="rotate" className="media-frame" style={{ maxWidth: 880, marginTop: 'var(--space-6)' }}>
+              <img src="/images/bob-images/sketches.png" alt="Sketches" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
 
-      {/* Thank You */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px 80px' }}>
-        <SectionImage src="/images/bob-images/thank-you.png" alt="Thank You" />
-      </section>
+        {/* SEC.18 — DESIGN: Final Icons */}
+        <section className="section section--roomy band bg-dark">
+          <div className="band-inner wrap-wide">
+            <Reveal className="section-index">SEC.<b>18</b> — DESIGN</Reveal>
+            <Reveal as="h2">Final Icons</Reveal>
+            <div className="icons-row">
+              <Reveal variant="scale" delay={staggerDelay(0)} className="icon-cell"><img src="/images/bob-images/Car.png" alt="BOB Rides 3D cab icon" /><span>Cab</span></Reveal>
+              <Reveal variant="scale" delay={staggerDelay(1)} className="icon-cell"><img src="/images/bob-images/Bike.png" alt="BOB Rides 3D bike icon" /><span>Bike</span></Reveal>
+              <Reveal variant="scale" delay={staggerDelay(2)} className="icon-cell"><img src="/images/bob-images/Auto.png" alt="BOB Rides 3D auto-rickshaw icon" /><span>Auto</span></Reveal>
+            </div>
+          </div>
+        </section>
 
-      {/* Footer */}
-      <footer style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontFamily: font, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
-        <span style={{ fontSize: 14, color: grey, fontWeight: 400 }}>© 2025 Sohum Bhatnagar</span>
-        <span style={{ fontSize: 12, color: '#A0A0A0', fontStyle: 'italic', fontWeight: 400 }}>Designed in Figma. Built with intent.</span>
-        <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-          <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer" style={{ color: grey, transition: 'color 200ms' }} onMouseEnter={(e) => (e.currentTarget.style.color = nearBlack)} onMouseLeave={(e) => (e.currentTarget.style.color = grey)} aria-label="LinkedIn"><Linkedin size={18} /></a>
-          <a href="https://www.behance.net/sohumbhatnagar" target="_blank" rel="noopener noreferrer" style={{ color: grey, transition: 'color 200ms' }} onMouseEnter={(e) => (e.currentTarget.style.color = nearBlack)} onMouseLeave={(e) => (e.currentTarget.style.color = grey)} aria-label="Behance"><BehanceIcon /></a>
-        </div>
+        {/* SEC.19 — DESIGN SYSTEM */}
+        <section className="section section--roomy bg-paper">
+          <div className="wrap cinema-head">
+            <Reveal className="section-index">SEC.<b>19</b> — DESIGN SYSTEM</Reveal>
+            <Reveal as="h2">Icon System</Reveal>
+            <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>
+              The icon system spans two production generations — flat 2D isometric to full-colour 3D with cast shadows. View the full version history, evolution rationale, and spec documentation in Figma.
+            </Reveal>
+            <Reveal style={{ marginTop: 'var(--space-7)' }}>
+              <a className="preview-cta" href="https://www.figma.com/design/6doJgq0YhHNlCkv7mLwwLy/bob-UI-Sohum?node-id=732-1630" target="_blank" rel="noopener noreferrer">View Icon System in Figma →</a>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.20 — DESIGN: Major Screens */}
+        <section className="section section--roomy band bg-dark">
+          <div className="band-inner cinema-head">
+            <Reveal className="section-index">SEC.<b>20</b> — DESIGN</Reveal>
+            <Reveal as="h2">Major Screens</Reveal>
+          </div>
+          <div className="cinema-stage" style={{ display: 'flex', justifyContent: 'center', marginTop: 'var(--space-7)' }}>
+            <Reveal variant="zoom" className="media-frame" style={{ maxWidth: 680, borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
+              <img src="/images/bob-images/major-screens.png" alt="Major Screens" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.21 — OUTCOME */}
+        <section className="section section--tight">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>21</b> — OUTCOME</Reveal>
+            <Reveal as="h2">What We Built</Reveal>
+            <Reveal variant="scale" className="facts-row">
+              <div><span className="meta-label">First Indian ride app with 3D icon system</span><span className="meta-value">3D</span></div>
+              <div><span className="meta-label">Native dark-mode UI built from ground up</span><span className="meta-value">Dark</span></div>
+              <div><span className="meta-label">Uber, Ola &amp; Rapido compared in one screen</span><span className="meta-value">1 app</span></div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.22 — CLOSE */}
+        <section className="section section--roomy bg-paper">
+          <div className="wrap" style={{ display: 'flex', justifyContent: 'center' }}>
+            <Reveal className="media-frame" style={{ maxWidth: 720 }}>
+              <img src="/images/bob-images/thank-you.png" alt="Thank You" loading="lazy" />
+            </Reveal>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>© 2025 Sohum Bhatnagar</span>
+        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Built with intent.</span>
+        <span>
+          <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          {' · '}
+          <a href="https://www.behance.net/sohumbhatnagar" target="_blank" rel="noopener noreferrer">Behance</a>
+        </span>
       </footer>
-
     </div>
   );
 }
