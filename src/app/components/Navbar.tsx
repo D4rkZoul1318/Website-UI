@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ROUTES } from "../routes";
 
 const font = "'Outfit', sans-serif";
 const nearBlack = "#1A1A1A";
@@ -13,15 +14,15 @@ export function Navbar() {
   const [visible, setVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const isHomePage = window.location.pathname === "/";
+  const isHomePage = window.location.pathname === ROUTES.home;
   const currentPage = window.location.pathname;
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100);
 
-    if (currentPage === "/about") setActive("About");
-    else if (currentPage === "/explorations") setActive("Explorations");
-    else if (currentPage === "/case-study" || currentPage === "/bob-rides") setActive("Work");
+    if (currentPage === ROUTES.about) setActive("About");
+    else if (currentPage === ROUTES.explorations) setActive("Explorations");
+    else if (currentPage === ROUTES.caseStudy || currentPage === ROUTES.bobRides) setActive("Work");
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -77,7 +78,7 @@ export function Navbar() {
         >
           {/* Logo */}
           <a
-            href="/"
+            href={ROUTES.home}
             style={{
               fontFamily: font,
               fontWeight: 500,
@@ -123,7 +124,7 @@ export function Navbar() {
             ))}
 
             <a
-              href="/explorations"
+              href={ROUTES.explorations}
               style={{
                 fontFamily: font, fontWeight: 400, fontSize: "16px",
                 color: active === "Explorations" ? nearBlack : grey,
@@ -138,7 +139,7 @@ export function Navbar() {
             </a>
 
             <a
-              href="/about"
+              href={ROUTES.about}
               style={{
                 fontFamily: font, fontWeight: 400, fontSize: "16px",
                 color: active === "About" ? nearBlack : grey,
@@ -211,11 +212,11 @@ export function Navbar() {
                 {link}
               </button>
             ))}
-            <a href="/explorations" onClick={() => setMenuOpen(false)}
+            <a href={ROUTES.explorations} onClick={() => setMenuOpen(false)}
               style={{ fontFamily: font, fontWeight: 400, fontSize: "18px", color: active === "Explorations" ? nearBlack : grey, textDecoration: "none", padding: "14px 0", borderBottom: "1px solid #F0EFEB", display: "block" }}>
               Explorations
             </a>
-            <a href="/about" onClick={() => setMenuOpen(false)}
+            <a href={ROUTES.about} onClick={() => setMenuOpen(false)}
               style={{ fontFamily: font, fontWeight: 400, fontSize: "18px", color: active === "About" ? nearBlack : grey, textDecoration: "none", padding: "14px 0", borderBottom: "1px solid #F0EFEB", display: "block" }}>
               About
             </a>

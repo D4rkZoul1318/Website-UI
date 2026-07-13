@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ROUTES } from "../routes";
 
 export function HudOverlay() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -64,7 +65,7 @@ export function HudOverlay() {
             Work
           </a>
           <Link
-            to="/about"
+            to={ROUTES.about}
             style={{ fontFamily: "var(--font-mono)" }}
             className="text-[11px] uppercase tracking-widest text-[#737373] hover:text-[#F0EDE8] transition-colors"
           >

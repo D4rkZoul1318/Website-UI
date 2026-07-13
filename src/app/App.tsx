@@ -9,6 +9,7 @@ import BobRides from "./components/bob-case-study/BobRides";
 import { AboutPage } from "./components/AboutPage";
 import CaseStudy from "./components/CaseStudy";
 import { ExplorationsPage } from "./components/ExplorationsPage";
+import { ROUTES } from "./routes";
 import { useEffect } from "react";
 
 const skills = ["UI/UX", "3D Modeling", "Graphic Design", "Photography"];
@@ -84,11 +85,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/bob-rides" element={<BobRides />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/case-study" element={<CaseStudy />} />
-        <Route path="/explorations" element={<ExplorationsPage />} />
+        <Route path={ROUTES.home} element={<HomePage />} />
+        <Route path={ROUTES.bobRides} element={<BobRides />} />
+        <Route path={ROUTES.about} element={<AboutPage />} />
+        <Route path={ROUTES.caseStudy} element={<CaseStudy />} />
+        <Route path={ROUTES.explorations} element={<ExplorationsPage />} />
       </Routes>
     </BrowserRouter>
   );

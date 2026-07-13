@@ -1,4 +1,5 @@
 import { ProjectCard } from "./ProjectCard";
+import { ROUTES } from "../routes";
 
 export function SelectedWork() {
   return (
@@ -27,7 +28,7 @@ export function SelectedWork() {
           videoSrc="/videos/bob-rides-preview.mp4"
           videoOrientation="portrait"
           badge="Live Product"
-          link="/bob-rides"
+          link={ROUTES.bobRides}
           status="Shipped"
         />
 
@@ -37,7 +38,7 @@ export function SelectedWork() {
           description="Redesigned a university campus management portal. Reduced student task completion from 12 steps to 4 through information architecture restructuring."
           tags={["EdTech", "Responsive Web", "Accessibility", "IA"]}
           badge="Case Study"
-          link="/case-study"
+          link={ROUTES.caseStudy}
           status="Completed"
         />
 

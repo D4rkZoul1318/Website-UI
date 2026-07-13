@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Linkedin } from 'lucide-react';
 import Carousel from './Carousel';
+import { ROUTES } from '../routes';
 
 const font = 'Outfit, sans-serif';
 const nearBlack = '#1A1A1A';
@@ -136,7 +137,7 @@ export default function CaseStudy() {
         }}
       >
         <a
-          onClick={() => (window.location.href = '/')}
+          onClick={() => (window.location.href = ROUTES.home)}
           style={{
             fontSize: 24,
             fontWeight: 700,
@@ -149,8 +150,8 @@ export default function CaseStudy() {
         </a>
         <div style={{ display: 'flex', gap: 24 }}>
           <a
-            href="/"
-            
+            href={ROUTES.home}
+
             style={{
               fontFamily: font,
               fontSize: '14px',

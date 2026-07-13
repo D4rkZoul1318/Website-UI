@@ -1,4 +1,5 @@
 import { useScrollReveal } from "./useScrollReveal";
+import { ROUTES } from "../routes";
 
 const pills = ["2-click navigation", "Student-first IA", "Figma Prototype"];
 
@@ -71,7 +72,7 @@ export function Projects() {
           style={cardStyle(160)}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
-          onClick={() => window.location.href = '/case-study'}
+          onClick={() => window.location.href = ROUTES.caseStudy}
         >
           <CardImage src="/images/uucms-thumbnail.png" alt="UUCMS thumbnail" />
           <div className="w-full md:w-1/2 flex flex-col justify-center p-6 md:p-10">
@@ -91,7 +92,7 @@ export function Projects() {
                 </span>
               ))}
             </div>
-            <a href="/case-study" style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: "16px", color: "#4A5240", textDecoration: "none", display: "inline-block" }}>
+            <a href={ROUTES.caseStudy} style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: "16px", color: "#4A5240", textDecoration: "none", display: "inline-block" }}>
               View Case Study &rarr;
             </a>
           </div>
@@ -103,7 +104,7 @@ export function Projects() {
           style={cardStyle(240)}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
-          onClick={() => window.location.href = '/bob-rides'}
+          onClick={() => window.location.href = ROUTES.bobRides}
         >
           <CardImage src="/images/bob-thumbnail.png" alt="BOB Rides thumbnail" />
           <div className="w-full md:w-1/2 flex flex-col justify-center p-6 md:p-10">
@@ -123,7 +124,7 @@ export function Projects() {
                 </span>
               ))}
             </div>
-            <a href="/bob-rides" style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: "16px", color: "#4A5240", textDecoration: "none", display: "inline-block" }}>
+            <a href={ROUTES.bobRides} style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: "16px", color: "#4A5240", textDecoration: "none", display: "inline-block" }}>
               View Case Study &rarr;
             </a>
           </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ROUTES } from "../routes";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -30,7 +31,7 @@ export function NavBar() {
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center">
         <Link
-          to="/"
+          to={ROUTES.home}
           className="text-sm font-medium text-neutral-900"
         >
           Sohum Bhatnagar
@@ -44,7 +45,7 @@ export function NavBar() {
             Work
           </a>
           <Link
-            to="/about"
+            to={ROUTES.about}
             className="text-sm text-neutral-500 hover:text-neutral-900 transition-colors"
           >
             About
