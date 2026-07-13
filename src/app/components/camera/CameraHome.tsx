@@ -260,6 +260,51 @@ export default function CameraHome() {
       cleanups.push(() => target.removeEventListener(evt, fn, opts));
     };
 
+    // ---- FLOATING NAV: THEME DETECTION -------------------------------------
+    const FNAV_DEBUG = false; // verified correct; logging muted by default
+
+    function sampleThemeAt(el: HTMLElement) {
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) return { theme: 'light' as const };
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const points = [
+        { x: cx, y: cy },
+        { x: cx, y: rect.top + 1 },
+        { x: cx, y: rect.bottom - 1 },
+        { x: rect.left + 1, y: cy },
+        { x: rect.right - 1, y: cy },
+      ];
+      const prevPointerEvents = el.style.pointerEvents;
+      el.style.pointerEvents = 'none';
+      let darkCount = 0;
+      points.forEach((p) => {
+        const x = Math.max(0, Math.min(window.innerWidth - 1, p.x));
+        const y = Math.max(0, Math.min(window.innerHeight - 1, p.y));
+        const hit = document.elementFromPoint(x, y);
+        const themed = hit && hit.closest ? (hit.closest('[data-theme]') as HTMLElement | null) : null;
+        const pointTheme = themed && themed.dataset.theme === 'dark' ? 'dark' : 'light';
+        if (pointTheme === 'dark') darkCount++;
+      });
+      el.style.pointerEvents = prevPointerEvents;
+      const result = darkCount >= 3 ? 'dark' : 'light';
+      if (FNAV_DEBUG) console.log('[floating-nav theme] dark votes:', darkCount, '/ 5 — applied theme:', result);
+      return { theme: result as 'dark' | 'light' };
+    }
+
+    function updateFloatingNavThemes() {
+      if (getComputedStyle(floatingNav).display === 'none') return;
+      const result = sampleThemeAt(floatingNav);
+      floatingNav.classList.toggle('theme-dark', result.theme === 'dark');
+    }
+
+    let fnavThemeTicking = false;
+    function requestFloatingNavThemeUpdate() {
+      if (fnavThemeTicking) return;
+      fnavThemeTicking = true;
+      requestAnimationFrame(() => { updateFloatingNavThemes(); fnavThemeTicking = false; });
+    }
+
     // ---- BOOT SEQUENCE ----------------------------------------------------
     (function boot_() {
       const dot3 = focusFrame ? focusFrame.querySelector('.dot-3') : null;
@@ -396,54 +441,6 @@ export default function CameraHome() {
       if (miniCounter) miniCounter.textContent = '0' + (idx + 1) + '/0' + SECTIONS.length;
       topnavLinks.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + SECTIONS[idx].id));
     }
-
-    // ---- FLOATING NAV: THEME DETECTION -------------------------------------
-    const FNAV_DEBUG = false; // verified correct; logging muted by default
-
-    function sampleThemeAt(el: HTMLElement) {
-      const rect = el.getBoundingClientRect();
-      if (rect.width === 0 && rect.height === 0) return { theme: 'light' as const };
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const points = [
-        { x: cx, y: cy },
-        { x: cx, y: rect.top + 1 },
-        { x: cx, y: rect.bottom - 1 },
-        { x: rect.left + 1, y: cy },
-        { x: rect.right - 1, y: cy },
-      ];
-      const prevPointerEvents = el.style.pointerEvents;
-      el.style.pointerEvents = 'none';
-      let darkCount = 0;
-      points.forEach((p) => {
-        const x = Math.max(0, Math.min(window.innerWidth - 1, p.x));
-        const y = Math.max(0, Math.min(window.innerHeight - 1, p.y));
-        const hit = document.elementFromPoint(x, y);
-        const themed = hit && hit.closest ? (hit.closest('[data-theme]') as HTMLElement | null) : null;
-        const pointTheme = themed && themed.dataset.theme === 'dark' ? 'dark' : 'light';
-        if (pointTheme === 'dark') darkCount++;
-      });
-      el.style.pointerEvents = prevPointerEvents;
-      const result = darkCount >= 3 ? 'dark' : 'light';
-      if (FNAV_DEBUG) console.log('[floating-nav theme] dark votes:', darkCount, '/ 5 — applied theme:', result);
-      return { theme: result as 'dark' | 'light' };
-    }
-
-    function updateFloatingNavThemes() {
-      if (getComputedStyle(floatingNav).display === 'none') return;
-      const result = sampleThemeAt(floatingNav);
-      floatingNav.classList.toggle('theme-dark', result.theme === 'dark');
-    }
-
-    let fnavThemeTicking = false;
-    function requestFloatingNavThemeUpdate() {
-      if (fnavThemeTicking) return;
-      fnavThemeTicking = true;
-      requestAnimationFrame(() => { updateFloatingNavThemes(); fnavThemeTicking = false; });
-    }
-    on(window, 'scroll', requestFloatingNavThemeUpdate, { passive: true });
-    on(window, 'resize', requestFloatingNavThemeUpdate);
-    updateFloatingNavThemes();
 
     // ---- NEEDLE SPRING PHYSICS ---------------------------------------------
     let angleCurrent = SECTIONS[0].angle, angleTarget = SECTIONS[0].angle, velocity = 0;
