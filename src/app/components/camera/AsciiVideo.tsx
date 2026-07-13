@@ -31,6 +31,10 @@ export default function AsciiVideo({ src, className, label }: AsciiVideoProps) {
 
     let cols = 60;
     let rows = 40;
+    let cropX = 0;
+    let cropY = 0;
+    let cropW = 0;
+    let cropH = 0;
     let dimsReady = false;
     let running = false;
     let rafId = 0;
@@ -40,16 +44,34 @@ export default function AsciiVideo({ src, className, label }: AsciiVideoProps) {
       const rect = container.getBoundingClientRect();
       const vw = video.videoWidth || 16;
       const vh = video.videoHeight || 9;
-      cols = Math.max(10, Math.round(rect.width / CHAR_WIDTH_PX));
-      rows = Math.max(6, Math.round(cols * (vh / vw) * CHAR_ASPECT));
+      ctx.font = `${FONT_SIZE_PX}px 'JetBrains Mono', monospace`;
+      const charWidthPx = ctx.measureText('0').width || CHAR_WIDTH_PX;
+      cols = Math.max(10, Math.round(rect.width / charWidthPx));
+      rows = Math.max(6, Math.round(rect.height / CHAR_HEIGHT_PX));
       sampleCanvas.width = cols;
       sampleCanvas.height = rows;
+
+      // object-fit: cover — crop the video to the panel's aspect so the
+      // ascii grid fills it edge to edge with no letterboxing.
+      const targetAspect = cols / rows;
+      const videoAspect = vw / vh;
+      if (videoAspect > targetAspect) {
+        cropH = vh;
+        cropW = vh * targetAspect;
+        cropX = (vw - cropW) / 2;
+        cropY = 0;
+      } else {
+        cropW = vw;
+        cropH = vw / targetAspect;
+        cropX = 0;
+        cropY = (vh - cropH) / 2;
+      }
       dimsReady = true;
     };
 
     const renderFrame = () => {
       if (!dimsReady) return;
-      ctx.drawImage(video, 0, 0, cols, rows);
+      ctx.drawImage(video, cropX, cropY, cropW, cropH, 0, 0, cols, rows);
       const { data } = ctx.getImageData(0, 0, cols, rows);
       let out = '';
       for (let y = 0; y < rows; y++) {

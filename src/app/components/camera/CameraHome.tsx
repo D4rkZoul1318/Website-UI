@@ -908,9 +908,12 @@ export default function CameraHome() {
                 ))}
               </div>
             </Reveal>
-            <Reveal variant="clip" className="about-portrait">
-              <AsciiVideo src="/videos/aboutbird.mp4" label="Bird in flight, rendered as live ASCII" />
-            </Reveal>
+            <div className="about-portrait-wrap">
+              <Reveal variant="clip" className="about-portrait">
+                <AsciiVideo src="/videos/aboutbird.mp4" label="Bird in flight, rendered as live ASCII" />
+              </Reveal>
+              <p className="about-portrait-caption">Bee-eater — looking for breakfast.</p>
+            </div>
           </div>
         </section>
 
