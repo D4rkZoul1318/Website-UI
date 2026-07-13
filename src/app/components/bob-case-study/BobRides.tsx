@@ -421,10 +421,18 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>20</b> — DESIGN</Reveal>
             <Reveal as="h2">Major Screens</Reveal>
           </div>
-          <div className="cinema-stage" style={{ display: 'flex', justifyContent: 'center', marginTop: 'var(--space-7)' }}>
-            <Reveal variant="zoom" className="media-frame" style={{ maxWidth: 680, borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
-              <img src="/images/bob-images/major-screens.png" alt="Major Screens" loading="lazy" />
-            </Reveal>
+          <div className="cinema-stage" style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)', marginTop: 'var(--space-7)' }}>
+            {['home-screen-1', 'home-screen-2', 'home-screen-3'].map((name, i) => (
+              <Reveal
+                key={name}
+                variant="zoom"
+                delay={staggerDelay(i)}
+                className="media-frame"
+                style={{ flex: '1 1 320px', maxWidth: 380, borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}
+              >
+                <img src={`/images/bob-images/major-screens-${name}.png`} alt={`Major Screens — ${i + 1}`} loading="lazy" />
+              </Reveal>
+            ))}
           </div>
         </section>
 
