@@ -51,8 +51,9 @@ export default function AsciiVideo({ src, className, label }: AsciiVideoProps) {
       sampleCanvas.width = cols;
       sampleCanvas.height = rows;
 
-      // object-fit: cover — crop the video to the panel's aspect so the
-      // ascii grid fills it edge to edge with no letterboxing.
+      // object-fit: cover, object-position: top — crop the video to the
+      // panel's aspect so the ascii grid fills it edge to edge, biased to
+      // the top of frame so the subject doesn't get cropped off.
       const targetAspect = cols / rows;
       const videoAspect = vw / vh;
       if (videoAspect > targetAspect) {
@@ -64,7 +65,7 @@ export default function AsciiVideo({ src, className, label }: AsciiVideoProps) {
         cropW = vw;
         cropH = vw / targetAspect;
         cropX = 0;
-        cropY = (vh - cropH) / 2;
+        cropY = 0;
       }
       dimsReady = true;
     };
