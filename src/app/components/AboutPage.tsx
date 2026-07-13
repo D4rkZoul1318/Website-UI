@@ -1,54 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
-import InfiniteMenu from './InfiniteMenu';
-import { Navbar } from './Navbar';
+import { useEffect, useState } from 'react';
+import { Reveal, staggerDelay } from './camera/Reveal';
+import { ROUTES } from '../routes';
 
-const font = 'Outfit, sans-serif';
-const nearBlack = '#1A1A1A';
-const grey = '#6B6B6B';
-const bgColor = '#F9F9F7';
-const warmBg = '#F2F0EB';
-const cardBg = '#EEEEEA';
-const accent = '#4A5240';
-
-const photoItems = [
-  { image: '/images/about/eagle.jpg', link: '', title: 'Crested Hawk-Eagle', description: 'Patience is just focus with nowhere to be.' },
-  { image: '/images/about/shrike.jpg', link: '', title: 'Long-tailed Shrike', description: 'Small bird, very serious about it.' },
-  { image: '/images/about/bee-eater.jpg', link: '', title: 'Green Bee-eater', description: "Nature's color palette > any Figma swatch." },
-  { image: '/images/about/leopard.jpg', link: '', title: 'Leopard', description: 'Spent 20 minutes staring before I saw it.' },
-  { image: '/images/about/macaques.jpg', link: '', title: 'Macaques', description: 'Three opinions, zero consensus.' },
-  { image: '/images/about/peacock.jpg', link: '', title: 'Indian Peacock', description: 'The blue that made me reconsider every UI I had ever built.' },
-];
-
-const skills = [
-  { category: 'Design', items: ['Figma', 'Photoshop', 'Maya', 'Blender', 'ZBrush', 'Substance Painter'] },
-  { category: 'Prototyping', items: ['Figma Make', 'Unreal Engine'] },
-  { category: 'AI', items: ['Claude', 'Gemini', 'ChatGPT', 'DALL·E', 'Midjourney'] },
-  { category: 'Dev', items: ['Git', 'Vercel', 'Reaper'] },
-  { category: 'Methods', items: ['UX Research', 'Wireframing', '3D Iconography', 'PBR Asset Creation'] },
-];
+function useScrollProgress() {
+  const [pct, setPct] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return pct;
+}
 
 const experience = [
   {
-    role: 'Icon Designer — Freelance',
-    company: 'Bob Rides',
-    duration: '4 weeks',
-    bullets: [
-      'Redesigned icons for the Bob Rides platform, focusing on creating a unique yet highly user-friendly visual language.',
-    ],
+    role: 'Icon Designer — Freelance', company: 'Bob Rides', duration: '4 weeks',
+    bullets: ['Redesigned icons for the Bob Rides platform, focusing on creating a unique yet highly user-friendly visual language.'],
   },
   {
-    role: '3D Modeler — Intern',
-    company: 'UC Riverside, Dept. of Paleontology',
-    duration: '6 months',
+    role: '3D Modeler — Intern', company: 'UC Riverside, Dept. of Paleontology', duration: '6 months',
     bullets: [
       'Created scientifically accurate 3D fossil models in Blender and ZBrush for research and education.',
       'Delivered optimized assets for academic visualizations, enhancing accessibility for wider audiences.',
     ],
   },
   {
-    role: '3D Generalist',
-    company: 'Academic & Freelance',
-    duration: '2021 – 2025',
+    role: '3D Generalist', company: 'Academic & Freelance', duration: '2021 – 2025',
     bullets: [
       'Designed game-ready PBR assets in Unreal Engine for modular environments.',
       'Produced hard-surface assets in Maya/Substance Painter for academic films and short projects.',
@@ -58,234 +38,152 @@ const experience = [
 ];
 
 const education = [
-  {
-    degree: 'Bachelor of Visual Arts (B.Va), Distinction',
-    major: 'Major — Animation',
-    institution: 'Chitrakala Parishath, Bengaluru',
-    year: '2021 – 2025',
-  },
-  {
-    degree: 'Class XII',
-    major: '',
-    institution: 'Delhi Public School',
-    year: '2020 – 2021',
-  },
+  { degree: 'Bachelor of Visual Arts (B.Va), Distinction', major: 'Major — Animation', institution: 'Chitrakala Parishath, Bengaluru', year: '2021 – 2025' },
+  { degree: 'Class XII', major: '', institution: 'Delhi Public School', year: '2020 – 2021' },
 ];
 
-type PhotoItem = typeof photoItems[0];
+const toolkit = [
+  { category: 'Design', items: ['Figma', 'Photoshop', 'Maya', 'Blender', 'ZBrush', 'Substance Painter'] },
+  { category: 'Prototyping', items: ['Figma Make', 'Unreal Engine'] },
+  { category: 'AI', items: ['Claude', 'Gemini', 'ChatGPT', 'DALL·E', 'Midjourney'] },
+  { category: 'Dev', items: ['Git', 'Vercel', 'Reaper'] },
+  { category: 'Methods', items: ['UX Research', 'Wireframing', '3D Iconography', 'PBR Asset Creation'] },
+];
 
 export function AboutPage() {
-  const [lightbox, setLightbox] = useState<PhotoItem | null>(null);
-  const [loaded, setLoaded] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 100);
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', checkMobile);
-    };
-  }, []);
-
-  const useFadeIn = () => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [visible, setVisible] = useState(false);
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-        { threshold: 0.1 }
-      );
-      if (ref.current) observer.observe(ref.current);
-      return () => observer.disconnect();
-    }, []);
-    return { ref, visible };
-  };
-
-  const px = isMobile ? '20px' : '48px';
+  useEffect(() => { document.title = 'About — Sohum Bhatnagar'; }, []);
+  const scrollPct = useScrollProgress();
 
   return (
-    <div style={{ backgroundColor: bgColor, minHeight: '100vh', fontFamily: font }}>
+    <div className="camera-theme">
+      <header className="topbar">
+        <span className="mark">ABOUT</span>
+        <a className="focus-cue" href={`${ROUTES.home}#notes`}>
+          <span className="arrow" aria-hidden="true">←</span><span>Back to Home</span>
+        </a>
+      </header>
+      <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
 
-      <Navbar />
+      <main>
+        {/* HERO */}
+        <section className="section bg-paper">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>00</b> — ABOUT</Reveal>
+            <Reveal as="h1" style={{ maxWidth: '22ch' }}>Designer by training.<br />Naturalist by instinct.</Reveal>
+            <Reveal as="p" className="lede">
+              Multidisciplinary creative with 4+ years spanning UI/UX, 3D visual production, brand design, and AI-assisted workflows. My process starts with real problems and ends with interfaces that feel obvious in hindsight. When I'm not in Figma, I'm somewhere quiet with a 600mm lens.
+            </Reveal>
+          </div>
+        </section>
 
-      {/* Hero */}
-      <section style={{ paddingTop: '140px', paddingBottom: '80px', paddingLeft: px, paddingRight: px, maxWidth: '960px', margin: '0 auto' }}>
-        <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '24px' }}>About</p>
-        <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
-          <h1 style={{ fontFamily: font, fontWeight: 700, fontSize: isMobile ? '36px' : 'clamp(36px, 5vw, 64px)', color: nearBlack, lineHeight: 1.1, margin: '0 0 32px 0' }}>
-            Designer by training.<br />Naturalist by instinct.
-          </h1>
-        </div>
-        <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease 150ms, transform 500ms ease 150ms' }}>
-          <p style={{ fontFamily: font, fontWeight: 300, fontSize: isMobile ? '16px' : 'clamp(16px, 2vw, 20px)', color: grey, lineHeight: 1.8, maxWidth: '640px', margin: 0 }}>
-            Multidisciplinary creative with 4+ years spanning UI/UX, 3D visual production, brand design, and AI-assisted workflows. My process starts with real problems and ends with interfaces that feel obvious in hindsight. When I'm not in Figma, I'm somewhere quiet with a 600mm lens.
-          </p>
-        </div>
-      </section>
+        {/* BIO */}
+        <section className="section bg-soft">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>01</b> — BACKGROUND</Reveal>
+            <Reveal as="h2">I'm Sohum.</Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>I studied Animation at Chitrakala Parishath in Bengaluru (B.Va, Distinction) before moving into product design, so I still think in composition, narrative and visual weight before I think in components. Four-plus years span UI/UX, 3D visual production — game-ready PBR assets in Unreal Engine, hard-surface modeling in Maya and Substance Painter, even scientifically accurate 3D fossil models for UC Riverside's Paleontology department — brand design, and AI-assisted workflows.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>That background shows up directly in the work: the Bob Rides icon system exists because I could take a vehicle from sketch to a fully-shaded 3D render, not just a flat vector. My process starts with a real problem and ends with an interface that feels obvious in hindsight. When I'm not in Figma, I'm usually somewhere quiet with a 600mm lens, or on a basketball court.</p>
+            </Reveal>
+            <Reveal variant="scale" className="facts-row">
+              <div><span className="meta-label">Based in</span><span className="meta-value" style={{ fontSize: 20 }}>Bengaluru</span></div>
+              <div><span className="meta-label">Status</span><span className="meta-value" style={{ fontSize: 20 }}>Open to roles &amp; apprenticeships</span></div>
+              <div><span className="meta-label">Tools</span><span className="meta-value" style={{ fontSize: 20 }}>Figma, Maya, Blender, React</span></div>
+            </Reveal>
+          </div>
+        </section>
 
-      {/* Experience */}
-      {(() => {
-        const { ref, visible } = useFadeIn();
-        return (
-          <section ref={ref} style={{ padding: `80px ${px}`, maxWidth: '960px', margin: '0 auto', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
-            <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
-              Experience
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
-              {experience.map((exp) => (
-                <div key={exp.role} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '8px' : '48px' }}>
-                  <div style={{ minWidth: isMobile ? 'unset' : '200px', flex: isMobile ? 'unset' : '0 0 200px' }}>
-                    <p style={{ fontFamily: font, fontSize: '13px', color: grey, margin: '0 0 4px 0' }}>{exp.duration}</p>
-                    <p style={{ fontFamily: font, fontSize: '13px', color: grey, margin: 0 }}>{exp.company}</p>
+        {/* EXPERIENCE */}
+        <section className="section">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>02</b> — EXPERIENCE</Reveal>
+            <Reveal as="h2">Where I've Worked</Reveal>
+            <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-7)' }}>
+              {experience.map((exp, i) => (
+                <Reveal key={exp.role} delay={staggerDelay(i)} className="split">
+                  <div>
+                    <span className="meta-label" style={{ marginBottom: 4 }}>{exp.duration}</span>
+                    <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-faint)' }}>{exp.company}</p>
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ fontFamily: font, fontWeight: 600, fontSize: '16px', color: nearBlack, margin: isMobile ? '8px 0 16px 0' : '0 0 16px 0' }}>{exp.role}</p>
-                    <ul style={{ margin: 0, padding: '0 0 0 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {exp.bullets.map((b, i) => (
-                        <li key={i} style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, lineHeight: 1.7 }}>{b}</li>
+                  <div>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: 'var(--space-3)' }}>{exp.role}</h3>
+                    <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                      {exp.bullets.map((b, bi) => (
+                        <li key={bi} style={{ color: 'var(--ink-soft)', lineHeight: 1.7, fontSize: '0.96rem', paddingLeft: 20, position: 'relative' }}>
+                          <span style={{ position: 'absolute', left: 0, color: 'var(--accent)' }}>→</span>{b}
+                        </li>
                       ))}
                     </ul>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
-          </section>
-        );
-      })()}
+          </div>
+        </section>
 
-      {/* Education */}
-      {(() => {
-        const { ref, visible } = useFadeIn();
-        return (
-          <section ref={ref} style={{ padding: `64px ${px} 80px`, maxWidth: '960px', margin: '0 auto', borderTop: '1px solid #E8E6E0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
-            <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '48px' }}>
-              Education
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              {education.map((ed) => (
-                <div key={ed.institution} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '4px' : '48px' }}>
-                  <div style={{ minWidth: isMobile ? 'unset' : '200px', flex: isMobile ? 'unset' : '0 0 200px' }}>
-                    <p style={{ fontFamily: font, fontSize: '13px', color: grey, margin: 0 }}>{ed.year}</p>
+        {/* EDUCATION */}
+        <section className="section bg-soft">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>03</b> — EDUCATION</Reveal>
+            <Reveal as="h2">Where I Studied</Reveal>
+            <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+              {education.map((ed, i) => (
+                <Reveal key={ed.institution} delay={staggerDelay(i)} className="split">
+                  <span className="meta-label">{ed.year}</span>
+                  <div>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 4 }}>{ed.degree}</h3>
+                    {ed.major && <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-faint)', marginBottom: 4 }}>{ed.major}</p>}
+                    <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-faint)' }}>{ed.institution}</p>
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ fontFamily: font, fontWeight: 600, fontSize: '16px', color: nearBlack, margin: isMobile ? '4px 0 4px 0' : '0 0 4px 0' }}>{ed.degree}</p>
-                    {ed.major && <p style={{ fontFamily: font, fontSize: '14px', color: grey, margin: '0 0 4px 0' }}>{ed.major}</p>}
-                    <p style={{ fontFamily: font, fontSize: '14px', color: grey, margin: 0 }}>{ed.institution}</p>
-                  </div>
-                </div>
+                </Reveal>
               ))}
             </div>
-          </section>
-        );
-      })()}
+          </div>
+        </section>
 
-      {/* Skills */}
-      {(() => {
-        const { ref, visible } = useFadeIn();
-        return (
-          <section ref={ref} style={{ padding: `64px ${px} 80px`, maxWidth: '960px', margin: '0 auto', borderTop: '1px solid #E8E6E0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
-            <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '40px' }}>
-              Skills & Tools
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {skills.map(skill => (
-                <div key={skill.category} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? '8px' : '24px' }}>
-                  <span style={{ fontFamily: font, fontSize: '12px', color: grey, textTransform: 'uppercase', letterSpacing: '0.08em', minWidth: '120px', paddingTop: isMobile ? '0' : '6px' }}>
-                    {skill.category}
-                  </span>
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    {skill.items.map(item => (
-                      <span key={item} style={{ fontFamily: font, fontSize: '13px', color: nearBlack, backgroundColor: cardBg, borderRadius: 999, padding: '6px 16px' }}>
-                        {item}
-                      </span>
-                    ))}
+        {/* TOOLKIT */}
+        <section className="section">
+          <div className="wrap-wide">
+            <Reveal className="section-index">SEC.<b>04</b> — TOOLKIT</Reveal>
+            <Reveal as="h2">Skills &amp; Tools</Reveal>
+            <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+              {toolkit.map((group, i) => (
+                <Reveal key={group.category} delay={staggerDelay(i)} className="split">
+                  <span className="meta-label" style={{ paddingTop: 4 }}>{group.category}</span>
+                  <div className="hero-tags" style={{ marginTop: 0 }}>
+                    {group.items.map((item) => <span key={item}>{item}</span>)}
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
-          </section>
-        );
-      })()}
+          </div>
+        </section>
 
-      {/* Contact */}
-      {(() => {
-        const { ref, visible } = useFadeIn();
-        return (
-          <section ref={ref} style={{ padding: `64px ${px} 80px`, textAlign: 'center', borderTop: '1px solid #E8E6E0', backgroundColor: bgColor, opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
-            <p style={{ fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '32px' }}>
-              Get in touch
-            </p>
-            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              <a href="mailto:sohum1311@gmail.com"
-                style={{ fontFamily: font, fontSize: isMobile ? '13px' : '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: isMobile ? '9px 18px' : '10px 24px', textDecoration: 'none', display: 'inline-block', transition: 'background 200ms' }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = accent; e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = accent; }}
-              >
-                sohum1311@gmail.com
-              </a>
-              <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer"
-                style={{ fontFamily: font, fontSize: isMobile ? '13px' : '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: isMobile ? '9px 18px' : '10px 24px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 200ms' }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = accent; e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = accent; }}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-                </svg>
-                LinkedIn
-              </a>
-              <a href="https://www.behance.net/sohumbhatnagar" target="_blank" rel="noopener noreferrer"
-                style={{ fontFamily: font, fontSize: isMobile ? '13px' : '15px', color: accent, border: `1px solid ${accent}`, borderRadius: 999, padding: isMobile ? '9px 18px' : '10px 24px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 200ms' }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = accent; e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = accent; }}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 9h5a2 2 0 0 1 0 4H3V9z"/><path d="M3 13h5.5a2.5 2.5 0 0 1 0 5H3v-5z"/><path d="M15 7h6"/><path d="M21 13.5a4 4 0 1 0-1 2.5h-5"/>
-                </svg>
-                Behance
-              </a>
+        {/* CONTACT */}
+        <section className="section band bg-dark" style={{ textAlign: 'center' }}>
+          <div className="band-inner wrap cinema-head">
+            <Reveal className="section-index">SEC.<b>05</b> — CONTACT</Reveal>
+            <Reveal as="h2">Get in touch.</Reveal>
+            <Reveal as="p">Open to product design roles and apprenticeships.</Reveal>
+            <div style={{ display: 'flex', gap: 'var(--space-3)', justifyContent: 'center', flexWrap: 'wrap', marginTop: 'var(--space-6)' }}>
+              <Reveal as="a" className="contact-cta" href="mailto:sohum1311@gmail.com">
+                <span>sohum1311@gmail.com</span><span className="arrow">→</span>
+              </Reveal>
+              <Reveal as="a" delay={staggerDelay(1)} className="contact-cta" href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer">
+                <span>LinkedIn</span><span className="arrow">↗</span>
+              </Reveal>
+              <Reveal as="a" delay={staggerDelay(2)} className="contact-cta" href="https://www.behance.net/sohumbhatnagar" target="_blank" rel="noopener noreferrer">
+                <span>Behance</span><span className="arrow">↗</span>
+              </Reveal>
             </div>
-          </section>
-        );
-      })()}
+          </div>
+        </section>
+      </main>
 
-      {/* Photography — InfiniteMenu */}
-      {(() => {
-        const { ref, visible } = useFadeIn();
-        return (
-          <section ref={ref} style={{ backgroundColor: warmBg, padding: isMobile ? '60px 0' : '80px 0', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(32px)', transition: 'opacity 500ms ease, transform 500ms ease' }}>
-            <p style={{ fontFamily: font, fontSize: '16px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>
-              Through the lens
-            </p>
-            <p style={{ fontFamily: font, fontWeight: 300, fontSize: '15px', color: grey, textAlign: 'center', marginBottom: '40px', padding: '0 20px' }}>
-              {isMobile ? 'Tap to open' : 'Drag to explore · Click to open'}
-            </p>
-            <div style={{ height: isMobile ? '400px' : '700px', width: '100%', position: 'relative' }}>
-              <InfiniteMenu
-                items={photoItems}
-                scale={isMobile ? 0.8 : 1.2}
-                onItemClick={(item: PhotoItem) => setLightbox(item)}
-              />
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* Lightbox */}
-      {lightbox && (
-        <div onClick={() => setLightbox(null)} style={{
-          position: 'fixed', inset: 0, zIndex: 999,
-          backgroundColor: 'rgba(0,0,0,0.9)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          cursor: 'zoom-out', padding: isMobile ? '20px' : '40px',
-        }}>
-          <img src={lightbox.image} alt={lightbox.title} style={{ maxWidth: '90vw', maxHeight: '70vh', objectFit: 'contain', borderRadius: '8px' }} />
-          <h3 style={{ fontFamily: font, fontWeight: 600, fontSize: isMobile ? '16px' : '20px', color: '#FFFFFF', marginTop: '20px', marginBottom: '8px', textAlign: 'center' }}>{lightbox.title}</h3>
-          <p style={{ fontFamily: font, fontWeight: 300, fontSize: isMobile ? '13px' : '15px', color: 'rgba(255,255,255,0.65)', textAlign: 'center', padding: '0 20px' }}>{lightbox.description}</p>
-        </div>
-      )}
+      <footer>
+        <span>© 2026 Sohum Bhatnagar</span>
+        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Built with intent.</span>
+      </footer>
     </div>
   );
 }
