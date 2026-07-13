@@ -37,7 +37,7 @@ export function SelectedWork() {
           description="Redesigned a university campus management portal. Reduced student task completion from 12 steps to 4 through information architecture restructuring."
           tags={["EdTech", "Responsive Web", "Accessibility", "IA"]}
           badge="Case Study"
-          link="/uucms"
+          link="/case-study"
           status="Completed"
         />
 

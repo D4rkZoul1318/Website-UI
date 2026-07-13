@@ -216,7 +216,7 @@ export default function BobRides() {
                     </div>
                   ))}
                 </div>
-git add . && git commit -m "Add icon system design system section and fix Maya tool credit" && git push              </div>
+              </div>
             </div>
           </FadeUp>
           {/* Competitor screenshots */}
