@@ -182,7 +182,7 @@ export function AboutPage() {
 
       <footer>
         <span>© 2026 Sohum Bhatnagar</span>
-        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Built with intent.</span>
+        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Designed and built in React.</span>
       </footer>
     </div>
   );

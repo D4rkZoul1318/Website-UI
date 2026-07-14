@@ -142,7 +142,7 @@ export function ExplorationsPage() {
                 fontFamily: font, fontSize: '13px', fontWeight: active === cat ? 600 : 400,
                 color: active === cat ? '#FFFFFF' : nearBlack,
                 backgroundColor: active === cat ? accent : '#EEEEEA',
-                border: 'none', borderRadius: 999, padding: '8px 20px', cursor: 'pointer',
+                border: 'none', borderRadius: 999, padding: '11px 20px', cursor: 'pointer',
                 transition: 'background 200ms, color 200ms',
               }}
             >
