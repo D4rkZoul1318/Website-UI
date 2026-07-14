@@ -22,8 +22,8 @@ const decisions = [
 ];
 
 const outcomeSlides = [
-  { src: '/images/redesigned-dashboard.png', alt: 'Redesigned Dashboard', caption: 'Simplified navigation with clear hierarchy and quick access to key student actions' },
-  { src: '/images/results.png', alt: 'Results and Outcomes', caption: 'Time, clicks, and independence — the three metrics measured below' },
+  { src: '/images/redesigned-dashboard.webp', alt: 'Redesigned Dashboard', caption: 'Simplified navigation with clear hierarchy and quick access to key student actions' },
+  { src: '/images/results.webp', alt: 'Results and Outcomes', caption: 'Time, clicks, and independence — the three metrics measured below' },
 ];
 
 function useScrollProgress() {
@@ -84,9 +84,9 @@ function CompareSlider() {
               else if (e.key === 'End') { setPct(100); e.preventDefault(); }
             }}
           >
-            <div className="compare-pane compare-before"><img src="/images/original-uucms.png" alt="Original UUCMS portal" /></div>
+            <div className="compare-pane compare-before"><img src="/images/original-uucms.webp" alt="Original UUCMS portal" loading="lazy" decoding="async" /></div>
             <div className="compare-pane compare-after" style={{ clipPath: `inset(0 ${100 - pct}% 0 0)` }}>
-              <img src="/images/redesigned-dashboard.png" alt="Redesigned UUCMS dashboard" />
+              <img src="/images/redesigned-dashboard.webp" alt="Redesigned UUCMS dashboard" loading="lazy" decoding="async" />
             </div>
             <div className="compare-label before">Before</div>
             <div className="compare-label after">After</div>
@@ -121,7 +121,7 @@ function OutcomeCarousel() {
     <Reveal variant="scale" className="outcome-carousel">
       <div className="device-frame">
         {outcomeSlides.map((s, i) => (
-          <img key={s.src} className={`outcome-slide${i === active ? ' is-active' : ''}`} src={s.src} alt={s.alt} />
+          <img key={s.src} className={`outcome-slide${i === active ? ' is-active' : ''}`} src={s.src} alt={s.alt} loading="lazy" decoding="async" />
         ))}
         <button className="outcome-arrow outcome-arrow--prev" type="button" aria-label="Previous screen" onClick={() => setActive((a) => (a - 1 + outcomeSlides.length) % outcomeSlides.length)}>
           <span aria-hidden="true">←</span>

@@ -44,11 +44,11 @@
 .camera-theme a { color: inherit; }
 
 /* ---- Reveal vocabulary --------------------------------------------- */
-.camera-theme .reveal { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.camera-theme .reveal { opacity: 0; transform: translateY(16px); transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
 .camera-theme .reveal.visible { opacity: 1; transform: translateY(0); }
-.camera-theme .reveal--scale { opacity: 0; transform: scale(0.96) translateY(10px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.camera-theme .reveal--scale { opacity: 0; transform: scale(0.96) translateY(10px); transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
 .camera-theme .reveal--scale.visible { opacity: 1; transform: scale(1) translateY(0); }
-.camera-theme .reveal--rotate { opacity: 0; transform: translateY(14px) rotate(-0.8deg); transition: opacity 650ms var(--ease-out), transform 650ms var(--ease-out); }
+.camera-theme .reveal--rotate { opacity: 0; transform: translateY(14px) rotate(-0.8deg); transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
 .camera-theme .reveal--rotate.visible { opacity: 1; transform: translateY(0) rotate(0deg); }
 .camera-theme .reveal--clip { clip-path: inset(0 0 100% 0); transition: clip-path 750ms var(--ease-in-out); }
 .camera-theme .reveal--clip.visible { clip-path: inset(0 0 0% 0); }
@@ -227,5 +227,10 @@
 
 .camera-theme a:focus-visible, .camera-theme button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 @media (prefers-reduced-motion: reduce) {
-  .camera-theme * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  .camera-theme * { animation: none !important; }
+  .camera-theme .reveal, .camera-theme .reveal--scale, .camera-theme .reveal--rotate {
+    transform: none !important;
+    transition: opacity 200ms ease !important;
+  }
+  .camera-theme * { transition-duration: 200ms !important; transition-property: opacity, color, background-color !important; }
 }

@@ -158,33 +158,23 @@ export default function RewindCaseStudy() {
             <Reveal as="h2">The Instrument</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>A 6-disc slot system modeled after CD changers. A glass carriage that slides between discs. Dedicated rotary EQ knobs per channel, vertical faders for master and pan, an iPod-style click wheel for navigation — each control does one thing and feels distinct.</Reveal>
             <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-7)', maxWidth: 839, marginInline: 'auto', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
-              <img src="/images/rewind/instrument.png" alt="REWIND — the six-disc instrument body, glass carriage, EQ knobs, and faders" loading="lazy" />
+              <img src="/images/rewind/instrument.webp" alt="REWIND — the six-disc instrument body, glass carriage, EQ knobs, and faders" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>
 
-        {/* SEC.04 — INTERACTION SYSTEM */}
-        <section className="section">
-          <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>04</b> — SYSTEM</Reveal>
-            <Reveal as="h2">One Control, One Job</Reveal>
-            <Reveal as="p" className="lede">The flat-tap problem isn't solved by drawing knobs — it's solved by making every control mechanically distinct: different gesture, different resistance, different feedback.</Reveal>
-            <div className="feature-grid">
-              {systemFeatures.map((f, i) => (
-                <Reveal key={f.ord} delay={staggerDelay(i)} className="feature-cell">
-                  <span className="ord">{f.ord}</span><h3>{f.title}</h3><p>{f.body}</p>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* SEC.05 — SIGNAL CHAIN */}
+        {/* SEC.04 — HOW IT'S BUILT */}
         <section className="section bg-paper">
           <div className="wrap cinema-head">
-            <Reveal className="section-index">SEC.<b>05</b> — ENGINEERING</Reveal>
-            <Reveal as="h2">The Signal Chain Is Real</Reveal>
-            <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>This isn't a skin over a standard player. Every control on the surface drives a node in a live Web Audio processing graph — turn a knob and the sound actually changes.</Reveal>
+            <Reveal className="section-index">SEC.<b>04</b> — BUILD</Reveal>
+            <Reveal as="h2">How It's Built</Reveal>
+            <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>
+              {/* TODO(SOHUM): hardest interaction problem (the click wheel) and how it was solved */}
+            </Reveal>
+            <Reveal as="p" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', color: 'var(--ink-faint)', marginTop: 'var(--space-4)' }}>
+              React · Web Audio API · Deployed on Vercel
+            </Reveal>
+            <Reveal as="p" className="lede" style={{ marginInline: 'auto', marginTop: 'var(--space-6)' }}>This isn't a skin over a standard player. Every control on the surface drives a node in a live Web Audio processing graph — turn a knob and the sound actually changes.</Reveal>
             <div className="flow-chart">
               {signalChain.map((node, i) => (
                 <div key={node.label} style={{ display: 'contents' }}>
@@ -193,6 +183,22 @@ export default function RewindCaseStudy() {
                     <span className="flow-label">{node.label}</span><p>{node.body}</p>
                   </Reveal>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SEC.05 — INTERACTION SYSTEM */}
+        <section className="section">
+          <div className="wrap-wide">
+            <Reveal className="section-index">SEC.<b>05</b> — SYSTEM</Reveal>
+            <Reveal as="h2">One Control, One Job</Reveal>
+            <Reveal as="p" className="lede">The flat-tap problem isn't solved by drawing knobs — it's solved by making every control mechanically distinct: different gesture, different resistance, different feedback.</Reveal>
+            <div className="feature-grid">
+              {systemFeatures.map((f, i) => (
+                <Reveal key={f.ord} delay={staggerDelay(i)} className="feature-cell">
+                  <span className="ord">{f.ord}</span><h3>{f.title}</h3><p>{f.body}</p>
+                </Reveal>
               ))}
             </div>
           </div>

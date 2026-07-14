@@ -186,7 +186,7 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
     radial-gradient(circle at 30% 75%, #0018a8 0%, rgba(0, 24, 168, 0) 55%),
     radial-gradient(circle at 80% 80%, #3d7bff 0%, rgba(61, 123, 255, 0) 50%),
     linear-gradient(180deg, #0038ff 0%, #001a8f 45%, #050c3a 75%, #020210 100%);
-  animation: bobPan 10s ease-in-out infinite alternate, bobHue 9s linear infinite;
+  animation: bobPan 10s linear infinite alternate, bobHue 9s linear infinite;
 }
 @keyframes bobPan {
   0% { transform: translate(0%, 0%) rotate(0deg); }
@@ -232,7 +232,7 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
 .camera-home .narrative-block p { color: var(--ink-soft); line-height: 1.6; font-size: 0.94rem; }
 
 .camera-home .moment { min-height: 56vh; display: flex; align-items: center; justify-content: center; padding: var(--space-6); }
-.camera-home .moment p { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(1.3rem, 2.6vw, 1.9rem); color: var(--ink-soft); max-width: 34ch; text-align: center; line-height: 1.5; opacity: 0; transform: translateY(14px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
+.camera-home .moment p { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(1.3rem, 2.6vw, 1.9rem); color: var(--ink-soft); max-width: 34ch; text-align: center; line-height: 1.5; opacity: 0; transform: translateY(14px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); }
 .camera-home .moment.visible p { opacity: 1; transform: translateY(0); }
 
 #notes.section { align-items: stretch; }
