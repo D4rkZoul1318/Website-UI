@@ -83,6 +83,8 @@ export function ExplorationsPage() {
   const [loaded, setLoaded] = useState(false);
   const [lightbox, setLightbox] = useState<string | null>(null);
 
+  useEffect(() => { document.title = 'Explorations — Sohum Bhatnagar'; }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 100);
     return () => clearTimeout(timer);
