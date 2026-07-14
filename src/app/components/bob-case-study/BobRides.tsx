@@ -139,7 +139,7 @@ export default function BobRides() {
         style={{
           position: 'sticky', top: 63, zIndex: 8,
           display: 'flex', gap: 'var(--space-4)', overflowX: 'auto',
-          padding: 'var(--space-3) var(--space-6)',
+          padding: 'var(--space-2) var(--space-6)',
           background: 'rgba(226, 224, 220, 0.97)', borderBottom: '1px solid var(--line-soft)',
           WebkitOverflowScrolling: 'touch',
         }}
@@ -151,7 +151,8 @@ export default function BobRides() {
             title={s.title}
             aria-current={activeSection === s.id ? 'true' : undefined}
             style={{
-              flex: '0 0 auto',
+              flex: '0 0 auto', display: 'inline-flex', alignItems: 'center',
+              padding: '13px 6px',
               fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em',
               textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap',
               color: activeSection === s.id ? 'var(--accent)' : 'var(--ink-faint)',
