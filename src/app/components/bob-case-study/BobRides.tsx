@@ -31,14 +31,13 @@ const NAV_SECTIONS = [
   { id: 'unique-features', num: '12', title: 'Unique Features' },
   { id: 'task-mapping', num: '13', title: 'Task Mapping' },
   { id: 'eisenhower-matrix', num: '14', title: 'Eisenhower Matrix' },
-  { id: 'five-why-analysis', num: '15', title: '5 Why Analysis' },
-  { id: 'key-decisions', num: '16', title: 'Three Decisions' },
-  { id: 'sketches', num: '17', title: 'Sketches' },
-  { id: 'final-icons', num: '18', title: 'Final Icons' },
-  { id: 'icon-system', num: '19', title: 'Icon System' },
-  { id: 'major-screens', num: '20', title: 'Major Screens' },
-  { id: 'what-we-built', num: '21', title: 'What We Built' },
-  { id: 'close', num: '22', title: 'Close' },
+  { id: 'key-decisions', num: '15', title: 'Three Decisions' },
+  { id: 'sketches', num: '16', title: 'Sketches' },
+  { id: 'final-icons', num: '17', title: 'Final Icons' },
+  { id: 'icon-system', num: '18', title: 'Icon System' },
+  { id: 'major-screens', num: '19', title: 'Major Screens' },
+  { id: 'what-we-built', num: '20', title: 'What We Built' },
+  { id: 'close', num: '21', title: 'Close' },
 ] as const;
 
 function useActiveSection(ids: readonly string[]) {
@@ -118,13 +117,6 @@ const taskMappingRows: { label: string; cells: string[] }[] = [
   { label: 'Thoughts', cells: ['"Is this faster than opening three apps separately?"', '"Which one is actually cheapest right now?"', '"Is that icon a bike or an auto? Is Best Price actually the best?"', '"Did it book the right vehicle? When does it arrive?"'] },
   { label: 'Urgency Level', cells: ['Medium — user has a destination in mind and is ready to book', 'High — fare comparison is time-sensitive due to surge pricing', 'High — selection decision happens in under 30 seconds', 'Low — passive monitoring state'] },
   { label: 'Design Opportunity', cells: ['Home screen icons (bike, auto, cab) must communicate vehicle category at 48px without any label', 'Available Rides screen is the primary icon performance test — all three vehicle types appear simultaneously at 32px', 'Best Price badge and icon must work together to guide the decision without requiring the user to read every row', 'Activity screen must clearly confirm vehicle type icon and provider — same icon system, confirmation context'] },
-];
-
-const fiveWhy = [
-  { label: 'Cause 1', text: 'The icon system used standard flat 2D vehicle silhouettes, identical in style to Rapido, Uber, and Ola.' },
-  { label: 'Cause 2', text: 'The initial design direction referenced existing competitors as the baseline rather than as the benchmark to exceed.' },
-  { label: 'Cause 3', text: 'No Indian ride-hailing app had attempted 3D icons, so there was no category precedent — the design process defaulted to what already existed.' },
-  { label: 'Cause 4', text: 'The market had collectively prioritised development speed and functional clarity over visual brand differentiation, making flat icons the industry default.' },
 ];
 
 export default function BobRides() {
@@ -437,36 +429,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.15 — ANALYSIS: 5 Why */}
-        <section id="five-why-analysis" className="section">
-          <div className="wrap">
-            <Reveal className="section-index">SEC.<b>15</b> — ANALYSIS</Reveal>
-            <Reveal as="h2">5 Why Analysis</Reveal>
-            <div className="flow-chart">
-              <Reveal className="flow-node flow-node--accent">
-                <span className="flow-label">Problem</span><p>Users cannot distinguish BOB Rides from other ride apps at first glance.</p>
-              </Reveal>
-              {fiveWhy.map((c, i) => (
-                <div key={c.label} style={{ display: 'contents' }}>
-                  <div className="flow-connector" />
-                  <Reveal delay={staggerDelay(i)} className="flow-node">
-                    <span className="flow-label">{c.label}</span><p>{c.text}</p>
-                  </Reveal>
-                </div>
-              ))}
-              <div className="flow-connector" />
-              <Reveal delay={staggerDelay(fiveWhy.length)} className="flow-node flow-node--accent">
-                <span className="flow-label">Root Cause</span>
-                <p>The icon design brief across the entire ride-hailing category was defined as "communicate vehicle type" — never "communicate vehicle type AND brand identity simultaneously." No one had challenged that constraint, leaving the design opportunity completely open.</p>
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-        {/* SEC.16 — ANALYSIS: Three decisions that shaped the system */}
+        {/* SEC.15 — ANALYSIS: Three decisions that shaped the system */}
         <section id="key-decisions" className="section band bg-dark">
           <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
+            <Reveal className="section-index">SEC.<b>15</b> — ANALYSIS</Reveal>
             <Reveal as="h2">Three decisions that shaped the system</Reveal>
             <div className="feature-grid">
               {decisions.map((d, i) => (
@@ -483,10 +449,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.17 — DESIGN: Sketches */}
+        {/* SEC.16 — DESIGN: Sketches */}
         <section id="sketches" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>17</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>16</b> — DESIGN</Reveal>
             <Reveal as="h2">Sketches</Reveal>
             <Reveal variant="rotate" className="media-frame" style={{ maxWidth: 880, marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/sketches.webp" alt="Sketches" loading="lazy" decoding="async" />
@@ -494,10 +460,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.18 — DESIGN: Final Icons */}
+        {/* SEC.17 — DESIGN: Final Icons */}
         <section id="final-icons" className="section section--roomy band bg-dark">
           <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>18</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>17</b> — DESIGN</Reveal>
             <Reveal as="h2">Final Icons</Reveal>
             <div className="icons-row">
               <Reveal variant="scale" delay={staggerDelay(0)} className="icon-cell"><img src="/images/bob-images/Car.webp" alt="BOB Rides 3D cab icon" loading="lazy" decoding="async" /><span>Cab</span></Reveal>
@@ -507,10 +473,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.19 — DESIGN SYSTEM */}
+        {/* SEC.18 — DESIGN SYSTEM */}
         <section id="icon-system" className="section section--roomy bg-paper">
           <div className="wrap cinema-head">
-            <Reveal className="section-index">SEC.<b>19</b> — DESIGN SYSTEM</Reveal>
+            <Reveal className="section-index">SEC.<b>18</b> — DESIGN SYSTEM</Reveal>
             <Reveal as="h2">Icon System</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>
               The icon system spans two production generations — flat 2D isometric to full-colour 3D with cast shadows. View the full version history, evolution rationale, and spec documentation in Figma.
@@ -521,10 +487,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.20 — DESIGN: Major Screens */}
+        {/* SEC.19 — DESIGN: Major Screens */}
         <section id="major-screens" className="section section--roomy band bg-dark">
           <div className="band-inner cinema-head">
-            <Reveal className="section-index">SEC.<b>20</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>19</b> — DESIGN</Reveal>
             <Reveal as="h2">Major Screens</Reveal>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)', marginTop: 'var(--space-7)', maxWidth: 1800, marginInline: 'auto', paddingInline: 'var(--space-5)' }}>
@@ -554,10 +520,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.21 — OUTCOME */}
+        {/* SEC.20 — OUTCOME */}
         <section id="what-we-built" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>21</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>20</b> — OUTCOME</Reveal>
             <Reveal as="h2">What We Built</Reveal>
             <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">First Indian ride app with 3D icon system</span><span className="meta-value">3D</span></div>
@@ -567,7 +533,7 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.22 — CLOSE */}
+        {/* SEC.21 — CLOSE */}
         <section id="close" className="section section--roomy bg-paper">
           <div className="wrap" style={{ display: 'flex', justifyContent: 'center' }}>
             <Reveal className="media-frame" style={{ maxWidth: 720 }}>
