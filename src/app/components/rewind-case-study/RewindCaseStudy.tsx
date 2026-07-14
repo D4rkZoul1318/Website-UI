@@ -169,7 +169,7 @@ export default function RewindCaseStudy() {
             <Reveal className="section-index">SEC.<b>04</b> — BUILD</Reveal>
             <Reveal as="h2">How It's Built</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>
-              {/* TODO(SOHUM): hardest interaction problem (the click wheel) and how it was solved */}
+              The hardest part wasn't visual, it was feel. The wheel's design came from combining two hardware languages, an iPod and a vinyl turntable, then tuning the drag sensitivity until spinning it actually felt smooth.
             </Reveal>
             <Reveal as="p" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', color: 'var(--ink-faint)', marginTop: 'var(--space-4)' }}>
               React · Web Audio API · Deployed on Vercel

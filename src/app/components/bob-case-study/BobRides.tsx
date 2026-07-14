@@ -66,6 +66,24 @@ const businessChallenges = [
   'The aggregator model required a single visual system that could represent competing brands (Rapido, Uber, Ola) without visual conflict',
 ];
 
+const decisions = [
+  {
+    name: 'Vehicle direction: left-facing to isometric right-facing',
+    tradeoff: 'Took noticeably longer to iterate. Every vehicle had to be redrawn and retested until the new direction read clearly.',
+    whyItWon: 'Facing right reads as forward motion, a vehicle ready to go, which fit the booking moment better than a static left-facing silhouette.',
+  },
+  {
+    name: 'Vehicle choice: recognizable over realistic',
+    tradeoff: "Traded some visual realism for recognizability. The vehicle shapes aren't as photoreal as they could be.",
+    whyItWon: 'Instant recognition mattered more than photorealism. Users identify the vehicle type without a second thought.',
+  },
+  {
+    name: 'Color system built for both light and dark',
+    tradeoff: 'Ruled out bright, saturated colors to keep the set uniform across both themes.',
+    whyItWon: 'The icons stay equally legible in both modes, so switching themes never costs clarity.',
+  },
+];
+
 const competitorPoints = [
   "Icon style: Flat 2D silhouettes across most competitors vs BOB Rides' 3 Dimensional renders.",
   'Dark mode support: None native in Rapido or Ola; partial in Uber vs BOB Rides fully dark-mode-native.',
@@ -185,15 +203,15 @@ export default function BobRides() {
             <div className="feature-grid">
               <Reveal className="feature-cell">
                 <span className="ord">What Shipped</span>
-                <p>{/* TODO(SOHUM): summarize what actually shipped from this project */}</p>
+                <p>A ground-up 3D vehicle icon system designed specifically for Bob Rides, replacing flat 2D silhouettes across the booking flow.</p>
               </Reveal>
               <Reveal delay={staggerDelay(1)} className="feature-cell">
                 <span className="ord">My Ownership</span>
-                <p>{/* TODO(SOHUM): describe your specific role/ownership on this project */}</p>
+                <p>Designed the full 3D icon set from scratch, distinct from every competitor, and led the shift from 2D to 3D across the product.</p>
               </Reveal>
               <Reveal delay={staggerDelay(2)} className="feature-cell">
                 <span className="ord">What Changed</span>
-                <p>{/* TODO(SOHUM): describe what changed as a result of this work */}</p>
+                <p>The product moved from flat, generic 2D icons to a 3D system that feels alive and reads instantly.</p>
               </Reveal>
             </div>
           </div>
@@ -451,14 +469,14 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
             <Reveal as="h2">Three decisions that shaped the system</Reveal>
             <div className="feature-grid">
-              {[0, 1, 2].map((i) => (
+              {decisions.map((d, i) => (
                 <Reveal key={i} delay={staggerDelay(i)} className="spec-plate" style={{ padding: 'var(--space-5)' }}>
                   <span className="spec-label">Decision {String(i + 1).padStart(2, '0')}</span>
-                  <p style={{ fontWeight: 700, color: 'var(--ink)', marginTop: 'var(--space-2)', fontSize: '1.02rem' }}>{/* TODO(SOHUM): name the decision */}</p>
+                  <p style={{ fontWeight: 700, color: 'var(--ink)', marginTop: 'var(--space-2)', fontSize: '1.02rem' }}>{d.name}</p>
                   <span className="meta-label" style={{ marginTop: 'var(--space-5)' }}>The Tradeoff</span>
-                  <p style={{ color: 'var(--ink-soft)', fontSize: '0.92rem', lineHeight: 1.6 }}>{/* TODO(SOHUM): what was traded off to make this decision */}</p>
+                  <p style={{ color: 'var(--ink-soft)', fontSize: '0.92rem', lineHeight: 1.6 }}>{d.tradeoff}</p>
                   <span className="meta-label" style={{ marginTop: 'var(--space-4)' }}>Why It Won</span>
-                  <p style={{ color: 'var(--ink-soft)', fontSize: '0.92rem', lineHeight: 1.6 }}>{/* TODO(SOHUM): why this option won over the alternatives */}</p>
+                  <p style={{ color: 'var(--ink-soft)', fontSize: '0.92rem', lineHeight: 1.6 }}>{d.whyItWon}</p>
                 </Reveal>
               ))}
             </div>
