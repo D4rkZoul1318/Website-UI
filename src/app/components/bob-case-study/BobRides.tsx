@@ -545,7 +545,7 @@ export default function BobRides() {
 
       <footer>
         <span>© 2025 Sohum Bhatnagar</span>
-        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Built with intent.</span>
+        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Designed and built in React.</span>
         <span>
           <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           {' · '}

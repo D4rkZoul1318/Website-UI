@@ -306,7 +306,7 @@ export default function CaseStudy() {
 
       <footer>
         <span>© 2025 Sohum Bhatnagar</span>
-        <span>Designed in Figma. Built with intent.</span>
+        <span>Designed in Figma. Designed and built in React.</span>
       </footer>
     </div>
   );
