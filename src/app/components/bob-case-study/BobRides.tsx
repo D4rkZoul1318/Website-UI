@@ -15,6 +15,51 @@ function useScrollProgress() {
   return pct;
 }
 
+const NAV_SECTIONS = [
+  { id: 'hero', num: '00', title: 'BOB Rides' },
+  { id: 'at-a-glance', num: 'TL;DR', title: 'At a Glance' },
+  { id: 'the-challenge', num: '01', title: 'The Challenge' },
+  { id: 'problem-statement', num: '02', title: 'Problem Statement' },
+  { id: 'how-we-got-there', num: '03', title: 'How We Got There' },
+  { id: 'objectives-goals', num: '04', title: 'Objectives & Goals' },
+  { id: 'business-challenges', num: '05', title: 'Business Challenges' },
+  { id: 'competitor-analysis', num: '06', title: 'Competitor Analysis' },
+  { id: 'product-users', num: '07', title: 'Product Users' },
+  { id: 'user-persona', num: '08', title: 'User Persona' },
+  { id: 'user-needs', num: '09', title: 'User Needs' },
+  { id: 'features-functionalities', num: '10', title: 'Features & Functionalities' },
+  { id: 'product-user-challenges', num: '11', title: 'Product User Challenges' },
+  { id: 'unique-features', num: '12', title: 'Unique Features' },
+  { id: 'task-mapping', num: '13', title: 'Task Mapping' },
+  { id: 'eisenhower-matrix', num: '14', title: 'Eisenhower Matrix' },
+  { id: 'five-why-analysis', num: '15', title: '5 Why Analysis' },
+  { id: 'root-cause-analysis', num: '16', title: 'Root Cause Analysis' },
+  { id: 'sketches', num: '17', title: 'Sketches' },
+  { id: 'final-icons', num: '18', title: 'Final Icons' },
+  { id: 'icon-system', num: '19', title: 'Icon System' },
+  { id: 'major-screens', num: '20', title: 'Major Screens' },
+  { id: 'what-we-built', num: '21', title: 'What We Built' },
+  { id: 'close', num: '22', title: 'Close' },
+] as const;
+
+function useActiveSection(ids: readonly string[]) {
+  const [active, setActive] = useState<string>(ids[0] ?? '');
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    );
+    const els = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [ids]);
+  return active;
+}
+
 const businessChallenges = [
   'Existing ride-hailing apps in India use flat, generic vehicle icons that offer no brand differentiation',
   'No established design reference for 3D vehicle icons in a dark-mode mobile context',
@@ -68,6 +113,7 @@ const fiveWhy = [
 export default function BobRides() {
   useEffect(() => { document.title = 'BOB Rides — Sohum Bhatnagar'; }, []);
   const scrollPct = useScrollProgress();
+  const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
 
   return (
     <div className="camera-theme">
@@ -79,9 +125,38 @@ export default function BobRides() {
       </header>
       <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
 
+      <nav
+        aria-label="Case study sections"
+        style={{
+          position: 'sticky', top: 63, zIndex: 8,
+          display: 'flex', gap: 'var(--space-4)', overflowX: 'auto',
+          padding: 'var(--space-3) var(--space-6)',
+          background: 'rgba(226, 224, 220, 0.97)', borderBottom: '1px solid var(--line-soft)',
+          WebkitOverflowScrolling: 'touch',
+        }}
+      >
+        {NAV_SECTIONS.map((s) => (
+          <a
+            key={s.id}
+            href={`#${s.id}`}
+            title={s.title}
+            aria-current={activeSection === s.id ? 'true' : undefined}
+            style={{
+              flex: '0 0 auto',
+              fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em',
+              textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap',
+              color: activeSection === s.id ? 'var(--accent)' : 'var(--ink-faint)',
+              fontWeight: activeSection === s.id ? 700 : 500,
+            }}
+          >
+            {s.num}
+          </a>
+        ))}
+      </nav>
+
       <main>
         {/* SEC.00 — HERO */}
-        <section className="section bg-paper">
+        <section id="hero" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>00</b> — Icon Design &amp; UI/UX · 2025</Reveal>
             <Reveal as="h1">BOB Rides</Reveal>
@@ -104,8 +179,29 @@ export default function BobRides() {
           </div>
         </section>
 
+        {/* AT A GLANCE — TLDR */}
+        <section id="at-a-glance" className="section section--tight bg-soft">
+          <div className="wrap">
+            <Reveal className="section-index">AT A GLANCE</Reveal>
+            <div className="feature-grid">
+              <Reveal className="feature-cell">
+                <span className="ord">What Shipped</span>
+                <p>{/* TODO(SOHUM): summarize what actually shipped from this project */}</p>
+              </Reveal>
+              <Reveal delay={staggerDelay(1)} className="feature-cell">
+                <span className="ord">My Ownership</span>
+                <p>{/* TODO(SOHUM): describe your specific role/ownership on this project */}</p>
+              </Reveal>
+              <Reveal delay={staggerDelay(2)} className="feature-cell">
+                <span className="ord">What Changed</span>
+                <p>{/* TODO(SOHUM): describe what changed as a result of this work */}</p>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
         {/* SEC.01 — PROBLEM */}
-        <section className="section bg-soft">
+        <section id="the-challenge" className="section bg-soft">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>01</b> — PROBLEM</Reveal>
             <Reveal as="h2">The Challenge</Reveal>
@@ -123,7 +219,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.02 — PROBLEM STATEMENT */}
-        <section className="section">
+        <section id="problem-statement" className="section">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>02</b> — PROBLEM</Reveal>
             <Reveal as="h2">Problem Statement</Reveal>
@@ -136,7 +232,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.03 — PROCESS */}
-        <section className="section band bg-dark">
+        <section id="how-we-got-there" className="section band bg-dark">
           <div className="band-inner wrap-wide">
             <Reveal className="section-index">SEC.<b>03</b> — PROCESS</Reveal>
             <Reveal as="h2">How We Got There</Reveal>
@@ -147,7 +243,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.04 — STRATEGY */}
-        <section className="section bg-paper">
+        <section id="objectives-goals" className="section bg-paper">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>04</b> — STRATEGY</Reveal>
             <Reveal as="h2">Objectives &amp; Goals</Reveal>
@@ -158,7 +254,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.05 — RESEARCH: Business Challenges */}
-        <section className="section">
+        <section id="business-challenges" className="section">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>05</b> — RESEARCH</Reveal>
             <Reveal as="h2">Business Challenges</Reveal>
@@ -171,7 +267,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.06 — RESEARCH: Competitor Analysis */}
-        <section className="section section--roomy bg-soft">
+        <section id="competitor-analysis" className="section section--roomy bg-soft">
           <div className="wrap-wide" style={{ textAlign: 'center' }}>
             <Reveal className="section-index">SEC.<b>06</b> — RESEARCH</Reveal>
             <Reveal as="h2">Competitor Analysis</Reveal>
@@ -193,7 +289,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.07 — RESEARCH: Product Users */}
-        <section className="section section--tight">
+        <section id="product-users" className="section section--tight">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>07</b> — RESEARCH</Reveal>
             <Reveal as="h2">Product Users</Reveal>
@@ -204,7 +300,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.08 — RESEARCH: User Persona */}
-        <section className="section bg-paper">
+        <section id="user-persona" className="section bg-paper">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>08</b> — RESEARCH</Reveal>
             <Reveal as="h2">User Persona</Reveal>
@@ -238,7 +334,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.09 — RESEARCH: User Needs */}
-        <section className="section section--tight">
+        <section id="user-needs" className="section section--tight">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>09</b> — RESEARCH</Reveal>
             <Reveal as="h2">User Needs</Reveal>
@@ -251,7 +347,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.10 — DESIGN: Features & Functionalities */}
-        <section className="section bg-soft">
+        <section id="features-functionalities" className="section bg-soft">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>10</b> — DESIGN</Reveal>
             <Reveal as="h2">Features &amp; Functionalities</Reveal>
@@ -270,7 +366,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.11 — DESIGN: Product User Challenges */}
-        <section className="section">
+        <section id="product-user-challenges" className="section">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>11</b> — DESIGN</Reveal>
             <Reveal as="h2">Product User Challenges</Reveal>
@@ -281,7 +377,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.12 — DESIGN: Unique Features */}
-        <section className="section bg-paper">
+        <section id="unique-features" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>12</b> — DESIGN</Reveal>
             <Reveal as="h2">Unique Features</Reveal>
@@ -294,7 +390,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.13 — DESIGN: Task Mapping */}
-        <section className="section">
+        <section id="task-mapping" className="section">
           <div className="wrap-wide cinema-head">
             <Reveal className="section-index">SEC.<b>13</b> — DESIGN</Reveal>
             <Reveal as="h2">Task Mapping</Reveal>
@@ -328,7 +424,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.14 — DESIGN: Eisenhower Matrix */}
-        <section className="section bg-soft">
+        <section id="eisenhower-matrix" className="section bg-soft">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>14</b> — DESIGN</Reveal>
             <Reveal as="h2">Eisenhower Matrix</Reveal>
@@ -339,7 +435,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.15 — ANALYSIS: 5 Why */}
-        <section className="section">
+        <section id="five-why-analysis" className="section">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>15</b> — ANALYSIS</Reveal>
             <Reveal as="h2">5 Why Analysis</Reveal>
@@ -365,7 +461,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.16 — ANALYSIS: Root Cause Analysis */}
-        <section className="section band bg-dark">
+        <section id="root-cause-analysis" className="section band bg-dark">
           <div className="band-inner wrap-wide" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ alignSelf: 'flex-start' }}>
               <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
@@ -378,7 +474,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.17 — DESIGN: Sketches */}
-        <section className="section bg-paper">
+        <section id="sketches" className="section bg-paper">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>17</b> — DESIGN</Reveal>
             <Reveal as="h2">Sketches</Reveal>
@@ -389,7 +485,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.18 — DESIGN: Final Icons */}
-        <section className="section section--roomy band bg-dark">
+        <section id="final-icons" className="section section--roomy band bg-dark">
           <div className="band-inner wrap-wide">
             <Reveal className="section-index">SEC.<b>18</b> — DESIGN</Reveal>
             <Reveal as="h2">Final Icons</Reveal>
@@ -402,7 +498,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.19 — DESIGN SYSTEM */}
-        <section className="section section--roomy bg-paper">
+        <section id="icon-system" className="section section--roomy bg-paper">
           <div className="wrap cinema-head">
             <Reveal className="section-index">SEC.<b>19</b> — DESIGN SYSTEM</Reveal>
             <Reveal as="h2">Icon System</Reveal>
@@ -416,7 +512,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.20 — DESIGN: Major Screens */}
-        <section className="section section--roomy band bg-dark">
+        <section id="major-screens" className="section section--roomy band bg-dark">
           <div className="band-inner cinema-head">
             <Reveal className="section-index">SEC.<b>20</b> — DESIGN</Reveal>
             <Reveal as="h2">Major Screens</Reveal>
@@ -449,7 +545,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.21 — OUTCOME */}
-        <section className="section section--tight">
+        <section id="what-we-built" className="section section--tight">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>21</b> — OUTCOME</Reveal>
             <Reveal as="h2">What We Built</Reveal>
@@ -462,7 +558,7 @@ export default function BobRides() {
         </section>
 
         {/* SEC.22 — CLOSE */}
-        <section className="section section--roomy bg-paper">
+        <section id="close" className="section section--roomy bg-paper">
           <div className="wrap" style={{ display: 'flex', justifyContent: 'center' }}>
             <Reveal className="media-frame" style={{ maxWidth: 720 }}>
               <img src="/images/bob-images/thank-you.png" alt="Thank You" loading="lazy" />
