@@ -20,7 +20,6 @@ const NAV_SECTIONS = [
   { id: 'at-a-glance', num: 'TL;DR', title: 'At a Glance' },
   { id: 'the-challenge', num: '01', title: 'The Challenge' },
   { id: 'problem-statement', num: '02', title: 'Problem Statement' },
-  { id: 'how-we-got-there', num: '03', title: 'How We Got There' },
   { id: 'objectives-goals', num: '04', title: 'Objectives & Goals' },
   { id: 'business-challenges', num: '05', title: 'Business Challenges' },
   { id: 'competitor-analysis', num: '06', title: 'Competitor Analysis' },
@@ -33,7 +32,7 @@ const NAV_SECTIONS = [
   { id: 'task-mapping', num: '13', title: 'Task Mapping' },
   { id: 'eisenhower-matrix', num: '14', title: 'Eisenhower Matrix' },
   { id: 'five-why-analysis', num: '15', title: '5 Why Analysis' },
-  { id: 'root-cause-analysis', num: '16', title: 'Root Cause Analysis' },
+  { id: 'key-decisions', num: '16', title: 'Three Decisions' },
   { id: 'sketches', num: '17', title: 'Sketches' },
   { id: 'final-icons', num: '18', title: 'Final Icons' },
   { id: 'icon-system', num: '19', title: 'Icon System' },
@@ -231,17 +230,6 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.03 — PROCESS */}
-        <section id="how-we-got-there" className="section band bg-dark">
-          <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>03</b> — PROCESS</Reveal>
-            <Reveal as="h2">How We Got There</Reveal>
-            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-7)', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
-              <img src="/images/bob-images/our-process.png" alt="Our Process" loading="lazy" />
-            </Reveal>
-          </div>
-        </section>
-
         {/* SEC.04 — STRATEGY */}
         <section id="objectives-goals" className="section bg-paper">
           <div className="wrap-wide">
@@ -304,10 +292,7 @@ export default function BobRides() {
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>08</b> — RESEARCH</Reveal>
             <Reveal as="h2">User Persona</Reveal>
-            <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-redesign/user-persona-rahul.png" alt="User Persona — Rahul Kumar" loading="lazy" />
-            </Reveal>
-            <div style={{ marginTop: 'var(--space-7)', maxWidth: 640 }}>
+            <div style={{ marginTop: 'var(--space-6)', maxWidth: 640 }}>
               <Reveal as="h3" style={{ fontSize: '1.15rem', fontWeight: 700, letterSpacing: '-0.005em' }}>Rahul Kumar</Reveal>
               <Reveal as="p" style={{ fontFamily: 'var(--font-mono)', fontSize: '10.5px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginTop: 4 }}>Community Manager</Reveal>
               <Reveal as="span" className="meta-label" style={{ marginTop: 'var(--space-5)' }}>About</Reveal>
@@ -460,16 +445,23 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.16 — ANALYSIS: Root Cause Analysis */}
-        <section id="root-cause-analysis" className="section band bg-dark">
-          <div className="band-inner wrap-wide" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ alignSelf: 'flex-start' }}>
-              <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
-              <Reveal as="h2">Root Cause Analysis</Reveal>
+        {/* SEC.16 — ANALYSIS: Three decisions that shaped the system */}
+        <section id="key-decisions" className="section band bg-dark">
+          <div className="band-inner wrap-wide">
+            <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
+            <Reveal as="h2">Three decisions that shaped the system</Reveal>
+            <div className="feature-grid">
+              {[0, 1, 2].map((i) => (
+                <Reveal key={i} delay={staggerDelay(i)} className="spec-plate" style={{ padding: 'var(--space-5)' }}>
+                  <span className="spec-label">Decision {String(i + 1).padStart(2, '0')}</span>
+                  <p style={{ fontWeight: 700, color: 'var(--ink)', marginTop: 'var(--space-2)', fontSize: '1.02rem' }}>{/* TODO(SOHUM): name the decision */}</p>
+                  <span className="meta-label" style={{ marginTop: 'var(--space-5)' }}>The Tradeoff</span>
+                  <p style={{ color: 'var(--ink-soft)', fontSize: '0.92rem', lineHeight: 1.6 }}>{/* TODO(SOHUM): what was traded off to make this decision */}</p>
+                  <span className="meta-label" style={{ marginTop: 'var(--space-4)' }}>Why It Won</span>
+                  <p style={{ color: 'var(--ink-soft)', fontSize: '0.92rem', lineHeight: 1.6 }}>{/* TODO(SOHUM): why this option won over the alternatives */}</p>
+                </Reveal>
+              ))}
             </div>
-            <Reveal variant="zoom" className="media-frame" style={{ maxWidth: '100%', width: 1040, marginTop: 'var(--space-7)', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--paper)' }}>
-              <img src="/images/bob-images/root-cause-analysis.png" alt="Root Cause Analysis" loading="lazy" />
-            </Reveal>
           </div>
         </section>
 
