@@ -54,7 +54,7 @@ const PROJECTS: Project[] = [
     impactBody: 'The final app lets riders compare Uber, Ola, and Rapido fares in one screen with a real-time Best Price indicator — collapsing the habit of switching between three apps into one.',
     reflectionHeading: 'The 3D icon direction paid off, but it is a heavier production pipeline than the category is used to.',
     reflectionBody: 'Next time I would build the 24px tab-bar legibility testing earlier in the process, rather than after the first full render pass.',
-    image: '/images/bob-thumbnail.png',
+    image: '/images/bob-thumbnail.webp',
     thumbVideo: '/videos/bob-rides-preview.mp4',
     thumbAnimated: true, thumbZoom: 1.65, thumbPosition: 'center 38%',
     url: ROUTES.bobRides,
@@ -75,9 +75,9 @@ const PROJECTS: Project[] = [
     impactBody: 'Every student interviewed after the redesign could navigate to their results independently — a task that previously required help for less tech-savvy students.',
     reflectionHeading: 'The fix was never more features — it was fewer, better-named screens.',
     reflectionBody: 'If I rebuilt it today, I’d push for structured usability testing with a larger student sample before locking the IA, rather than relying mainly on personal use and peer interviews.',
-    image: '/images/uucms-thumbnail.png',
-    compareBefore: '/images/original-uucms.png',
-    compareAfter: '/images/redesigned-dashboard.png',
+    image: '/images/uucms-thumbnail.webp',
+    compareBefore: '/images/original-uucms.webp',
+    compareAfter: '/images/redesigned-dashboard.webp',
     compare: true,
     url: ROUTES.caseStudy,
   },
@@ -139,10 +139,10 @@ const SECTIONS = [
 const WORK_INDEX = 1;
 
 const PHOTOS = [
-  { img: '/images/about/eagle.jpg', title: 'Crested Hawk-Eagle', desc: 'Patience is just focus with nowhere to be.' },
-  { img: '/images/about/leopard.jpg', title: 'Leopard', desc: 'Spent 20 minutes staring before I saw it.' },
-  { img: '/images/about/peacock.jpg', title: 'Indian Peacock', desc: 'The blue that made me reconsider every UI I had ever built.' },
-  { img: '/images/about/bee-eater.jpg', title: 'Green Bee-eater', desc: "Nature's color palette beats any Figma swatch." },
+  { img: '/images/about/eagle.webp', title: 'Crested Hawk-Eagle', desc: 'Patience is just focus with nowhere to be.' },
+  { img: '/images/about/leopard.webp', title: 'Leopard', desc: 'Spent 20 minutes staring before I saw it.' },
+  { img: '/images/about/peacock.webp', title: 'Indian Peacock', desc: 'The blue that made me reconsider every UI I had ever built.' },
+  { img: '/images/about/bee-eater.webp', title: 'Green Bee-eater', desc: "Nature's color palette beats any Figma swatch." },
 ];
 
 const TOOLS: { name: string; icon: JSX.Element }[] = [
@@ -554,7 +554,7 @@ export default function CameraHome() {
       const thumbPos = p.thumbPosition || 'center';
       let thumbInner: string;
       if (p.thumbAnimated) {
-        thumbInner = '<div class="bob-anim-thumb"><div class="bob-anim-base"></div><img class="bob-anim-logo" src="/images/bob/bob-wordmark.png" alt="bob" /></div>';
+        thumbInner = '<div class="bob-anim-thumb"><div class="bob-anim-base"></div><img class="bob-anim-logo" src="/images/bob/bob-wordmark.webp" alt="bob" loading="lazy" decoding="async" /></div>';
       } else if (p.thumbVideo) {
         thumbInner = '<video class="polaroid-photo-inner" src="' + p.thumbVideo + '" poster="' + (p.image || '') + '" autoplay muted loop playsinline style="transform:scale(' + thumbZoom + ');transform-origin:' + thumbPos + ';object-position:' + thumbPos + ';"></video>';
       } else {

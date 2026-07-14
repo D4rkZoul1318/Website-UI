@@ -158,7 +158,7 @@ export default function RewindCaseStudy() {
             <Reveal as="h2">The Instrument</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>A 6-disc slot system modeled after CD changers. A glass carriage that slides between discs. Dedicated rotary EQ knobs per channel, vertical faders for master and pan, an iPod-style click wheel for navigation — each control does one thing and feels distinct.</Reveal>
             <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-7)', maxWidth: 839, marginInline: 'auto', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
-              <img src="/images/rewind/instrument.png" alt="REWIND — the six-disc instrument body, glass carriage, EQ knobs, and faders" loading="lazy" />
+              <img src="/images/rewind/instrument.webp" alt="REWIND — the six-disc instrument body, glass carriage, EQ knobs, and faders" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>

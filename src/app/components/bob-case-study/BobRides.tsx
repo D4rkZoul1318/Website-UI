@@ -173,7 +173,7 @@ export default function BobRides() {
           </div>
           <div className="wrap-wide" style={{ marginTop: 'var(--space-8)' }}>
             <Reveal variant="zoom" className="media-frame">
-              <img src="/images/bob-images/hero.png" alt="BOB Rides Hero" />
+              <img src="/images/bob-images/hero.webp" alt="BOB Rides Hero" />
             </Reveal>
           </div>
         </section>
@@ -236,7 +236,7 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>04</b> — STRATEGY</Reveal>
             <Reveal as="h2">Objectives &amp; Goals</Reveal>
             <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/objectives-goals.png" alt="Objectives and Goals" loading="lazy" />
+              <img src="/images/bob-images/objectives-goals.webp" alt="Objectives and Goals" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>
@@ -271,7 +271,7 @@ export default function BobRides() {
           <div className="wrap-wide" style={{ marginTop: 'var(--space-7)' }}>
             <Reveal as="span" className="meta-label">References from competitors</Reveal>
             <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-3)' }}>
-              <img src="/images/bob-images/competitor-analysis.png" alt="Competitor screenshots" loading="lazy" />
+              <img src="/images/bob-images/competitor-analysis.webp" alt="Competitor screenshots" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>
@@ -282,7 +282,7 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>07</b> — RESEARCH</Reveal>
             <Reveal as="h2">Product Users</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/product-users.png" alt="Product Users" loading="lazy" />
+              <img src="/images/bob-images/product-users.webp" alt="Product Users" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>
@@ -345,7 +345,7 @@ export default function BobRides() {
               ))}
             </div>
             <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-7)' }}>
-              <img src="/images/bob-redesign/features-functionalities-v2.png" alt="Features and Functionalities" loading="lazy" />
+              <img src="/images/bob-redesign/features-functionalities-v2.webp" alt="Features and Functionalities" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>
@@ -356,7 +356,7 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>11</b> — DESIGN</Reveal>
             <Reveal as="h2">Product User Challenges</Reveal>
             <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/product-user-challenges.png" alt="Product User Challenges" loading="lazy" />
+              <img src="/images/bob-images/product-user-challenges.webp" alt="Product User Challenges" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>
@@ -380,7 +380,7 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>13</b> — DESIGN</Reveal>
             <Reveal as="h2">Task Mapping</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-redesign/task-mapping-v2.png" alt="Task Mapping" loading="lazy" />
+              <img src="/images/bob-redesign/task-mapping-v2.webp" alt="Task Mapping" loading="lazy" decoding="async" />
             </Reveal>
           </div>
           <div className="wrap-wide">
@@ -414,7 +414,7 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>14</b> — DESIGN</Reveal>
             <Reveal as="h2">Eisenhower Matrix</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/eisen-hover-matrix.png" alt="Eisenhower Matrix" loading="lazy" />
+              <img src="/images/bob-images/eisen-hover-matrix.webp" alt="Eisenhower Matrix" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>
@@ -471,7 +471,7 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>17</b> — DESIGN</Reveal>
             <Reveal as="h2">Sketches</Reveal>
             <Reveal variant="rotate" className="media-frame" style={{ maxWidth: 880, marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/sketches.png" alt="Sketches" loading="lazy" />
+              <img src="/images/bob-images/sketches.webp" alt="Sketches" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>
@@ -482,9 +482,9 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>18</b> — DESIGN</Reveal>
             <Reveal as="h2">Final Icons</Reveal>
             <div className="icons-row">
-              <Reveal variant="scale" delay={staggerDelay(0)} className="icon-cell"><img src="/images/bob-images/Car.png" alt="BOB Rides 3D cab icon" /><span>Cab</span></Reveal>
-              <Reveal variant="scale" delay={staggerDelay(1)} className="icon-cell"><img src="/images/bob-images/Bike.png" alt="BOB Rides 3D bike icon" /><span>Bike</span></Reveal>
-              <Reveal variant="scale" delay={staggerDelay(2)} className="icon-cell"><img src="/images/bob-images/Auto.png" alt="BOB Rides 3D auto-rickshaw icon" /><span>Auto</span></Reveal>
+              <Reveal variant="scale" delay={staggerDelay(0)} className="icon-cell"><img src="/images/bob-images/Car.webp" alt="BOB Rides 3D cab icon" loading="lazy" decoding="async" /><span>Cab</span></Reveal>
+              <Reveal variant="scale" delay={staggerDelay(1)} className="icon-cell"><img src="/images/bob-images/Bike.webp" alt="BOB Rides 3D bike icon" loading="lazy" decoding="async" /><span>Bike</span></Reveal>
+              <Reveal variant="scale" delay={staggerDelay(2)} className="icon-cell"><img src="/images/bob-images/Auto.webp" alt="BOB Rides 3D auto-rickshaw icon" loading="lazy" decoding="async" /><span>Auto</span></Reveal>
             </div>
           </div>
         </section>
@@ -529,7 +529,7 @@ export default function BobRides() {
                   className="media-frame"
                   style={{ borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}
                 >
-                  <img src={`/images/bob-images/major-screens-${name}.png`} alt={label} loading="lazy" />
+                  <img src={`/images/bob-images/major-screens-${name}.webp`} alt={label} loading="lazy" decoding="async" />
                 </Reveal>
               </div>
             ))}
@@ -553,7 +553,7 @@ export default function BobRides() {
         <section id="close" className="section section--roomy bg-paper">
           <div className="wrap" style={{ display: 'flex', justifyContent: 'center' }}>
             <Reveal className="media-frame" style={{ maxWidth: 720 }}>
-              <img src="/images/bob-images/thank-you.png" alt="Thank You" loading="lazy" />
+              <img src="/images/bob-images/thank-you.webp" alt="Thank You" loading="lazy" decoding="async" />
             </Reveal>
           </div>
         </section>

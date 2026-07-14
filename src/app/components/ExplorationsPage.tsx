@@ -36,7 +36,7 @@ const allItems = [
   },
   {
     id: 4,
-    img: '/images/explorations/catalogue-01.png',
+    img: '/images/explorations/catalogue-01.webp',
     url: '',
     title: 'JAS Water Purifiers',
     category: 'Catalogue',
@@ -44,7 +44,7 @@ const allItems = [
   },
   {
     id: 5,
-    img: '/images/explorations/graphic-01.png',
+    img: '/images/explorations/graphic-01.webp',
     url: '',
     title: 'BMW Illustration',
     category: 'Graphic Design',
@@ -52,7 +52,7 @@ const allItems = [
   },
   {
     id: 6,
-    img: '/images/explorations/graphic-02.png',
+    img: '/images/explorations/graphic-02.webp',
     url: '',
     title: 'Polar Bear Low Poly',
     category: 'Graphic Design',
@@ -60,7 +60,7 @@ const allItems = [
   },
   {
     id: 7,
-    img: '/images/explorations/graphic-03.png',
+    img: '/images/explorations/graphic-03.webp',
     url: '',
     title: '3D Portfolio Banner',
     category: 'Graphic Design',
@@ -68,7 +68,7 @@ const allItems = [
   },
   {
     id: 8,
-    img: '/images/explorations/rewind-01.png',
+    img: '/images/explorations/rewind-01.webp',
     url: 'https://rewind-it.vercel.app',
     title: 'Rewind',
     category: 'UI/UX',
