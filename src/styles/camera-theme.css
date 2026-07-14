@@ -56,6 +56,11 @@
 .camera-theme .reveal--zoom > * { transform: scale(1.06); transition: transform 900ms var(--ease-out); }
 .camera-theme .reveal--zoom.visible > * { transform: scale(1); }
 
+/* reveal--rotate on a full-width element (e.g. .moment) rotates the box
+   itself, so its own bounding rect briefly exceeds 100% width during the
+   transition — clip that at the page boundary rather than the element. */
+.camera-theme main { overflow-x: hidden; }
+
 .camera-theme .wrap { max-width: 900px; margin: 0 auto; padding-inline: var(--space-6); }
 .camera-theme .wrap-wide { max-width: 1100px; margin: 0 auto; padding-inline: var(--space-6); }
 
@@ -133,8 +138,11 @@
 .camera-theme .spec-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--line); }
 .camera-theme .spec-row:last-child { border-bottom: none; }
 .camera-theme .spec-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; max-width: 18ch; }
-.camera-theme .spec-value { font-family: var(--font-mono); font-size: 20px; color: var(--ink); flex-shrink: 0; }
+.camera-theme .spec-value { font-family: var(--font-mono); font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.25rem); color: var(--ink); flex-shrink: 0; }
 @media (max-width: 780px) { .camera-theme .problem-composition { grid-template-columns: 1fr; } }
+
+.camera-theme .moment { min-height: 44vh; display: flex; align-items: center; justify-content: center; padding: var(--space-7) var(--space-6); }
+.camera-theme .moment p { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(1.3rem, 2.6vw, 1.9rem); color: var(--ink-soft); max-width: 38ch; text-align: center; line-height: 1.5; }
 
 .camera-theme .split { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--space-8); align-items: start; }
 .camera-theme .split--img-left { grid-template-columns: 1.2fr 0.8fr; }

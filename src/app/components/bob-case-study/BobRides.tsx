@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Reveal, staggerDelay } from '../camera/Reveal';
+import { CountUp } from '../camera/CountUp';
 import { ROUTES } from '../../routes';
 
 function useScrollProgress() {
@@ -214,15 +215,15 @@ export default function BobRides() {
         <section id="the-challenge" className="section bg-soft">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>01</b> — PROBLEM</Reveal>
-            <Reveal as="h2">The Challenge</Reveal>
+            <Reveal as="h2">Three apps, one decision, every time</Reveal>
             <div className="problem-composition">
               <Reveal className="problem-copy">
                 <p>Ride-hailing apps in India — Uber, Rapido, Ola, Namma Yatri — all use flat, generic vehicle silhouettes that offer zero brand differentiation. Users switch between 3 apps to compare prices, adding friction to every ride decision. BOB Rides needed a visual identity strong enough to stand apart, while keeping icons legible at 24px in a dark-mode-native interface.</p>
               </Reveal>
               <Reveal variant="scale" className="spec-plate">
-                <div className="spec-row"><span className="spec-label">Apps users open before booking a ride</span><span className="spec-value">3+</span></div>
-                <div className="spec-row"><span className="spec-label">Indian ride apps with 3D icon systems</span><span className="spec-value">&lt;4</span></div>
-                <div className="spec-row"><span className="spec-label">Minimum icon size for tab navigation</span><span className="spec-value">24px</span></div>
+                <div className="spec-row"><span className="spec-label">Apps users open before booking a ride</span><CountUp target={3} suffix="+" className="spec-value" /></div>
+                <div className="spec-row"><span className="spec-label">Indian ride apps with 3D icon systems</span><CountUp target={4} prefix="<" className="spec-value" /></div>
+                <div className="spec-row"><span className="spec-label">Minimum icon size for tab navigation</span><CountUp target={24} suffix="px" className="spec-value" /></div>
               </Reveal>
             </div>
           </div>
@@ -232,14 +233,17 @@ export default function BobRides() {
         <section id="problem-statement" className="section">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>02</b> — PROBLEM</Reveal>
-            <Reveal as="h2">Problem Statement</Reveal>
+            <Reveal as="h2">Nobody had solved this for India</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>Ride-hailing apps in the Indian market rely almost entirely on flat, generic vehicle icons that prioritize function over identity. Across Uber, Rapido, Ola, and Namma Yatri, the visual language is interchangeable silhouettes that tell users what vehicle type they are booking, but communicate nothing about the brand they are booking with.</p>
               <p style={{ marginTop: 'var(--space-4)' }}>The challenge for BOB Rides was to design a vehicle icon system that solved two competing demands simultaneously: icons that are instantly recognisable and legible at small UI sizes, and icons that carry a distinct visual character strong enough to differentiate BOB Rides from every other player in the category. The additional constraint was that the entire system had to be built for a dark-mode-native interface — a context that most existing icon styles in the market were never designed for.</p>
-              <p style={{ marginTop: 'var(--space-4)' }}>The core design question was: how do you create 3D vehicle icons that feel familiar enough for a user to identify at a glance, while being visually distinctive enough that the app they appear in could not be mistaken for any competitor?</p>
             </Reveal>
           </div>
         </section>
+
+        <Reveal variant="rotate" as="section" className="moment">
+          <p>How do you create 3D vehicle icons that feel familiar enough for a user to identify at a glance, while being visually distinctive enough that the app they appear in could not be mistaken for any competitor?</p>
+        </Reveal>
 
         {/* SEC.04 — STRATEGY */}
         <section id="objectives-goals" className="section bg-paper">
@@ -258,7 +262,7 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>05</b> — RESEARCH</Reveal>
             <Reveal as="h2">Business Challenges</Reveal>
             {businessChallenges.map((text, i) => (
-              <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
+              <Reveal key={i} variant="scale" className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
                 <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
               </Reveal>
             ))}
@@ -269,7 +273,7 @@ export default function BobRides() {
         <section id="competitor-analysis" className="section section--roomy bg-soft">
           <div className="wrap-wide" style={{ textAlign: 'center' }}>
             <Reveal className="section-index">SEC.<b>06</b> — RESEARCH</Reveal>
-            <Reveal as="h2">Competitor Analysis</Reveal>
+            <Reveal as="h2">What every competitor got wrong</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>Competitors: OLA, Rapido, Uber, Namma Yatri</Reveal>
           </div>
           <div className="wrap" style={{ marginTop: 'var(--space-7)' }}>
@@ -291,7 +295,7 @@ export default function BobRides() {
         <section id="product-users" className="section section--tight">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>07</b> — RESEARCH</Reveal>
-            <Reveal as="h2">Product Users</Reveal>
+            <Reveal as="h2">The user was never the hard part</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/product-users.webp" alt="Product Users" loading="lazy" decoding="async" />
             </Reveal>
@@ -302,7 +306,7 @@ export default function BobRides() {
         <section id="user-persona" className="section bg-paper">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>08</b> — RESEARCH</Reveal>
-            <Reveal as="h2">User Persona</Reveal>
+            <Reveal as="h2">Meet Rahul</Reveal>
             <div style={{ marginTop: 'var(--space-6)', maxWidth: 640 }}>
               <Reveal as="h3" style={{ fontSize: '1.15rem', fontWeight: 700, letterSpacing: '-0.005em' }}>Rahul Kumar</Reveal>
               <Reveal as="p" style={{ fontFamily: 'var(--font-mono)', fontSize: '10.5px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginTop: 4 }}>Community Manager</Reveal>
@@ -322,20 +326,21 @@ export default function BobRides() {
                 <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Can't tell which vehicle icon belongs to which service tier without reading the label</p>
                 <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Existing apps feel visually identical — no sense of which one he's actually on</p>
               </Reveal>
-              <Reveal as="p" style={{ fontStyle: 'italic', color: 'var(--ink-soft)', lineHeight: 1.6, fontSize: '1.05rem', maxWidth: '36ch', marginTop: 'var(--space-6)' }}>
-                "I just want to see all my options in one place and book the cheapest one. Why do I have to open three apps for that?"
-              </Reveal>
             </div>
           </div>
         </section>
+
+        <Reveal variant="rotate" as="section" className="moment">
+          <p>"I just want to see all my options in one place and book the cheapest one. Why do I have to open three apps for that?"</p>
+        </Reveal>
 
         {/* SEC.09 — RESEARCH: User Needs */}
         <section id="user-needs" className="section section--tight">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>09</b> — RESEARCH</Reveal>
-            <Reveal as="h2">User Needs</Reveal>
+            <Reveal as="h2">What riders actually needed</Reveal>
             {userNeeds.map((text, i) => (
-              <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
+              <Reveal key={i} variant="scale" className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
                 <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
               </Reveal>
             ))}
@@ -350,7 +355,7 @@ export default function BobRides() {
             <Reveal as="p" className="sheet-subtitle">To resolve user needs</Reveal>
             <div className="feature-grid">
               {features.map((f, i) => (
-                <Reveal key={f.ord} delay={staggerDelay(i)} className="feature-cell">
+                <Reveal key={f.ord} variant="scale" delay={staggerDelay(i)} className="feature-cell">
                   <span className="ord">{f.ord}</span><p>{f.text}</p>
                 </Reveal>
               ))}
@@ -365,7 +370,7 @@ export default function BobRides() {
         <section id="product-user-challenges" className="section">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>11</b> — DESIGN</Reveal>
-            <Reveal as="h2">Product User Challenges</Reveal>
+            <Reveal as="h2">What was actually broken for users</Reveal>
             <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/product-user-challenges.webp" alt="Product User Challenges" loading="lazy" decoding="async" />
             </Reveal>
@@ -389,7 +394,7 @@ export default function BobRides() {
         <section id="task-mapping" className="section">
           <div className="wrap-wide cinema-head">
             <Reveal className="section-index">SEC.<b>13</b> — DESIGN</Reveal>
-            <Reveal as="h2">Task Mapping</Reveal>
+            <Reveal as="h2">Every tap is a decision point</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-redesign/task-mapping-v2.webp" alt="Task Mapping" loading="lazy" decoding="async" />
             </Reveal>
@@ -437,7 +442,7 @@ export default function BobRides() {
             <Reveal as="h2">Three decisions that shaped the system</Reveal>
             <div className="feature-grid">
               {decisions.map((d, i) => (
-                <Reveal key={i} delay={staggerDelay(i)} className="spec-plate" style={{ padding: 'var(--space-5)' }}>
+                <Reveal key={i} variant="scale" delay={staggerDelay(i)} className="spec-plate" style={{ padding: 'var(--space-5)' }}>
                   <span className="spec-label">Decision {String(i + 1).padStart(2, '0')}</span>
                   <p style={{ fontWeight: 700, color: 'var(--ink)', marginTop: 'var(--space-2)', fontSize: '1.02rem' }}>{d.name}</p>
                   <span className="meta-label" style={{ marginTop: 'var(--space-5)' }}>The Tradeoff</span>
