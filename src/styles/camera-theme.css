@@ -261,6 +261,10 @@
 .camera-theme .facts-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); margin-top: var(--space-6); }
 .camera-theme .meta-label { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: var(--space-2); }
 .camera-theme .meta-value { font-family: var(--font-mono); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+.camera-theme .tool-icons { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.camera-theme .tool-icon { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+.camera-theme .tool-icon svg { width: 20px; height: 20px; flex-shrink: 0; fill: currentColor; }
+.camera-theme .tool-icon span { font-family: var(--font-mono); font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
 @media (max-width: 640px) { .camera-theme .facts-row { grid-template-columns: 1fr; gap: var(--space-5); } }
 
 .camera-theme footer { max-width: 1100px; margin: 0 auto; padding: var(--space-6) var(--space-6) var(--space-8); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); }
