@@ -74,18 +74,18 @@ export function AboutPage() {
             <Reveal as="p" className="lede">
               Multidisciplinary creative with 4+ years spanning UI/UX, 3D visual production, brand design, and AI-assisted workflows. My process starts with real problems and ends with interfaces that feel obvious in hindsight. When I'm not in Figma, I'm somewhere quiet with a 600mm lens.
             </Reveal>
-            <Reveal className="photo-cluster">
-              <div className="polaroid r1"><img src="/images/about-photos/rocks.webp" alt="Sohum relaxing by a rocky stream" loading="lazy" decoding="async" /></div>
-              <div className="polaroid r2"><img src="/images/about-photos/cafe.webp" alt="Sohum at a café" loading="lazy" decoding="async" /></div>
-              <div className="polaroid r3"><img src="/images/about-photos/camera.webp" alt="Sohum shooting with a telephoto lens" loading="lazy" decoding="async" /></div>
-              <div className="polaroid r4"><img src="/images/about-photos/macaques.webp" alt="Macaques photographed on a riverside rock" loading="lazy" decoding="async" /></div>
-            </Reveal>
           </div>
         </section>
 
         {/* BIO */}
-        <section className="section bg-soft index-bleed num-right">
+        <section className="section bg-soft index-bleed index-bleed--split num-right">
           <span className="index-num" aria-hidden="true">01</span>
+          <Reveal className="photo-cluster">
+            <div className="polaroid r1"><img src="/images/about-photos/rocks.webp" alt="Sohum relaxing by a rocky stream" loading="lazy" decoding="async" /></div>
+            <div className="polaroid r2"><img src="/images/about-photos/cafe.webp" alt="Sohum at a café" loading="lazy" decoding="async" /></div>
+            <div className="polaroid r3"><img src="/images/about-photos/camera.webp" alt="Sohum shooting with a telephoto lens" loading="lazy" decoding="async" /></div>
+            <div className="polaroid r4"><img src="/images/about-photos/macaques.webp" alt="Macaques photographed on a riverside rock" loading="lazy" decoding="async" /></div>
+          </Reveal>
           <div className="wrap wrap-lean-right">
             <Reveal className="section-index">SEC.<b>01</b> — BACKGROUND</Reveal>
             <Reveal as="h2">I'm Sohum.</Reveal>
@@ -102,15 +102,11 @@ export function AboutPage() {
         </section>
 
         {/* EXPERIENCE */}
-        <section className="section index-bleed num-left">
+        <section className="section index-bleed index-bleed--split num-left">
           <span className="index-num" aria-hidden="true">02</span>
           <div className="wrap wrap-lean-left">
             <Reveal className="section-index">SEC.<b>02</b> — EXPERIENCE</Reveal>
             <Reveal as="h2">Where I've Worked</Reveal>
-            <Reveal className="photo-cluster">
-              <div className="polaroid r2"><img src="/images/about-photos/skull-render.webp" alt="3D still-life render — antique study scene" loading="lazy" decoding="async" /></div>
-              <div className="polaroid r1"><img src="/images/about-photos/lever-render.webp" alt="3D render — sci-fi emergency lever panel, hard-surface modeling" loading="lazy" decoding="async" /></div>
-            </Reveal>
             <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-7)' }}>
               {experience.map((exp, i) => (
                 <Reveal key={exp.role} delay={staggerDelay(i)} className="split">
@@ -132,6 +128,10 @@ export function AboutPage() {
               ))}
             </div>
           </div>
+          <Reveal className="photo-cluster">
+            <div className="polaroid r2"><img src="/images/about-photos/skull-render.webp" alt="3D still-life render — antique study scene" loading="lazy" decoding="async" /></div>
+            <div className="polaroid r1"><img src="/images/about-photos/lever-render.webp" alt="3D render — sci-fi emergency lever panel, hard-surface modeling" loading="lazy" decoding="async" /></div>
+          </Reveal>
         </section>
 
         {/* EDUCATION */}
