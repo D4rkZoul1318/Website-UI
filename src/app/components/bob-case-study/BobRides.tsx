@@ -137,9 +137,10 @@ export default function BobRides() {
 
       <nav
         aria-label="Case study sections"
+        className="mobile-nav-fallback"
         style={{
           position: 'sticky', top: 63, zIndex: 8,
-          display: 'flex', gap: 'var(--space-4)', overflowX: 'auto',
+          gap: 'var(--space-4)', overflowX: 'auto',
           padding: 'var(--space-2) var(--space-6)',
           background: 'rgba(226, 224, 220, 0.97)', borderBottom: '1px solid var(--line-soft)',
           WebkitOverflowScrolling: 'touch',
@@ -161,6 +162,22 @@ export default function BobRides() {
             }}
           >
             {s.num}
+          </a>
+        ))}
+      </nav>
+
+      <nav aria-label="Case study sections (desktop)" className="side-nav">
+        <div className="side-nav__line" />
+        {NAV_SECTIONS.map((s) => (
+          <a
+            key={s.id}
+            href={`#${s.id}`}
+            aria-label={s.title}
+            aria-current={activeSection === s.id ? 'true' : undefined}
+            className={`side-nav__item${activeSection === s.id ? ' active' : ''}`}
+          >
+            <span className="side-nav__num">{s.num}</span>
+            <span className="side-nav__label">{s.title}</span>
           </a>
         ))}
       </nav>
