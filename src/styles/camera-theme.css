@@ -211,6 +211,21 @@
 .camera-theme .media-frame { border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; background: var(--paper); }
 .camera-theme .media-frame img { width: 100%; display: block; }
 
+/* ---- Polaroid-framed personal/work photos ---- */
+.camera-theme .photo-cluster { display: flex; flex-wrap: wrap; gap: var(--space-6) var(--space-5); margin-top: var(--space-7); align-items: flex-start; }
+.camera-theme .polaroid {
+  background: var(--paper); border: 1px solid var(--line-soft); border-radius: 3px;
+  padding: 10px 10px 28px; box-shadow: 0 6px 18px rgba(20,20,18,0.10);
+  width: 160px; flex-shrink: 0; transition: transform 220ms var(--ease-out);
+}
+.camera-theme .polaroid img { width: 100%; height: auto; display: block; border-radius: 1px; }
+.camera-theme .polaroid:hover { transform: translateY(-3px) rotate(0deg) !important; }
+.camera-theme .polaroid.r1 { transform: rotate(-3.5deg); }
+.camera-theme .polaroid.r2 { transform: rotate(2.5deg); margin-top: var(--space-4); }
+.camera-theme .polaroid.r3 { transform: rotate(-1.5deg); margin-top: var(--space-2); }
+.camera-theme .polaroid.r4 { transform: rotate(3deg); }
+@media (max-width: 640px) { .camera-theme .polaroid { width: 132px; } .camera-theme .polaroid.r2, .camera-theme .polaroid.r3 { margin-top: 0; } }
+
 .camera-theme .problem-composition { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-8); align-items: start; margin-top: var(--space-6); }
 .camera-theme .problem-copy p { color: var(--ink-soft); line-height: 1.7; font-size: 1.05rem; max-width: 56ch; }
 .camera-theme .spec-plate { border: 1px solid var(--line); border-radius: 4px; background: var(--paper); }
