@@ -196,7 +196,7 @@ export default function RewindCaseStudy() {
             <Reveal as="p" className="lede">The flat-tap problem isn't solved by drawing knobs — it's solved by making every control mechanically distinct: different gesture, different resistance, different feedback.</Reveal>
             <div className="feature-grid">
               {systemFeatures.map((f, i) => (
-                <Reveal key={f.ord} delay={staggerDelay(i)} className="feature-cell">
+                <Reveal key={f.ord} delay={staggerDelay(i)} variant="scale" className="feature-cell">
                   <span className="ord">{f.ord}</span><h3>{f.title}</h3><p>{f.body}</p>
                 </Reveal>
               ))}
@@ -235,7 +235,7 @@ export default function RewindCaseStudy() {
             <Reveal as="p" className="lede">Bold borders, heavy contrast, visible screw heads, a status bar reading out latency and buffer size. The aesthetic isn't decoration — it signals that REWIND is a tool, not a player. Concrete grey ground, JetBrains Mono labels, and a single accent color per disc that repaints the whole interface when the carriage moves.</Reveal>
             <div className="feature-grid">
               {craftFeatures.map((f, i) => (
-                <Reveal key={f.ord} delay={staggerDelay(i)} className="feature-cell">
+                <Reveal key={f.ord} delay={staggerDelay(i)} variant="scale" className="feature-cell">
                   <span className="ord">{f.ord}</span><p>{f.body}</p>
                 </Reveal>
               ))}
@@ -251,7 +251,7 @@ export default function RewindCaseStudy() {
             <Reveal as="p" className="lede">The makeathon brief was to push Figma's AI tooling as far as it would go. REWIND ran the full stack: Make generated and scaffolded components, MCP handled design-system operations against the file, Claude Code wired the Web Audio engine into the React app, and Runway produced the reveal video.</Reveal>
             <div className="feature-grid">
               {processFeatures.map((f, i) => (
-                <Reveal key={f.ord} delay={staggerDelay(i)} className="feature-cell">
+                <Reveal key={f.ord} delay={staggerDelay(i)} variant="scale" className="feature-cell">
                   <span className="ord">{f.ord}</span><p>{f.body}</p>
                 </Reveal>
               ))}
