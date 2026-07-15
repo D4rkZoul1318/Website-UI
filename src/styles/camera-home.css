@@ -263,9 +263,9 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
 .camera-home .about-facts { display: flex; flex-wrap: wrap; gap: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); }
 
 .camera-home .tool-row-outer {
-  overflow: hidden; margin-top: var(--space-7);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+  overflow: hidden; width: 190px; max-width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
 }
 .camera-home .tool-row { display: flex; flex-wrap: nowrap; gap: var(--space-6); width: max-content; animation: toolTicker 26s linear infinite; }
 .camera-home .tool-row:hover { animation-play-state: paused; }
