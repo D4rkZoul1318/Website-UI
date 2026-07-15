@@ -874,20 +874,22 @@ export default function CameraHome() {
               <div className="about-facts">
                 <div><span className="meta-label">Based in</span><span className="meta-value">Bengaluru</span></div>
                 <div><span className="meta-label">Status</span><span className="meta-value">Open to roles &amp; apprenticeships</span></div>
-                <div><span className="meta-label">Tools</span><span className="meta-value">Figma, Maya, Blender, React</span></div>
+                <div>
+                  <span className="meta-label">Tools</span>
+                  <div className="tool-row-outer">
+                    <div className="tool-row">
+                      {TOOLS.map((tool) => (
+                        <div key={tool.name} className="tool-icon" data-tooltip={tool.name}>{tool.icon}</div>
+                      ))}
+                      {TOOLS.map((tool) => (
+                        <div key={`${tool.name}-dup`} className="tool-icon" data-tooltip={tool.name} aria-hidden="true">{tool.icon}</div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
               <div style={{ marginTop: 'var(--space-6)' }}>
                 <a className="preview-cta" href={ROUTES.about}>Full background — experience, education, toolkit →</a>
-              </div>
-              <div className="tool-row-outer">
-                <div className="tool-row">
-                  {TOOLS.map((tool) => (
-                    <div key={tool.name} className="tool-icon" data-tooltip={tool.name}>{tool.icon}</div>
-                  ))}
-                  {TOOLS.map((tool) => (
-                    <div key={`${tool.name}-dup`} className="tool-icon" data-tooltip={tool.name} aria-hidden="true">{tool.icon}</div>
-                  ))}
-                </div>
               </div>
             </Reveal>
             <div className="about-portrait-wrap">
