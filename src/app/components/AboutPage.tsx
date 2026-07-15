@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { ROUTES } from '../routes';
-import { SiFigma, SiAutodeskmaya, SiBlender, SiReact } from 'react-icons/si';
+import { SiClaude, SiReact } from 'react-icons/si';
 
 const toolIcons = [
-  { Icon: SiFigma, label: 'Figma' },
-  { Icon: SiAutodeskmaya, label: 'Maya' },
-  { Icon: SiBlender, label: 'Blender' },
-  { Icon: SiReact, label: 'React' },
-];
+  { type: 'img', src: '/icons/tools/figma.webp', label: 'Figma' },
+  { type: 'img', src: '/icons/tools/photoshop.webp', label: 'Photoshop' },
+  { type: 'img', src: '/icons/tools/maya.webp', label: 'Maya' },
+  { type: 'img', src: '/icons/tools/blender.webp', label: 'Blender' },
+  { type: 'svg', Icon: SiClaude, color: '#D97757', label: 'Claude' },
+  { type: 'svg', Icon: SiReact, color: '#61DAFB', label: 'React' },
+] as const;
 
 function useScrollProgress() {
   const [pct, setPct] = useState(0);
@@ -99,10 +101,14 @@ export function AboutPage() {
               <div>
                 <span className="meta-label">Tools</span>
                 <div className="tool-icons">
-                  {toolIcons.map(({ Icon, label }) => (
-                    <span key={label} className="tool-icon" title={label}>
-                      <Icon aria-hidden="true" />
-                      <span>{label}</span>
+                  {toolIcons.map((t) => (
+                    <span key={t.label} className="tool-icon" title={t.label}>
+                      {t.type === 'img' ? (
+                        <img src={t.src} alt={`${t.label} logo`} loading="lazy" decoding="async" />
+                      ) : (
+                        <t.Icon aria-hidden="true" style={{ color: t.color }} />
+                      )}
+                      <span>{t.label}</span>
                     </span>
                   ))}
                 </div>
