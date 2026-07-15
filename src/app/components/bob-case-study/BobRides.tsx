@@ -41,6 +41,10 @@ const NAV_SECTIONS = [
   { id: 'close', num: '21', title: 'Close' },
 ] as const;
 
+// Sections rendered with the bg-dark/band treatment — used to flip the
+// side-nav rail's numerals/line to a light palette while scrolled over them.
+const DARK_SECTION_IDS = new Set(['key-decisions', 'final-icons', 'major-screens']);
+
 function useActiveSection(ids: readonly string[]) {
   const [active, setActive] = useState<string>(ids[0] ?? '');
   useEffect(() => {
@@ -124,6 +128,7 @@ export default function BobRides() {
   useEffect(() => { document.title = 'BOB Rides — Sohum Bhatnagar'; }, []);
   const scrollPct = useScrollProgress();
   const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
+  const navOnDark = DARK_SECTION_IDS.has(activeSection);
 
   return (
     <div className="camera-theme">
@@ -166,7 +171,7 @@ export default function BobRides() {
         ))}
       </nav>
 
-      <nav aria-label="Case study sections (desktop)" className="side-nav">
+      <nav aria-label="Case study sections (desktop)" className={`side-nav${navOnDark ? ' side-nav--on-dark' : ''}`}>
         <div className="side-nav__line" />
         {NAV_SECTIONS.map((s) => (
           <a
