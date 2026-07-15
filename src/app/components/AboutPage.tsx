@@ -66,8 +66,9 @@ export function AboutPage() {
 
       <main>
         {/* HERO */}
-        <section className="section bg-paper">
-          <div className="wrap">
+        <section className="section bg-paper index-bleed num-left">
+          <span className="index-num" aria-hidden="true">00</span>
+          <div className="wrap wrap-lean-left">
             <Reveal className="section-index">SEC.<b>00</b> — ABOUT</Reveal>
             <Reveal as="h1" style={{ maxWidth: '22ch' }}>Designer by training.<br />Naturalist by instinct.</Reveal>
             <Reveal as="p" className="lede">
@@ -77,8 +78,9 @@ export function AboutPage() {
         </section>
 
         {/* BIO */}
-        <section className="section bg-soft">
-          <div className="wrap">
+        <section className="section bg-soft index-bleed num-right">
+          <span className="index-num" aria-hidden="true">01</span>
+          <div className="wrap wrap-lean-right">
             <Reveal className="section-index">SEC.<b>01</b> — BACKGROUND</Reveal>
             <Reveal as="h2">I'm Sohum.</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
@@ -94,8 +96,9 @@ export function AboutPage() {
         </section>
 
         {/* EXPERIENCE */}
-        <section className="section">
-          <div className="wrap">
+        <section className="section index-bleed num-left">
+          <span className="index-num" aria-hidden="true">02</span>
+          <div className="wrap wrap-lean-left">
             <Reveal className="section-index">SEC.<b>02</b> — EXPERIENCE</Reveal>
             <Reveal as="h2">Where I've Worked</Reveal>
             <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-7)' }}>
@@ -122,8 +125,9 @@ export function AboutPage() {
         </section>
 
         {/* EDUCATION */}
-        <section className="section bg-soft">
-          <div className="wrap">
+        <section className="section bg-soft index-bleed num-right">
+          <span className="index-num" aria-hidden="true">03</span>
+          <div className="wrap wrap-lean-right">
             <Reveal className="section-index">SEC.<b>03</b> — EDUCATION</Reveal>
             <Reveal as="h2">Where I Studied</Reveal>
             <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
@@ -142,8 +146,9 @@ export function AboutPage() {
         </section>
 
         {/* TOOLKIT */}
-        <section className="section">
-          <div className="wrap-wide">
+        <section className="section index-bleed num-left">
+          <span className="index-num" aria-hidden="true">04</span>
+          <div className="wrap-wide wrap-lean-left">
             <Reveal className="section-index">SEC.<b>04</b> — TOOLKIT</Reveal>
             <Reveal as="h2">Skills &amp; Tools</Reveal>
             <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>

@@ -176,6 +176,23 @@
 .camera-theme .section-index b { color: var(--accent); font-weight: 500; }
 .camera-theme .section h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); font-weight: 800; letter-spacing: -0.02em; max-width: 16ch; }
 .camera-theme .section h2 { font-size: clamp(1.6rem, 3.2vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: var(--space-2); }
+
+/* ---- Asymmetric layout system: oversized bleeding index + offset containers ---- */
+.camera-theme .index-bleed { position: relative; }
+.camera-theme .index-bleed .index-num {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(4rem, 11vw, 8rem);
+  line-height: 1; color: var(--line); letter-spacing: -0.03em; user-select: none;
+  position: absolute; top: -0.15em; pointer-events: none; z-index: 0;
+}
+.camera-theme .index-bleed.num-left .index-num { left: clamp(-1.5rem, -4vw, -2.5rem); }
+.camera-theme .index-bleed.num-right .index-num { right: clamp(-1.5rem, -4vw, -2.5rem); }
+.camera-theme .index-bleed > .wrap, .camera-theme .index-bleed > .wrap-wide { position: relative; z-index: 1; }
+
+/* Biases a centered wrap toward one side instead of perfect margin:auto centering */
+.camera-theme .wrap-lean-left { margin-left: clamp(var(--space-6), 9vw, 220px); margin-right: auto; }
+.camera-theme .wrap-lean-right { margin-right: clamp(var(--space-6), 9vw, 220px); margin-left: auto; }
+@media (max-width: 900px) { .camera-theme .wrap-lean-left, .camera-theme .wrap-lean-right { margin-inline: auto; } }
+
 .camera-theme .lede { color: var(--ink-soft); max-width: 60ch; line-height: 1.7; font-size: 1.05rem; margin-top: var(--space-4); }
 
 .camera-theme .hero-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-6); }
@@ -258,7 +275,7 @@
 .camera-theme .flow-connector { width: 1px; height: var(--space-6); background: var(--line); }
 .camera-theme .flow-tap { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; margin: var(--space-2) 0; }
 
-.camera-theme .facts-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); margin-top: var(--space-6); }
+.camera-theme .facts-row { display: grid; grid-template-columns: 0.7fr 1fr 1.3fr; gap: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); margin-top: var(--space-6); }
 .camera-theme .meta-label { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: var(--space-2); }
 .camera-theme .meta-value { font-family: var(--font-mono); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
 @media (max-width: 640px) { .camera-theme .facts-row { grid-template-columns: 1fr; gap: var(--space-5); } }
