@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { ROUTES } from '../routes';
+import { SiFigma, SiAutodeskmaya, SiBlender, SiReact } from 'react-icons/si';
+
+const toolIcons = [
+  { Icon: SiFigma, label: 'Figma' },
+  { Icon: SiAutodeskmaya, label: 'Maya' },
+  { Icon: SiBlender, label: 'Blender' },
+  { Icon: SiReact, label: 'React' },
+];
 
 function useScrollProgress() {
   const [pct, setPct] = useState(0);
@@ -88,7 +96,17 @@ export function AboutPage() {
             <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">Based in</span><span className="meta-value" style={{ fontSize: 20 }}>Bengaluru</span></div>
               <div><span className="meta-label">Status</span><span className="meta-value" style={{ fontSize: 20 }}>Open to roles &amp; apprenticeships</span></div>
-              <div><span className="meta-label">Tools</span><span className="meta-value" style={{ fontSize: 20 }}>Figma, Maya, Blender, React</span></div>
+              <div>
+                <span className="meta-label">Tools</span>
+                <div className="tool-icons">
+                  {toolIcons.map(({ Icon, label }) => (
+                    <span key={label} className="tool-icon" title={label}>
+                      <Icon aria-hidden="true" />
+                      <span>{label}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
             </Reveal>
           </div>
         </section>
