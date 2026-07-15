@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Reveal } from './Reveal';
 import AsciiVideo from './AsciiVideo';
 import { ROUTES } from '../../routes';
+import { SiClaude, SiReact } from 'react-icons/si';
 
 type Project = {
   title: string;
@@ -146,36 +147,12 @@ const PHOTOS = [
 ];
 
 const TOOLS: { name: string; icon: JSX.Element }[] = [
-  { name: 'Claude', icon: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 L13.4 10.6 L21 12 L13.4 13.4 L12 21 L10.6 13.4 L3 12 L10.6 10.6 Z" /></svg> },
-  { name: 'Figma', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}><circle cx={12} cy={6.5} r={3} /><rect x={9} y={9.5} width={6} height={6} rx={3} /><circle cx={12} cy={18.5} r={3} /></svg> },
-  { name: 'Blender', icon: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4H18V10H12L18 16H12V21L6 15V10H12L6 4Z" /></svg> },
-  {
-    name: 'React', icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4}>
-        <circle cx={12} cy={12} r={1.6} fill="currentColor" stroke="none" />
-        <ellipse cx={12} cy={12} rx={9} ry={3.6} />
-        <ellipse cx={12} cy={12} rx={9} ry={3.6} transform="rotate(60 12 12)" />
-        <ellipse cx={12} cy={12} rx={9} ry={3.6} transform="rotate(120 12 12)" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Photoshop', icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4}>
-        <rect x={2.5} y={4.5} width={19} height={15} rx={2.5} />
-        <text x={12} y={15.2} textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize={8} fill="currentColor" stroke="none">Ps</text>
-      </svg>
-    ),
-  },
-  {
-    name: 'Illustrator', icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4}>
-        <rect x={2.5} y={4.5} width={19} height={15} rx={2.5} />
-        <text x={12} y={15.2} textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize={8} fill="currentColor" stroke="none">Ai</text>
-      </svg>
-    ),
-  },
-  { name: 'Maya', icon: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3L19 10L12.2 12L10 19.5L5 3Z" /></svg> },
+  { name: 'Figma', icon: <img src="/icons/tools/figma.webp" alt="" loading="lazy" decoding="async" /> },
+  { name: 'Photoshop', icon: <img src="/icons/tools/photoshop.webp" alt="" loading="lazy" decoding="async" /> },
+  { name: 'Maya', icon: <img src="/icons/tools/maya.webp" alt="" loading="lazy" decoding="async" /> },
+  { name: 'Blender', icon: <img src="/icons/tools/blender.webp" alt="" loading="lazy" decoding="async" /> },
+  { name: 'Claude', icon: <SiClaude aria-hidden="true" style={{ color: '#D97757' }} /> },
+  { name: 'React', icon: <SiReact aria-hidden="true" style={{ color: '#61DAFB' }} /> },
 ];
 
 export default function CameraHome() {
@@ -902,10 +879,15 @@ export default function CameraHome() {
               <div style={{ marginTop: 'var(--space-6)' }}>
                 <a className="preview-cta" href={ROUTES.about}>Full background — experience, education, toolkit →</a>
               </div>
-              <div className="tool-row">
-                {TOOLS.map((tool) => (
-                  <div key={tool.name} className="tool-icon" data-tooltip={tool.name}>{tool.icon}</div>
-                ))}
+              <div className="tool-row-outer">
+                <div className="tool-row">
+                  {TOOLS.map((tool) => (
+                    <div key={tool.name} className="tool-icon" data-tooltip={tool.name}>{tool.icon}</div>
+                  ))}
+                  {TOOLS.map((tool) => (
+                    <div key={`${tool.name}-dup`} className="tool-icon" data-tooltip={tool.name} aria-hidden="true">{tool.icon}</div>
+                  ))}
+                </div>
               </div>
             </Reveal>
             <div className="about-portrait-wrap">
