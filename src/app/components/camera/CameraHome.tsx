@@ -874,7 +874,7 @@ export default function CameraHome() {
               <div className="about-facts">
                 <div><span className="meta-label">Based in</span><span className="meta-value">Bengaluru</span></div>
                 <div><span className="meta-label">Status</span><span className="meta-value">Open to roles &amp; apprenticeships</span></div>
-                <div>
+                <div className="tools-fact">
                   <span className="meta-label">Tools</span>
                   <div className="tool-row-outer">
                     <div className="tool-row">
