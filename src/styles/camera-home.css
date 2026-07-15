@@ -262,9 +262,16 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
 }
 .camera-home .about-facts { display: flex; flex-wrap: wrap; gap: var(--space-7); border-top: 1px solid var(--line); padding-top: var(--space-5); }
 
-.camera-home .tool-row { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: var(--space-7); }
-.camera-home .tool-icon { position: relative; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; color: var(--ink-faint); opacity: 0.7; transition: transform 200ms var(--ease-out), color 200ms var(--ease-out), opacity 200ms var(--ease-out); }
-.camera-home .tool-icon svg { width: 100%; height: 100%; }
+.camera-home .tool-row-outer {
+  overflow: hidden; margin-top: var(--space-7);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+}
+.camera-home .tool-row { display: flex; flex-wrap: nowrap; gap: var(--space-6); width: max-content; animation: toolTicker 26s linear infinite; }
+.camera-home .tool-row:hover { animation-play-state: paused; }
+@keyframes toolTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.camera-home .tool-icon { position: relative; width: 26px; height: 26px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; color: var(--ink-faint); opacity: 0.85; transition: transform 200ms var(--ease-out), color 200ms var(--ease-out), opacity 200ms var(--ease-out); }
+.camera-home .tool-icon svg, .camera-home .tool-icon img { width: 100%; height: 100%; object-fit: contain; }
 .camera-home .tool-icon::after {
   content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%;
   transform: translateX(-50%) translateY(4px); font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.04em;
