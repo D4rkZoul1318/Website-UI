@@ -75,36 +75,37 @@
    Icons, Key Decisions, Major Screens) that the rail scrolls over. The
    homepage handles that with JS scroll-based theme sampling, which is
    out of scope here (porting the interaction pattern, not the imperative
-   implementation) — a frosted backdrop chip keeps the numerals legible
-   over any section background without needing to detect it. */
+   implementation) — instead the numerals/line use mix-blend-mode:
+   difference against a white base color, so they auto-invert to dark
+   over light sections and stay white over dark ones with no backdrop
+   chip and no scroll-position detection needed. The active item's
+   accent color opts out of the blend (color math on a saturated hue
+   would shift its hue per-background) and stays a flat, always-orange
+   marker instead. */
 .camera-theme .side-nav {
   position: fixed; right: var(--space-5); top: 50%; transform: translateY(-50%); z-index: 60;
   display: flex; flex-direction: column; align-items: flex-end; gap: 7px;
   max-height: 80vh; overflow-y: auto; scrollbar-width: none;
-  padding: 10px 12px; border-radius: 999px;
-  background: rgba(226, 224, 220, 0.75);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  --fnav-label: rgba(26, 26, 26, 0.55);
-  --fnav-label-active: #1a1a1a;
-  --fnav-num: rgba(26, 26, 26, 0.4);
+  --fnav-label: rgba(255, 255, 255, 0.75);
+  --fnav-num: rgba(255, 255, 255, 0.85);
   --fnav-num-active: var(--accent);
-  --fnav-line: rgba(26, 26, 26, 0.15);
+  --fnav-line: rgba(255, 255, 255, 0.6);
 }
 .camera-theme .side-nav::-webkit-scrollbar { display: none; }
-.camera-theme .side-nav__line { position: absolute; top: 4px; bottom: 4px; right: 16px; width: 1px; background: var(--fnav-line); z-index: 0; }
+.camera-theme .side-nav__line { position: absolute; top: 4px; bottom: 4px; right: 3.5px; width: 1px; background: var(--fnav-line); z-index: 0; mix-blend-mode: difference; }
 .camera-theme .side-nav__item {
   position: relative; z-index: 1; display: flex; flex-direction: row-reverse; align-items: center; gap: 10px;
   text-decoration: none; padding: 3px 2px; cursor: pointer;
 }
-.camera-theme .side-nav__num { flex: 0 0 auto; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--fnav-num); transition: color 250ms var(--ease-out); }
-.camera-theme .side-nav__item.active .side-nav__num { color: var(--fnav-num-active); font-weight: 700; }
+.camera-theme .side-nav__num { flex: 0 0 auto; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--fnav-num); mix-blend-mode: difference; transition: color 250ms var(--ease-out); }
+.camera-theme .side-nav__item.active .side-nav__num { color: var(--fnav-num-active); mix-blend-mode: normal; font-weight: 700; }
 .camera-theme .side-nav__label {
   flex: 0 0 auto; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; color: var(--fnav-label);
+  mix-blend-mode: difference;
   text-transform: uppercase; white-space: nowrap; opacity: 0; transform: translateX(4px);
-  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), color 250ms var(--ease-out);
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
 }
-.camera-theme .side-nav__item:hover .side-nav__label, .camera-theme .side-nav__item.active .side-nav__label { opacity: 1; transform: translateX(0); color: var(--fnav-label-active); }
+.camera-theme .side-nav__item:hover .side-nav__label, .camera-theme .side-nav__item.active .side-nav__label { opacity: 1; transform: translateX(0); }
 .camera-theme .side-nav__item:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 @media (max-width: 860px) {
   .camera-theme .side-nav { display: none; }
