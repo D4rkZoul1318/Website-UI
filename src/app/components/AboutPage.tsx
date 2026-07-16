@@ -128,7 +128,7 @@ export function AboutPage() {
               ))}
             </div>
           </div>
-          <Reveal className="photo-cluster">
+          <Reveal className="photo-cluster photo-cluster--work">
             <div className="polaroid r2"><img src="/images/about-photos/skull-render.webp" alt="3D still-life render — antique study scene" loading="lazy" decoding="async" /></div>
             <div className="polaroid r1"><img src="/images/about-photos/lever-render.webp" alt="3D render — sci-fi emergency lever panel, hard-surface modeling" loading="lazy" decoding="async" /></div>
           </Reveal>
