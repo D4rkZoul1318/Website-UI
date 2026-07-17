@@ -4,6 +4,11 @@ import { Reveal } from './Reveal';
 import AsciiVideo from './AsciiVideo';
 import { ROUTES } from '../../routes';
 import { SiClaude, SiReact } from 'react-icons/si';
+import { gsap } from 'gsap';
+import { Draggable } from 'gsap/Draggable';
+import { InertiaPlugin } from 'gsap/InertiaPlugin';
+
+gsap.registerPlugin(Draggable, InertiaPlugin);
 
 type Project = {
   title: string;
@@ -630,21 +635,25 @@ export default function CameraHome() {
       prevBtn!.disabled = projectIndex === 0;
       nextBtn!.disabled = projectIndex === PROJECTS.length - 1;
     }
-    function updateTrackPosition(animate: boolean) {
-      const active = cardEls[projectIndex];
-      if (!active) return;
+    function cardTargetX(i: number) {
+      const card = cardEls[i];
+      if (!card) return 0;
       const vpWidth = viewport!.getBoundingClientRect().width;
-      const cardCenter = active.offsetLeft + active.offsetWidth / 2;
-      const targetX = vpWidth / 2 - cardCenter;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      return vpWidth / 2 - cardCenter;
+    }
+    function updateTrackPosition(animate: boolean) {
+      if (!cardEls[projectIndex]) return;
+      const targetX = cardTargetX(projectIndex);
       track!.style.transition = animate && !prefersReduced ? 'transform 400ms var(--ease-out)' : 'none';
       track!.style.transform = 'translateX(' + targetX + 'px)';
     }
-    function goToProject(i: number) {
+    function goToProject(i: number, opts: { skipTrackAnim?: boolean } = {}) {
       i = Math.max(0, Math.min(PROJECTS.length - 1, i));
       if (i === projectIndex) return;
       projectIndex = i;
       setActiveCard();
-      updateTrackPosition(true);
+      if (!opts.skipTrackAnim) updateTrackPosition(true);
       updateNavState();
       if (currentSection === WORK_INDEX && miniCounter) miniCounter.textContent = '0' + (projectIndex + 1) + '/0' + PROJECTS.length;
       if (prefersReduced) { renderPreview(); return; }
@@ -661,6 +670,50 @@ export default function CameraHome() {
     renderPreview();
     updateTrackPosition(false);
     on(window, 'resize', () => updateTrackPosition(false));
+
+    // ---- DRAG-TO-NAVIGATE (grab the row, momentum + snap to nearest card) --
+    let dragger: Draggable[] | undefined;
+    if (!prefersReduced && cardEls.length > 1) {
+      const snapPoints = () => cardEls.map((_, i) => cardTargetX(i));
+      // bounds run from the last card's centered position (leftmost drag limit)
+      // to the first card's (rightmost) — the track can slide between those.
+      dragger = Draggable.create(track, {
+        type: 'x',
+        inertia: true,
+        allowNativeTouchScrolling: true,
+        bounds: () => {
+          const points = snapPoints();
+          return { minX: Math.min(...points), maxX: Math.max(...points) };
+        },
+        snap: {
+          x: (value: number) => {
+            const points = snapPoints();
+            return points.reduce((closest, p) => (Math.abs(p - value) < Math.abs(closest - value) ? p : closest), points[0]);
+          },
+        },
+        onPress() {
+          track!.style.transition = 'none';
+        },
+        onDragEnd() {
+          settleToNearest();
+        },
+        onThrowComplete() {
+          settleToNearest();
+        },
+      });
+      const settleToNearest = () => {
+        const points = snapPoints();
+        const x = gsap.getProperty(track, 'x') as number;
+        let nearestIndex = 0;
+        let nearestDist = Infinity;
+        points.forEach((p, i) => {
+          const d = Math.abs(p - x);
+          if (d < nearestDist) { nearestDist = d; nearestIndex = i; }
+        });
+        goToProject(nearestIndex, { skipTrackAnim: true });
+      };
+      cleanups.push(() => dragger?.forEach((d) => d.kill()));
+    }
 
     // ---- COMPARE SLIDER -------------------------------------------------
     function setComparePosition(pct: number) {
