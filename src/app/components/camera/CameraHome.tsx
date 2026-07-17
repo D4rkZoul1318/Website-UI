@@ -538,8 +538,22 @@ export default function CameraHome() {
     }
 
     // ---- CAROUSEL -----------------------------------------------------------
+    // Infinite loop: render several consecutive copies of the project list
+    // (SETS total) so dragging/scrubbing never reaches a hard edge. Every
+    // project's own centering math is unchanged — the new pieces are the
+    // extra copies plus a silent "recenter" that rewrites the live DOM index
+    // back toward the middle copy once a drag/scrub has fully settled a
+    // whole set away from it. Because every set is a pixel-identical repeat
+    // of the same n cards, jumping by whole-set multiples changes which
+    // button is "current" without changing a single visible pixel — the
+    // carousel just keeps going in either direction, forever.
+    const n = PROJECTS.length;
+    const SETS = 7;
+    const MIDDLE_SET = Math.floor(SETS / 2);
     const cardEls: HTMLButtonElement[] = [];
-    PROJECTS.forEach((p, i) => {
+    for (let slot = 0; slot < SETS * n; slot++) {
+      const i = slot % n;
+      const p = PROJECTS[i];
       const num = String(i + 1).padStart(2, '0');
       const el = document.createElement('button');
       el.className = 'polaroid';
@@ -565,14 +579,15 @@ export default function CameraHome() {
         '</div>';
       (el.querySelector('.polaroid-title') as HTMLElement).textContent = p.title;
       (el.querySelector('.polaroid-meta') as HTMLElement).textContent = p.problem;
-      const clickHandler = () => goToProject(i);
+      const clickHandler = () => goToSlot(slot);
       el.addEventListener('click', clickHandler);
       cleanups.push(() => el.removeEventListener('click', clickHandler));
       track.appendChild(el);
       cardEls.push(el);
-    });
+    }
 
-    let projectIndex = 0;
+    let currentSlot = MIDDLE_SET * n;
+    let projectIndex = currentSlot % n;
 
     function renderPreview() {
       const p = PROJECTS[projectIndex];
@@ -625,66 +640,107 @@ export default function CameraHome() {
     }
 
     function setActiveCard() {
-      cardEls.forEach((el, i) => {
-        const isActive = i === projectIndex;
+      cardEls.forEach((el, slot) => {
+        const isActive = slot === currentSlot;
         el.classList.toggle('active', isActive);
         el.setAttribute('aria-current', isActive ? 'true' : 'false');
       });
     }
-    function updateNavState() {
-      prevBtn!.disabled = projectIndex === 0;
-      nextBtn!.disabled = projectIndex === PROJECTS.length - 1;
-    }
-    function cardTargetX(i: number) {
-      const card = cardEls[i];
+    function cardTargetX(slot: number) {
+      const card = cardEls[slot];
       if (!card) return 0;
       const vpWidth = viewport!.getBoundingClientRect().width;
       const cardCenter = card.offsetLeft + card.offsetWidth / 2;
       return vpWidth / 2 - cardCenter;
     }
     function updateTrackPosition(animate: boolean) {
-      if (!cardEls[projectIndex]) return;
-      const targetX = cardTargetX(projectIndex);
+      if (!cardEls[currentSlot]) return;
+      const targetX = cardTargetX(currentSlot);
       track!.style.transition = animate && !prefersReduced ? 'transform 400ms var(--ease-out)' : 'none';
       track!.style.transform = 'translateX(' + targetX + 'px)';
     }
-    function goToProject(i: number, opts: { skipTrackAnim?: boolean } = {}) {
-      i = Math.max(0, Math.min(PROJECTS.length - 1, i));
-      if (i === projectIndex) return;
-      projectIndex = i;
+    // Once settled a whole set away from the middle copy, silently rewrite
+    // currentSlot (and the track's raw x) to the equivalent slot in the
+    // middle set. Every set is an exact pixel-for-pixel repeat of the same
+    // n cards, so a jump of whole-set multiples changes nothing on screen —
+    // confirmed via before/after screenshot diff, not assumed.
+    function recenterIfNeeded() {
+      const setsAway = Math.floor(currentSlot / n) - MIDDLE_SET;
+      if (setsAway === 0) return;
+      currentSlot -= setsAway * n;
+      track!.style.transition = 'none';
+      track!.style.transform = 'translateX(' + cardTargetX(currentSlot) + 'px)';
+    }
+    function goToSlot(slot: number, opts: { skipTrackAnim?: boolean } = {}) {
+      if (slot === currentSlot) return;
+      currentSlot = slot;
+      projectIndex = ((currentSlot % n) + n) % n;
       setActiveCard();
-      if (!opts.skipTrackAnim) updateTrackPosition(true);
-      updateNavState();
-      if (currentSection === WORK_INDEX && miniCounter) miniCounter.textContent = '0' + (projectIndex + 1) + '/0' + PROJECTS.length;
+      if (opts.skipTrackAnim) {
+        recenterIfNeeded();
+      } else {
+        updateTrackPosition(true);
+        setTimeout(recenterIfNeeded, 420);
+      }
+      if (currentSection === WORK_INDEX && miniCounter) miniCounter.textContent = '0' + (projectIndex + 1) + '/0' + n;
       if (prefersReduced) { renderPreview(); return; }
       preview!.classList.add('updating');
       setTimeout(() => { renderPreview(); preview!.classList.remove('updating'); }, 250);
     }
-    function scrubProject(dir: number) { goToProject(projectIndex + dir); }
+    function scrubProject(dir: number) { goToSlot(currentSlot + dir); }
 
-    on(prevBtn, 'click', () => scrubProject(-1));
-    on(nextBtn, 'click', () => scrubProject(1));
+    // Draggable's own global press/release tracking redirects the very first
+    // pointerup after it's created away from whatever element the press
+    // actually started on — confirmed by instrumenting the full event
+    // sequence: pointerdown/mousedown correctly reach the button, but
+    // pointerup/mouseup/click land on an unrelated div, and even
+    // elementFromPoint at the release coordinates resolves to that div (an
+    // internal full-viewport tracking layer Draggable creates for the press,
+    // still present at release), so there's no reliable way to recover the
+    // real release target after the fact. Recover from the press side
+    // instead, which is unaffected: remember which nav button (if any) a
+    // pointerdown actually landed on, and resolve on the very next pointerup
+    // regardless of what it reports as its target. Both this path and the
+    // native click handler below route through the same handleNavOnce guard
+    // so a normal click (which fires correctly from the second press onward,
+    // alongside this same pointerdown/pointerup pair) never double-navigates.
+    let pendingNavDir: number | null = null;
+    let lastNavHandledAt = 0;
+    function handleNavOnce(dir: number) {
+      const now = Date.now();
+      if (now - lastNavHandledAt < 200) return;
+      lastNavHandledAt = now;
+      scrubProject(dir);
+    }
+    on(prevBtn, 'click', () => handleNavOnce(-1));
+    on(nextBtn, 'click', () => handleNavOnce(1));
+    on(prevBtn, 'pointerdown', () => { pendingNavDir = -1; });
+    on(nextBtn, 'pointerdown', () => { pendingNavDir = 1; });
+    on(document, 'pointerup', () => {
+      if (pendingNavDir === null) return;
+      const dir = pendingNavDir;
+      pendingNavDir = null;
+      handleNavOnce(dir);
+    }, { capture: true });
 
     setActiveCard();
-    updateNavState();
     renderPreview();
     updateTrackPosition(false);
     on(window, 'resize', () => updateTrackPosition(false));
 
     // ---- DRAG-TO-NAVIGATE (grab the row, momentum + snap to nearest card) --
     let dragger: Draggable[] | undefined;
-    if (!prefersReduced && cardEls.length > 1) {
-      const snapPoints = () => cardEls.map((_, i) => cardTargetX(i));
-      // bounds run from the last card's centered position (leftmost drag limit)
-      // to the first card's (rightmost) — the track can slide between those.
+    if (!prefersReduced && n > 1) {
+      const snapPoints = () => cardEls.map((_, slot) => cardTargetX(slot));
+      // bounds are just a safety net spanning the full rendered strip — the
+      // infinite feel comes from recenterIfNeeded, not from these bounds
+      // ever actually being reached.
+      const initialPoints = snapPoints();
       dragger = Draggable.create(track, {
         type: 'x',
         inertia: true,
         allowNativeTouchScrolling: true,
-        bounds: () => {
-          const points = snapPoints();
-          return { minX: Math.min(...points), maxX: Math.max(...points) };
-        },
+        bounds: { minX: Math.min(...initialPoints), maxX: Math.max(...initialPoints) },
         snap: {
           x: (value: number) => {
             const points = snapPoints();
@@ -704,13 +760,13 @@ export default function CameraHome() {
       const settleToNearest = () => {
         const points = snapPoints();
         const x = gsap.getProperty(track, 'x') as number;
-        let nearestIndex = 0;
+        let nearestSlot = 0;
         let nearestDist = Infinity;
-        points.forEach((p, i) => {
+        points.forEach((p, slot) => {
           const d = Math.abs(p - x);
-          if (d < nearestDist) { nearestDist = d; nearestIndex = i; }
+          if (d < nearestDist) { nearestDist = d; nearestSlot = slot; }
         });
-        goToProject(nearestIndex, { skipTrackAnim: true });
+        goToSlot(nearestSlot, { skipTrackAnim: true });
       };
       cleanups.push(() => dragger?.forEach((d) => d.kill()));
     }
