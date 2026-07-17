@@ -908,7 +908,7 @@ export default function CameraHome() {
             <nav aria-label="Primary">
               <a href="#sheet">Work</a>
               <a href="#notes">About</a>
-              <a href="#writing">Photography</a>
+              <a href={`${ROUTES.explorations}?filter=Photography`}>Photography</a>
               <a href="#contact">Contact</a>
             </nav>
           </header>

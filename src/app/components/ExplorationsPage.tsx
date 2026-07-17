@@ -124,8 +124,13 @@ const allItems = [
 
 const categories = ['All', '3D', 'Graphic Design', 'Catalogue', 'UI/UX', 'Photography'];
 
+function initialFilter() {
+  const requested = new URLSearchParams(window.location.search).get('filter');
+  return requested && categories.includes(requested) ? requested : 'All';
+}
+
 export function ExplorationsPage() {
-  const [active, setActive] = useState('All');
+  const [active, setActive] = useState(initialFilter);
   const [loaded, setLoaded] = useState(false);
   const [lightbox, setLightbox] = useState<string | null>(null);
 
