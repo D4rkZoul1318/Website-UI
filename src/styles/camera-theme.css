@@ -232,18 +232,20 @@
    Simplifies to a plain wrapping grid below 900px, where the section
    also stops leaning and stacks — fixed-pixel scatter offsets don't
    translate to narrow viewports. */
-.camera-theme .photo-cluster { position: relative; z-index: 1; width: 480px; max-width: 100%; min-height: 690px; margin-top: var(--space-7); }
+.camera-theme .photo-cluster { position: relative; z-index: 1; width: 640px; max-width: 100%; min-height: 850px; margin-top: var(--space-7); }
 .camera-theme .polaroid {
   background: var(--paper); border: 1px solid var(--line-soft); border-radius: 3px;
   padding: 10px 10px 28px; box-shadow: 0 10px 26px rgba(20,20,18,0.14);
-  width: 330px; transition: transform 220ms var(--ease-out);
+  width: 280px; transition: transform 220ms var(--ease-out);
 }
 .camera-theme .polaroid img { width: 100%; height: auto; display: block; border-radius: 1px; }
 .camera-theme .polaroid:hover { transform: translateY(-6px) rotate(0deg) !important; z-index: 10 !important; }
-.camera-theme .polaroid.r1 { position: absolute; top: 0; left: 100px; transform: rotate(-4deg); z-index: 2; }
-.camera-theme .polaroid.r2 { position: absolute; top: 140px; left: 0; transform: rotate(2deg); z-index: 3; }
-.camera-theme .polaroid.r3 { position: absolute; top: 0; left: 150px; transform: rotate(-1.5deg); z-index: 1; }
-.camera-theme .polaroid.r4 { position: absolute; top: 260px; left: 130px; transform: rotate(4deg); z-index: 4; }
+/* Two loose columns with real gaps between every card — a pinned-up
+   collage, not an overlapping stack where one photo hides another. */
+.camera-theme .polaroid.r1 { position: absolute; top: 0; left: 0; transform: rotate(-3deg); z-index: 2; }
+.camera-theme .polaroid.r2 { position: absolute; top: 30px; left: 320px; transform: rotate(2deg); z-index: 3; }
+.camera-theme .polaroid.r3 { position: absolute; top: 280px; left: 40px; transform: rotate(-2deg); z-index: 1; }
+.camera-theme .polaroid.r4 { position: absolute; top: 480px; left: 330px; transform: rotate(3deg); z-index: 4; }
 
 /* Work-render cluster (Experience section): larger cards, deeper overlap
    than the personal-photo cluster — scoped so it doesn't affect the
