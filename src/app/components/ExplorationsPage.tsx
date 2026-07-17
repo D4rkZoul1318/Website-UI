@@ -122,7 +122,12 @@ const allItems = [
   },
 ];
 
-const categories = ['All', '3D', 'Graphic Design', 'Catalogue', 'UI/UX', 'Photography'];
+const categories = ['All', '3D', 'Graphic Design', 'Catalogue', 'UI/UX', 'Photography', 'Play'];
+
+function initialFilter() {
+  const requested = new URLSearchParams(window.location.search).get('filter');
+  return requested && categories.includes(requested) ? requested : 'All';
+}
 
 function initialFilter() {
   const requested = new URLSearchParams(window.location.search).get('filter');
@@ -203,18 +208,32 @@ export function ExplorationsPage() {
         </div>
       </section>
 
-      {/* Masonry Grid */}
+      {/* Masonry Grid / Play canvas */}
       <section style={{ padding: '0 48px 120px', maxWidth: '1200px', margin: '0 auto' }}>
-        <PhotoBurst active={active === 'Photography'}>
-          <Masonry
-            items={filtered}
-            animateFrom="bottom"
-            scaleOnHover={true}
-            hoverScale={0.97}
-            blurToFocus={true}
-            stagger={0.06}
-            onItemClick={(item) => item.url ? window.open(item.url, '_blank', 'noopener') : setLightbox(item.img)}
-          />
+        <PhotoBurst active={active === 'Photography' || active === 'Play'}>
+          {active === 'Play' ? (
+            <div
+              style={{
+                minHeight: '65vh', borderRadius: '16px', border: `2px dashed ${grey}`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                textAlign: 'center', padding: '48px',
+              }}
+            >
+              <p style={{ fontFamily: font, fontWeight: 300, fontSize: 'clamp(16px, 2vw, 20px)', color: grey, maxWidth: '440px' }}>
+                Click and drag anywhere in this space.
+              </p>
+            </div>
+          ) : (
+            <Masonry
+              items={filtered}
+              animateFrom="bottom"
+              scaleOnHover={true}
+              hoverScale={0.97}
+              blurToFocus={true}
+              stagger={0.06}
+              onItemClick={(item) => item.url ? window.open(item.url, '_blank', 'noopener') : setLightbox(item.img)}
+            />
+          )}
         </PhotoBurst>
       </section>
 
