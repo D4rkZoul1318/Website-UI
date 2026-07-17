@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { ROUTES } from '../routes';
 
@@ -56,18 +57,23 @@ export function AboutPage() {
 
   return (
     <div className="camera-theme">
-      <header className="topbar">
-        <span className="mark">ABOUT</span>
-        <a className="focus-cue" href={`${ROUTES.home}#notes`}>
-          <span className="arrow" aria-hidden="true">←</span><span>Back to Home</span>
-        </a>
-      </header>
-      <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
+      {createPortal(
+        <>
+          <header className="topbar">
+            <span className="mark">ABOUT</span>
+            <a className="focus-cue" href={`${ROUTES.home}#notes`}>
+              <span className="arrow" aria-hidden="true">←</span><span>Back to Home</span>
+            </a>
+          </header>
+          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
+        </>,
+        document.getElementById('fixed-ui-root')!
+      )}
 
       <main>
         {/* HERO */}
         <section className="section bg-paper index-bleed num-left">
-          <span className="index-num" aria-hidden="true">00</span>
+          <span className="index-num" data-speed="0.85" aria-hidden="true">00</span>
           <div className="wrap wrap-lean-left">
             <Reveal className="section-index">SEC.<b>00</b> — ABOUT</Reveal>
             <Reveal as="h1" style={{ maxWidth: '22ch' }}>Designer by training.<br />Naturalist by instinct.</Reveal>
@@ -79,7 +85,7 @@ export function AboutPage() {
 
         {/* BIO */}
         <section className="section bg-soft index-bleed index-bleed--split num-right">
-          <span className="index-num" aria-hidden="true">01</span>
+          <span className="index-num" data-speed="0.85" aria-hidden="true">01</span>
           <Reveal className="photo-cluster">
             <div className="polaroid r1"><img src="/images/about-photos/rocks.webp" alt="Sohum relaxing by a rocky stream" loading="lazy" decoding="async" /></div>
             <div className="polaroid r2"><img src="/images/about-photos/cafe.webp" alt="Sohum at a café" loading="lazy" decoding="async" /></div>
@@ -103,7 +109,7 @@ export function AboutPage() {
 
         {/* EXPERIENCE */}
         <section className="section index-bleed index-bleed--split num-left">
-          <span className="index-num" aria-hidden="true">02</span>
+          <span className="index-num" data-speed="0.85" aria-hidden="true">02</span>
           <div className="wrap wrap-lean-left">
             <Reveal className="section-index">SEC.<b>02</b> — EXPERIENCE</Reveal>
             <Reveal as="h2">Where I've Worked</Reveal>
@@ -136,7 +142,7 @@ export function AboutPage() {
 
         {/* EDUCATION */}
         <section className="section bg-soft index-bleed num-right">
-          <span className="index-num" aria-hidden="true">03</span>
+          <span className="index-num" data-speed="0.85" aria-hidden="true">03</span>
           <div className="wrap wrap-lean-right">
             <Reveal className="section-index">SEC.<b>03</b> — EDUCATION</Reveal>
             <Reveal as="h2">Where I Studied</Reveal>
@@ -157,7 +163,7 @@ export function AboutPage() {
 
         {/* TOOLKIT */}
         <section className="section index-bleed num-left">
-          <span className="index-num" aria-hidden="true">04</span>
+          <span className="index-num" data-speed="0.85" aria-hidden="true">04</span>
           <div className="wrap-wide wrap-lean-left">
             <Reveal className="section-index">SEC.<b>04</b> — TOOLKIT</Reveal>
             <Reveal as="h2">Skills &amp; Tools</Reveal>

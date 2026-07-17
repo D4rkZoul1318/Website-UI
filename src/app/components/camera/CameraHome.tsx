@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Reveal } from './Reveal';
 import AsciiVideo from './AsciiVideo';
 import { ROUTES } from '../../routes';
@@ -791,34 +792,39 @@ export default function CameraHome() {
         <span className="focus-label">Initializing<span className="dot">.</span><span className="dot">.</span><span className="dot dot-3">.</span></span>
       </div>
 
-      <header id="topnav" ref={topnavRef}>
-        <a className="topnav-mark" href="#viewfinder">Sohum Bhatnagar</a>
-        <nav aria-label="Primary">
-          <a href="#sheet">Work</a>
-          <a href="#notes">About</a>
-          <a href="#writing">Photography</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </header>
+      {createPortal(
+        <>
+          <header id="topnav" ref={topnavRef}>
+            <a className="topnav-mark" href="#viewfinder">Sohum Bhatnagar</a>
+            <nav aria-label="Primary">
+              <a href="#sheet">Work</a>
+              <a href="#notes">About</a>
+              <a href="#writing">Photography</a>
+              <a href="#contact">Contact</a>
+            </nav>
+          </header>
 
-      <nav id="floating-nav" className="floating-nav" ref={floatingNavRef} aria-label="Section navigation"></nav>
+          <nav id="floating-nav" className="floating-nav" ref={floatingNavRef} aria-label="Section navigation"></nav>
 
-      <div id="controls" ref={controlsRef}>
-        <div className="mini-screen" ref={miniScreenRef}>
-          <div className="zone" ref={miniZoneRef}>VIEWFINDER</div>
-          <div className="counter" ref={miniCounterRef}>01/05</div>
-        </div>
-        <button className="fn-btn" ref={infoBtnRef} title="About" type="button">INFO</button>
-        <div id="wheel" ref={wheelRef}>
-          <button className="wheel-arrow up" ref={wheelUpRef} aria-label="Previous section" type="button"><span className="tri"></span></button>
-          <button className="wheel-arrow left" ref={wheelLeftRef} aria-label="Previous project" type="button"><span className="tri"></span></button>
-          <div className="needle-dot" ref={needleRef}></div>
-          <div className="hub"></div>
-          <button className="wheel-arrow right" ref={wheelRightRef} aria-label="Next project" type="button"><span className="tri"></span></button>
-          <button className="wheel-arrow down" ref={wheelDownRef} aria-label="Next section" type="button"><span className="tri"></span></button>
-        </div>
-        <button className="fn-btn" ref={menuBtnRef} title="Viewfinder" type="button">TOP</button>
-      </div>
+          <div id="controls" ref={controlsRef}>
+            <div className="mini-screen" ref={miniScreenRef}>
+              <div className="zone" ref={miniZoneRef}>VIEWFINDER</div>
+              <div className="counter" ref={miniCounterRef}>01/05</div>
+            </div>
+            <button className="fn-btn" ref={infoBtnRef} title="About" type="button">INFO</button>
+            <div id="wheel" ref={wheelRef}>
+              <button className="wheel-arrow up" ref={wheelUpRef} aria-label="Previous section" type="button"><span className="tri"></span></button>
+              <button className="wheel-arrow left" ref={wheelLeftRef} aria-label="Previous project" type="button"><span className="tri"></span></button>
+              <div className="needle-dot" ref={needleRef}></div>
+              <div className="hub"></div>
+              <button className="wheel-arrow right" ref={wheelRightRef} aria-label="Next project" type="button"><span className="tri"></span></button>
+              <button className="wheel-arrow down" ref={wheelDownRef} aria-label="Next section" type="button"><span className="tri"></span></button>
+            </div>
+            <button className="fn-btn" ref={menuBtnRef} title="Viewfinder" type="button">TOP</button>
+          </div>
+        </>,
+        document.getElementById('fixed-ui-root')!
+      )}
 
       <main className="pre-focus" ref={mainRef}>
         <section className="section" id="viewfinder" data-theme="light">

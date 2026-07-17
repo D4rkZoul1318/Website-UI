@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { CountUp } from '../camera/CountUp';
 import { ROUTES } from '../../routes';
@@ -132,62 +133,67 @@ export default function BobRides() {
 
   return (
     <div className="camera-theme">
-      <header className="topbar">
-        <span className="mark">BOB RIDES — Case Study</span>
-        <a className="focus-cue" href={`${ROUTES.home}#sheet`}>
-          <span className="arrow" aria-hidden="true">←</span><span>Back to Projects</span>
-        </a>
-      </header>
-      <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
+      {createPortal(
+        <>
+          <header className="topbar">
+            <span className="mark">BOB RIDES — Case Study</span>
+            <a className="focus-cue" href={`${ROUTES.home}#sheet`}>
+              <span className="arrow" aria-hidden="true">←</span><span>Back to Projects</span>
+            </a>
+          </header>
+          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
 
-      <nav
-        aria-label="Case study sections"
-        className="mobile-nav-fallback"
-        style={{
-          position: 'sticky', top: 63, zIndex: 8,
-          gap: 'var(--space-4)', overflowX: 'auto',
-          padding: 'var(--space-2) var(--space-6)',
-          background: 'rgba(226, 224, 220, 0.97)', borderBottom: '1px solid var(--line-soft)',
-          WebkitOverflowScrolling: 'touch',
-        }}
-      >
-        {NAV_SECTIONS.map((s) => (
-          <a
-            key={s.id}
-            href={`#${s.id}`}
-            title={s.title}
-            aria-current={activeSection === s.id ? 'true' : undefined}
+          <nav
+            aria-label="Case study sections"
+            className="mobile-nav-fallback"
             style={{
-              flex: '0 0 auto', display: 'inline-flex', alignItems: 'center',
-              padding: '13px 6px',
-              fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em',
-              textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap',
-              color: activeSection === s.id ? 'var(--accent)' : 'var(--ink-faint)',
-              fontWeight: activeSection === s.id ? 700 : 500,
+              position: 'fixed', top: 63, left: 0, right: 0, zIndex: 8,
+              gap: 'var(--space-4)', overflowX: 'auto',
+              padding: 'var(--space-2) var(--space-6)',
+              background: 'rgba(226, 224, 220, 0.97)', borderBottom: '1px solid var(--line-soft)',
+              WebkitOverflowScrolling: 'touch',
             }}
           >
-            {s.num}
-          </a>
-        ))}
-      </nav>
+            {NAV_SECTIONS.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                title={s.title}
+                aria-current={activeSection === s.id ? 'true' : undefined}
+                style={{
+                  flex: '0 0 auto', display: 'inline-flex', alignItems: 'center',
+                  padding: '13px 6px',
+                  fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em',
+                  textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap',
+                  color: activeSection === s.id ? 'var(--accent)' : 'var(--ink-faint)',
+                  fontWeight: activeSection === s.id ? 700 : 500,
+                }}
+              >
+                {s.num}
+              </a>
+            ))}
+          </nav>
 
-      <nav aria-label="Case study sections (desktop)" className={`side-nav${navOnDark ? ' side-nav--on-dark' : ''}`}>
-        <div className="side-nav__line" />
-        {NAV_SECTIONS.map((s) => (
-          <a
-            key={s.id}
-            href={`#${s.id}`}
-            aria-label={s.title}
-            aria-current={activeSection === s.id ? 'true' : undefined}
-            className={`side-nav__item${activeSection === s.id ? ' active' : ''}`}
-          >
-            <span className="side-nav__num">{s.num}</span>
-            <span className="side-nav__label">{s.title}</span>
-          </a>
-        ))}
-      </nav>
+          <nav aria-label="Case study sections (desktop)" className={`side-nav${navOnDark ? ' side-nav--on-dark' : ''}`}>
+            <div className="side-nav__line" />
+            {NAV_SECTIONS.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                aria-label={s.title}
+                aria-current={activeSection === s.id ? 'true' : undefined}
+                className={`side-nav__item${activeSection === s.id ? ' active' : ''}`}
+              >
+                <span className="side-nav__num">{s.num}</span>
+                <span className="side-nav__label">{s.title}</span>
+              </a>
+            ))}
+          </nav>
+        </>,
+        document.getElementById('fixed-ui-root')!
+      )}
 
-      <main>
+      <main className="has-mobile-nav">
         {/* SEC.00 — HERO */}
         <section id="hero" className="section bg-paper">
           <div className="wrap">

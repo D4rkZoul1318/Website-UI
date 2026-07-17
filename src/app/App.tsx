@@ -7,6 +7,7 @@ import { ExplorationsPage } from "./components/ExplorationsPage";
 import RewindCaseStudy from "./components/rewind-case-study/RewindCaseStudy";
 import { ROUTES } from "./routes";
 import { useEffect } from "react";
+import { SmoothScroll } from "./components/SmoothScroll";
 
 function useHashScroll() {
   useEffect(() => {
@@ -33,14 +34,16 @@ export default function App() {
   useHashScroll();
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path={ROUTES.home} element={<CameraHome />} />
-        <Route path={ROUTES.bobRides} element={<BobRides />} />
-        <Route path={ROUTES.about} element={<AboutPage />} />
-        <Route path={ROUTES.caseStudy} element={<CaseStudy />} />
-        <Route path={ROUTES.explorations} element={<ExplorationsPage />} />
-        <Route path={ROUTES.rewindCaseStudy} element={<RewindCaseStudy />} />
-      </Routes>
+      <SmoothScroll>
+        <Routes>
+          <Route path={ROUTES.home} element={<CameraHome />} />
+          <Route path={ROUTES.bobRides} element={<BobRides />} />
+          <Route path={ROUTES.about} element={<AboutPage />} />
+          <Route path={ROUTES.caseStudy} element={<CaseStudy />} />
+          <Route path={ROUTES.explorations} element={<ExplorationsPage />} />
+          <Route path={ROUTES.rewindCaseStudy} element={<RewindCaseStudy />} />
+        </Routes>
+      </SmoothScroll>
     </BrowserRouter>
   );
 }
