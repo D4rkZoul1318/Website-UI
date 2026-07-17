@@ -881,7 +881,7 @@ export default function CameraHome() {
 
       <main className="pre-focus" ref={mainRef}>
         <section className="section" id="viewfinder" data-theme="light">
-          <Reveal className="hero-tags">
+          <Reveal className="hero-tags" data-speed="0.9">
             <span>UI/UX</span><span>3D Modeling</span><span>Graphic Design</span><span>Photography</span>
           </Reveal>
           <Reveal as="h1">Sohum Bhatnagar</Reveal>

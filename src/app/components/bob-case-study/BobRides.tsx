@@ -212,7 +212,7 @@ export default function BobRides() {
             </Reveal>
           </div>
           <div className="wrap-wide" style={{ marginTop: 'var(--space-8)' }}>
-            <Reveal variant="zoom" className="media-frame">
+            <Reveal variant="zoom" className="media-frame" data-speed="0.85">
               <img src="/images/bob-images/hero.webp" alt="BOB Rides Hero" />
             </Reveal>
           </div>
