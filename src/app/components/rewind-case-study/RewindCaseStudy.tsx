@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { ROUTES } from '../../routes';
 
@@ -89,13 +90,18 @@ export default function RewindCaseStudy() {
 
   return (
     <div className="camera-theme">
-      <header className="topbar">
-        <span className="mark">REWIND — Case Study</span>
-        <a className="focus-cue" href={`${ROUTES.home}#sheet`}>
-          <span className="arrow" aria-hidden="true">←</span><span>Back to Projects</span>
-        </a>
-      </header>
-      <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
+      {createPortal(
+        <>
+          <header className="topbar">
+            <span className="mark">REWIND — Case Study</span>
+            <a className="focus-cue" href={`${ROUTES.home}#sheet`}>
+              <span className="arrow" aria-hidden="true">←</span><span>Back to Projects</span>
+            </a>
+          </header>
+          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
+        </>,
+        document.getElementById('fixed-ui-root')!
+      )}
 
       <main>
         {/* SEC.00 — HERO */}

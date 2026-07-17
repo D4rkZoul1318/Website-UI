@@ -59,7 +59,18 @@
 /* reveal--rotate on a full-width element (e.g. .moment) rotates the box
    itself, so its own bounding rect briefly exceeds 100% width during the
    transition — clip that at the page boundary rather than the element. */
-.camera-theme main { overflow-x: hidden; }
+/* Compensates for .topbar + .progress-track moving from position:sticky (which
+   reserved 63px of real flow height above main) to position:fixed (which
+   reserves none, since they're now portaled out to #fixed-ui-root for
+   ScrollSmoother compatibility) — without this, content starts 63px higher
+   and the first ~63px scrolls in underneath the fixed bar. */
+.camera-theme main { overflow-x: hidden; padding-top: 63px; }
+/* BobRides only: .mobile-nav-fallback is also now fixed/portaled (same reason
+   as topbar/progress-track above), so its own flow height needs compensating
+   too, on top of the 63px above — but only where it's actually visible. */
+@media (max-width: 860px) {
+  .camera-theme main.has-mobile-nav { padding-top: calc(63px + 53px); }
+}
 
 /* Right-vertical section rail — same visual/interaction vocabulary as the
    homepage's .floating-nav (line, dot-equivalent, hover/active label
@@ -137,7 +148,17 @@
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--space-4) var(--space-6);
   background: rgba(226, 224, 220, 0.97);
-  border-bottom: 1px solid var(--line-soft); position: sticky; top: 0; z-index: 10;
+  border-bottom: 1px solid var(--line-soft);
+  /* fixed, not sticky: this bar is portaled to a body-level #fixed-ui-root
+     (see index.html + SmoothScroll) so it survives ScrollSmoother's
+     transform-based scrolling. Its containing block there is a tiny box
+     sitting right at document y=0 (since #root collapses when its
+     ScrollSmoother wrapper goes position:fixed), which gives sticky no
+     room to "stick" in — it would scroll away after ~50px. Fixed doesn't
+     care about the containing block's box size, only the viewport, so it
+     stays pinned correctly. Visually identical to sticky here since this
+     is the first element on the page (nothing to scroll past first). */
+  position: fixed; top: 0; left: 0; right: 0; z-index: 10;
 }
 .camera-theme .topbar .mark { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--ink); font-weight: 500; }
 .camera-theme .focus-cue {
@@ -155,7 +176,7 @@
 .camera-theme .focus-cue:hover::after { transform: scaleX(1); }
 .camera-theme .focus-cue:hover .arrow { transform: translateX(-3px); }
 
-.camera-theme .progress-track { position: sticky; top: 61px; z-index: 9; height: 2px; background: var(--line-soft); }
+.camera-theme .progress-track { position: fixed; top: 61px; left: 0; right: 0; z-index: 9; height: 2px; background: var(--line-soft); }
 .camera-theme .progress-fill { height: 100%; background: var(--accent); width: 0%; }
 
 /* ---- Chapter rhythm --------------------------------------------------- */
