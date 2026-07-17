@@ -120,7 +120,7 @@ export default function RewindCaseStudy() {
             </Reveal>
           </div>
           <div className="wrap-wide" style={{ marginTop: 'var(--space-8)' }}>
-            <Reveal variant="zoom" className="media-frame hero-video-frame">
+            <Reveal variant="zoom" className="media-frame hero-video-frame" data-speed="0.85">
               {/* Native 1280×720, streamed from the same source the homepage uses.
                   Untouched file: no re-encode, no crop; display capped at source width. */}
               <video autoPlay loop muted playsInline width={1280} height={720} aria-label="REWIND — device walkthrough: discs loading, EQ manipulation, fader control">

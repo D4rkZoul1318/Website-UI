@@ -158,7 +158,9 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
   --card-w: 270px;
 }
 .camera-home .carousel-viewport { flex: 1; overflow: hidden; }
-.camera-home .carousel-track { display: flex; align-items: center; gap: var(--space-5); position: relative; padding: var(--space-4) 0; will-change: transform; transition: transform 400ms var(--ease-out); }
+.camera-home .carousel-track { display: flex; align-items: center; gap: var(--space-5); position: relative; padding: var(--space-4) 0; will-change: transform; transition: transform 400ms var(--ease-out); cursor: grab; touch-action: pan-y; }
+.camera-home .carousel-track:active { cursor: grabbing; }
+@media (prefers-reduced-motion: reduce) { .camera-home .carousel-track { cursor: default; } }
 
 .camera-home .carousel-nav { width: 44px; height: 44px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 160ms var(--ease-out), border-color 160ms var(--ease-out), opacity 200ms var(--ease-out); }
 .camera-home .carousel-nav:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.3); }
