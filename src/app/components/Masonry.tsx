@@ -43,6 +43,7 @@ interface MasonryItem {
   title: string;
   category: string;
   height: number;
+  caption?: string;
 }
 
 interface MasonryProps {
@@ -172,6 +173,11 @@ const Masonry = ({
               <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: '15px', fontWeight: 600, color: '#FFFFFF' }}>
                 {item.title}
               </span>
+              {item.caption && (
+                <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: '12px', fontStyle: 'italic', color: 'rgba(255,255,255,0.75)', marginTop: '4px', lineHeight: 1.4 }}>
+                  {item.caption}
+                </span>
+              )}
             </div>
           </div>
         </div>

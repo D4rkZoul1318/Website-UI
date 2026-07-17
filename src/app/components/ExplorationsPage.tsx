@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Navbar } from './Navbar';
 import Masonry from './Masonry';
 import { ScrollToTop } from './ScrollToTop';
+import { PhotoBurst } from './PhotoBurst';
 
 const font = 'Outfit, sans-serif';
 const nearBlack = '#1A1A1A';
@@ -74,9 +75,54 @@ const allItems = [
     category: 'UI/UX',
     height: 550,
   },
+  {
+    id: 9,
+    img: '/images/about/eagle.webp',
+    url: '',
+    title: 'Crested Hawk-Eagle',
+    caption: 'Patience is just focus with nowhere to be.',
+    category: 'Photography',
+    height: 380,
+  },
+  {
+    id: 10,
+    img: '/images/about/leopard.webp',
+    url: '',
+    title: 'Leopard',
+    caption: 'Spent 20 minutes staring before I saw it.',
+    category: 'Photography',
+    height: 440,
+  },
+  {
+    id: 11,
+    img: '/images/about/peacock.webp',
+    url: '',
+    title: 'Indian Peacock',
+    caption: 'The blue that made me reconsider every UI I had ever built.',
+    category: 'Photography',
+    height: 430,
+  },
+  {
+    id: 12,
+    img: '/images/about/bee-eater.webp',
+    url: '',
+    title: 'Green Bee-eater',
+    caption: "Nature's color palette beats any Figma swatch.",
+    category: 'Photography',
+    height: 380,
+  },
+  {
+    id: 13,
+    img: '/images/about-photos/macaques.webp',
+    url: '',
+    title: 'Macaques on the Riverbank',
+    caption: '',
+    category: 'Photography',
+    height: 340,
+  },
 ];
 
-const categories = ['All', '3D', 'Graphic Design', 'Catalogue', 'UI/UX'];
+const categories = ['All', '3D', 'Graphic Design', 'Catalogue', 'UI/UX', 'Photography'];
 
 export function ExplorationsPage() {
   const [active, setActive] = useState('All');
@@ -154,15 +200,17 @@ export function ExplorationsPage() {
 
       {/* Masonry Grid */}
       <section style={{ padding: '0 48px 120px', maxWidth: '1200px', margin: '0 auto' }}>
-        <Masonry
-          items={filtered}
-          animateFrom="bottom"
-          scaleOnHover={true}
-          hoverScale={0.97}
-          blurToFocus={true}
-          stagger={0.06}
-          onItemClick={(item) => item.url ? window.open(item.url, '_blank', 'noopener') : setLightbox(item.img)}
-        />
+        <PhotoBurst active={active === 'Photography'}>
+          <Masonry
+            items={filtered}
+            animateFrom="bottom"
+            scaleOnHover={true}
+            hoverScale={0.97}
+            blurToFocus={true}
+            stagger={0.06}
+            onItemClick={(item) => item.url ? window.open(item.url, '_blank', 'noopener') : setLightbox(item.img)}
+          />
+        </PhotoBurst>
       </section>
 
       <ScrollToTop />
