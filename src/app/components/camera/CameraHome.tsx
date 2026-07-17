@@ -160,6 +160,7 @@ export default function CameraHome() {
   const focusFrameRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLElement>(null);
   const floatingNavRef = useRef<HTMLElement>(null);
+  const topnavRef = useRef<HTMLElement>(null);
   const wheelRef = useRef<HTMLDivElement>(null);
   const needleRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
@@ -201,6 +202,7 @@ export default function CameraHome() {
     const mainEl = mainRef.current;
     const focusFrame = focusFrameRef.current;
     const floatingNav = floatingNavRef.current;
+    const topnav = topnavRef.current;
     const wheel = wheelRef.current;
     const needle = needleRef.current;
     const controls = controlsRef.current;
@@ -276,12 +278,24 @@ export default function CameraHome() {
       floatingNav.classList.toggle('theme-dark', result.theme === 'dark');
     }
 
+    function updateTopnavTheme() {
+      if (!topnav) return;
+      const result = sampleThemeAt(topnav);
+      topnav.classList.toggle('theme-dark', result.theme === 'dark');
+    }
+
     let fnavThemeTicking = false;
     function requestFloatingNavThemeUpdate() {
       if (fnavThemeTicking) return;
       fnavThemeTicking = true;
-      requestAnimationFrame(() => { updateFloatingNavThemes(); fnavThemeTicking = false; });
+      requestAnimationFrame(() => {
+        updateFloatingNavThemes();
+        updateTopnavTheme();
+        fnavThemeTicking = false;
+      });
     }
+    on(window, 'scroll', requestFloatingNavThemeUpdate, { passive: true });
+    on(window, 'resize', requestFloatingNavThemeUpdate);
 
     // ---- BOOT SEQUENCE ----------------------------------------------------
     (function boot_() {
@@ -777,7 +791,7 @@ export default function CameraHome() {
         <span className="focus-label">Initializing<span className="dot">.</span><span className="dot">.</span><span className="dot dot-3">.</span></span>
       </div>
 
-      <header id="topnav">
+      <header id="topnav" ref={topnavRef}>
         <a className="topnav-mark" href="#viewfinder">Sohum Bhatnagar</a>
         <nav aria-label="Primary">
           <a href="#sheet">Work</a>

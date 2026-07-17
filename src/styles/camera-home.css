@@ -73,23 +73,35 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 80;
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--space-4) var(--space-6);
-  background: rgba(226, 224, 220, 0.97);
-  border-bottom: 1px solid var(--line-soft);
+  --topnav-bg: rgba(226, 224, 220, 0.97);
+  --topnav-border: var(--line-soft);
+  --topnav-ink: var(--ink);
+  --topnav-ink-soft: var(--ink-soft);
+  background: var(--topnav-bg);
+  border-bottom: 1px solid var(--topnav-border);
+  transition: background 300ms var(--ease-out), border-color 300ms var(--ease-out);
 }
-.camera-home #topnav .topnav-mark { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--ink); text-decoration: none; font-weight: 500; }
+.camera-home #topnav.theme-dark {
+  --topnav-bg: rgba(12, 12, 12, 0.75);
+  --topnav-border: rgba(255, 255, 255, 0.12);
+  --topnav-ink: #ffffff;
+  --topnav-ink-soft: rgba(255, 255, 255, 0.65);
+}
+.camera-home #topnav .topnav-mark { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--topnav-ink); text-decoration: none; font-weight: 500; transition: color 250ms var(--ease-out); }
 .camera-home #topnav nav { display: flex; gap: var(--space-6); }
 .camera-home #topnav nav a {
-  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--ink-soft);
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--topnav-ink-soft);
   text-decoration: none; text-transform: uppercase; position: relative; padding-bottom: 2px;
+  transition: color 250ms var(--ease-out);
 }
 .camera-home #topnav nav a::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--accent);
   transform: scaleX(0); transform-origin: left; transition: transform 200ms var(--ease-out);
 }
-.camera-home #topnav nav a:hover { color: var(--ink); }
+.camera-home #topnav nav a:hover { color: var(--topnav-ink); }
 .camera-home #topnav nav a:hover::after, .camera-home #topnav nav a:focus-visible::after { transform: scaleX(1); }
-.camera-home #topnav nav a.active { color: var(--ink); }
-.camera-home #topnav nav a.active::after { transform: scaleX(1); background: var(--ink); }
+.camera-home #topnav nav a.active { color: var(--topnav-ink); }
+.camera-home #topnav nav a.active::after { transform: scaleX(1); background: var(--topnav-ink); }
 @media (max-width: 480px) {
   .camera-home #topnav { padding: var(--space-3) var(--space-4); }
   .camera-home #topnav nav { gap: var(--space-4); }
@@ -129,16 +141,21 @@ html.no-boot .camera-home main.pre-focus { filter: none; }
 .camera-home .focus-cue { margin-top: var(--space-6); display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink-soft); text-transform: uppercase; text-decoration: none; padding-bottom: 2px; position: relative; background: none; border: none; cursor: pointer; }
 .camera-home .focus-cue:hover .arrow { transform: translateY(2px); }
 
-#sheet.section { align-items: stretch; text-align: left; }
-.camera-home #sheet .section-index { align-self: flex-start; }
+#sheet.section { align-items: stretch; text-align: left; padding-top: calc(var(--space-9) + var(--space-7)); }
+.camera-home #sheet .section-index { align-self: flex-start; margin-bottom: var(--space-5); }
+.camera-home #sheet h2 { font-size: clamp(2.2rem, 4.5vw, 3.2rem); }
+.camera-home #sheet .sheet-subtitle {
+  font-family: var(--font-display); font-size: 17px; letter-spacing: 0; color: var(--ink-soft);
+  max-width: 60ch; margin-top: var(--space-3); margin-bottom: var(--space-8);
+}
 .camera-home #sheet-wrap { width: 100%; }
 
 .camera-home .carousel-stage {
   position: relative; display: flex; align-items: center; gap: var(--space-5);
-  background: var(--screen-bg); padding: var(--space-7) var(--space-6);
+  background: var(--screen-bg); padding: var(--space-8) var(--space-7);
   width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
   margin-bottom: var(--space-8); box-sizing: border-box;
-  --card-w: 200px;
+  --card-w: 270px;
 }
 .camera-home .carousel-viewport { flex: 1; overflow: hidden; }
 .camera-home .carousel-track { display: flex; align-items: center; gap: var(--space-5); position: relative; padding: var(--space-4) 0; will-change: transform; transition: transform 400ms var(--ease-out); }
