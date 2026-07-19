@@ -361,7 +361,13 @@ export default function CameraHome() {
         schedule(skipBoot, 3400);
       }
 
-      ['click', 'keydown', 'wheel', 'touchstart'].forEach((evt) => {
+      // Only deliberate actions (a click, a key press) skip the boot
+      // sequence early. 'wheel' and 'touchstart' used to be included too,
+      // but scrolling/touching the page the instant it loads is an almost
+      // involuntary reflex, not a request to skip the intro — it was
+      // killing the focus-frame viewfinder animation before it ever had a
+      // chance to play for most visits.
+      ['click', 'keydown'].forEach((evt) => {
         on(window, evt, skipBoot, { once: true, passive: true });
       });
     })();
