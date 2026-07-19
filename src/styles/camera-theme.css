@@ -384,8 +384,11 @@
 .camera-theme .live-unit__sub { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; color: rgba(244, 243, 240, 0.35); text-transform: uppercase; }
 .camera-theme .live-unit__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-3) var(--space-5); background: #1a1a1a; }
 .camera-theme .live-unit__bar span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(244, 243, 240, 0.55); text-transform: uppercase; }
-.camera-theme .live-unit__bar a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(244, 243, 240, 0.75); text-transform: uppercase; text-decoration: none; }
-.camera-theme .live-unit__bar a:hover { color: var(--accent); }
+.camera-theme .live-unit__bar a, .camera-theme .live-unit__bar button {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(244, 243, 240, 0.75);
+  text-transform: uppercase; text-decoration: none; background: none; border: none; cursor: pointer; padding: 0;
+}
+.camera-theme .live-unit__bar a:hover, .camera-theme .live-unit__bar button:hover { color: var(--accent); }
 
 .camera-theme a:focus-visible, .camera-theme button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 @media (prefers-reduced-motion: reduce) {
@@ -397,7 +400,6 @@
   .camera-theme * { transition-duration: 200ms !important; transition-property: opacity, color, background-color !important; }
 }
 
-.camera-theme .ui-ux-tiles { display: flex; flex-direction: column; gap: var(--space-7); }
 .camera-theme .live-tile { position: relative; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--screen-bg); }
 .camera-theme .live-tile__stage { position: relative; width: 100%; }
 .camera-theme .live-tile__stage--wide { height: clamp(420px, 56vw, 640px); }
@@ -405,8 +407,6 @@
   min-height: clamp(480px, 56vw, 820px);
   display: flex; align-items: center; justify-content: center;
 }
-.camera-theme .live-tile__thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.camera-theme .live-tile__stage--card .live-tile__thumb { object-fit: contain; padding: var(--space-7) var(--space-5); }
 .camera-theme .live-tile__iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
 
 /* ---- Explorations page ------------------------------------------------ */
