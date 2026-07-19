@@ -46,9 +46,16 @@ export function PhotoBurst({ active, children }: PhotoBurstProps) {
     const svg = svgRef.current;
     if (!proxy || !svg) return;
 
+    // Observer tracks the drag globally once pressed, so onDrag/onDragEnd
+    // keep firing even after the pointer leaves this element's bounds —
+    // clamp here (not just where it's used) so the reticle, trail line,
+    // and burst origin can never render outside the box, even mid-drag.
     const svgPoint = (clientX: number, clientY: number) => {
       const rect = svg.getBoundingClientRect();
-      return { x: clientX - rect.left, y: clientY - rect.top };
+      return {
+        x: gsap.utils.clamp(0, rect.width, clientX - rect.left),
+        y: gsap.utils.clamp(0, rect.height, clientY - rect.top),
+      };
     };
 
     const observer = Observer.create({
