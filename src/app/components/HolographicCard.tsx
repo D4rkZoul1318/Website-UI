@@ -51,8 +51,17 @@ const FONT_STYLE = `
     50%      { filter: hue-rotate(25deg) brightness(1.12); }
   }
 
+  @keyframes ohcSpinA {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+  @keyframes ohcSpinB {
+    from { transform: translate(-50%,-50%) rotate(360deg); }
+    to   { transform: translate(-50%,-50%) rotate(0deg); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .ohc-shimmer { animation: none !important; }
+    .ohc-shimmer, .ohc-spin-a, .ohc-spin-b { animation: none !important; }
   }
 `;
 
@@ -64,6 +73,7 @@ export function HolographicCard() {
   const cardRef = useRef<HTMLDivElement>(null);
   const octopusRef = useRef<HTMLDivElement>(null);
   const lightRef = useRef<HTMLDivElement>(null);
+  const holoRef = useRef<HTMLDivElement>(null);
 
   // Animation state — all in refs, zero setState during RAF
   const s = useRef({
@@ -118,6 +128,14 @@ export function HolographicCard() {
       lightRef.current.style.background =
         `radial-gradient(circle 160px at ${st.lightX}% ${st.lightY}%,` +
         `rgba(255,255,255,0.40) 0%,rgba(255,255,255,0.10) 50%,transparent 75%)`;
+
+      // Pans the spectrum gradient itself (background-size is oversized so
+      // there's room to move) so the rainbow visibly shifts with the
+      // cursor, like real foil-card CSS effects — on top of the constant
+      // background spin, not instead of it.
+      if (holoRef.current) {
+        holoRef.current.style.backgroundPosition = `${st.lightX}% ${st.lightY}%`;
+      }
     }
 
     st.rafId = requestAnimationFrame(tick);
@@ -160,7 +178,7 @@ export function HolographicCard() {
             width: CARD_W,
             height: CARD_H,
             borderRadius: 30,
-            backgroundColor: '#d9d9d9',
+            backgroundColor: '#151515',
             transformStyle: 'preserve-3d',
             willChange: 'transform',
             animation: reduced ? 'none' : 'borderShimmer 5s ease-in-out infinite',
@@ -172,44 +190,51 @@ export function HolographicCard() {
         >
 
           {/* ════════════════════════════
-              HOLOGRAPHIC GRADIENT LAYER
+              HOLOGRAPHIC GRADIENT LAYER — full-bleed, so the dynamic
+              foil covers the whole card instead of leaving a flat
+              static-colored margin around a smaller inset patch.
           ════════════════════════════ */}
           <div style={{
-            ...abs,
-            top: '14.31%', bottom: '7.23%',
-            left: '5.35%', right: '5.35%',
-            opacity: 0.72,
-            borderRadius: 24,
+            ...abs, inset: 0,
+            opacity: 0.88,
+            borderRadius: 26,
             overflow: 'hidden',
             ...noPtr,
           }}>
-            {/* 1 — Spectrum radial gradient */}
-            <div style={{
-              ...abs, inset: 0,
-              background: HOLO_GRADIENT,
-            }} />
+            {/* 1 — Spectrum radial gradient, oversized + panned by cursor position */}
+            <div
+              ref={holoRef}
+              style={{
+                ...abs, inset: 0,
+                background: HOLO_GRADIENT,
+                backgroundSize: '180% 180%',
+                backgroundPosition: '50% 50%',
+              }}
+            />
 
-            {/* 2 — Conic shimmer  [difference] */}
-            <div style={{
+            {/* 2 — Conic shimmer  [difference] — spins continuously so the
+                foil never sits still, even without hovering */}
+            <div className="ohc-spin-a" style={{
               ...abs,
               top: '50%', left: '50%',
               width: '220%', height: '220%',
-              transform: 'translate(-50%,-50%) rotate(20deg)',
               mixBlendMode: 'difference',
               backgroundImage: CONIC_GRADIENT,
               opacity: 0.55,
+              animation: reduced ? 'none' : 'ohcSpinA 9s linear infinite',
               ...noPtr,
             }} />
 
-            {/* 3 — Conic shimmer  [screen] */}
-            <div style={{
+            {/* 3 — Conic shimmer  [screen] — counter-rotates at a different
+                speed so the two layers never sync into a static pattern */}
+            <div className="ohc-spin-b" style={{
               ...abs,
               top: '50%', left: '50%',
               width: '220%', height: '220%',
-              transform: 'translate(-50%,-50%) rotate(20deg)',
               mixBlendMode: 'screen',
               backgroundImage: CONIC_GRADIENT,
               opacity: 0.55,
+              animation: reduced ? 'none' : 'ohcSpinB 13s linear infinite',
               ...noPtr,
             }} />
 
@@ -222,15 +247,6 @@ export function HolographicCard() {
               backgroundSize: '767px 767px',
               backgroundPosition: 'top left',
               backdropFilter: 'blur(20px)',
-              ...noPtr,
-            }} />
-
-            {/* 5 — Inner border highlight */}
-            <div style={{
-              ...abs, inset: 0,
-              borderRadius: 24,
-              border: '10px solid rgba(224,175,255,0.7)',
-              boxSizing: 'border-box',
               ...noPtr,
             }} />
           </div>
