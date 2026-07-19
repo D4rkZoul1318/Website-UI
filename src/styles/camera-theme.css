@@ -397,6 +397,12 @@
   .camera-theme * { transition-duration: 200ms !important; transition-property: opacity, color, background-color !important; }
 }
 
+.camera-theme .card-unit { position: relative; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--screen-bg); margin-bottom: var(--space-7); }
+.camera-theme .card-unit__stage {
+  position: relative; width: 100%; min-height: clamp(480px, 60vw, 900px);
+  display: flex; align-items: center; justify-content: center; padding: var(--space-7) var(--space-5);
+}
+
 /* ---- Explorations page ------------------------------------------------ */
 .camera-theme .explore-filters { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
 .camera-theme .explore-pill {
