@@ -3,8 +3,45 @@ import { createPortal } from 'react-dom';
 import Masonry from './Masonry';
 import { ScrollToTop } from './ScrollToTop';
 import { PhotoBurst } from './PhotoBurst';
+import { HolographicCard } from './HolographicCard';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { ROUTES } from '../routes';
+
+function CardUnit() {
+  const [powered, setPowered] = useState(false);
+  return (
+    <Reveal variant="scale" className="card-unit">
+      <div className="card-unit__stage">
+        {powered ? (
+          <HolographicCard />
+        ) : (
+          <button
+            className="live-unit__cover"
+            type="button"
+            aria-label="Power on the Octopus holographic card"
+            // The stage is taller than most viewports, so this button (which
+            // fills it via inset:0) is often taller than the viewport too.
+            // Focusing an element larger than the viewport on click makes
+            // Chromium's native "scroll focused element into view" snap the
+            // ScrollSmoother wrapper's scrollTop back to 0 before mouseup
+            // fires, moving the button out from under the cursor mid-click
+            // and swallowing the click. Blocking the mousedown-triggered
+            // focus (without blocking the click itself) avoids that jump.
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => setPowered(true)}
+          >
+            <span className="power-ring" aria-hidden="true">⏻</span>
+            <span className="live-unit__label">Power On — Try the Holographic Card</span>
+            <span className="live-unit__sub">Move your cursor over it once it's on</span>
+          </button>
+        )}
+      </div>
+      <div className="live-unit__bar">
+        <span>Octopus Holographic Card · Interactive Component</span>
+      </div>
+    </Reveal>
+  );
+}
 
 function useScrollProgress() {
   const [pct, setPct] = useState(0);
@@ -190,6 +227,7 @@ export function ExplorationsPage() {
         {/* Grid / Play canvas */}
         <section className="section">
           <div className="wrap-wide">
+            {active === 'UI/UX' && <CardUnit />}
             <PhotoBurst active={active === 'Photography' || active === 'Play'}>
               {active === 'Play' ? (
                 <div className="explore-play-canvas">
