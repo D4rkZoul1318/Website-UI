@@ -885,6 +885,29 @@ export default function CameraHome() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Failsafe: the boot sequence above only wires up if every jog-wheel/
+  // carousel ref is already mounted (it bails out entirely otherwise), so
+  // main's initial pre-focus blur has no independent guarantee of ever
+  // clearing on its own. If that main effect didn't run — or ran but its
+  // own scheduled unblur never fired for some reason — this unconditionally
+  // clears the blur after a few seconds so a visitor is never staring at a
+  // permanently blurred homepage. A no-op if the normal sequence already
+  // resolved things (checked first, so it never re-triggers a finished page).
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      const main = mainRef.current;
+      const boot = bootRef.current;
+      if (main && main.classList.contains('pre-focus')) {
+        main.classList.remove('pre-focus');
+        main.classList.add('in-focus');
+      }
+      if (boot && !boot.classList.contains('gone')) {
+        boot.classList.add('iris-open', 'hidden', 'gone');
+      }
+    }, 5000);
+    return () => window.clearTimeout(id);
+  }, []);
+
   return (
     <div className="camera-theme camera-home">
       <div id="boot" ref={bootRef} aria-hidden="true">
