@@ -15,20 +15,6 @@
     <meta property="og:description" content="Designing interfaces for mobility and sound." />
     <meta property="og:image" content="https://sohumsite.vercel.app/Preview.png" />
 
-    <script>
-      // Runs before any layout/paint. The full boot-skip logic lives in the
-      // homepage's own boot component (it still needs to run, to set
-      // bootDone/markBooted state used by the click-to-skip listeners) —
-      // this is only here to add a class BEFORE #boot ever paints, so a
-      // same-session return trip (e.g. "Back to Projects" from a case
-      // study) never flashes the overlay while waiting for React to mount.
-      try {
-        if (sessionStorage.getItem('sb-booted') === '1') {
-          document.documentElement.classList.add('no-boot');
-        }
-      } catch (e) {}
-    </script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
