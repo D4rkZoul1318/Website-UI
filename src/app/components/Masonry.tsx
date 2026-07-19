@@ -44,6 +44,7 @@ interface MasonryItem {
   category: string;
   height: number;
   caption?: string;
+  live?: 'rewind' | 'octopus';
 }
 
 interface MasonryProps {

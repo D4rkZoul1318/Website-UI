@@ -39,29 +39,30 @@ const CONIC_GRADIENT =
   'rgb(128,128,128) 67.7%,rgb(255,255,255) 75%,rgb(128,128,128) 81.3%,' +
   'rgb(0,0,0) 87.7%,rgb(128,128,128) 93.8%,rgb(255,255,255) 100%)';
 
-// Rainbow border gradient
+// Rainbow border — a conic gradient (not linear) so it can spin clockwise
+// as a genuine rotation of the ring itself, driven by the --ohc-border-angle
+// custom property below, instead of a static diagonal sweep.
 const RAINBOW_BORDER =
-  'linear-gradient(135deg,#e0afff,#a78ef0,#6b5fd4,#2c6ec9,#0a97d4,#14a8af,#26ca65,#57d530,#cec400,#b87d4c,#9d4e96,#8707ca,#e0afff)';
+  'conic-gradient(from var(--ohc-border-angle, 0deg),' +
+  '#e0afff,#a78ef0,#6b5fd4,#2c6ec9,#0a97d4,#14a8af,#26ca65,#57d530,#cec400,#b87d4c,#9d4e96,#8707ca,#e0afff)';
 
 const FONT_STYLE = `
   @import url('https://fonts.googleapis.com/css2?family=Jura:wght@400&family=Kode+Mono:wght@500&display=swap');
 
-  @keyframes borderShimmer {
-    0%,100% { filter: hue-rotate(0deg) brightness(1); }
-    50%      { filter: hue-rotate(25deg) brightness(1.12); }
+  /* Registering the angle as a typed property is what lets the browser
+     interpolate it smoothly between 0deg and 360deg — animating a plain
+     custom property (unregistered) can only ever snap between values. */
+  @property --ohc-border-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
   }
-
-  @keyframes ohcSpinA {
-    from { transform: translate(-50%,-50%) rotate(0deg); }
-    to   { transform: translate(-50%,-50%) rotate(360deg); }
-  }
-  @keyframes ohcSpinB {
-    from { transform: translate(-50%,-50%) rotate(360deg); }
-    to   { transform: translate(-50%,-50%) rotate(0deg); }
+  @keyframes ohcBorderSpin {
+    to { --ohc-border-angle: 360deg; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ohc-shimmer, .ohc-spin-a, .ohc-spin-b { animation: none !important; }
+    .ohc-border-spin { animation: none !important; }
   }
 `;
 
@@ -73,7 +74,6 @@ export function HolographicCard() {
   const cardRef = useRef<HTMLDivElement>(null);
   const octopusRef = useRef<HTMLDivElement>(null);
   const lightRef = useRef<HTMLDivElement>(null);
-  const holoRef = useRef<HTMLDivElement>(null);
 
   // Animation state — all in refs, zero setState during RAF
   const s = useRef({
@@ -128,14 +128,6 @@ export function HolographicCard() {
       lightRef.current.style.background =
         `radial-gradient(circle 160px at ${st.lightX}% ${st.lightY}%,` +
         `rgba(255,255,255,0.40) 0%,rgba(255,255,255,0.10) 50%,transparent 75%)`;
-
-      // Pans the spectrum gradient itself (background-size is oversized so
-      // there's room to move) so the rainbow visibly shifts with the
-      // cursor, like real foil-card CSS effects — on top of the constant
-      // background spin, not instead of it.
-      if (holoRef.current) {
-        holoRef.current.style.backgroundPosition = `${st.lightX}% ${st.lightY}%`;
-      }
     }
 
     st.rafId = requestAnimationFrame(tick);
@@ -181,7 +173,6 @@ export function HolographicCard() {
             backgroundColor: '#151515',
             transformStyle: 'preserve-3d',
             willChange: 'transform',
-            animation: reduced ? 'none' : 'borderShimmer 5s ease-in-out infinite',
             cursor: 'pointer',
             overflow: 'hidden',
             userSelect: 'none',
@@ -201,40 +192,33 @@ export function HolographicCard() {
             overflow: 'hidden',
             ...noPtr,
           }}>
-            {/* 1 — Spectrum radial gradient, oversized + panned by cursor position */}
-            <div
-              ref={holoRef}
-              style={{
-                ...abs, inset: 0,
-                background: HOLO_GRADIENT,
-                backgroundSize: '180% 180%',
-                backgroundPosition: '50% 50%',
-              }}
-            />
+            {/* 1 — Spectrum radial gradient (static) */}
+            <div style={{
+              ...abs, inset: 0,
+              background: HOLO_GRADIENT,
+            }} />
 
-            {/* 2 — Conic shimmer  [difference] — spins continuously so the
-                foil never sits still, even without hovering */}
-            <div className="ohc-spin-a" style={{
+            {/* 2 — Conic shimmer  [difference] (static) */}
+            <div style={{
               ...abs,
               top: '50%', left: '50%',
               width: '220%', height: '220%',
+              transform: 'translate(-50%,-50%) rotate(20deg)',
               mixBlendMode: 'difference',
               backgroundImage: CONIC_GRADIENT,
               opacity: 0.55,
-              animation: reduced ? 'none' : 'ohcSpinA 9s linear infinite',
               ...noPtr,
             }} />
 
-            {/* 3 — Conic shimmer  [screen] — counter-rotates at a different
-                speed so the two layers never sync into a static pattern */}
-            <div className="ohc-spin-b" style={{
+            {/* 3 — Conic shimmer  [screen] (static) */}
+            <div style={{
               ...abs,
               top: '50%', left: '50%',
               width: '220%', height: '220%',
+              transform: 'translate(-50%,-50%) rotate(20deg)',
               mixBlendMode: 'screen',
               backgroundImage: CONIC_GRADIENT,
               opacity: 0.55,
-              animation: reduced ? 'none' : 'ohcSpinB 13s linear infinite',
               ...noPtr,
             }} />
 
@@ -252,9 +236,10 @@ export function HolographicCard() {
           </div>
 
           {/* ════════════════════════════
-              RAINBOW BORDER RING
+              RAINBOW BORDER RING — the only dynamic color on the card;
+              spins clockwise via the animated --ohc-border-angle property.
           ════════════════════════════ */}
-          <div style={{
+          <div className="ohc-border-spin" style={{
             ...abs, inset: 0,
             borderRadius: 30,
             padding: 5,
@@ -266,8 +251,9 @@ export function HolographicCard() {
             maskComposite: 'exclude' as React.CSSProperties['maskComposite'],
             boxSizing: 'border-box',
             zIndex: 20,
+            animation: reduced ? 'none' : 'ohcBorderSpin 6s linear infinite',
             ...noPtr,
-          }} />
+          } as React.CSSProperties} />
 
           {/* ════════════════════════════
               STAR BADGE

@@ -7,66 +7,18 @@ import { HolographicCard } from './HolographicCard';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { ROUTES } from '../routes';
 
-interface LiveTileProps {
-  thumbnail: string;
-  thumbnailAlt: string;
-  label: string;
-  ariaLabel: string;
-  stageVariant: 'wide' | 'card';
-  renderLive: () => React.ReactNode;
-}
+type LiveKind = 'rewind' | 'octopus';
 
-/** A masonry-style thumbnail that "powers on" into a live, interactive
- * build in place — same click-to-activate convention as the REWIND live
- * prototype embed on its own case-study page, generalized so any live
- * build (an embedded prototype, a standalone component) gets its own
- * distinct tile with its own thumbnail, rather than sharing one. */
-function LiveTile({ thumbnail, thumbnailAlt, label, ariaLabel, stageVariant, renderLive }: LiveTileProps) {
-  const [powered, setPowered] = useState(false);
+/** The live/interactive build for a UI-UX thumbnail, revealed in a panel
+ * below the grid once its thumbnail is clicked — same masonry thumbnail
+ * treatment as every other category, just routed to a live embed instead
+ * of a lightbox or external tab. */
+function LiveProjectPanel({ kind, onClose }: { kind: LiveKind; onClose: () => void }) {
+  const label = kind === 'rewind' ? 'Rewind · Live Prototype' : 'Octopus Holographic Card · Interactive Component';
   return (
-    <Reveal variant="scale" className="live-tile">
-      <div className={`live-tile__stage live-tile__stage--${stageVariant}`}>
-        {powered ? (
-          renderLive()
-        ) : (
-          <>
-            <img src={thumbnail} alt={thumbnailAlt} className="live-tile__thumb" />
-            <button
-              className="live-unit__cover"
-              type="button"
-              aria-label={ariaLabel}
-              // A tall/full-stage cover button can exceed the viewport height,
-              // and focusing an element larger than the viewport makes Chromium's
-              // native "scroll focused element into view" snap the ScrollSmoother
-              // wrapper's scrollTop back to 0 before mouseup fires — moving the
-              // button out from under the cursor mid-click and swallowing it.
-              // Blocking the mousedown-triggered focus (not the click) avoids that.
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => setPowered(true)}
-            >
-              <span className="power-ring" aria-hidden="true">⏻</span>
-              <span className="live-unit__label">Power On</span>
-            </button>
-          </>
-        )}
-      </div>
-      <div className="live-unit__bar">
-        <span>{label}</span>
-      </div>
-    </Reveal>
-  );
-}
-
-function UIUXLiveTiles() {
-  return (
-    <div className="ui-ux-tiles">
-      <LiveTile
-        thumbnail="/images/explorations/rewind-01.webp"
-        thumbnailAlt="Rewind — screenshot preview"
-        label="Rewind · Live Prototype"
-        ariaLabel="Power on the Rewind live prototype"
-        stageVariant="wide"
-        renderLive={() => (
+    <Reveal variant="scale" className="live-tile" style={{ marginTop: 'var(--space-7)' }}>
+      <div className={`live-tile__stage live-tile__stage--${kind === 'rewind' ? 'wide' : 'card'}`}>
+        {kind === 'rewind' ? (
           <iframe
             src="https://rewind-it.vercel.app"
             title="Rewind — live prototype"
@@ -74,17 +26,15 @@ function UIUXLiveTiles() {
             allow="autoplay"
             className="live-tile__iframe"
           />
+        ) : (
+          <HolographicCard />
         )}
-      />
-      <LiveTile
-        thumbnail="/images/explorations/octopus-card/thumbnail.webp"
-        thumbnailAlt="Octopus Holographic Card — preview"
-        label="Octopus Holographic Card · Interactive Component"
-        ariaLabel="Power on the Octopus holographic card"
-        stageVariant="card"
-        renderLive={() => <HolographicCard />}
-      />
-    </div>
+      </div>
+      <div className="live-unit__bar">
+        <span>{label}</span>
+        <button onClick={onClose} type="button" aria-label="Close live preview">✕ Close</button>
+      </div>
+    </Reveal>
   );
 }
 
@@ -159,6 +109,26 @@ const allItems = [
     height: 700,
   },
   {
+    id: 8,
+    img: '/images/explorations/rewind-01.webp',
+    url: '',
+    title: 'Rewind',
+    caption: 'Click to launch the live prototype.',
+    category: 'UI/UX',
+    height: 550,
+    live: 'rewind' as const,
+  },
+  {
+    id: 14,
+    img: '/images/explorations/octopus-card/thumbnail.webp',
+    url: '',
+    title: 'Octopus Holographic Card',
+    caption: 'Click to power on the interactive card.',
+    category: 'UI/UX',
+    height: 650,
+    live: 'octopus' as const,
+  },
+  {
     id: 9,
     img: '/images/about/eagle.webp',
     url: '',
@@ -215,6 +185,7 @@ function initialFilter() {
 export function ExplorationsPage() {
   const [active, setActive] = useState(initialFilter);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [activeLive, setActiveLive] = useState<LiveKind | null>(null);
   const scrollPct = useScrollProgress();
 
   useEffect(() => { document.title = 'Explorations — Sohum Bhatnagar'; }, []);
@@ -261,29 +232,32 @@ export function ExplorationsPage() {
           </div>
         </section>
 
-        {/* Grid / Play canvas / UI-UX live tiles */}
+        {/* Grid / Play canvas */}
         <section className="section">
           <div className="wrap-wide">
-            {active === 'UI/UX' ? (
-              <UIUXLiveTiles />
-            ) : (
-              <PhotoBurst active={active === 'Photography' || active === 'Play'}>
-                {active === 'Play' ? (
-                  <div className="explore-play-canvas">
-                    <p>Click and drag anywhere in this space.</p>
-                  </div>
-                ) : (
-                  <Masonry
-                    items={filtered}
-                    animateFrom="bottom"
-                    scaleOnHover={true}
-                    hoverScale={0.97}
-                    blurToFocus={true}
-                    stagger={0.06}
-                    onItemClick={(item) => item.url ? window.open(item.url, '_blank', 'noopener') : setLightbox(item.img)}
-                  />
-                )}
-              </PhotoBurst>
+            <PhotoBurst active={active === 'Photography' || active === 'Play'}>
+              {active === 'Play' ? (
+                <div className="explore-play-canvas">
+                  <p>Click and drag anywhere in this space.</p>
+                </div>
+              ) : (
+                <Masonry
+                  items={filtered}
+                  animateFrom="bottom"
+                  scaleOnHover={true}
+                  hoverScale={0.97}
+                  blurToFocus={true}
+                  stagger={0.06}
+                  onItemClick={(item) => {
+                    if (item.live) setActiveLive(item.live);
+                    else if (item.url) window.open(item.url, '_blank', 'noopener');
+                    else setLightbox(item.img);
+                  }}
+                />
+              )}
+            </PhotoBurst>
+            {active === 'UI/UX' && activeLive && (
+              <LiveProjectPanel kind={activeLive} onClose={() => setActiveLive(null)} />
             )}
           </div>
         </section>
