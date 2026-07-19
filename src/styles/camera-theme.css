@@ -396,3 +396,32 @@
   }
   .camera-theme * { transition-duration: 200ms !important; transition-property: opacity, color, background-color !important; }
 }
+
+/* ---- Explorations page ------------------------------------------------ */
+.camera-theme .explore-filters { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+.camera-theme .explore-pill {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
+  cursor: pointer; transition: background 200ms var(--ease-out), color 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+.camera-theme .explore-pill:hover { border-color: var(--ink-faint); color: var(--ink); }
+.camera-theme .explore-pill.active { background: var(--ink); border-color: var(--ink); color: var(--paper); font-weight: 500; }
+
+.camera-theme .explore-play-canvas {
+  min-height: 60vh; border-radius: 12px; border: 1px dashed var(--line);
+  display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--space-7);
+}
+.camera-theme .explore-play-canvas p { color: var(--ink-faint); font-size: 1.05rem; max-width: 40ch; }
+
+.camera-theme .explore-lightbox {
+  position: fixed; inset: 0; z-index: 1000; background: rgba(12, 12, 12, 0.94);
+  display: flex; align-items: center; justify-content: center; cursor: zoom-out;
+  animation: exploreFadeIn 200ms var(--ease-out);
+}
+.camera-theme .explore-lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+.camera-theme .explore-lightbox button {
+  position: absolute; top: var(--space-6); right: var(--space-6); background: none; border: none; cursor: pointer;
+  color: var(--paper); font-size: 26px; line-height: 1; opacity: 0.7; transition: opacity 200ms var(--ease-out);
+}
+.camera-theme .explore-lightbox button:hover { opacity: 1; }
+@keyframes exploreFadeIn { from { opacity: 0; } to { opacity: 1; } }

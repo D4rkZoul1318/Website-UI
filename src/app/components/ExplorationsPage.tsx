@@ -1,14 +1,23 @@
 import { useState, useEffect } from 'react';
-import { Navbar } from './Navbar';
+import { createPortal } from 'react-dom';
 import Masonry from './Masonry';
 import { ScrollToTop } from './ScrollToTop';
 import { PhotoBurst } from './PhotoBurst';
+import { Reveal, staggerDelay } from './camera/Reveal';
+import { ROUTES } from '../routes';
 
-const font = 'Outfit, sans-serif';
-const nearBlack = '#1A1A1A';
-const grey = '#6B6B6B';
-const bgColor = '#F9F9F7';
-const accent = '#4A5240';
+function useScrollProgress() {
+  const [pct, setPct] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return pct;
+}
 
 const allItems = [
   {
@@ -129,153 +138,98 @@ function initialFilter() {
   return requested && categories.includes(requested) ? requested : 'All';
 }
 
-function initialFilter() {
-  const requested = new URLSearchParams(window.location.search).get('filter');
-  return requested && categories.includes(requested) ? requested : 'All';
-}
-
 export function ExplorationsPage() {
   const [active, setActive] = useState(initialFilter);
-  const [loaded, setLoaded] = useState(false);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const scrollPct = useScrollProgress();
 
   useEffect(() => { document.title = 'Explorations — Sohum Bhatnagar'; }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   const filtered = active === 'All' ? allItems : allItems.filter(i => i.category === active);
 
   return (
-    <div style={{ backgroundColor: bgColor, minHeight: '100vh', fontFamily: font }}>
-      <Navbar />
-      <button
-        onClick={() => window.history.back()}
-        style={{
-          position: 'fixed', top: '80px', left: '40px', zIndex: 99,
-          fontFamily: font, fontSize: '14px', color: grey,
-          background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-          transition: 'color 200ms',
-        }}
-        onMouseEnter={e => (e.currentTarget.style.color = nearBlack)}
-        onMouseLeave={e => (e.currentTarget.style.color = grey)}
-      >
-        ← Back
-      </button>
-      {/* Hero */}
-      <section style={{ paddingTop: '140px', paddingBottom: '60px', paddingLeft: '48px', paddingRight: '48px', maxWidth: '1200px', margin: '0 auto' }}>
-        <p style={{
-          fontFamily: font, fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', color: grey, textTransform: 'uppercase', marginBottom: '24px',
-          opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 400ms ease, transform 400ms ease',
-        }}>
-          Explorations
-        </p>
-        <h1 style={{
-          fontFamily: font, fontWeight: 700, fontSize: 'clamp(36px, 5vw, 64px)', color: nearBlack, lineHeight: 1.1, margin: '0 0 24px 0',
-          opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 400ms ease 100ms, transform 400ms ease 100ms',
-        }}>
-          3D, Graphic & Visual Work
-        </h1>
-        <p style={{
-          fontFamily: font, fontWeight: 300, fontSize: 'clamp(16px, 2vw, 20px)', color: grey, lineHeight: 1.8, maxWidth: '560px', margin: '0 0 48px 0',
-          opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 400ms ease 200ms, transform 400ms ease 200ms',
-        }}>
-          Work outside the case studies — 3D renders, illustrations, catalogues, and graphic design.
-        </p>
+    <div className="camera-theme">
+      {createPortal(
+        <>
+          <header className="topbar">
+            <span className="mark">EXPLORATIONS</span>
+            <a className="focus-cue" href={ROUTES.home}>
+              <span className="arrow" aria-hidden="true">←</span><span>Back to Home</span>
+            </a>
+          </header>
+          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
+        </>,
+        document.getElementById('fixed-ui-root')!
+      )}
 
-        {/* Filter pills */}
-        <div style={{
-          display: 'flex', gap: '10px', flexWrap: 'wrap',
-          opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 400ms ease 300ms, transform 400ms ease 300ms',
-        }}>
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setActive(cat)}
-              style={{
-                fontFamily: font, fontSize: '13px', fontWeight: active === cat ? 600 : 400,
-                color: active === cat ? '#FFFFFF' : nearBlack,
-                backgroundColor: active === cat ? accent : '#EEEEEA',
-                border: 'none', borderRadius: 999, padding: '11px 20px', cursor: 'pointer',
-                transition: 'background 200ms, color 200ms',
-              }}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </section>
+      <main>
+        {/* Hero */}
+        <section className="section bg-paper">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>00</b> — EXPLORATIONS</Reveal>
+            <Reveal as="h1" style={{ maxWidth: '18ch' }}>3D, Graphic &amp; Visual Work</Reveal>
+            <Reveal as="p" className="lede">
+              Work outside the case studies — 3D renders, illustrations, catalogues, graphic design, and photography.
+            </Reveal>
 
-      {/* Masonry Grid / Play canvas */}
-      <section style={{ padding: '0 48px 120px', maxWidth: '1200px', margin: '0 auto' }}>
-        <PhotoBurst active={active === 'Photography' || active === 'Play'}>
-          {active === 'Play' ? (
-            <div
-              style={{
-                minHeight: '65vh', borderRadius: '16px', border: `2px dashed ${grey}`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                textAlign: 'center', padding: '48px',
-              }}
-            >
-              <p style={{ fontFamily: font, fontWeight: 300, fontSize: 'clamp(16px, 2vw, 20px)', color: grey, maxWidth: '440px' }}>
-                Click and drag anywhere in this space.
-              </p>
-            </div>
-          ) : (
-            <Masonry
-              items={filtered}
-              animateFrom="bottom"
-              scaleOnHover={true}
-              hoverScale={0.97}
-              blurToFocus={true}
-              stagger={0.06}
-              onItemClick={(item) => item.url ? window.open(item.url, '_blank', 'noopener') : setLightbox(item.img)}
-            />
-          )}
-        </PhotoBurst>
-      </section>
+            <Reveal className="explore-filters">
+              {categories.map((cat, i) => (
+                <button
+                  key={cat}
+                  onClick={() => setActive(cat)}
+                  className={`explore-pill${active === cat ? ' active' : ''}`}
+                  style={{ transitionDelay: `${staggerDelay(i)}ms` }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Grid / Play canvas */}
+        <section className="section">
+          <div className="wrap-wide">
+            <PhotoBurst active={active === 'Photography' || active === 'Play'}>
+              {active === 'Play' ? (
+                <div className="explore-play-canvas">
+                  <p>Click and drag anywhere in this space.</p>
+                </div>
+              ) : (
+                <Masonry
+                  items={filtered}
+                  animateFrom="bottom"
+                  scaleOnHover={true}
+                  hoverScale={0.97}
+                  blurToFocus={true}
+                  stagger={0.06}
+                  onItemClick={(item) => item.url ? window.open(item.url, '_blank', 'noopener') : setLightbox(item.img)}
+                />
+              )}
+            </PhotoBurst>
+          </div>
+        </section>
+      </main>
 
       <ScrollToTop />
 
-      {/* Lightbox */}
-      {lightbox && (
+      {/* Lightbox — portaled to #fixed-ui-root like the topbar/progress-track,
+          since anything inside #root is trapped in ScrollSmoother's
+          transformed #smooth-content stacking context: no z-index value set
+          in here can ever render above elements portaled out of it. */}
+      {lightbox && createPortal(
         <div
           onClick={() => setLightbox(null)}
-          style={{
-            position: 'fixed', inset: 0, zIndex: 1000,
-            backgroundColor: 'rgba(0,0,0,0.92)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'zoom-out',
-            animation: 'fadeIn 200ms ease',
-          }}
+          className="explore-lightbox"
         >
           <img
             src={lightbox}
             alt="Preview"
-            style={{
-              maxWidth: '90vw', maxHeight: '90vh',
-              borderRadius: '12px',
-              boxShadow: '0 32px 80px rgba(0,0,0,0.5)',
-              objectFit: 'contain',
-            }}
             onClick={e => e.stopPropagation()}
           />
-          <button
-            onClick={() => setLightbox(null)}
-            style={{
-              position: 'absolute', top: '24px', right: '32px',
-              background: 'none', border: 'none', cursor: 'pointer',
-              color: '#FFFFFF', fontSize: '28px', lineHeight: 1,
-              fontFamily: font, opacity: 0.7, transition: 'opacity 200ms',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-            onMouseLeave={e => (e.currentTarget.style.opacity = '0.7')}
-          >
-            ✕
-          </button>
-        </div>
+          <button onClick={() => setLightbox(null)} aria-label="Close preview">✕</button>
+        </div>,
+        document.getElementById('fixed-ui-root')!
       )}
     </div>
   );
