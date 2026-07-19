@@ -167,14 +167,14 @@ const Masonry = ({
               }}
 
             >
-              <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>
                 {item.category}
               </span>
-              <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: '15px', fontWeight: 600, color: '#FFFFFF' }}>
+              <span style={{ fontFamily: 'Bricolage Grotesque, sans-serif', fontSize: '15px', fontWeight: 600, color: '#FFFFFF' }}>
                 {item.title}
               </span>
               {item.caption && (
-                <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: '12px', fontStyle: 'italic', color: 'rgba(255,255,255,0.75)', marginTop: '4px', lineHeight: 1.4 }}>
+                <span style={{ fontFamily: 'Bricolage Grotesque, sans-serif', fontSize: '12px', fontStyle: 'italic', color: 'rgba(255,255,255,0.75)', marginTop: '4px', lineHeight: 1.4 }}>
                   {item.caption}
                 </span>
               )}
