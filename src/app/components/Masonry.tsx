@@ -115,14 +115,25 @@ const Masonry = ({
     });
   }, [columns, items, width]);
 
-  const hasMounted = useRef(false);
+  // Tracks which item ids were actually mounted in the DOM as of the last
+  // run — not just "has the component ever rendered before". Switching
+  // filters unmounts the old category's DOM nodes and mounts brand-new ones
+  // for the new category; a single one-time "hasMounted" flag can't tell
+  // those fresh nodes apart from ones that have been sitting in the DOM the
+  // whole time (e.g. a resize/column-count change on the same item set), so
+  // it was sending fresh nodes straight into the bare reposition tween below
+  // with no entrance treatment — they'd pop in at their untouched CSS
+  // default position/opacity, then snap to their grid slot, instead of
+  // fading + sliding + un-blurring in like the very first page load does.
+  const prevIdsRef = useRef<Set<number>>(new Set());
 
   useLayoutEffect(() => {
     if (!imagesReady) return;
+    const prevIds = prevIdsRef.current;
     grid.forEach((item, index) => {
       const selector = `[data-key="${item.id}"]`;
       const animationProps = { x: item.x, y: item.y, width: item.w, height: item.h };
-      if (!hasMounted.current) {
+      if (!prevIds.has(item.id)) {
         const initialPos = getInitialPosition(item);
         gsap.fromTo(selector,
           { opacity: 0, x: initialPos.x, y: initialPos.y, width: item.w, height: item.h, ...(blurToFocus && { filter: 'blur(10px)' }) },
@@ -132,7 +143,7 @@ const Masonry = ({
         gsap.to(selector, { ...animationProps, duration, ease, overwrite: 'auto' });
       }
     });
-    hasMounted.current = true;
+    prevIdsRef.current = new Set(grid.map((item) => item.id));
   }, [grid, imagesReady]);
 
   const handleMouseEnter = (_: React.MouseEvent, item: any) => {
