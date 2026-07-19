@@ -125,7 +125,7 @@ const allItems = [
     title: 'Octopus Holographic Card',
     caption: 'Click to power on the interactive card.',
     category: 'UI/UX',
-    height: 650,
+    height: 550,
     live: 'octopus' as const,
   },
   {
