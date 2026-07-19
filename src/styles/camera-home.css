@@ -22,8 +22,6 @@
 .camera-home #boot.iris-open { clip-path: circle(160vmax at 50% 50%); }
 .camera-home #boot.hidden { opacity: 0; }
 .camera-home #boot.gone { display: none; }
-html.no-boot .camera-home #boot { display: none; }
-html.no-boot .camera-home main.pre-focus { filter: none; }
 
 .camera-home .boot-mark {
   font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0.18em;

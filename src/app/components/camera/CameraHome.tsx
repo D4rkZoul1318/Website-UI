@@ -347,13 +347,8 @@ export default function CameraHome() {
         reveal();
       }
 
-      let alreadyBooted = false;
-      try { alreadyBooted = sessionStorage.getItem('sb-booted') === '1'; } catch (e) { /* private mode */ }
-      function markBooted() { try { sessionStorage.setItem('sb-booted', '1'); } catch (e) { /* private mode */ } }
-
-      if (prefersReduced || alreadyBooted) {
+      if (prefersReduced) {
         skipBoot();
-        markBooted();
       } else {
         if (bootMark) schedule(() => bootMark.classList.add('in'), 40);
         schedule(() => {
@@ -362,12 +357,12 @@ export default function CameraHome() {
             schedule(() => chk.classList.add('ready'), i * 65 + 90);
           });
         }, 180);
-        schedule(() => { finishBoot(); markBooted(); }, 900);
-        schedule(() => { skipBoot(); markBooted(); }, 3400);
+        schedule(finishBoot, 900);
+        schedule(skipBoot, 3400);
       }
 
       ['click', 'keydown', 'wheel', 'touchstart'].forEach((evt) => {
-        on(window, evt, () => { skipBoot(); markBooted(); }, { once: true, passive: true });
+        on(window, evt, skipBoot, { once: true, passive: true });
       });
     })();
 
@@ -908,7 +903,7 @@ export default function CameraHome() {
             <nav aria-label="Primary">
               <a href="#sheet">Work</a>
               <a href="#notes">About</a>
-              <a href={ROUTES.explorations}>Photography</a>
+              <a href={ROUTES.explorations}>Explorations</a>
               <a href="#contact">Contact</a>
             </nav>
           </header>
