@@ -60,7 +60,7 @@
   0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
   50% { transform: translate(-50%, -50%) scale(1.045); opacity: 0.8; }
 }
-.camera-home #focusFrame.show { animation: focusHunt 460ms var(--ease-in-out) 320ms 2; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.camera-home #focusFrame.show { animation: focusHunt 200ms var(--ease-in-out) 40ms 2; opacity: 1; transform: translate(-50%, -50%) scale(1); }
 .camera-home #focusFrame .corner { position: absolute; width: 14px; height: 14px; border: 1.5px solid var(--accent); }
 .camera-home #focusFrame .corner.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
 .camera-home #focusFrame .corner.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
