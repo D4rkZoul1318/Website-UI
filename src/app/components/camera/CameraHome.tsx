@@ -321,8 +321,8 @@ export default function CameraHome() {
         bootDone = true;
         clearPending();
         boot!.classList.add('iris-open');
-        setTimeout(() => boot!.classList.add('hidden'), 300);
-        setTimeout(() => boot!.classList.add('gone'), 620);
+        setTimeout(() => boot!.classList.add('hidden'), 200);
+        setTimeout(() => boot!.classList.add('gone'), 420);
         setTimeout(() => {
           if (focusFrame) focusFrame.classList.add('show');
           setTimeout(() => {
@@ -330,8 +330,8 @@ export default function CameraHome() {
             mainEl!.classList.remove('pre-focus');
             mainEl!.classList.add('in-focus');
             if (focusFrame) focusFrame.classList.remove('show');
-          }, 1300);
-        }, 260);
+          }, 500);
+        }, 180);
         reveal();
       }
 
@@ -357,8 +357,8 @@ export default function CameraHome() {
             schedule(() => chk.classList.add('ready'), i * 65 + 90);
           });
         }, 180);
-        schedule(finishBoot, 900);
-        schedule(skipBoot, 3400);
+        schedule(finishBoot, 450);
+        schedule(skipBoot, 2200);
       }
 
       // Only deliberate actions (a click, a key press) skip the boot
@@ -904,7 +904,7 @@ export default function CameraHome() {
       if (boot && !boot.classList.contains('gone')) {
         boot.classList.add('iris-open', 'hidden', 'gone');
       }
-    }, 5000);
+    }, 3000);
     return () => window.clearTimeout(id);
   }, []);
 
