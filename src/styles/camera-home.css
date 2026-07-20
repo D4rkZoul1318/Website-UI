@@ -4,55 +4,151 @@
 
 .camera-home html { scroll-behavior: smooth; }
 
-/* Boot sequence — the overlay, boot-mark, checklist, focus-frame, and
-   main's blur are all driven directly by one GSAP timeline in
-   CameraHome.tsx (opacity/transform/clip-path/filter set via .set()/.to()
-   calls). Deliberately no CSS transition or @keyframes on any of those
-   properties here — a JS-authored duration and a CSS-authored duration
-   for the same effect is exactly how this drifted out of sync before
-   (see the focusHunt history). Only static layout/position and a couple
-   of small, orthogonal, non-duration-critical decorative swaps (the
-   checklist's ✓/— glyph and its color, the "..." dot's fade) still use
-   plain CSS — none of them have a "cycle" that can be cut off mid-way. */
+/* Boot sequence — every phase (overlay reveal, boot-mark fade, checklist
+   stagger + checkmark flip, focus-frame hunt, main's blur-clear) is a
+   plain CSS transition/animation keyed off ONE class ("is-opening")
+   added to .camera-home. This used to be a GSAP timeline built from a
+   long chain of .set()/.to() calls: if anything threw partway through
+   that construction (before .play() was reached), the timeline was left
+   paused forever in whatever partial state its .set() calls had already
+   applied — reported as the boot screen stuck blurred, never reproduced
+   in automated testing. A single class toggle has nothing equivalent to
+   partially fail into: React either renders with the class or without
+   it, there's no multi-step construction in between to get interrupted.
+   See CameraHome.tsx's boot effect for the state that drives this class.
+
+   The overlay reveal itself is a `mask-image` radial-gradient driven by
+   an @property-registered custom property, not `clip-path`: mask's
+   "transparent" hides and "black"/opaque shows, so --iris-r:0 at rest
+   means the opaque region covers the whole overlay (fully visible) and
+   growing it expands a hidden hole outward. clip-path's circle() is the
+   inverse (the shape IS the visible region), so a "0 at rest" clip-path
+   is invisible at rest — that inversion was the root cause of a real,
+   previously shipped bug when this technique was once swapped for
+   clip-path "for performance." Restoring mask-image restores the
+   originally-correct direction. */
+@property --iris-r {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
 .camera-home #boot {
   position: fixed; inset: 0; z-index: 200; background: var(--screen-bg);
   display: flex; align-items: center; justify-content: center;
-  pointer-events: none;
   flex-direction: column; gap: var(--space-5);
+  pointer-events: none;
+  --iris-r: 0px;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent var(--iris-r), black calc(var(--iris-r) + 2px));
+  mask-image: radial-gradient(circle at 50% 50%, transparent var(--iris-r), black calc(var(--iris-r) + 2px));
+  transition: --iris-r 420ms var(--ease-in-out) 1020ms,
+              opacity 240ms var(--ease-out) 1440ms,
+              visibility 0ms linear 1680ms;
 }
+.camera-home.is-opening #boot { --iris-r: 160vmax; opacity: 0; visibility: hidden; }
 
 .camera-home .boot-mark {
   font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0.18em;
-  color: var(--paper);
+  color: var(--paper); opacity: 0; transform: scale(0.97);
+  transition: opacity 150ms var(--ease-out) 30ms, transform 150ms var(--ease-out) 30ms;
 }
+.camera-home.is-opening .boot-mark { opacity: 0.92; transform: scale(1); }
 .camera-home .boot-mark b { color: var(--accent); font-weight: 500; }
+
 .camera-home .boot-checks { display: flex; flex-direction: column; gap: 6px; align-items: center; }
 .camera-home .boot-check {
   font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
   color: rgba(244, 243, 240, 0.35); display: flex; align-items: center; gap: var(--space-2);
-  transition: color 160ms var(--ease-out);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 150ms var(--ease-out) calc(100ms + var(--i, 0) * 70ms),
+              transform 150ms var(--ease-out) calc(100ms + var(--i, 0) * 70ms),
+              color 150ms var(--ease-out) calc(100ms + var(--i, 0) * 70ms);
 }
-.camera-home .boot-check.ready { color: rgba(244, 243, 240, 0.75); }
-.camera-home .boot-check::before { content: '—'; color: rgba(244, 243, 240, 0.3); }
-.camera-home .boot-check.ready::before { content: '✓'; color: var(--accent); }
+.camera-home.is-opening .boot-check { opacity: 1; transform: translateY(0); color: rgba(244, 243, 240, 0.75); }
 
-.camera-home main { position: relative; z-index: 1; }
+/* Checkmark flip: `content` can't be transitioned (it's a discrete swap),
+   so instead of toggling a ::before glyph via a JS-added "ready" class,
+   two overlapping glyph spans crossfade opacity — fully CSS, still keyed
+   off the same single is-opening class + the item's own --i stagger. */
+.camera-home .boot-check-glyph { position: relative; display: inline-block; width: 0.85em; height: 1em; flex: none; }
+.camera-home .boot-check-glyph span {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  transition: opacity 140ms var(--ease-out) calc(190ms + var(--i, 0) * 70ms);
+}
+.camera-home .boot-check-glyph .glyph-dash { color: rgba(244, 243, 240, 0.3); opacity: 1; }
+.camera-home .boot-check-glyph .glyph-check { color: var(--accent); opacity: 0; }
+.camera-home.is-opening .boot-check-glyph .glyph-dash { opacity: 0; }
+.camera-home.is-opening .boot-check-glyph .glyph-check { opacity: 1; }
+
+.camera-home main {
+  position: relative; z-index: 1;
+  filter: blur(7px) brightness(0.4);
+  transition: filter 420ms var(--ease-in-out) 1020ms;
+}
+.camera-home.is-opening main { filter: blur(0) brightness(1); }
 
 .camera-home #focusFrame {
   position: fixed; top: 50%; left: 50%; width: 220px; height: 140px; z-index: 150; pointer-events: none;
   display: flex; align-items: center; justify-content: center;
+  transform: translate(-50%, -50%) scale(1.08); opacity: 0;
+}
+.camera-home.is-opening #focusFrame {
+  animation: focusFrameLife 700ms var(--ease-in-out) 500ms 1 both;
+}
+/* fade in -> hunt-pulse x2 -> fade out, one keyframe set instead of a
+   separately-timed CSS @keyframes chased by JS .to() calls (the two
+   drifted out of sync before — see the old focusHunt history). */
+@keyframes focusFrameLife {
+  0%   { opacity: 0;   transform: translate(-50%, -50%) scale(1.08); }
+  17%  { opacity: 1;   transform: translate(-50%, -50%) scale(1); }
+  31%  { opacity: 0.8; transform: translate(-50%, -50%) scale(1.045); }
+  46%  { opacity: 1;   transform: translate(-50%, -50%) scale(1); }
+  60%  { opacity: 0.8; transform: translate(-50%, -50%) scale(1.045); }
+  74%  { opacity: 1;   transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0;   transform: translate(-50%, -50%) scale(1.08); }
 }
 .camera-home .focus-label {
   font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--accent); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
-.camera-home .focus-label .dot-3 { opacity: 0; transition: opacity 200ms var(--ease-out); }
-.camera-home .focus-label .dot-3.in { opacity: 1; }
+.camera-home .focus-label .dot-3 { opacity: 0; transition: opacity 200ms var(--ease-out) 500ms; }
+.camera-home.is-opening .focus-label .dot-3 { opacity: 1; }
 .camera-home #focusFrame .corner { position: absolute; width: 14px; height: 14px; border: 1.5px solid var(--accent); }
 .camera-home #focusFrame .corner.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
 .camera-home #focusFrame .corner.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
 .camera-home #focusFrame .corner.bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
 .camera-home #focusFrame .corner.br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+/* Instant-skip / reduced-motion: same is-opening class, zero animation
+   frames. The .no-anim class (added by JS alongside is-opening on a
+   click/keydown skip, or from the start when matchMedia already reports
+   reduced motion) collapses every duration/delay to 0 — this is a
+   backstop, not the only path to "reduced motion is respected": the
+   media query below re-states the same zero-durations independent of
+   whether the JS state was ever set correctly. */
+.camera-home.no-anim #boot,
+.camera-home.no-anim .boot-mark,
+.camera-home.no-anim .boot-check,
+.camera-home.no-anim .boot-check-glyph span,
+.camera-home.no-anim main,
+.camera-home.no-anim .focus-label .dot-3 {
+  transition-duration: 0ms !important;
+  transition-delay: 0ms !important;
+}
+.camera-home.no-anim #focusFrame { animation: none !important; opacity: 0 !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .camera-home #boot,
+  .camera-home .boot-mark,
+  .camera-home .boot-check,
+  .camera-home .boot-check-glyph span,
+  .camera-home main,
+  .camera-home .focus-label .dot-3 {
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+  .camera-home #focusFrame { animation: none !important; opacity: 0 !important; }
+}
 
 .camera-home #topnav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 80;
