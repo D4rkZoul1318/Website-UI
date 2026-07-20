@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Reveal } from './Reveal';
 import AsciiVideo from './AsciiVideo';
@@ -202,11 +202,124 @@ export default function CameraHome() {
   const heroRef = useRef<HTMLElement>(null);
   const momentRef = useRef<HTMLDivElement>(null);
 
+  // ---- BOOT SEQUENCE — one GSAP timeline, one source of truth for every
+  // duration in the sequence. Previously this was a chain of nested
+  // setTimeouts in this file coordinating with a separately-defined CSS
+  // @keyframes animation in camera-home.css — the two drifted out of sync
+  // more than once (most recently: a JS-side timing compression left the
+  // CSS keyframe only ~40% finished before its class was removed). A
+  // single timeline means every phase's duration lives in exactly one
+  // place, so that class of bug can't recur.
+  //
+  // This effect depends ONLY on the three elements boot actually touches
+  // (the overlay, the focus-frame reticle, and main). It intentionally
+  // does NOT sit inside the giant setup effect below, which bails out
+  // entirely if any of its ~11 jog-wheel/carousel refs isn't mounted yet —
+  // that coupling was the likely root cause behind every "homepage stuck
+  // blurred" report, reproducible or not. Boot must complete regardless of
+  // whether the carousel ever mounts.
+  //
+  // useLayoutEffect (not useEffect): the initial .set() calls below are
+  // what actually blurs main and hides the checklist/focus-frame — with a
+  // regular effect those would apply one paint late, flashing the sharp,
+  // unblurred page for a frame first. Running synchronously before paint
+  // avoids that.
+  useLayoutEffect(() => {
+    const boot = bootRef.current;
+    const focusFrame = focusFrameRef.current;
+    const mainEl = mainRef.current;
+    if (!boot || !focusFrame || !mainEl) return;
+
+    const bootMark = boot.querySelector('.boot-mark');
+    const bootChecks = boot.querySelectorAll('.boot-check');
+    const dot3 = focusFrame.querySelector('.dot-3');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const tl = gsap.timeline({ paused: true });
+
+    // Initial authored state. Nothing else (no CSS transition/animation)
+    // sets these properties, so this timeline is the single source of
+    // truth for what "start" and "settled" look like.
+    tl.set(boot, { clipPath: 'circle(160vmax at 50% 50%)', opacity: 1, display: 'flex' })
+      .set(bootMark, { opacity: 0, scale: 0.97 })
+      .set(bootChecks, { opacity: 0, y: 4 })
+      // xPercent/yPercent (not a raw transform string) so GSAP's own
+      // transform cache preserves this centering offset across every
+      // subsequent .to() on this element instead of overwriting it —
+      // #focusFrame is positioned via top:50%/left:50% and depends on
+      // this -50%/-50% translate to stay centered.
+      .set(focusFrame, { opacity: 0, scale: 1.08, xPercent: -50, yPercent: -50 })
+      .set(mainEl, { filter: 'blur(7px) brightness(0.4)' });
+
+    // 1 — boot mark: "SB · 2026" fades in
+    tl.to(bootMark, { opacity: 0.92, scale: 1, duration: 0.15, ease: 'power2.out' }, 0.03);
+
+    // 2 — system checks tick through, staggered: Sensor, Lens, Storage, Stabilisation
+    bootChecks.forEach((chk, i) => {
+      const t = 0.1 + i * 0.07;
+      tl.to(chk, { opacity: 1, y: 0, duration: 0.15, ease: 'power2.out' }, t)
+        .set(chk, { className: '+=ready' }, t + 0.09);
+    });
+
+    // 3 — focus-hunt: the reticle settles in, then pulses twice hunting for
+    // focus (replaces the old separate focusHunt CSS @keyframes — same
+    // motion, but its duration is now a timeline value, not a second,
+    // disconnected CSS number). repeat:3 + yoyo gives base->peak->base
+    // twice (4 legs) in one .to() call.
+    const huntStart = 0.5;
+    tl.to(focusFrame, { opacity: 1, scale: 1, duration: 0.12, ease: 'power2.out' }, huntStart)
+      .set(dot3, { className: '+=in' }, huntStart)
+      .to(focusFrame, { scale: 1.045, opacity: 0.8, duration: 0.1, ease: 'sine.inOut', repeat: 3, yoyo: true }, huntStart + 0.12);
+    const huntEnd = huntStart + 0.12 + 0.4;
+
+    // 4 — iris closes: the opaque boot overlay shrinks away (clip-path
+    // circle 160vmax -> 0), revealing the page as it goes — the same
+    // technique noted in the old CSS comment as deliberately chosen over
+    // an animated mask-image (cheaper to composite), just now aimed the
+    // direction that actually reveals content: shrinking a fully-opaque
+    // circle down to nothing, not growing one from nothing (which — kept
+    // as `circle(0px)` at rest and only ever grown — meant the boot-mark
+    // and checklist were clipped to zero area and invisible for their
+    // entire run in the previous implementation; confirmed via computed
+    // clip-path during the checklist phase before writing this).
+    tl.to(boot, { clipPath: 'circle(0px at 50% 50%)', duration: 0.32, ease: 'power2.inOut' }, huntEnd)
+      .to(focusFrame, { opacity: 0, scale: 1.08, duration: 0.18, ease: 'power2.in' }, huntEnd)
+      .set(boot, { display: 'none' }, huntEnd + 0.32);
+
+    // 5 — main unblurs to its settled, interactive state, overlapping with
+    // the iris close for a snappy finish rather than waiting for it.
+    tl.to(mainEl, { filter: 'blur(0px) brightness(1)', duration: 0.42, ease: 'power2.inOut' }, huntEnd);
+
+    if (prefersReduced) {
+      // Same timeline, same end state — just jumped there instantly with
+      // zero animation frames, instead of a separately-maintained
+      // "skipBoot" function that has to be kept in sync with what
+      // finishBoot considers "done".
+      tl.progress(1);
+    } else {
+      tl.play();
+    }
+
+    // Only deliberate actions (a click, a key press) skip the boot
+    // sequence early — jumping the SAME timeline to completion, not a
+    // second implementation of "what done looks like". 'wheel' and
+    // 'touchstart' are deliberately excluded: scrolling/touching the
+    // instant a page loads is close to an involuntary reflex, and
+    // including them here previously collapsed the sequence on nearly
+    // every real visit before it ever played.
+    const skip = () => tl.progress(1);
+    window.addEventListener('click', skip, { once: true, passive: true });
+    window.addEventListener('keydown', skip, { once: true, passive: true });
+
+    return () => {
+      tl.kill();
+      window.removeEventListener('click', skip);
+      window.removeEventListener('keydown', skip);
+    };
+  }, []);
+
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const boot = bootRef.current;
-    const mainEl = mainRef.current;
-    const focusFrame = focusFrameRef.current;
     const floatingNav = floatingNavRef.current;
     const topnav = topnavRef.current;
     const wheel = wheelRef.current;
@@ -236,7 +349,7 @@ export default function CameraHome() {
     const heroEl = heroRef.current;
     const momentEl = momentRef.current;
 
-    if (!boot || !mainEl || !floatingNav || !wheel || !needle || !controls || !track || !viewport || !prevBtn || !nextBtn || !preview) {
+    if (!floatingNav || !wheel || !needle || !controls || !track || !viewport || !prevBtn || !nextBtn || !preview) {
       return;
     }
 
@@ -302,75 +415,10 @@ export default function CameraHome() {
     }
     on(window, 'scroll', requestFloatingNavThemeUpdate, { passive: true });
     on(window, 'resize', requestFloatingNavThemeUpdate);
-
-    // ---- BOOT SEQUENCE ----------------------------------------------------
-    (function boot_() {
-      const dot3 = focusFrame ? focusFrame.querySelector('.dot-3') : null;
-      const bootMark = boot.querySelector('.boot-mark');
-      const bootChecks = boot.querySelectorAll('.boot-check');
-      let bootDone = false;
-      let timers: number[] = [];
-
-      const schedule = (fn: () => void, ms: number) => { timers.push(window.setTimeout(fn, ms)); };
-      const clearPending = () => { timers.forEach(clearTimeout); timers = []; };
-
-      function reveal() { requestFloatingNavThemeUpdate(); }
-
-      function finishBoot() {
-        if (bootDone) return;
-        bootDone = true;
-        clearPending();
-        boot!.classList.add('iris-open');
-        setTimeout(() => boot!.classList.add('hidden'), 200);
-        setTimeout(() => boot!.classList.add('gone'), 420);
-        setTimeout(() => {
-          if (focusFrame) focusFrame.classList.add('show');
-          setTimeout(() => {
-            if (dot3) dot3.classList.add('in');
-            mainEl!.classList.remove('pre-focus');
-            mainEl!.classList.add('in-focus');
-            if (focusFrame) focusFrame.classList.remove('show');
-          }, 500);
-        }, 180);
-        reveal();
-      }
-
-      function skipBoot() {
-        if (bootDone) return;
-        bootDone = true;
-        clearPending();
-        boot!.classList.add('iris-open', 'hidden', 'gone');
-        mainEl!.classList.remove('pre-focus');
-        mainEl!.classList.add('in-focus');
-        if (dot3) dot3.classList.add('in');
-        if (focusFrame) focusFrame.classList.remove('show');
-        reveal();
-      }
-
-      if (prefersReduced) {
-        skipBoot();
-      } else {
-        if (bootMark) schedule(() => bootMark.classList.add('in'), 40);
-        schedule(() => {
-          bootChecks.forEach((chk, i) => {
-            schedule(() => chk.classList.add('in'), i * 65);
-            schedule(() => chk.classList.add('ready'), i * 65 + 90);
-          });
-        }, 180);
-        schedule(finishBoot, 450);
-        schedule(skipBoot, 2200);
-      }
-
-      // Only deliberate actions (a click, a key press) skip the boot
-      // sequence early. 'wheel' and 'touchstart' used to be included too,
-      // but scrolling/touching the page the instant it loads is an almost
-      // involuntary reflex, not a request to skip the intro — it was
-      // killing the focus-frame viewfinder animation before it ever had a
-      // chance to play for most visits.
-      ['click', 'keydown'].forEach((evt) => {
-        on(window, evt, skipBoot, { once: true, passive: true });
-      });
-    })();
+    // Runs once on mount regardless of boot — nav theme detection shouldn't
+    // depend on the boot sequence's own timing (previously it only ever
+    // ran via boot's own reveal() call).
+    requestFloatingNavThemeUpdate();
 
     // ---- FLOATING NAV: LAYOUT ----------------------------------------------
     const fnavLine = document.createElement('div');
@@ -885,29 +933,6 @@ export default function CameraHome() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Failsafe: the boot sequence above only wires up if every jog-wheel/
-  // carousel ref is already mounted (it bails out entirely otherwise), so
-  // main's initial pre-focus blur has no independent guarantee of ever
-  // clearing on its own. If that main effect didn't run — or ran but its
-  // own scheduled unblur never fired for some reason — this unconditionally
-  // clears the blur after a few seconds so a visitor is never staring at a
-  // permanently blurred homepage. A no-op if the normal sequence already
-  // resolved things (checked first, so it never re-triggers a finished page).
-  useEffect(() => {
-    const id = window.setTimeout(() => {
-      const main = mainRef.current;
-      const boot = bootRef.current;
-      if (main && main.classList.contains('pre-focus')) {
-        main.classList.remove('pre-focus');
-        main.classList.add('in-focus');
-      }
-      if (boot && !boot.classList.contains('gone')) {
-        boot.classList.add('iris-open', 'hidden', 'gone');
-      }
-    }, 3000);
-    return () => window.clearTimeout(id);
-  }, []);
-
   return (
     <div className="camera-theme camera-home">
       <div id="boot" ref={bootRef} aria-hidden="true">
@@ -959,7 +984,7 @@ export default function CameraHome() {
         document.getElementById('fixed-ui-root')!
       )}
 
-      <main className="pre-focus" ref={mainRef}>
+      <main ref={mainRef}>
         <section className="section" id="viewfinder" data-theme="light">
           <Reveal className="hero-tags" data-speed="0.9">
             <span>UI/UX</span><span>3D Modeling</span><span>Graphic Design</span><span>Photography</span>
