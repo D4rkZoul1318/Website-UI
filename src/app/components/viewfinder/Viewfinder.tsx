@@ -362,12 +362,9 @@ export default function Viewfinder() {
           </div>
           <div className="vf-footer-col">
             <div className="vf-footer-col-title">ELSEWHERE</div>
-            {/* GAP: no Read.cv / Are.na / Instagram URLs exist anywhere in
-                this repo — these need real links before shipping. */}
+            <a href="mailto:sohum1311@gmail.com">↗ EMAIL</a>
             <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer">↗ LINKEDIN</a>
-            <a href="#" onClick={(e) => e.preventDefault()}>↗ READ.CV</a>
-            <a href="#" onClick={(e) => e.preventDefault()}>↗ ARE.NA</a>
-            <a href="#" onClick={(e) => e.preventDefault()}>↗ INSTAGRAM</a>
+            <a href="https://www.artstation.com/sohum1311" target="_blank" rel="noopener noreferrer">↗ ARTSTATION</a>
           </div>
         </div>
         <div className="vf-footer-watermark">SB · 00</div>
