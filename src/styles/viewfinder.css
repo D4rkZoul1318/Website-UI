@@ -73,7 +73,7 @@
 .viewfinder-theme .vf-nav-mark .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--vf-accent); flex: none; }
 .viewfinder-theme .vf-nav-links { display: flex; gap: var(--vf-space-6); list-style: none; margin: 0; padding: 0; flex: 1 1 auto; justify-content: center; }
 .viewfinder-theme .vf-nav-links a { color: var(--vf-paper-soft); text-decoration: none; transition: color 200ms var(--vf-ease-out); }
-.viewfinder-theme .vf-nav-links a:hover, .viewfinder-theme .vf-nav-links a:focus-visible { color: var(--vf-paper); }
+.viewfinder-theme .vf-nav-links a:focus-visible { color: var(--vf-paper); }
 .viewfinder-theme .vf-nav-right { display: flex; align-items: center; gap: var(--vf-space-5); flex: 0 0 auto; color: var(--vf-paper-soft); }
 .viewfinder-theme .vf-nav-clock { font-variant-numeric: tabular-nums; color: var(--vf-paper-soft); }
 .viewfinder-theme .vf-nav-status { display: flex; align-items: center; gap: var(--vf-space-2); }
@@ -181,17 +181,14 @@
   background: var(--vf-ink); color: var(--vf-paper);
   font-family: var(--vf-font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 13px 22px; border-radius: 999px; text-decoration: none;
-  transition: transform 200ms var(--vf-ease-out), background 200ms var(--vf-ease-out);
+  transition: transform 140ms var(--vf-ease-out), background 200ms var(--vf-ease-out);
 }
-.viewfinder-theme .vf-cta-pill:hover { transform: translateY(-1px); background: #000; }
 .viewfinder-theme .vf-cta-pill--accent { background: var(--vf-accent); color: #171012; }
-.viewfinder-theme .vf-cta-pill--accent:hover { background: #c85a40; }
 .viewfinder-theme .vf-text-link {
   font-family: var(--vf-font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--vf-ink-soft); text-decoration: none; border-bottom: 1px solid var(--vf-line);
   padding-bottom: 2px; transition: color 200ms var(--vf-ease-out), border-color 200ms var(--vf-ease-out);
 }
-.viewfinder-theme .vf-text-link:hover { color: var(--vf-ink); border-color: var(--vf-ink); }
 
 .viewfinder-theme .vf-fold {
   text-align: center; margin-top: var(--vf-space-9);
@@ -244,7 +241,6 @@
   display: flex; width: max-content; gap: var(--vf-space-6);
   animation: vfMarquee 26s linear infinite;
 }
-.viewfinder-theme .vf-marquee:hover .vf-marquee-track { animation-play-state: paused; }
 .viewfinder-theme .vf-marquee-item {
   display: flex; align-items: center; gap: var(--vf-space-6);
   font-family: var(--vf-font-display); font-style: italic; font-weight: 500;
@@ -302,9 +298,6 @@
   background: var(--vf-dark-soft); overflow: hidden; display: block;
   transition: border-color 200ms var(--vf-ease-out);
 }
-.viewfinder-theme .vf-frame:hover { border-color: var(--vf-paper-faint); }
-.viewfinder-theme .vf-frame:hover .vf-frame-photo,
-.viewfinder-theme .vf-frame:hover .vf-frame-triptych img { transform: scale(1.03); }
 .viewfinder-theme .vf-frame-photo {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;
   transition: transform 500ms var(--vf-ease-out);
@@ -352,7 +345,6 @@
 .viewfinder-theme .vf-work-num { font-family: var(--vf-font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--vf-paper-soft); margin-bottom: var(--vf-space-2); }
 .viewfinder-theme .vf-work-title { font-size: clamp(1.3rem, 2.2vw, 1.7rem); font-weight: 700; margin: 0 0 var(--vf-space-3); letter-spacing: -0.01em; }
 .viewfinder-theme .vf-work-title a { color: inherit; text-decoration: none; background-image: linear-gradient(var(--vf-paper), var(--vf-paper)); background-size: 0% 1px; background-repeat: no-repeat; background-position: left bottom; transition: background-size 200ms var(--vf-ease-out); }
-.viewfinder-theme .vf-work-title a:hover { background-size: 100% 1px; }
 .viewfinder-theme .vf-work-desc { color: var(--vf-paper-soft); font-size: 0.9rem; line-height: 1.6; margin-bottom: var(--vf-space-4); max-width: 42ch; }
 .viewfinder-theme .vf-work-tags { display: flex; flex-wrap: wrap; gap: var(--vf-space-2); margin-bottom: var(--vf-space-5); }
 .viewfinder-theme .vf-work-tags span {
@@ -445,7 +437,6 @@
 .viewfinder-theme .vf-contact-headline em { font-style: italic; font-weight: 400; color: var(--vf-paper-soft); }
 .viewfinder-theme .vf-contact-cta { display: flex; align-items: center; gap: var(--vf-space-6); flex-wrap: wrap; }
 .viewfinder-theme .vf-text-link--on-dark { color: var(--vf-paper-soft); border-color: var(--vf-line-on-dark); }
-.viewfinder-theme .vf-text-link--on-dark:hover { color: var(--vf-paper); border-color: var(--vf-paper-soft); }
 
 /* =========================================================================
    FOOTER
@@ -460,7 +451,6 @@
   display: block; color: var(--vf-paper-soft); text-decoration: none; font-size: 0.85rem; margin-bottom: var(--vf-space-2);
   transition: color 200ms var(--vf-ease-out);
 }
-.viewfinder-theme .vf-footer-col a:hover { color: var(--vf-paper); }
 
 .viewfinder-theme .vf-footer-watermark {
   font-family: var(--vf-font-display); font-weight: 800; font-size: clamp(4rem, 14vw, 9rem);
@@ -472,3 +462,37 @@
   gap: 2px; margin-top: var(--vf-space-5); position: relative; z-index: 1;
 }
 @media (max-width: 760px) { .viewfinder-theme .vf-footer-fine { align-items: flex-start; } }
+
+/* =========================================================================
+   MOUSE-ONLY HOVER (touch triggers :hover on tap with no matching
+   mouseleave, so these effects would otherwise stick after a tap until
+   some unrelated element is touched next — gated to real pointer devices;
+   touch gets the :active press states declared alongside each rule above)
+   ========================================================================= */
+@media (hover: hover) and (pointer: fine) {
+  .viewfinder-theme .vf-nav-links a:hover { color: var(--vf-paper); }
+  .viewfinder-theme .vf-cta-pill:hover { transform: translateY(-1px); background: #000; }
+  .viewfinder-theme .vf-cta-pill--accent:hover { background: #c85a40; }
+  .viewfinder-theme .vf-text-link:hover { color: var(--vf-ink); border-color: var(--vf-ink); }
+  .viewfinder-theme .vf-text-link--on-dark:hover { color: var(--vf-paper); border-color: var(--vf-paper-soft); }
+  .viewfinder-theme .vf-frame:hover { border-color: var(--vf-paper-faint); }
+  .viewfinder-theme .vf-frame:hover .vf-frame-photo,
+  .viewfinder-theme .vf-frame:hover .vf-frame-triptych img { transform: scale(1.03); }
+  .viewfinder-theme .vf-work-title a:hover { background-size: 100% 1px; }
+  .viewfinder-theme .vf-footer-col a:hover { color: var(--vf-paper); }
+  .viewfinder-theme .vf-marquee:hover .vf-marquee-track { animation-play-state: paused; }
+}
+
+/* Press feedback, declared after the hover block above so it wins the
+   specificity tie: on a real mouse, a click is :hover and :active
+   simultaneously, and without this ordering the hover rule above would
+   override the press feedback the entire time the button is held down
+   (confirmed via Playwright — mousedown showed the hover matrix, not the
+   active one, before this block was moved here). */
+.viewfinder-theme .vf-cta-pill:active { transform: scale(0.97); }
+.viewfinder-theme .vf-text-link:active { color: var(--vf-ink); border-color: var(--vf-ink); }
+.viewfinder-theme .vf-text-link--on-dark:active { color: var(--vf-paper); border-color: var(--vf-paper-soft); }
+.viewfinder-theme .vf-frame:active .vf-frame-photo,
+.viewfinder-theme .vf-frame:active .vf-frame-triptych img { transform: scale(0.99); transition-duration: 100ms; }
+.viewfinder-theme .vf-work-title a:active { background-size: 100% 1px; }
+.viewfinder-theme .vf-footer-col a:active { color: var(--vf-paper); }
