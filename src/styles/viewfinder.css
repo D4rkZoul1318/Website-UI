@@ -87,6 +87,10 @@
 @media (max-width: 860px) {
   .viewfinder-theme .vf-nav-links { display: none; }
 }
+@media (max-width: 480px) {
+  .viewfinder-theme .vf-nav { padding-inline: var(--vf-space-4); font-size: 9px; gap: var(--vf-space-3); }
+  .viewfinder-theme .vf-nav-status .label { display: none; } /* dot alone still signals status; label re-appears above 480px */
+}
 
 /* Hero-only sub-bar */
 .viewfinder-theme .vf-subbar {
@@ -159,9 +163,19 @@
   margin-top: -0.12em;
   animation: vfMaskReveal 900ms var(--vf-ease-in-out) 120ms both;
 }
-.viewfinder-theme .vf-hero-body { max-width: 46ch; margin: var(--vf-space-6) 0 0; color: var(--vf-ink-soft); font-size: 1rem; line-height: 1.6; }
+.viewfinder-theme .vf-hero-body {
+  max-width: 46ch; margin: var(--vf-space-6) 0 0; color: var(--vf-ink-soft); font-size: 1rem; line-height: 1.6;
+  opacity: 0; animation: vfFadeUp 640ms var(--vf-ease-out) 340ms both;
+}
 
-.viewfinder-theme .vf-hero-cta { display: flex; align-items: center; gap: var(--vf-space-5); margin-top: var(--vf-space-7); flex-wrap: wrap; }
+.viewfinder-theme .vf-hero-cta {
+  display: flex; align-items: center; gap: var(--vf-space-5); margin-top: var(--vf-space-7); flex-wrap: wrap;
+  opacity: 0; animation: vfFadeUp 640ms var(--vf-ease-out) 460ms both;
+}
+@keyframes vfFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
 .viewfinder-theme .vf-cta-pill {
   display: inline-flex; align-items: center; gap: var(--vf-space-2);
   background: var(--vf-ink); color: var(--vf-paper);
@@ -183,10 +197,14 @@
   text-align: center; margin-top: var(--vf-space-9);
   font-family: var(--vf-font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--vf-ink-faint);
+  opacity: 0; animation: vfFadeUp 640ms var(--vf-ease-out) 560ms both;
 }
 
 /* Aperture dial */
-.viewfinder-theme .vf-dial-col { position: relative; z-index: 1; padding-top: var(--vf-space-4); }
+.viewfinder-theme .vf-dial-col {
+  position: relative; z-index: 1; padding-top: var(--vf-space-4);
+  opacity: 0; animation: vfFadeUp 640ms var(--vf-ease-out) 260ms both;
+}
 .viewfinder-theme .vf-dial {
   width: clamp(180px, 20vw, 240px); aspect-ratio: 1; margin: 0 auto; position: relative;
   border-radius: 50%; border: 1px dashed var(--vf-ink-faint);
@@ -195,7 +213,12 @@
     repeating-conic-gradient(from 0deg, var(--vf-ink-faint) 0deg 1.2deg, transparent 1.2deg 30deg);
   -webkit-mask-image: radial-gradient(circle, transparent 0 34%, black 35% 96%, transparent 97%);
   mask-image: radial-gradient(circle, transparent 0 34%, black 35% 96%, transparent 97%);
+  /* Ambient detail, not a confirmed source behavior (source doc lists
+     dial rotation as an unmeasured GAP) — slow enough to read as "idle
+     machinery," not a distraction. */
+  animation: vfDialSpin 90s linear infinite;
 }
+@keyframes vfDialSpin { to { transform: rotate(360deg); } }
 .viewfinder-theme .vf-dial-center {
   position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--vf-ink);
 }
@@ -221,6 +244,7 @@
   display: flex; width: max-content; gap: var(--vf-space-6);
   animation: vfMarquee 26s linear infinite;
 }
+.viewfinder-theme .vf-marquee:hover .vf-marquee-track { animation-play-state: paused; }
 .viewfinder-theme .vf-marquee-item {
   display: flex; align-items: center; gap: var(--vf-space-6);
   font-family: var(--vf-font-display); font-style: italic; font-weight: 500;
@@ -239,6 +263,10 @@
   color: var(--vf-paper-faint); margin-bottom: var(--vf-space-7);
 }
 .viewfinder-theme .vf-section-head .rule { flex: 1 1 auto; height: 1px; background: var(--vf-line-on-dark); }
+@media (max-width: 600px) {
+  .viewfinder-theme .vf-section-head { flex-wrap: wrap; row-gap: var(--vf-space-2); }
+  .viewfinder-theme .vf-section-head .rule { display: none; }
+}
 .viewfinder-theme .vf-section-headline {
   font-family: var(--vf-font-display); font-weight: 700; letter-spacing: -0.02em;
   font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.08; margin: 0;
@@ -246,9 +274,10 @@
 .viewfinder-theme .vf-section-headline em { display: block; font-style: italic; font-weight: 400; color: var(--vf-paper-soft); }
 .viewfinder-theme .vf-section-caption {
   font-size: 0.85rem; color: var(--vf-paper-faint); max-width: 34ch; line-height: 1.6;
+  padding-top: 0.35em; /* nudges baseline toward the headline's first line instead of its last */
 }
 .viewfinder-theme .vf-section-top {
-  display: grid; grid-template-columns: 1fr auto; gap: var(--vf-space-7); align-items: end;
+  display: grid; grid-template-columns: 1fr auto; gap: var(--vf-space-7); align-items: start;
   margin-bottom: var(--vf-space-8);
 }
 @media (max-width: 760px) {

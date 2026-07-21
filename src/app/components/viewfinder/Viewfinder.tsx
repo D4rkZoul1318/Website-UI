@@ -117,7 +117,7 @@ export default function Viewfinder() {
         </ul>
         <div className="vf-nav-right">
           <span className="vf-nav-clock">IST · {clock}</span>
-          <span className="vf-nav-status"><span className="dot" /> AVAILABLE</span>
+          <span className="vf-nav-status"><span className="dot" /> <span className="label">AVAILABLE</span></span>
         </div>
       </nav>
 
