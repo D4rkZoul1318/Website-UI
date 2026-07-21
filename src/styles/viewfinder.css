@@ -299,14 +299,34 @@
 
 .viewfinder-theme .vf-frame {
   position: relative; aspect-ratio: 4 / 3; border: 1px solid var(--vf-line-on-dark);
-  background: var(--vf-dark-soft); overflow: hidden;
+  background: var(--vf-dark-soft); overflow: hidden; display: block;
+  transition: border-color 200ms var(--vf-ease-out);
+}
+.viewfinder-theme .vf-frame:hover { border-color: var(--vf-paper-faint); }
+.viewfinder-theme .vf-frame:hover .vf-frame-photo,
+.viewfinder-theme .vf-frame:hover .vf-frame-triptych img { transform: scale(1.03); }
+.viewfinder-theme .vf-frame-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;
+  transition: transform 500ms var(--vf-ease-out);
+}
+.viewfinder-theme .vf-frame-triptych {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: var(--vf-space-4);
+  background: var(--vf-paper);
+}
+.viewfinder-theme .vf-frame-triptych img { width: 30%; height: auto; transition: transform 500ms var(--vf-ease-out); }
+/* Legibility scrim: the corner/focal/ratio labels need to read against
+   whatever the real photo behind them looks like, not just a flat
+   background anymore. */
+.viewfinder-theme .vf-frame::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(15, 15, 15, 0.35) 0%, transparent 22%, transparent 78%, rgba(15, 15, 15, 0.35) 100%);
 }
 .viewfinder-theme .vf-frame-grid {
   position: absolute; inset: 0;
   background-image:
     repeating-linear-gradient(90deg, transparent 0 calc(33.33% - 0.5px), var(--vf-line-on-dark) calc(33.33% - 0.5px) calc(33.33% + 0.5px)),
     repeating-linear-gradient(0deg, transparent 0 calc(33.33% - 0.5px), var(--vf-line-on-dark) calc(33.33% - 0.5px) calc(33.33% + 0.5px));
-  opacity: 0.6;
+  opacity: 0.35;
 }
 .viewfinder-theme .vf-frame-corner { position: absolute; top: var(--vf-space-3); left: var(--vf-space-3); font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--vf-paper-faint); }
 .viewfinder-theme .vf-frame-focal { position: absolute; top: var(--vf-space-3); right: var(--vf-space-3); font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--vf-paper-faint); }
@@ -331,14 +351,15 @@
 .viewfinder-theme .vf-work-tag .sq { width: 6px; height: 6px; background: var(--vf-accent); flex: none; }
 .viewfinder-theme .vf-work-num { font-family: var(--vf-font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--vf-paper-soft); margin-bottom: var(--vf-space-2); }
 .viewfinder-theme .vf-work-title { font-size: clamp(1.3rem, 2.2vw, 1.7rem); font-weight: 700; margin: 0 0 var(--vf-space-3); letter-spacing: -0.01em; }
-.viewfinder-theme .vf-work-title.is-gap { color: var(--vf-paper-faint); font-style: italic; font-weight: 400; }
+.viewfinder-theme .vf-work-title a { color: inherit; text-decoration: none; background-image: linear-gradient(var(--vf-paper), var(--vf-paper)); background-size: 0% 1px; background-repeat: no-repeat; background-position: left bottom; transition: background-size 200ms var(--vf-ease-out); }
+.viewfinder-theme .vf-work-title a:hover { background-size: 100% 1px; }
 .viewfinder-theme .vf-work-desc { color: var(--vf-paper-soft); font-size: 0.9rem; line-height: 1.6; margin-bottom: var(--vf-space-4); max-width: 42ch; }
-.viewfinder-theme .vf-work-tags { display: flex; flex-wrap: wrap; gap: var(--vf-space-2); }
+.viewfinder-theme .vf-work-tags { display: flex; flex-wrap: wrap; gap: var(--vf-space-2); margin-bottom: var(--vf-space-5); }
 .viewfinder-theme .vf-work-tags span {
   font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--vf-paper-soft); border: 1px solid var(--vf-line-on-dark); padding: 4px 8px;
 }
-.viewfinder-theme .vf-work-intro { font-size: 0.85rem; color: var(--vf-paper-soft); max-width: 60ch; margin-bottom: var(--vf-space-5); line-height: 1.6; }
+.viewfinder-theme .vf-work-view { font-size: 10px; }
 
 /* =========================================================================
    ABOUT / MANIFESTO

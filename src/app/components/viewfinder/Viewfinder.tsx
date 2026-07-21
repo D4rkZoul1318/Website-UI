@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Reveal, staggerDelay } from '../camera/Reveal';
+import { ROUTES } from '../../routes';
 
 /* VIEWFINDER — an alternate homepage exploration reconstructed from a
  * frame-sampled screen recording of an "Emergent" preview pane, not from
@@ -11,6 +12,12 @@ import { Reveal, staggerDelay } from '../camera/Reveal';
  *  - anything visually built to fill an unmeasured value carries an
  *    inline comment saying so — none of that is claimed as accurate,
  *    it's there to look at and replace once the real source is checked.
+ *
+ * Work section: the three cards are the three real, shipped case studies
+ * already in this repo (Bob Rides, UUCMS, Rewind) — copy and metadata
+ * pulled directly from CameraHome.tsx's PROJECTS array, not invented, and
+ * each card links out to its real route. This replaced the source doc's
+ * placeholder cards (one of which had an illegible, GAP-flagged title).
  */
 
 const WORK_CARDS = [
@@ -19,44 +26,41 @@ const WORK_CARDS = [
     focal: '35MM',
     ratio: '16:9',
     num: '01',
-    numLabel: '01 2024',
-    title: 'Placeholder — Product suite for a fintech operator.',
-    desc: 'End-to-end design system, dashboards, and onboarding for a multi-market lending platform.',
-    tags: ['UI/UX', 'SYSTEM DESIGN', 'MOTION'],
-    isGapTitle: false,
+    numLabel: '01 · 2025',
+    title: 'Bob Rides — a 3D vehicle icon system for ride-hailing.',
+    desc: 'A live ride-hailing aggregator that compares Uber, Ola, and Rapido in one screen — sole designer across a full 3D vehicle icon system and a dark-mode-native token system.',
+    tags: ['MOBILE UX', 'RIDE-HAILING', '3D ICONS'],
+    tag: 'SHIPPED',
+    url: ROUTES.bobRides,
+    visual: { type: 'triptych' as const, images: ['/images/bob-images/Bike.webp', '/images/bob-images/Auto.webp', '/images/bob-images/Car.webp'] },
   },
   {
     frame: 'B',
     focal: '50MM',
     ratio: '3:2',
     num: '02',
-    numLabel: '02 2024',
-    // GAP: title/description weren't legible at any sampled resolution —
-    // pull the real copy from source before shipping this card.
-    title: '[title pending — not legible in source capture]',
-    desc: '[description pending — pull from source before shipping]',
-    tags: [],
-    isGapTitle: true,
+    numLabel: '02 · 2025',
+    title: 'UUCMS Redesign — from 12 steps to 4 for Karnataka’s student portal.',
+    desc: 'A redesign of UUCMS, the official student portal for Karnataka’s Department of Higher Education, used by students across the state each term.',
+    tags: ['EDTECH', 'RESPONSIVE WEB', 'INFORMATION ARCHITECTURE'],
+    tag: 'COMPLETED',
+    url: ROUTES.caseStudy,
+    visual: { type: 'image' as const, src: '/images/redesigned-dashboard.webp' },
   },
   {
     frame: 'C',
     focal: '24MM',
     ratio: '4:3',
     num: '03',
-    numLabel: '03 2025',
-    title: 'Placeholder — AI-assisted editor for design teams.',
-    desc: 'Interface and interaction model for a canvas tool where model output stays legible, editable, and reversible.',
-    tags: ['UI/UX', 'AI WORKFLOWS', 'PROTOTYPE'],
-    isGapTitle: false,
+    numLabel: '03 · 2026',
+    title: 'Rewind — a hardware-inspired browser music player.',
+    desc: 'A nostalgic, hardware-inspired browser music player with spatial audio — built for the Figma Config Makeathon 2026 using the Web Audio API.',
+    tags: ['HARDWARE UI', 'MAKEATHON', 'WEB AUDIO API'],
+    tag: 'SUBMITTED',
+    url: ROUTES.rewindCaseStudy,
+    visual: { type: 'image' as const, src: '/images/rewind/instrument.webp' },
   },
 ];
-
-// GAP: unclear from source whether this intro line belongs to card 3
-// specifically or is a section-level line — attached here to card 3 per
-// its position in the capture, flagged so it's easy to move if wrong.
-const CARD_3_INTRO =
-  '3D visual language, product photography direction, and campaign toolkit built around a single mechanical form.';
-const CARD_3_INTRO_TAGS = ['3D MODELING', 'BRAND', 'ART DIRECTION'];
 
 const CHAPTERS = [
   {
@@ -197,42 +201,40 @@ export default function Viewfinder() {
               </h2>
             </div>
             <p className="vf-section-caption">
-              THREE PLACEHOLDERS IN THE CURRENT ROLL. FULL CONTACT SHEETS AVAILABLE ON REQUEST.
+              THREE SHIPPED FRAMES FROM THE CURRENT ROLL. FULL CASE STUDIES ONE CLICK AWAY.
             </p>
           </div>
 
           {WORK_CARDS.map((card, i) => (
-            <div key={card.frame}>
-              {i === 2 && (
-                <Reveal className="vf-work-intro" delay={staggerDelay(i)}>
-                  {CARD_3_INTRO}
-                  <span className="vf-work-tags" style={{ display: 'inline-flex', marginLeft: 12 }}>
-                    {CARD_3_INTRO_TAGS.map((t) => <span key={t}>{t}</span>)}
-                  </span>
-                </Reveal>
-              )}
-              <Reveal as="div" className="vf-work-card" delay={staggerDelay(i)}>
-                <div className="vf-frame">
-                  <div className="vf-frame-grid" />
-                  <span className="vf-frame-corner">FRAME · {card.frame}</span>
-                  <span className="vf-frame-focal">{card.focal}</span>
-                  <span className="vf-frame-ratio">RATIO {card.ratio}</span>
-                  <span className="vf-frame-crosshair" />
-                  <span className="vf-frame-num">{card.num}</span>
+            <Reveal as="div" className="vf-work-card" delay={staggerDelay(i)} key={card.frame}>
+              <a className="vf-frame" href={card.url}>
+                {card.visual.type === 'image' ? (
+                  <img className="vf-frame-photo" src={card.visual.src} alt="" loading="lazy" decoding="async" />
+                ) : (
+                  <div className="vf-frame-triptych">
+                    {card.visual.images.map((src) => (
+                      <img key={src} src={src} alt="" loading="lazy" decoding="async" />
+                    ))}
+                  </div>
+                )}
+                <div className="vf-frame-grid" />
+                <span className="vf-frame-corner">FRAME · {card.frame}</span>
+                <span className="vf-frame-focal">{card.focal}</span>
+                <span className="vf-frame-ratio">RATIO {card.ratio}</span>
+                <span className="vf-frame-crosshair" />
+                <span className="vf-frame-num">{card.num}</span>
+              </a>
+              <div className="vf-work-copy">
+                <div className="vf-work-tag"><span className="sq" />CASE STUDY · {card.tag}</div>
+                <div className="vf-work-num">{card.numLabel}</div>
+                <h3 className="vf-work-title"><a href={card.url}>{card.title}</a></h3>
+                <p className="vf-work-desc">{card.desc}</p>
+                <div className="vf-work-tags">
+                  {card.tags.map((t) => <span key={t}>{t}</span>)}
                 </div>
-                <div className="vf-work-copy">
-                  <div className="vf-work-tag"><span className="sq" />PLACEHOLDER · CASE STUDY FORTHCOMING</div>
-                  <div className="vf-work-num">{card.numLabel}</div>
-                  <h3 className={'vf-work-title' + (card.isGapTitle ? ' is-gap' : '')}>{card.title}</h3>
-                  <p className="vf-work-desc">{card.desc}</p>
-                  {card.tags.length > 0 && (
-                    <div className="vf-work-tags">
-                      {card.tags.map((t) => <span key={t}>{t}</span>)}
-                    </div>
-                  )}
-                </div>
-              </Reveal>
-            </div>
+                <a className="vf-text-link vf-text-link--on-dark vf-work-view" href={card.url}>VIEW CASE STUDY →</a>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
