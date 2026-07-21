@@ -1,0 +1,380 @@
+import { useEffect, useState } from 'react';
+import { Reveal, staggerDelay } from '../camera/Reveal';
+
+/* VIEWFINDER — an alternate homepage exploration reconstructed from a
+ * frame-sampled screen recording of an "Emergent" preview pane, not from
+ * the live source itself. Lives at /viewfinder, separate from the
+ * shipped CameraHome, so the two can be compared side by side.
+ *
+ * Content confidence follows the source doc's own grading:
+ *  - plain text below is CONFIRMED (read directly off multiple frames)
+ *  - anything visually built to fill an unmeasured value carries an
+ *    inline comment saying so — none of that is claimed as accurate,
+ *    it's there to look at and replace once the real source is checked.
+ */
+
+const WORK_CARDS = [
+  {
+    frame: 'A',
+    focal: '35MM',
+    ratio: '16:9',
+    num: '01',
+    numLabel: '01 2024',
+    title: 'Placeholder — Product suite for a fintech operator.',
+    desc: 'End-to-end design system, dashboards, and onboarding for a multi-market lending platform.',
+    tags: ['UI/UX', 'SYSTEM DESIGN', 'MOTION'],
+    isGapTitle: false,
+  },
+  {
+    frame: 'B',
+    focal: '50MM',
+    ratio: '3:2',
+    num: '02',
+    numLabel: '02 2024',
+    // GAP: title/description weren't legible at any sampled resolution —
+    // pull the real copy from source before shipping this card.
+    title: '[title pending — not legible in source capture]',
+    desc: '[description pending — pull from source before shipping]',
+    tags: [],
+    isGapTitle: true,
+  },
+  {
+    frame: 'C',
+    focal: '24MM',
+    ratio: '4:3',
+    num: '03',
+    numLabel: '03 2025',
+    title: 'Placeholder — AI-assisted editor for design teams.',
+    desc: 'Interface and interaction model for a canvas tool where model output stays legible, editable, and reversible.',
+    tags: ['UI/UX', 'AI WORKFLOWS', 'PROTOTYPE'],
+    isGapTitle: false,
+  },
+];
+
+// GAP: unclear from source whether this intro line belongs to card 3
+// specifically or is a section-level line — attached here to card 3 per
+// its position in the capture, flagged so it's easy to move if wrong.
+const CARD_3_INTRO =
+  '3D visual language, product photography direction, and campaign toolkit built around a single mechanical form.';
+const CARD_3_INTRO_TAGS = ['3D MODELING', 'BRAND', 'ART DIRECTION'];
+
+const CHAPTERS = [
+  {
+    num: '01',
+    label: 'CH.01 · PRINCIPLE',
+    title: 'Composition before decoration.',
+    body: 'Structure earns attention; ornament borrows it. Every layout is a lens choice — where the eye lands, what falls out of frame, what stays in focus. I begin with hierarchy and negative space, not with textures.',
+  },
+  {
+    num: '02',
+    label: 'CH.02 · METHOD',
+    title: 'Exposure is a design decision.',
+    body: 'Interfaces, like photographs, are governed by contrast. What is loud, what is quiet, what is legible under low light. I treat typography, motion, and color as exposure controls — each one deliberately set, never automatic.',
+  },
+  {
+    num: '03',
+    label: 'CH.03 · PRACTICE',
+    title: 'Ship the whole system, not the shot.',
+    // GAP: this sentence is truncated at the frame edge in every sampled
+    // timestamp in the source — left exactly as confirmed, not completed.
+    body: 'A single hero screen is a portrait; a product is a—',
+  },
+];
+
+function useIstClock() {
+  const [time, setTime] = useState('');
+  useEffect(() => {
+    const format = () =>
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+      }).format(new Date());
+    setTime(format());
+    const id = window.setInterval(() => setTime(format()), 1000);
+    return () => window.clearInterval(id);
+  }, []);
+  return time;
+}
+
+export default function Viewfinder() {
+  const clock = useIstClock();
+
+  return (
+    <div className="viewfinder-theme">
+      <nav className="vf-nav" aria-label="Primary">
+        <a href="#hero" className="vf-nav-mark">
+          <span className="dot" />
+          SB / VIEWFINDER
+        </a>
+        <ul className="vf-nav-links">
+          <li><a href="#work">01 WORK</a></li>
+          <li><a href="#about">02 ABOUT</a></li>
+          <li><a href="#explorations">03 EXPLORATIONS</a></li>
+          <li><a href="#contact">04 CONTACT</a></li>
+        </ul>
+        <div className="vf-nav-right">
+          <span className="vf-nav-clock">IST · {clock}</span>
+          <span className="vf-nav-status"><span className="dot" /> AVAILABLE</span>
+        </div>
+      </nav>
+
+      <div className="vf-subbar">
+        <span>00 / HOME · VIEWFINDER</span>
+        <span className="vf-subbar-rule" />
+        <span>F/2.8 · 1/250 · ISO 200</span>
+        <span className="vf-subbar-rec"><span className="dot" /> REC · PORTFOLIO 2025</span>
+      </div>
+
+      <section id="hero" className="vf-hero">
+        <div className="vf-hero-rings" aria-hidden="true" />
+        <div className="vf-hero-grid">
+          <div className="vf-hero-headline">
+            <span className="vf-crosshair" aria-hidden="true" />
+            <h1 className="vf-hero-name">
+              Sohum
+              <br />
+              Bhatnagar
+              <span className="vf-hero-looking">is looking.</span>
+            </h1>
+            <p className="vf-hero-body">
+              Multidisciplinary work spanning UI/UX, 3D visual production, brand design, and
+              AI-assisted workflows — I design complex digital products end-to-end, from the
+              first sketch to the shipped system.
+            </p>
+            <div className="vf-hero-cta">
+              <a className="vf-cta-pill" href="#work">FOCUS / SELECTED WORK →</a>
+              <a className="vf-text-link" href="#contact">OR, GET IN TOUCH</a>
+            </div>
+            <p className="vf-fold">—— SCROLL · SHUTTER OPEN</p>
+          </div>
+
+          <div className="vf-dial-col">
+            <div className="vf-dial" aria-hidden="true">
+              <span className="vf-dial-center" />
+            </div>
+            <div className="vf-dial-labels">
+              {/* GAP: the two flanking labels beside the dial's center dot
+                  were illegible at capture resolution. */}
+              <span>IRIS</span>
+              <span>OPEN</span>
+            </div>
+            <p className="vf-dial-frame">FRAME · <b>001 / 128</b></p>
+            <p className="vf-dial-desc">
+              Designer, photographer, and storyteller interested in how people interact with
+              systems.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="vf-marquee" aria-hidden="true">
+        <div className="vf-marquee-track">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div className="vf-marquee-item" key={i}>
+              {Array.from({ length: 4 }).map((_, j) => (
+                <span key={j}>
+                  3D Visual Production <span className="vf-marquee-dot">·</span> Brand Design
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <section id="work" className="vf-section">
+        <div className="vf-wrap">
+          <div className="vf-section-top">
+            <div>
+              <div className="vf-section-head">
+                01 · SELECTED / WORK <span className="rule" />
+              </div>
+              <h2 className="vf-section-headline">
+                Frames in focus,
+                <em>everything else falls out.</em>
+              </h2>
+            </div>
+            <p className="vf-section-caption">
+              THREE PLACEHOLDERS IN THE CURRENT ROLL. FULL CONTACT SHEETS AVAILABLE ON REQUEST.
+            </p>
+          </div>
+
+          {WORK_CARDS.map((card, i) => (
+            <div key={card.frame}>
+              {i === 2 && (
+                <Reveal className="vf-work-intro" delay={staggerDelay(i)}>
+                  {CARD_3_INTRO}
+                  <span className="vf-work-tags" style={{ display: 'inline-flex', marginLeft: 12 }}>
+                    {CARD_3_INTRO_TAGS.map((t) => <span key={t}>{t}</span>)}
+                  </span>
+                </Reveal>
+              )}
+              <Reveal as="div" className="vf-work-card" delay={staggerDelay(i)}>
+                <div className="vf-frame">
+                  <div className="vf-frame-grid" />
+                  <span className="vf-frame-corner">FRAME · {card.frame}</span>
+                  <span className="vf-frame-focal">{card.focal}</span>
+                  <span className="vf-frame-ratio">RATIO {card.ratio}</span>
+                  <span className="vf-frame-crosshair" />
+                  <span className="vf-frame-num">{card.num}</span>
+                </div>
+                <div className="vf-work-copy">
+                  <div className="vf-work-tag"><span className="sq" />PLACEHOLDER · CASE STUDY FORTHCOMING</div>
+                  <div className="vf-work-num">{card.numLabel}</div>
+                  <h3 className={'vf-work-title' + (card.isGapTitle ? ' is-gap' : '')}>{card.title}</h3>
+                  <p className="vf-work-desc">{card.desc}</p>
+                  {card.tags.length > 0 && (
+                    <div className="vf-work-tags">
+                      {card.tags.map((t) => <span key={t}>{t}</span>)}
+                    </div>
+                  )}
+                </div>
+              </Reveal>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="about" className="vf-section">
+        <div className="vf-wrap">
+          <div className="vf-section-top">
+            <div>
+              <div className="vf-section-head">
+                02 · ABOUT / MANIFESTO <span className="rule" />
+              </div>
+              <h2 className="vf-section-headline">
+                A camera, not a canvas.
+                <em>A short field manual.</em>
+              </h2>
+            </div>
+            <p className="vf-section-caption">THREE CHAPTERS · READ 90S</p>
+          </div>
+
+          {CHAPTERS.map((ch, i) => (
+            <Reveal as="div" className="vf-chapter" delay={staggerDelay(i)} key={ch.num}>
+              <div className="vf-chapter-num">{ch.num}</div>
+              <div>
+                <div className="vf-chapter-label">{ch.label}</div>
+                <h3 className="vf-chapter-title">{ch.title}</h3>
+                <p className="vf-chapter-body">{ch.body}</p>
+                <div className="vf-chapter-foot">
+                  <div className="vf-chapter-dots">
+                    {CHAPTERS.map((_, j) => <span key={j} className={j === i ? 'is-active' : ''} />)}
+                  </div>
+                  {ch.num} / 03
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section id="explorations" className="vf-section">
+        <div className="vf-wrap">
+          <div className="vf-section-top">
+            <div>
+              <div className="vf-section-head">
+                03 · EXPLORATIONS / FIELD NOTES <span className="rule" />
+              </div>
+              <h2 className="vf-section-headline">
+                The instrument
+                <em>is the argument.</em>
+              </h2>
+            </div>
+            <p className="vf-section-caption">
+              Field studies from the workshop — camera parts, mechanical objects, and the
+              interfaces they inspire. Ongoing, never finished.
+            </p>
+          </div>
+
+          <Reveal as="div" className="vf-plate">
+            <div className="vf-plate-strip">
+              PLATE · 07 · SOHUM BHATNAGAR · FIELD STUDIES · 2024
+            </div>
+            <div className="vf-plate-photo">
+              {/* Stand-in graphic — no matching lens-barrel product photo
+                  exists in the repo's assets; replace with the real plate
+                  photo before shipping. */}
+              <div className="vf-plate-photo-art"><div className="vf-lens-art" /></div>
+              <div className="vf-plate-overlay-top">
+                <span>PLATE 07 · LENS BARREL</span>
+                <span>50MM · F/1.8 · 1/500</span>
+              </div>
+              <div className="vf-plate-overlay-bottom">
+                <span>N 28.61° · E 77.20°</span>
+                <span>ROLL 04 / 12</span>
+              </div>
+            </div>
+            <div className="vf-plate-notes">
+              <div>
+                <div className="vf-plate-notes-head">PLATE 07 · NOTES</div>
+                <p className="vf-plate-quote">
+                  "The click of a mechanical shutter is a design decision. It commits. Screens
+                  rarely do — I try to design interfaces that behave the same way."
+                </p>
+              </div>
+              <div className="vf-plate-specs">
+                <div>APERTURE<b>F/1.8</b></div>
+                <div>SHUTTER<b>1/500</b></div>
+                <div>ISO<b>400</b></div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section id="contact" className="vf-section vf-contact">
+        <div className="vf-wrap">
+          <div className="vf-section-head">
+            04 · CONTACT / SHUTTER RELEASE <span className="rule" /> END OF FRAME
+          </div>
+          <Reveal as="h2" className="vf-contact-headline">
+            <span className="vf-contact-line">Let's make something</span>
+            <span className="vf-contact-line"><em>worth</em></span>
+            <span className="vf-contact-line">keeping.</span>
+          </Reveal>
+          <Reveal className="vf-contact-cta" delay={staggerDelay(1)}>
+            <a className="vf-cta-pill vf-cta-pill--accent" href="mailto:hello@sohum.design">
+              HELLO@SOHUM.DESIGN →
+            </a>
+            <a className="vf-text-link vf-text-link--on-dark" href="mailto:sohum1311@gmail.com">OR, TALK ABOUT A ROLE</a>
+          </Reveal>
+        </div>
+      </section>
+
+      <footer className="vf-footer">
+        <div className="vf-footer-cols">
+          <div className="vf-footer-col">
+            <div className="vf-footer-col-title">CURRENTLY</div>
+            <p><span className="dot" />Open to roles &amp; apprenticeships.</p>
+            <p>Based in New Delhi · Working globally</p>
+          </div>
+          <div className="vf-footer-col">
+            <div className="vf-footer-col-title">DIRECTORY</div>
+            <a href="#work">→ WORK</a>
+            <a href="#about">→ ABOUT</a>
+            <a href="#explorations">→ EXPLORATIONS</a>
+            <a href="#contact">→ CONTACT</a>
+          </div>
+          <div className="vf-footer-col">
+            <div className="vf-footer-col-title">ELSEWHERE</div>
+            {/* GAP: no Read.cv / Are.na / Instagram URLs exist anywhere in
+                this repo — these need real links before shipping. */}
+            <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer">↗ LINKEDIN</a>
+            <a href="#" onClick={(e) => e.preventDefault()}>↗ READ.CV</a>
+            <a href="#" onClick={(e) => e.preventDefault()}>↗ ARE.NA</a>
+            <a href="#" onClick={(e) => e.preventDefault()}>↗ INSTAGRAM</a>
+          </div>
+        </div>
+        <div className="vf-footer-watermark">SB · 00</div>
+        <div className="vf-footer-fine">
+          <span>© 2025 SOHUM BHATNAGAR</span>
+          <span>SET IN BRICOLAGE GROTESQUE &amp; JETBRAINS MONO</span>
+          <span>BUILT AS A VIEWFINDER, NOT A CANVAS.</span>
+        </div>
+      </footer>
+    </div>
+  );
+}

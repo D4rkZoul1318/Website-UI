@@ -1,0 +1,424 @@
+/* VIEWFINDER — an alternate homepage exploration, built from a reverse-
+   engineered spec (frame-sampled from a screen capture, not the live
+   source). Deliberately its own scoped theme (.viewfinder-theme), not a
+   change to camera-theme — this lives at /viewfinder so it can be
+   compared against the shipped CameraHome without touching it. Tokens
+   below are the doc's CONFIRMED (pixel-measured) values, not
+   camera-theme's — they're close but not identical (e.g. accent
+   #D9674C here vs #ff4d00 on the shipped site); do not reconcile them
+   without checking which one the live reference actually uses.
+
+   Marked "GAP" in a comment means the source spec explicitly couldn't
+   confirm that value/content — what's here is a reasonable placeholder
+   to look at and compare, not a claimed-accurate replica. */
+
+.viewfinder-theme {
+  --vf-paper: #efeded;
+  --vf-dark: #191919;
+  --vf-dark-soft: #232323;
+  --vf-ink: #131313;
+  --vf-ink-soft: rgba(19, 19, 19, 0.62);
+  --vf-ink-faint: rgba(19, 19, 19, 0.38);
+  --vf-paper-soft: rgba(239, 237, 235, 0.7);
+  --vf-paper-faint: rgba(239, 237, 235, 0.32);
+  --vf-line: rgba(19, 19, 19, 0.14);
+  --vf-line-on-dark: rgba(239, 237, 235, 0.14);
+  --vf-accent: #d9674c;
+
+  --vf-space-1: 4px;
+  --vf-space-2: 8px;
+  --vf-space-3: 12px;
+  --vf-space-4: 16px;
+  --vf-space-5: 24px;
+  --vf-space-6: 32px;
+  --vf-space-7: 48px;
+  --vf-space-8: 64px;
+  --vf-space-9: 96px;
+
+  --vf-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --vf-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --vf-font-display: 'Bricolage Grotesque', -apple-system, sans-serif;
+  --vf-font-mono: 'JetBrains Mono', Consolas, monospace;
+
+  background: var(--vf-dark);
+  color: var(--vf-paper);
+  font-family: var(--vf-font-display);
+  min-height: 100vh;
+}
+
+.viewfinder-theme * { box-sizing: border-box; }
+
+.viewfinder-theme .vf-wrap { max-width: 1180px; margin: 0 auto; padding-inline: var(--vf-space-6); }
+
+/* ---- Reveal (mirrors the site-wide Reveal component's class names, just
+   re-themed for this page's own tokens/dark-by-default surfaces) ---- */
+.viewfinder-theme .reveal { opacity: 0; transform: translateY(16px); transition: opacity 480ms var(--vf-ease-out), transform 480ms var(--vf-ease-out); }
+.viewfinder-theme .reveal.visible { opacity: 1; transform: none; }
+.viewfinder-theme .reveal--scale { opacity: 0; transform: scale(0.96) translateY(10px); transition: opacity 480ms var(--vf-ease-out), transform 480ms var(--vf-ease-out); }
+.viewfinder-theme .reveal--scale.visible { opacity: 1; transform: none; }
+
+/* =========================================================================
+   PERSISTENT NAV
+   ========================================================================= */
+.viewfinder-theme .vf-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--vf-space-5);
+  padding: var(--vf-space-4) var(--vf-space-6);
+  background: rgba(25, 25, 25, 0.82);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--vf-line-on-dark);
+  font-family: var(--vf-font-mono); font-size: 11px; letter-spacing: 0.08em;
+}
+.viewfinder-theme .vf-nav-mark { display: flex; align-items: center; gap: var(--vf-space-2); color: var(--vf-paper); flex: 0 0 auto; }
+.viewfinder-theme .vf-nav-mark .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--vf-accent); flex: none; }
+.viewfinder-theme .vf-nav-links { display: flex; gap: var(--vf-space-6); list-style: none; margin: 0; padding: 0; flex: 1 1 auto; justify-content: center; }
+.viewfinder-theme .vf-nav-links a { color: var(--vf-paper-soft); text-decoration: none; transition: color 200ms var(--vf-ease-out); }
+.viewfinder-theme .vf-nav-links a:hover, .viewfinder-theme .vf-nav-links a:focus-visible { color: var(--vf-paper); }
+.viewfinder-theme .vf-nav-right { display: flex; align-items: center; gap: var(--vf-space-5); flex: 0 0 auto; color: var(--vf-paper-soft); }
+.viewfinder-theme .vf-nav-clock { font-variant-numeric: tabular-nums; color: var(--vf-paper-soft); }
+.viewfinder-theme .vf-nav-status { display: flex; align-items: center; gap: var(--vf-space-2); }
+.viewfinder-theme .vf-nav-status .dot { width: 6px; height: 6px; border-radius: 50%; background: #6fce7f; flex: none; animation: vfPulse 2.4s var(--vf-ease-in-out) infinite; }
+
+@keyframes vfPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+@media (max-width: 860px) {
+  .viewfinder-theme .vf-nav-links { display: none; }
+}
+
+/* Hero-only sub-bar */
+.viewfinder-theme .vf-subbar {
+  position: fixed; top: 45px; left: 0; right: 0; z-index: 90;
+  display: flex; align-items: center; gap: var(--vf-space-4);
+  padding: var(--vf-space-2) var(--vf-space-6);
+  font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--vf-ink-soft);
+  border-bottom: 1px solid var(--vf-line);
+}
+.viewfinder-theme .vf-subbar-rule { flex: 1 1 auto; height: 1px; background: repeating-linear-gradient(90deg, var(--vf-ink-faint) 0 4px, transparent 4px 8px); }
+.viewfinder-theme .vf-subbar-rec { display: flex; align-items: center; gap: var(--vf-space-2); flex: 0 0 auto; }
+.viewfinder-theme .vf-subbar-rec .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--vf-accent); animation: vfPulse 1.6s var(--vf-ease-in-out) infinite; }
+@media (max-width: 860px) {
+  .viewfinder-theme .vf-subbar { flex-wrap: wrap; height: auto; }
+}
+
+/* =========================================================================
+   HERO
+   ========================================================================= */
+.viewfinder-theme .vf-hero {
+  background: var(--vf-paper); color: var(--vf-ink);
+  padding: calc(var(--vf-space-9) + 64px) var(--vf-space-6) var(--vf-space-8);
+  position: relative; overflow: hidden;
+}
+.viewfinder-theme .vf-hero-grid {
+  max-width: 1180px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.7fr 1fr; gap: var(--vf-space-9);
+  align-items: start; position: relative;
+}
+@media (max-width: 960px) {
+  .viewfinder-theme .vf-hero-grid { grid-template-columns: 1fr; gap: var(--vf-space-7); }
+}
+
+.viewfinder-theme .vf-hero-rings { position: absolute; inset: -60px auto auto -80px; width: 420px; height: 420px; pointer-events: none; z-index: 0; }
+.viewfinder-theme .vf-hero-rings::before, .viewfinder-theme .vf-hero-rings::after {
+  content: ''; position: absolute; border-radius: 50%; border: 1px solid var(--vf-ink-faint);
+}
+.viewfinder-theme .vf-hero-rings::before { inset: 0; }
+.viewfinder-theme .vf-hero-rings::after { inset: 60px; }
+
+.viewfinder-theme .vf-hero-headline { position: relative; z-index: 1; }
+.viewfinder-theme .vf-crosshair {
+  position: absolute; top: 0.35em; left: -46px; width: 26px; height: 26px;
+  border: 1.5px solid var(--vf-ink-faint); border-radius: 50%;
+}
+.viewfinder-theme .vf-crosshair::before, .viewfinder-theme .vf-crosshair::after {
+  content: ''; position: absolute; background: var(--vf-ink-faint);
+}
+.viewfinder-theme .vf-crosshair::before { top: 50%; left: 50%; width: 12px; height: 1px; transform: translate(-50%, -50%); }
+.viewfinder-theme .vf-crosshair::after { top: 50%; left: 50%; width: 1px; height: 12px; transform: translate(-50%, -50%); }
+@media (max-width: 960px) { .viewfinder-theme .vf-crosshair { display: none; } }
+
+.viewfinder-theme .vf-hero-name {
+  font-family: var(--vf-font-display); font-weight: 800; letter-spacing: -0.03em;
+  font-size: clamp(3.2rem, 8vw, 6.4rem); line-height: 0.98; margin: 0;
+  /* masked reveal: timing/easing not observable in source (already
+     resolved at capture start) — a clip-path wipe is a reasonable
+     interpretation of "masked reveal", not a confirmed replica. */
+  clip-path: inset(0 0 0 0);
+  animation: vfMaskReveal 900ms var(--vf-ease-in-out) both;
+}
+@keyframes vfMaskReveal {
+  from { clip-path: inset(0 0 100% 0); opacity: 0; }
+  to { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+.viewfinder-theme .vf-hero-looking {
+  display: block; font-style: italic; font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 4.4rem); color: var(--vf-ink-soft);
+  margin-top: -0.12em;
+  animation: vfMaskReveal 900ms var(--vf-ease-in-out) 120ms both;
+}
+.viewfinder-theme .vf-hero-body { max-width: 46ch; margin: var(--vf-space-6) 0 0; color: var(--vf-ink-soft); font-size: 1rem; line-height: 1.6; }
+
+.viewfinder-theme .vf-hero-cta { display: flex; align-items: center; gap: var(--vf-space-5); margin-top: var(--vf-space-7); flex-wrap: wrap; }
+.viewfinder-theme .vf-cta-pill {
+  display: inline-flex; align-items: center; gap: var(--vf-space-2);
+  background: var(--vf-ink); color: var(--vf-paper);
+  font-family: var(--vf-font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 13px 22px; border-radius: 999px; text-decoration: none;
+  transition: transform 200ms var(--vf-ease-out), background 200ms var(--vf-ease-out);
+}
+.viewfinder-theme .vf-cta-pill:hover { transform: translateY(-1px); background: #000; }
+.viewfinder-theme .vf-cta-pill--accent { background: var(--vf-accent); color: #171012; }
+.viewfinder-theme .vf-cta-pill--accent:hover { background: #c85a40; }
+.viewfinder-theme .vf-text-link {
+  font-family: var(--vf-font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--vf-ink-soft); text-decoration: none; border-bottom: 1px solid var(--vf-line);
+  padding-bottom: 2px; transition: color 200ms var(--vf-ease-out), border-color 200ms var(--vf-ease-out);
+}
+.viewfinder-theme .vf-text-link:hover { color: var(--vf-ink); border-color: var(--vf-ink); }
+
+.viewfinder-theme .vf-fold {
+  text-align: center; margin-top: var(--vf-space-9);
+  font-family: var(--vf-font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--vf-ink-faint);
+}
+
+/* Aperture dial */
+.viewfinder-theme .vf-dial-col { position: relative; z-index: 1; padding-top: var(--vf-space-4); }
+.viewfinder-theme .vf-dial {
+  width: clamp(180px, 20vw, 240px); aspect-ratio: 1; margin: 0 auto; position: relative;
+  border-radius: 50%; border: 1px dashed var(--vf-ink-faint);
+  display: flex; align-items: center; justify-content: center;
+  background:
+    repeating-conic-gradient(from 0deg, var(--vf-ink-faint) 0deg 1.2deg, transparent 1.2deg 30deg);
+  -webkit-mask-image: radial-gradient(circle, transparent 0 34%, black 35% 96%, transparent 97%);
+  mask-image: radial-gradient(circle, transparent 0 34%, black 35% 96%, transparent 97%);
+}
+.viewfinder-theme .vf-dial-center {
+  position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--vf-ink);
+}
+.viewfinder-theme .vf-dial-labels {
+  display: flex; justify-content: space-between; margin-top: var(--vf-space-3);
+  font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.12em; color: var(--vf-ink-faint);
+}
+.viewfinder-theme .vf-dial-frame {
+  text-align: center; margin-top: var(--vf-space-6);
+  font-family: var(--vf-font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--vf-ink-soft);
+}
+.viewfinder-theme .vf-dial-frame b { color: var(--vf-ink); font-weight: 600; }
+.viewfinder-theme .vf-dial-desc { text-align: center; margin-top: var(--vf-space-3); font-size: 0.8rem; color: var(--vf-ink-faint); max-width: 30ch; margin-inline: auto; }
+
+/* =========================================================================
+   MARQUEE
+   ========================================================================= */
+.viewfinder-theme .vf-marquee {
+  background: var(--vf-dark); overflow: hidden; padding: var(--vf-space-6) 0;
+  border-bottom: 1px solid var(--vf-line-on-dark);
+}
+.viewfinder-theme .vf-marquee-track {
+  display: flex; width: max-content; gap: var(--vf-space-6);
+  animation: vfMarquee 26s linear infinite;
+}
+.viewfinder-theme .vf-marquee-item {
+  display: flex; align-items: center; gap: var(--vf-space-6);
+  font-family: var(--vf-font-display); font-style: italic; font-weight: 500;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem); color: var(--vf-paper-soft); white-space: nowrap;
+}
+.viewfinder-theme .vf-marquee-dot { color: var(--vf-accent); font-style: normal; }
+@keyframes vfMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* =========================================================================
+   SECTION SHELL (shared by Work / About / Explorations / Contact)
+   ========================================================================= */
+.viewfinder-theme .vf-section { background: var(--vf-dark); padding: var(--vf-space-9) var(--vf-space-6); }
+.viewfinder-theme .vf-section-head {
+  display: flex; align-items: center; gap: var(--vf-space-5);
+  font-family: var(--vf-font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--vf-paper-faint); margin-bottom: var(--vf-space-7);
+}
+.viewfinder-theme .vf-section-head .rule { flex: 1 1 auto; height: 1px; background: var(--vf-line-on-dark); }
+.viewfinder-theme .vf-section-headline {
+  font-family: var(--vf-font-display); font-weight: 700; letter-spacing: -0.02em;
+  font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.08; margin: 0;
+}
+.viewfinder-theme .vf-section-headline em { display: block; font-style: italic; font-weight: 400; color: var(--vf-paper-soft); }
+.viewfinder-theme .vf-section-caption {
+  font-size: 0.85rem; color: var(--vf-paper-faint); max-width: 34ch; line-height: 1.6;
+}
+.viewfinder-theme .vf-section-top {
+  display: grid; grid-template-columns: 1fr auto; gap: var(--vf-space-7); align-items: end;
+  margin-bottom: var(--vf-space-8);
+}
+@media (max-width: 760px) {
+  .viewfinder-theme .vf-section-top { grid-template-columns: 1fr; }
+  .viewfinder-theme .vf-section-caption { max-width: none; text-align: left; }
+}
+
+/* =========================================================================
+   WORK
+   ========================================================================= */
+.viewfinder-theme .vf-work-card {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--vf-space-8);
+  align-items: center; padding: var(--vf-space-8) 0; border-top: 1px solid var(--vf-line-on-dark);
+}
+.viewfinder-theme .vf-work-card:first-of-type { border-top: none; }
+@media (max-width: 860px) {
+  .viewfinder-theme .vf-work-card { grid-template-columns: 1fr; gap: var(--vf-space-5); }
+}
+
+.viewfinder-theme .vf-frame {
+  position: relative; aspect-ratio: 4 / 3; border: 1px solid var(--vf-line-on-dark);
+  background: var(--vf-dark-soft); overflow: hidden;
+}
+.viewfinder-theme .vf-frame-grid {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 calc(33.33% - 0.5px), var(--vf-line-on-dark) calc(33.33% - 0.5px) calc(33.33% + 0.5px)),
+    repeating-linear-gradient(0deg, transparent 0 calc(33.33% - 0.5px), var(--vf-line-on-dark) calc(33.33% - 0.5px) calc(33.33% + 0.5px));
+  opacity: 0.6;
+}
+.viewfinder-theme .vf-frame-corner { position: absolute; top: var(--vf-space-3); left: var(--vf-space-3); font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--vf-paper-faint); }
+.viewfinder-theme .vf-frame-focal { position: absolute; top: var(--vf-space-3); right: var(--vf-space-3); font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--vf-paper-faint); }
+.viewfinder-theme .vf-frame-ratio { position: absolute; bottom: var(--vf-space-3); left: var(--vf-space-3); font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--vf-paper-faint); }
+.viewfinder-theme .vf-frame-num {
+  position: absolute; bottom: -0.15em; right: 0.05em; font-family: var(--vf-font-display); font-weight: 800;
+  font-size: 5rem; color: var(--vf-paper-faint); opacity: 0.5; line-height: 1;
+}
+.viewfinder-theme .vf-frame-crosshair {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 30px; height: 30px; border: 1px solid var(--vf-line-on-dark); border-radius: 50%;
+}
+.viewfinder-theme .vf-frame-crosshair::before, .viewfinder-theme .vf-frame-crosshair::after { content: ''; position: absolute; background: var(--vf-line-on-dark); }
+.viewfinder-theme .vf-frame-crosshair::before { top: 50%; left: 50%; width: 14px; height: 1px; transform: translate(-50%, -50%); }
+.viewfinder-theme .vf-frame-crosshair::after { top: 50%; left: 50%; width: 1px; height: 14px; transform: translate(-50%, -50%); }
+
+.viewfinder-theme .vf-work-copy .vf-work-tag {
+  display: inline-flex; align-items: center; gap: var(--vf-space-2);
+  font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--vf-paper-faint); margin-bottom: var(--vf-space-4);
+}
+.viewfinder-theme .vf-work-tag .sq { width: 6px; height: 6px; background: var(--vf-accent); flex: none; }
+.viewfinder-theme .vf-work-num { font-family: var(--vf-font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--vf-paper-soft); margin-bottom: var(--vf-space-2); }
+.viewfinder-theme .vf-work-title { font-size: clamp(1.3rem, 2.2vw, 1.7rem); font-weight: 700; margin: 0 0 var(--vf-space-3); letter-spacing: -0.01em; }
+.viewfinder-theme .vf-work-title.is-gap { color: var(--vf-paper-faint); font-style: italic; font-weight: 400; }
+.viewfinder-theme .vf-work-desc { color: var(--vf-paper-soft); font-size: 0.9rem; line-height: 1.6; margin-bottom: var(--vf-space-4); max-width: 42ch; }
+.viewfinder-theme .vf-work-tags { display: flex; flex-wrap: wrap; gap: var(--vf-space-2); }
+.viewfinder-theme .vf-work-tags span {
+  font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--vf-paper-soft); border: 1px solid var(--vf-line-on-dark); padding: 4px 8px;
+}
+.viewfinder-theme .vf-work-intro { font-size: 0.85rem; color: var(--vf-paper-soft); max-width: 60ch; margin-bottom: var(--vf-space-5); line-height: 1.6; }
+
+/* =========================================================================
+   ABOUT / MANIFESTO
+   ========================================================================= */
+.viewfinder-theme .vf-chapter {
+  display: grid; grid-template-columns: 96px 1fr; gap: var(--vf-space-7);
+  padding: var(--vf-space-7) 0; border-top: 1px solid var(--vf-line-on-dark);
+}
+.viewfinder-theme .vf-chapter:first-of-type { border-top: none; padding-top: 0; }
+@media (max-width: 760px) {
+  .viewfinder-theme .vf-chapter { grid-template-columns: 1fr; gap: var(--vf-space-3); }
+}
+.viewfinder-theme .vf-chapter-num { font-family: var(--vf-font-display); font-weight: 800; font-size: 3.2rem; color: var(--vf-paper-faint); line-height: 1; }
+.viewfinder-theme .vf-chapter-label { font-family: var(--vf-font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--vf-accent); margin-bottom: var(--vf-space-2); }
+.viewfinder-theme .vf-chapter-title { font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 700; margin: 0 0 var(--vf-space-3); }
+.viewfinder-theme .vf-chapter-body { color: var(--vf-paper-soft); font-size: 0.95rem; line-height: 1.7; max-width: 62ch; margin: 0 0 var(--vf-space-4); }
+.viewfinder-theme .vf-chapter-foot { display: flex; align-items: center; gap: var(--vf-space-3); font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.1em; color: var(--vf-paper-faint); }
+.viewfinder-theme .vf-chapter-dots { display: flex; gap: 5px; }
+.viewfinder-theme .vf-chapter-dots span { width: 4px; height: 4px; border-radius: 50%; background: var(--vf-line-on-dark); }
+.viewfinder-theme .vf-chapter-dots span.is-active { background: var(--vf-accent); }
+
+/* =========================================================================
+   EXPLORATIONS / FIELD NOTES
+   ========================================================================= */
+.viewfinder-theme .vf-plate {
+  display: grid; grid-template-columns: 40px 1.1fr 1fr; gap: var(--vf-space-6);
+  align-items: stretch; margin-top: var(--vf-space-6);
+}
+@media (max-width: 860px) {
+  .viewfinder-theme .vf-plate { grid-template-columns: 1fr; }
+}
+.viewfinder-theme .vf-plate-strip {
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--vf-paper-faint); gap: var(--vf-space-3);
+}
+@media (max-width: 860px) { .viewfinder-theme .vf-plate-strip { display: none; } }
+
+.viewfinder-theme .vf-plate-photo {
+  position: relative; background: var(--vf-paper); border-radius: 2px; overflow: hidden; min-height: 340px;
+}
+.viewfinder-theme .vf-plate-photo-art {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  filter: grayscale(1) contrast(1.05);
+}
+/* Stand-in "lens barrel" graphic — no matching product photo exists in
+   the repo's asset library; this is a placeholder shape to compare
+   against the real photo once it's sourced, not a claimed real photo. */
+.viewfinder-theme .vf-lens-art { width: 62%; aspect-ratio: 1; border-radius: 50%; position: relative;
+  background: radial-gradient(circle at 40% 35%, #6b6b6b, #232323 70%);
+  box-shadow: inset 0 0 0 10px rgba(0,0,0,0.4), inset 0 0 0 11px rgba(255,255,255,0.08);
+}
+.viewfinder-theme .vf-lens-art::before {
+  content: ''; position: absolute; inset: 18%; border-radius: 50%;
+  background: radial-gradient(circle at 42% 38%, rgba(255,255,255,0.25), transparent 60%), #101010;
+  box-shadow: inset 0 0 0 6px rgba(0,0,0,0.5);
+}
+.viewfinder-theme .vf-plate-overlay-top, .viewfinder-theme .vf-plate-overlay-bottom {
+  position: absolute; left: 0; right: 0; display: flex; justify-content: space-between;
+  padding: var(--vf-space-4); font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--vf-ink-soft);
+}
+.viewfinder-theme .vf-plate-overlay-top { top: 0; }
+.viewfinder-theme .vf-plate-overlay-bottom { bottom: 0; }
+
+.viewfinder-theme .vf-plate-notes { display: flex; flex-direction: column; justify-content: space-between; }
+.viewfinder-theme .vf-plate-notes-head { font-family: var(--vf-font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--vf-paper-faint); margin-bottom: var(--vf-space-3); }
+.viewfinder-theme .vf-plate-quote { font-size: 1rem; line-height: 1.6; color: var(--vf-paper); font-style: italic; margin: 0 0 var(--vf-space-6); }
+.viewfinder-theme .vf-plate-specs { display: flex; gap: var(--vf-space-5); flex-wrap: wrap; }
+.viewfinder-theme .vf-plate-specs div { font-family: var(--vf-font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--vf-paper-faint); }
+.viewfinder-theme .vf-plate-specs b { display: block; color: var(--vf-paper); font-size: 12px; margin-top: 2px; }
+
+/* =========================================================================
+   CONTACT / CLOSING CTA
+   ========================================================================= */
+.viewfinder-theme .vf-contact { text-align: left; }
+.viewfinder-theme .vf-contact-headline {
+  font-family: var(--vf-font-display); font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.05;
+  font-weight: 700; margin: 0 0 var(--vf-space-7);
+}
+.viewfinder-theme .vf-contact-line { display: block; }
+.viewfinder-theme .vf-contact-headline em { font-style: italic; font-weight: 400; color: var(--vf-paper-soft); }
+.viewfinder-theme .vf-contact-cta { display: flex; align-items: center; gap: var(--vf-space-6); flex-wrap: wrap; }
+.viewfinder-theme .vf-text-link--on-dark { color: var(--vf-paper-soft); border-color: var(--vf-line-on-dark); }
+.viewfinder-theme .vf-text-link--on-dark:hover { color: var(--vf-paper); border-color: var(--vf-paper-soft); }
+
+/* =========================================================================
+   FOOTER
+   ========================================================================= */
+.viewfinder-theme .vf-footer { background: #0f0f0f; padding: var(--vf-space-9) var(--vf-space-6) var(--vf-space-6); position: relative; overflow: hidden; }
+.viewfinder-theme .vf-footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--vf-space-7); max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+@media (max-width: 760px) { .viewfinder-theme .vf-footer-cols { grid-template-columns: 1fr; } }
+.viewfinder-theme .vf-footer-col-title { font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vf-paper-faint); margin-bottom: var(--vf-space-4); }
+.viewfinder-theme .vf-footer-col p { font-size: 0.85rem; color: var(--vf-paper-soft); margin: 0 0 var(--vf-space-2); }
+.viewfinder-theme .vf-footer-col p .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #6fce7f; margin-right: var(--vf-space-2); }
+.viewfinder-theme .vf-footer-col a {
+  display: block; color: var(--vf-paper-soft); text-decoration: none; font-size: 0.85rem; margin-bottom: var(--vf-space-2);
+  transition: color 200ms var(--vf-ease-out);
+}
+.viewfinder-theme .vf-footer-col a:hover { color: var(--vf-paper); }
+
+.viewfinder-theme .vf-footer-watermark {
+  font-family: var(--vf-font-display); font-weight: 800; font-size: clamp(4rem, 14vw, 9rem);
+  color: rgba(239, 237, 235, 0.05); line-height: 1; margin-top: var(--vf-space-9); user-select: none;
+}
+.viewfinder-theme .vf-footer-fine {
+  display: flex; justify-content: flex-end; flex-direction: column; align-items: flex-end;
+  font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.06em; color: var(--vf-paper-faint);
+  gap: 2px; margin-top: var(--vf-space-5); position: relative; z-index: 1;
+}
+@media (max-width: 760px) { .viewfinder-theme .vf-footer-fine { align-items: flex-start; } }

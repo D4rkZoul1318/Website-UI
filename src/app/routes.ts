@@ -5,4 +5,5 @@ export const ROUTES = {
   bobRides: "/bob-rides",
   explorations: "/explorations",
   rewindCaseStudy: "/rewind-case-study",
+  viewfinder: "/viewfinder",
 } as const;

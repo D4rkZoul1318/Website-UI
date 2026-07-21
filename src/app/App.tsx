@@ -5,6 +5,7 @@ import { AboutPage } from "./components/AboutPage";
 import CaseStudy from "./components/CaseStudy";
 import { ExplorationsPage } from "./components/ExplorationsPage";
 import RewindCaseStudy from "./components/rewind-case-study/RewindCaseStudy";
+import Viewfinder from "./components/viewfinder/Viewfinder";
 import { ROUTES } from "./routes";
 import { useEffect } from "react";
 import { SmoothScroll } from "./components/SmoothScroll";
@@ -42,6 +43,7 @@ export default function App() {
           <Route path={ROUTES.caseStudy} element={<CaseStudy />} />
           <Route path={ROUTES.explorations} element={<ExplorationsPage />} />
           <Route path={ROUTES.rewindCaseStudy} element={<RewindCaseStudy />} />
+          <Route path={ROUTES.viewfinder} element={<Viewfinder />} />
         </Routes>
       </SmoothScroll>
     </BrowserRouter>
