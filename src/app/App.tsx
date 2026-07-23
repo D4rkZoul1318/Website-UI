@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CameraHome from "./components/camera/CameraHome";
+import Home from "./components/home/Home";
 import BobRides from "./components/bob-case-study/BobRides";
 import { AboutPage } from "./components/AboutPage";
 import CaseStudy from "./components/CaseStudy";
@@ -37,7 +37,7 @@ export default function App() {
     <BrowserRouter>
       <SmoothScroll>
         <Routes>
-          <Route path={ROUTES.home} element={<CameraHome />} />
+          <Route path={ROUTES.home} element={<Home />} />
           <Route path={ROUTES.bobRides} element={<BobRides />} />
           <Route path={ROUTES.about} element={<AboutPage />} />
           <Route path={ROUTES.caseStudy} element={<CaseStudy />} />
