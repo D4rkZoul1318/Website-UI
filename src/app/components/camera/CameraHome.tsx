@@ -138,10 +138,9 @@ const PROJECTS: Project[] = [
 ];
 
 const SECTIONS = [
-  { key: 'VIEWFINDER', id: 'viewfinder', angle: -90 },
-  { key: 'WORK', id: 'sheet', angle: -45 },
-  { key: 'ABOUT', id: 'notes', angle: 0 },
-  { key: 'PHOTOGRAPHY', id: 'writing', angle: 45 },
+  { key: 'ABOUT', id: 'notes', angle: -90 },
+  { key: 'WORK', id: 'sheet', angle: -30 },
+  { key: 'PHOTOGRAPHY', id: 'writing', angle: 30 },
   { key: 'CONTACT', id: 'contact', angle: 90 },
 ];
 const WORK_INDEX = 1;
@@ -199,7 +198,7 @@ export default function CameraHome() {
   const compareAfterRef = useRef<HTMLDivElement>(null);
   const compareHandleRef = useRef<HTMLDivElement>(null);
   const deviceFrameRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const momentRef = useRef<HTMLDivElement>(null);
 
   // ---- BOOT SEQUENCE — one class toggle, driving plain CSS transitions
@@ -367,33 +366,17 @@ export default function CameraHome() {
     requestFloatingNavThemeUpdate();
 
     // ---- FLOATING NAV: LAYOUT ----------------------------------------------
-    const fnavLine = document.createElement('div');
-    fnavLine.className = 'floating-nav__line';
-    floatingNav.appendChild(fnavLine);
+    // Single rotated label showing only the current section's name — no
+    // dot rail, no accent-colored active state, no per-section click
+    // targets (the topnav bar already covers direct navigation).
+    const floatingLabel = document.createElement('span');
+    floatingLabel.className = 'floating-nav__current';
+    floatingNav.appendChild(floatingLabel);
 
     const sectionEls = SECTIONS.map((s) => ({
       ...s,
-      navItem: (() => {
-        const item = document.createElement('button');
-        item.className = 'floating-nav__item';
-        item.setAttribute('aria-label', 'Go to ' + s.key);
-        const dot = document.createElement('span');
-        dot.className = 'floating-nav__dot';
-        const label = document.createElement('span');
-        label.className = 'floating-nav__label';
-        label.textContent = s.key;
-        item.appendChild(dot);
-        item.appendChild(label);
-        floatingNav.appendChild(item);
-        return item;
-      })(),
       el: document.getElementById(s.id),
     }));
-    sectionEls.forEach((s, idx) => {
-      const handler = () => flyTo(s.id, idx);
-      s.navItem.addEventListener('click', handler);
-      cleanups.push(() => s.navItem.removeEventListener('click', handler));
-    });
 
     for (let i = 0; i < 12; i++) {
       const t = document.createElement('div');
@@ -429,7 +412,7 @@ export default function CameraHome() {
     const topnavLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('#topnav nav a'));
     let currentSection = 0;
     function setActiveVisuals(idx: number) {
-      sectionEls.forEach((s, i) => s.navItem.classList.toggle('active', i === idx));
+      floatingLabel.textContent = SECTIONS[idx].key;
       if (miniZone) miniZone.textContent = SECTIONS[idx].key;
       if (miniCounter) miniCounter.textContent = '0' + (idx + 1) + '/0' + SECTIONS.length;
       topnavLinks.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + SECTIONS[idx].id));
@@ -477,8 +460,8 @@ export default function CameraHome() {
       setActiveVisuals(idx);
     }
 
-    if (infoBtnRef.current) on(infoBtnRef.current, 'click', () => flyTo('notes', 2));
-    if (menuBtnRef.current) on(menuBtnRef.current, 'click', () => flyTo('viewfinder', 0));
+    if (infoBtnRef.current) on(infoBtnRef.current, 'click', () => flyTo('notes', 0));
+    if (menuBtnRef.current) on(menuBtnRef.current, 'click', () => flyTo('notes', 0));
     if (focusCueRef.current) on(focusCueRef.current, 'click', (e: Event) => { e.preventDefault(); flyTo('sheet', WORK_INDEX); });
 
     function goUp() { const idx = Math.max(0, currentSection - 1); flyTo(SECTIONS[idx].id, idx); }
@@ -907,7 +890,7 @@ export default function CameraHome() {
       {createPortal(
         <>
           <header id="topnav" ref={topnavRef}>
-            <a className="topnav-mark" href="#viewfinder">Sohum Bhatnagar</a>
+            <a className="topnav-mark" href="#notes">Sohum Bhatnagar</a>
             <nav aria-label="Primary">
               <a href="#sheet">Work</a>
               <a href="#notes">About</a>
@@ -920,8 +903,8 @@ export default function CameraHome() {
 
           <div id="controls" ref={controlsRef}>
             <div className="mini-screen" ref={miniScreenRef}>
-              <div className="zone" ref={miniZoneRef}>VIEWFINDER</div>
-              <div className="counter" ref={miniCounterRef}>01/05</div>
+              <div className="zone" ref={miniZoneRef}>ABOUT</div>
+              <div className="counter" ref={miniCounterRef}>01/04</div>
             </div>
             <button className="fn-btn" ref={infoBtnRef} title="About" type="button">INFO</button>
             <div id="wheel" ref={wheelRef}>
@@ -932,22 +915,56 @@ export default function CameraHome() {
               <button className="wheel-arrow right" ref={wheelRightRef} aria-label="Next project" type="button"><span className="tri"></span></button>
               <button className="wheel-arrow down" ref={wheelDownRef} aria-label="Next section" type="button"><span className="tri"></span></button>
             </div>
-            <button className="fn-btn" ref={menuBtnRef} title="Viewfinder" type="button">TOP</button>
+            <button className="fn-btn" ref={menuBtnRef} title="Top" type="button">TOP</button>
           </div>
         </>,
         document.getElementById('fixed-ui-root')!
       )}
 
       <main>
-        <section className="section" id="viewfinder" data-theme="light">
-          <Reveal className="hero-tags" data-speed="0.9">
-            <span>UI/UX</span><span>3D Modeling</span><span>Graphic Design</span><span>Photography</span>
-          </Reveal>
-          <Reveal as="h1">Sohum Bhatnagar</Reveal>
-          <Reveal as="p" className="lede">Designer, photographer, and storyteller interested in how people interact with systems. Multidisciplinary work spanning UI/UX, 3D visual production, brand design, and AI-assisted workflows — I design complex digital products end-to-end, from the first sketch to the shipped system.</Reveal>
-          <Reveal as="a" className="focus-cue" href="#sheet" ref={focusCueRef}>
-            <span>See selected work</span><span className="arrow">↓</span>
-          </Reveal>
+        <section className="section bg-soft" id="notes" data-theme="light">
+          <div className="hero-block" ref={heroRef}>
+            <Reveal className="hero-tags" data-speed="0.9">
+              <span>UI/UX</span><span>3D Modeling</span><span>Graphic Design</span><span>Photography</span>
+            </Reveal>
+            <Reveal as="h1">Sohum Bhatnagar</Reveal>
+            <Reveal as="p" className="lede">Designer, photographer, and storyteller interested in how people interact with systems. Multidisciplinary work spanning UI/UX, 3D visual production, brand design, and AI-assisted workflows — I design complex digital products end-to-end, from the first sketch to the shipped system.</Reveal>
+            <Reveal as="a" className="focus-cue" href="#sheet" ref={focusCueRef}>
+              <span>See selected work</span><span className="arrow">↓</span>
+            </Reveal>
+          </div>
+          <div className="about-grid">
+            <Reveal className="about-body">
+              <p>I studied Animation at Chitrakala Parishath in Bengaluru (B.Va, Distinction) before moving into product design, so I still think in composition, narrative and visual weight before I think in components. Four-plus years span UI/UX, 3D visual production — game-ready PBR assets in Unreal Engine, hard-surface modeling in Maya and Substance Painter, even scientifically accurate 3D fossil models for UC Riverside's Paleontology department — brand design, and AI-assisted workflows.</p>
+              <p>That background shows up directly in the work: the Bob Rides icon system exists because I could take a vehicle from sketch to a fully-shaded 3D render, not just a flat vector. My process starts with a real problem and ends with an interface that feels obvious in hindsight. When I'm not in Figma, I'm usually somewhere quiet with a 600mm lens, or on a basketball court.</p>
+              <div className="about-facts">
+                <div><span className="meta-label">Based in</span><span className="meta-value">Bengaluru</span></div>
+                <div><span className="meta-label">Status</span><span className="meta-value">Open to roles &amp; apprenticeships</span></div>
+                <div className="tools-fact">
+                  <span className="meta-label">Tools</span>
+                  <div className="tool-row-outer">
+                    <div className="tool-row">
+                      {TOOLS.map((tool) => (
+                        <div key={tool.name} className="tool-icon" data-tooltip={tool.name}>{tool.icon}</div>
+                      ))}
+                      {TOOLS.map((tool) => (
+                        <div key={`${tool.name}-dup`} className="tool-icon" data-tooltip={tool.name} aria-hidden="true">{tool.icon}</div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ marginTop: 'var(--space-6)' }}>
+                <a className="preview-cta" href={ROUTES.about}>Full background — experience, education, toolkit →</a>
+              </div>
+            </Reveal>
+            <div className="about-portrait-wrap">
+              <Reveal variant="clip" className="about-portrait">
+                <AsciiVideo src="/videos/aboutbird.mp4" label="Bird in flight, rendered as live ASCII" />
+              </Reveal>
+              <p className="about-portrait-caption">Bee-eater — looking for breakfast.</p>
+            </div>
+          </div>
         </section>
 
         <section className="section" id="sheet" data-theme="light">
@@ -994,47 +1011,8 @@ export default function CameraHome() {
           <p>Every product begins with noticing something everyone else ignored.</p>
         </div>
 
-        <section className="section bg-soft" id="notes" data-theme="light">
-          <Reveal className="notes-head">
-            <div className="section-index">SEC.<b>02</b> — ABOUT</div>
-            <h2>I&#8217;m Sohum.</h2>
-          </Reveal>
-          <div className="about-grid">
-            <Reveal className="about-body">
-              <p>I studied Animation at Chitrakala Parishath in Bengaluru (B.Va, Distinction) before moving into product design, so I still think in composition, narrative and visual weight before I think in components. Four-plus years span UI/UX, 3D visual production — game-ready PBR assets in Unreal Engine, hard-surface modeling in Maya and Substance Painter, even scientifically accurate 3D fossil models for UC Riverside's Paleontology department — brand design, and AI-assisted workflows.</p>
-              <p>That background shows up directly in the work: the Bob Rides icon system exists because I could take a vehicle from sketch to a fully-shaded 3D render, not just a flat vector. My process starts with a real problem and ends with an interface that feels obvious in hindsight. When I'm not in Figma, I'm usually somewhere quiet with a 600mm lens, or on a basketball court.</p>
-              <div className="about-facts">
-                <div><span className="meta-label">Based in</span><span className="meta-value">Bengaluru</span></div>
-                <div><span className="meta-label">Status</span><span className="meta-value">Open to roles &amp; apprenticeships</span></div>
-                <div className="tools-fact">
-                  <span className="meta-label">Tools</span>
-                  <div className="tool-row-outer">
-                    <div className="tool-row">
-                      {TOOLS.map((tool) => (
-                        <div key={tool.name} className="tool-icon" data-tooltip={tool.name}>{tool.icon}</div>
-                      ))}
-                      {TOOLS.map((tool) => (
-                        <div key={`${tool.name}-dup`} className="tool-icon" data-tooltip={tool.name} aria-hidden="true">{tool.icon}</div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div style={{ marginTop: 'var(--space-6)' }}>
-                <a className="preview-cta" href={ROUTES.about}>Full background — experience, education, toolkit →</a>
-              </div>
-            </Reveal>
-            <div className="about-portrait-wrap">
-              <Reveal variant="clip" className="about-portrait">
-                <AsciiVideo src="/videos/aboutbird.mp4" label="Bird in flight, rendered as live ASCII" />
-              </Reveal>
-              <p className="about-portrait-caption">Bee-eater — looking for breakfast.</p>
-            </div>
-          </div>
-        </section>
-
         <section className="section" id="writing" data-theme="light">
-          <Reveal className="section-index">SEC.<b>03</b> — THROUGH THE LENS</Reveal>
+          <Reveal className="section-index">SEC.<b>02</b> — THROUGH THE LENS</Reveal>
           <Reveal as="h2">Notes from behind the camera.</Reveal>
           <Reveal as="p" className="sheet-subtitle">When I'm not in Figma, I'm usually somewhere quiet with a 600mm lens. A few frames from the field.</Reveal>
           <div className="writing-list">
@@ -1051,7 +1029,7 @@ export default function CameraHome() {
 
         <section className="section bg-dark" id="contact" data-theme="dark">
           <RetroGrid />
-          <Reveal className="section-index">SEC.<b>04</b> — CONTACT</Reveal>
+          <Reveal className="section-index">SEC.<b>03</b> — CONTACT</Reveal>
           <Reveal as="h2">Let&#8217;s work together.</Reveal>
           <Reveal as="p">Open to product design roles and apprenticeships.</Reveal>
           <Reveal as="a" className="contact-cta" href="mailto:sohum1311@gmail.com">

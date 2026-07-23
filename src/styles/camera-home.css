@@ -191,34 +191,26 @@
 
 .camera-home .floating-nav {
   position: fixed; right: var(--space-5); top: 50%; transform: translateY(-50%); z-index: 60;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 22px;
   --fnav-label: rgba(26, 26, 26, 0.55);
-  --fnav-label-active: #1a1a1a;
-  --fnav-dot: rgba(26, 26, 26, 0.25);
-  --fnav-line: rgba(26, 26, 26, 0.15);
-  --fnav-glow: 0 0 0 rgba(255, 77, 0, 0);
 }
 .camera-home .floating-nav.theme-dark {
   --fnav-label: rgba(255, 255, 255, 0.6);
-  --fnav-label-active: #ffffff;
-  --fnav-dot: rgba(255, 255, 255, 0.35);
-  --fnav-line: rgba(255, 255, 255, 0.15);
-  --fnav-glow: 0 0 8px rgba(255, 109, 40, 0.65);
 }
-.camera-home .floating-nav__line { position: absolute; top: 4px; bottom: 4px; right: 3.5px; width: 1px; background: var(--fnav-line); transition: background 250ms var(--ease-out); z-index: 0; }
-.camera-home .floating-nav__item { position: relative; z-index: 1; display: flex; flex-direction: row-reverse; align-items: center; gap: 28px; background: none; border: none; cursor: pointer; padding: 6px 2px; }
-.camera-home .floating-nav__dot { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--fnav-dot); border: 1px solid transparent; transition: background 250ms var(--ease-out), transform 240ms var(--ease-out), box-shadow 250ms var(--ease-out); }
-.camera-home .floating-nav__item.active .floating-nav__dot { background: var(--accent); border-color: var(--accent); transform: scale(1.3); box-shadow: var(--fnav-glow); }
-.camera-home .floating-nav__label { flex: 0 0 auto; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; color: var(--fnav-label); text-transform: uppercase; white-space: nowrap; opacity: 0; transform: translateX(4px); transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), color 250ms var(--ease-out); }
-.camera-home .floating-nav__item:hover .floating-nav__label, .camera-home .floating-nav__item.active .floating-nav__label { opacity: 1; transform: translateX(0); color: var(--fnav-label-active); }
-.camera-home .floating-nav__item:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+.camera-home .floating-nav__current {
+  display: inline-block; writing-mode: vertical-rl; text-orientation: mixed;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--fnav-label); transition: color 250ms var(--ease-out);
+}
 
 .camera-home .section { min-height: 100vh; padding: var(--space-9) var(--space-6); position: relative; display: flex; flex-direction: column; justify-content: center; scroll-margin-top: 64px; }
 
-#viewfinder.section { align-items: center; text-align: center; gap: var(--space-4); padding-top: calc(var(--space-9) + 40px); }
 .camera-home .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); margin-bottom: var(--space-2); }
-.camera-home #viewfinder h1 { max-width: 16ch; }
-.camera-home #viewfinder .lede { color: var(--ink-soft); max-width: 52ch; line-height: 1.7; font-size: 1.1rem; }
+.camera-home .hero-block {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-4);
+  padding-bottom: var(--space-8);
+}
+.camera-home .hero-block h1 { max-width: 16ch; }
+.camera-home .hero-block .lede { color: var(--ink-soft); max-width: 52ch; line-height: 1.7; font-size: 1.1rem; }
 .camera-home .focus-cue { margin-top: var(--space-6); display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink-soft); text-transform: uppercase; text-decoration: none; padding-bottom: 2px; position: relative; background: none; border: none; cursor: pointer; }
 .camera-home .focus-cue:hover .arrow { transform: translateY(2px); }
 
@@ -335,10 +327,13 @@
 .camera-home .moment p { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(1.3rem, 2.6vw, 1.9rem); color: var(--ink-soft); max-width: 34ch; text-align: center; line-height: 1.5; opacity: 0; transform: translateY(14px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); }
 .camera-home .moment.visible p { opacity: 1; transform: translateY(0); }
 
-#notes.section { align-items: stretch; }
-.camera-home .notes-head { max-width: 640px; margin-bottom: var(--space-7); }
-.camera-home .notes-head h2 { margin-top: var(--space-3); }
-.camera-home .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-8); }
+/* align-items:stretch (not the generic .section's centered default) since
+   this section now holds the hero block followed by the two-column
+   about-grid, not a single centered block. justify-content/padding-top
+   are tightened so the hero sits higher, closer to the topnav, instead of
+   vertically centered with a full viewport of empty space above it. */
+#notes.section { align-items: stretch; justify-content: flex-start; padding-top: calc(var(--space-9) + 24px); }
+.camera-home .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-8); margin-top: var(--space-8); }
 .camera-home .about-body p { color: var(--ink-soft); line-height: 1.75; font-size: 1.05rem; margin-bottom: var(--space-5); max-width: 62ch; }
 .camera-home .about-body p:last-of-type { margin-bottom: var(--space-7); }
 /* Stretches to match the text column's natural height instead of a fixed
