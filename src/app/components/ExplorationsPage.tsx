@@ -5,6 +5,7 @@ import { ScrollToTop } from './ScrollToTop';
 import { PhotoBurst } from './PhotoBurst';
 import { HolographicCard } from './HolographicCard';
 import { Reveal, staggerDelay } from './camera/Reveal';
+import { ClippedTab } from './camera/ClippedTab';
 import { ROUTES } from '../routes';
 
 type LiveKind = 'rewind' | 'octopus';
@@ -218,16 +219,18 @@ export function ExplorationsPage() {
             </Reveal>
 
             <Reveal className="explore-filters">
-              {categories.map((cat, i) => (
-                <button
-                  key={cat}
-                  onClick={() => setActive(cat)}
-                  className={`explore-pill${active === cat ? ' active' : ''}`}
-                  style={{ transitionDelay: `${staggerDelay(i)}ms` }}
-                >
-                  {cat}
-                </button>
-              ))}
+              <div className="clipped-tab-bar">
+                {categories.map((cat, i) => (
+                  <ClippedTab
+                    key={cat}
+                    active={active === cat}
+                    onClick={() => setActive(cat)}
+                    style={{ transitionDelay: `${staggerDelay(i)}ms` }}
+                  >
+                    {cat}
+                  </ClippedTab>
+                ))}
+              </div>
             </Reveal>
           </div>
         </section>

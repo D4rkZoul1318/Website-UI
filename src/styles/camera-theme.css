@@ -354,6 +354,8 @@
 .camera-theme .meta-label { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: var(--space-2); }
 .camera-theme .meta-value { font-family: var(--font-mono); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
 @media (max-width: 640px) { .camera-theme .facts-row { grid-template-columns: 1fr; gap: var(--space-5); } }
+.camera-theme .facts-row--four { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 640px) { .camera-theme .facts-row--four { grid-template-columns: 1fr; } }
 
 .camera-theme footer { max-width: 1100px; margin: 0 auto; padding: var(--space-6) var(--space-6) var(--space-8); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); }
 .camera-theme footer span, .camera-theme footer a { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.04em; text-decoration: none; }
@@ -411,13 +413,6 @@
 
 /* ---- Explorations page ------------------------------------------------ */
 .camera-theme .explore-filters { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
-.camera-theme .explore-pill {
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
-  cursor: pointer; transition: background 200ms var(--ease-out), color 200ms var(--ease-out), border-color 200ms var(--ease-out);
-}
-.camera-theme .explore-pill:hover { border-color: var(--ink-faint); color: var(--ink); }
-.camera-theme .explore-pill.active { background: var(--ink); border-color: var(--ink); color: var(--paper); font-weight: 500; }
 
 .camera-theme .explore-play-canvas {
   min-height: 60vh; border-radius: 12px; border: 1px dashed var(--line);
@@ -437,3 +432,82 @@
 }
 .camera-theme .explore-lightbox button:hover { opacity: 1; }
 @keyframes exploreFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---- Motif: digit-reel counter ----------------------------------------- */
+.camera-theme .digit-reel {
+  display: inline-flex; align-items: baseline; font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums; font-weight: 700;
+}
+.camera-theme .digit-reel__affix { line-height: 1; }
+.camera-theme .digit-reel__cell {
+  position: relative; display: inline-block; overflow: hidden;
+  height: 1em; width: 0.62em; line-height: 1; vertical-align: baseline;
+}
+.camera-theme .digit-reel__strip {
+  display: flex; flex-direction: column; transition: transform 320ms var(--ease-out);
+}
+.camera-theme .digit-reel__digit {
+  display: block; height: 1em; line-height: 1; text-align: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .camera-theme .digit-reel__strip { transition: none; }
+}
+
+/* ---- Motif: retro perspective grid -------------------------------------- */
+.camera-theme .retro-grid {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;
+}
+.camera-theme .retro-grid__plane { position: absolute; inset: 0; perspective: 400px; overflow: hidden; }
+.camera-theme .retro-grid__lines {
+  position: absolute; left: 0; right: 0; bottom: -50%; height: 200%;
+  background-image:
+    linear-gradient(to right, rgba(244, 243, 240, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(244, 243, 240, 0.08) 1px, transparent 1px);
+  background-size: 48px 32px;
+  transform: rotateX(60deg);
+  transform-origin: bottom;
+  animation: retro-grid-scroll 6s linear infinite;
+}
+@keyframes retro-grid-scroll { from { background-position: 0 0; } to { background-position: 0 32px; } }
+.camera-theme .retro-grid__fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse at 50% 30%, transparent 0%, var(--screen-bg) 75%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .camera-theme .retro-grid__lines { animation: none; }
+}
+
+/* ---- Motif: clipped tab (concave-corner tab bar) ------------------------ */
+.camera-theme .clipped-tab-bar {
+  display: inline-flex; align-items: flex-end; gap: 2px; max-width: 100%;
+  padding: 0 var(--space-3); background: var(--screen-bg); border-radius: 10px 10px 0 0;
+  overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.camera-theme .clipped-tab-bar::-webkit-scrollbar { display: none; }
+.camera-theme .clipped-tab {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  flex: 0 0 auto; white-space: nowrap;
+  height: 36px; padding: 0 var(--space-4); margin: 0; border: none; cursor: pointer;
+  border-radius: 10px 10px 0 0; background: transparent;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(244, 243, 240, 0.45);
+  transition: color 200ms var(--ease-out), background 200ms var(--ease-out);
+}
+.camera-theme .clipped-tab:hover { color: rgba(244, 243, 240, 0.75); }
+.camera-theme .clipped-tab.active { color: var(--ink); background: var(--paper); }
+.camera-theme .clipped-tab__notch {
+  position: absolute; bottom: 0; width: 10px; height: 10px; opacity: 0;
+  transition: opacity 160ms var(--ease-out);
+}
+.camera-theme .clipped-tab.active .clipped-tab__notch { opacity: 1; }
+.camera-theme .clipped-tab__notch--left {
+  left: -10px;
+  background: radial-gradient(circle at top left, transparent 10px, var(--paper) 10px);
+}
+.camera-theme .clipped-tab__notch--right {
+  right: -10px;
+  background: radial-gradient(circle at top right, transparent 10px, var(--paper) 10px);
+}
+.camera-theme .clipped-tab:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 6px;
+}

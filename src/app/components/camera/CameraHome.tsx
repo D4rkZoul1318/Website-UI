@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Reveal } from './Reveal';
+import { RetroGrid } from './RetroGrid';
 import AsciiVideo from './AsciiVideo';
 import { ROUTES } from '../../routes';
 import { SiClaude, SiReact } from 'react-icons/si';
@@ -1049,6 +1050,7 @@ export default function CameraHome() {
         </section>
 
         <section className="section bg-dark" id="contact" data-theme="dark">
+          <RetroGrid />
           <Reveal className="section-index">SEC.<b>04</b> — CONTACT</Reveal>
           <Reveal as="h2">Let&#8217;s work together.</Reveal>
           <Reveal as="p">Open to product design roles and apprenticeships.</Reveal>
