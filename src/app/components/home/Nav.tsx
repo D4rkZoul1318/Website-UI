@@ -4,8 +4,7 @@ import { createPortal } from 'react-dom';
 const LINKS = [
   { href: '#work', index: '01', label: 'Work' },
   { href: '#about', index: '02', label: 'About' },
-  { href: '#explorations', index: '03', label: 'Explorations' },
-  { href: '#contact', index: '04', label: 'Contact' },
+  { href: '#contact', index: '03', label: 'Contact' },
 ];
 
 function useScrollProgress() {

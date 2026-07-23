@@ -4,7 +4,6 @@ import { Hero } from './Hero';
 import { Marquee } from './Marquee';
 import { SelectedWork } from './SelectedWork';
 import { Manifesto } from './Manifesto';
-import { Explorations } from './Explorations';
 import { Footer } from './Footer';
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
         <Marquee />
         <SelectedWork />
         <Manifesto />
-        <Explorations />
         <Footer />
       </main>
     </div>

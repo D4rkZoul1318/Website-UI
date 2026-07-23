@@ -3,7 +3,6 @@ import { Reveal } from '../camera/Reveal';
 const DIRECTORY = [
   { href: '#work', label: 'Work' },
   { href: '#about', label: 'About' },
-  { href: '#explorations', label: 'Explorations' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -18,7 +17,7 @@ export function Footer() {
     <footer id="contact" className="vf-footer" data-testid="footer">
       <div className="vf-footer-top">
         <div className="vf-footer-eyebrow">
-          <span>04 &middot; Contact / Shutter release</span>
+          <span>03 &middot; Contact / Shutter release</span>
           <span className="rule" />
           <span>End of frame</span>
         </div>
