@@ -64,9 +64,8 @@ export function Nav() {
           items={LINKS}
           activeHref={activeHref}
           baseColor="var(--ink)"
-          pillColor="transparent"
           pillTextColor="var(--ink)"
-          hoveredPillTextColor="var(--paper)"
+          hoveredPillTextColor="var(--terracotta-ink)"
           theme="light"
         />
         <div className="vf-nav-right">

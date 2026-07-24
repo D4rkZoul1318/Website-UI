@@ -13,7 +13,6 @@ export interface PillNavProps {
   className?: string;
   ease?: string;
   baseColor?: string;
-  pillColor?: string;
   hoveredPillTextColor?: string;
   pillTextColor?: string;
   theme?: 'light' | 'dark';
@@ -22,31 +21,28 @@ export interface PillNavProps {
   logoAlt?: string;
 }
 
-/** A pill-shaped nav with a circular color-swap reveal on hover, modeled on
- * react-bits' PillNav (installed via the shadcn registry in spirit — rebuilt
- * here since the sandbox can't reach ui.shadcn.com's registry endpoint).
- * Each pill hides a full-color circle behind its label; hovering scales the
- * circle up from its center (clipped by the pill's own rounded corners) while
- * the label crossfades between `pillTextColor` and `hoveredPillTextColor`.
- * The active item is pinned in that same "hovered" state so the current
- * section/page is always visually distinct from the rest.
+/** Plain-text nav links with a rolling text-swap hover: each label renders
+ * as two stacked copies in an overflow-hidden window (one in the resting
+ * color, one in the accent color), and hovering/the active state translates
+ * that two-line stack up by exactly half its own height, so the label
+ * appears to roll a fresh, differently-colored copy into view rather than
+ * just crossfading. No pill background, border, or fill — just the link
+ * and its roll.
  *
- * The circle's scale is driven entirely by CSS `:hover`/`.is-active`, not by
- * JS mouseenter/mouseleave handlers calling gsap.to(). An earlier version
- * did that, and under main-thread contention (e.g. switching Explorations'
- * filter tabs, which fires GSAP tweens across a dozen-plus masonry items)
- * the browser can coalesce or drop a mouseleave event — the "scale up" tween
- * would finish with no matching "scale down" ever firing, leaving a pill
- * permanently stuck solid-black with unreadable dark-on-dark text. CSS
- * `:hover` can't desync from the real pointer state like that. */
+ * Driven entirely by CSS `:hover`/`.is-active`, not JS mouseenter/mouseleave
+ * handlers. An earlier pill-shaped version used gsap.to() on those events,
+ * and under main-thread contention (e.g. switching Explorations' filter
+ * tabs, which fires GSAP tweens across a dozen-plus masonry items) the
+ * browser can coalesce or drop a mouseleave event — the tween would finish
+ * with no reverse ever firing, leaving a link stuck mid-roll. CSS `:hover`
+ * can't desync from the real pointer state like that. */
 export function PillNav({
   items,
   activeHref = '',
   className = '',
   ease = 'power3.out',
   baseColor = 'var(--ink)',
-  pillColor = 'var(--paper)',
-  hoveredPillTextColor = 'var(--paper)',
+  hoveredPillTextColor = 'var(--terracotta-ink)',
   pillTextColor = 'var(--ink)',
   theme = 'light',
   initialLoadAnimation = true,
@@ -96,10 +92,9 @@ export function PillNav({
                 role="menuitem"
                 aria-label={item.ariaLabel ?? item.label}
                 aria-current={isActive ? 'page' : undefined}
-                className={`vf-pillnav-pill${isActive ? ' is-active' : ''}`}
-                style={{ background: pillColor, color: pillTextColor }}
+                className={`vf-pillnav-link${isActive ? ' is-active' : ''}`}
+                style={{ color: pillTextColor }}
               >
-                <span className="vf-pillnav-circle" aria-hidden="true" />
                 <span className="vf-pillnav-roll" aria-hidden="true">
                   <span className="vf-pillnav-roll-track">
                     <span className="vf-pillnav-roll-line" style={{ color: pillTextColor }}>{item.label}</span>

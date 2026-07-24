@@ -102,53 +102,31 @@
 }
 .vf-home .vf-logo { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
 .vf-home .vf-logo-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--terracotta); }
-/* ---- PillNav (react-bits-style animated pill links) -------------------
-   Black-and-white by default: transparent pills with a black outline,
-   solid black hover fill. Glass (blur + translucency) is reserved for the
-   active pill only, so the current page/section reads as the one "special"
-   item instead of the whole bar looking frosted. */
+/* ---- PillNav (rolling text-swap links, no pill chrome) -----------------
+   Plain text links — no background, border, or fill. The only hover/active
+   treatment is the label rolling from ink to the terracotta accent. */
 .vf-home .vf-pillnav { display: flex; align-items: center; position: relative; }
-.vf-home .vf-pillnav-list { display: none; align-items: center; gap: 8px; list-style: none; margin: 0; padding: 0; }
-.vf-home .vf-pillnav-pill {
-  position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; justify-content: center;
-  padding: 9px 18px; border-radius: 9999px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-  border: 1px solid var(--ink);
-  transition: border-color 150ms;
+.vf-home .vf-pillnav-list { display: none; align-items: center; gap: 32px; list-style: none; margin: 0; padding: 0; }
+.vf-home .vf-pillnav-link {
+  position: relative; display: inline-flex; align-items: center;
+  padding: 4px 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
 }
-.vf-home .vf-pillnav-circle {
-  position: absolute; inset: 0; border-radius: 9999px; z-index: 0; will-change: transform;
-  background: var(--pillnav-base);
-  /* Scale is driven purely by :hover/.is-active below, not by JS — the
-     browser keeps :hover perfectly in sync with the real pointer, so this
-     can never get stuck mid-transition the way a paired mouseenter/
-     mouseleave + gsap.to() pair could (a dropped mouseleave under
-     main-thread load left it permanently scaled up in an earlier version). */
-  transform: scale(0);
-  transform-origin: 50% 50%;
-  transition: transform 300ms var(--ease-out);
+.vf-home .vf-pillnav-link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px;
+  background: var(--terracotta-ink); transform: scaleX(0); transform-origin: left; transition: transform 250ms var(--ease-out);
 }
+.vf-home .vf-pillnav-link.is-active::after { transform: scaleX(1); }
 /* Roll: two stacked copies of the label in an overflow-hidden window, one
    pre-colored for rest, one for hover/active. Hovering slides the whole
    two-line stack up by exactly half its own height (a 2-line stack, so
-   -50% is one line) — the label appears to swap color by rolling to a
-   fresh copy rather than a plain color transition. */
+   -50% is one line) — the label appears to roll a fresh, differently
+   colored copy into view rather than just crossfading. */
 .vf-home .vf-pillnav-roll { position: relative; z-index: 1; display: block; overflow: hidden; height: 1em; line-height: 1; }
 .vf-home .vf-pillnav-roll-track { display: flex; flex-direction: column; transition: transform 320ms var(--ease-out); }
 .vf-home .vf-pillnav-roll-line { display: block; height: 1em; line-height: 1; }
-.vf-home .vf-pillnav-pill:hover .vf-pillnav-roll-track,
-.vf-home .vf-pillnav-pill.is-active .vf-pillnav-roll-track { transform: translateY(-50%); }
+.vf-home .vf-pillnav-link.is-active .vf-pillnav-roll-track { transform: translateY(-50%); }
 @media (hover: hover) and (pointer: fine) {
-  .vf-home .vf-pillnav-pill:hover .vf-pillnav-circle { transform: scale(1); }
-}
-.vf-home .vf-pillnav-pill.is-active {
-  border-color: rgba(26, 26, 26, 0.35);
-  box-shadow: inset 0 1px 0 rgba(244, 243, 240, 0.3), 0 4px 14px rgba(26, 26, 26, 0.12);
-}
-.vf-home .vf-pillnav-pill.is-active .vf-pillnav-circle {
-  transform: scale(1);
-  background: rgba(26, 26, 26, 0.55);
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  .vf-home .vf-pillnav-link:hover .vf-pillnav-roll-track { transform: translateY(-50%); }
 }
 .vf-home .vf-pillnav-toggle {
   display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
