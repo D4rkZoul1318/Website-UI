@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { RollingCounter } from './camera/DigitReel';
 import { Nav } from './home/Nav';
+import { ToolsTicker } from './ToolsTicker';
 
 const experience = [
   {
@@ -74,11 +75,17 @@ export function AboutPage() {
               <p>I studied Animation at Chitrakala Parishath in Bengaluru (B.Va, Distinction) before moving into product design, so I still think in composition, narrative and visual weight before I think in components. Four-plus years span UI/UX, 3D visual production — game-ready PBR assets in Unreal Engine, hard-surface modeling in Maya and Substance Painter, even scientifically accurate 3D fossil models for UC Riverside's Paleontology department — brand design, and AI-assisted workflows.</p>
               <p style={{ marginTop: 'var(--space-4)' }}>That background shows up directly in the work: the Bob Rides icon system exists because I could take a vehicle from sketch to a fully-shaded 3D render, not just a flat vector. My process starts with a real problem and ends with an interface that feels obvious in hindsight. When I'm not in Figma, I'm usually somewhere quiet with a 600mm lens, or on a basketball court.</p>
             </Reveal>
-            <Reveal variant="scale" className="facts-row facts-row--four">
+            <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">Based in</span><span className="meta-value" style={{ fontSize: 20 }}>Bengaluru</span></div>
               <div><span className="meta-label">Frames shipped</span><span className="meta-value" style={{ fontSize: 20 }}><RollingCounter target={3} /></span></div>
-              <div><span className="meta-label">Status</span><span className="meta-value" style={{ fontSize: 20 }}>Open to roles &amp; apprenticeships</span></div>
-              <div><span className="meta-label">Tools</span><span className="meta-value" style={{ fontSize: 20 }}>Figma, Maya, Blender, React</span></div>
+              <div>
+                <span className="meta-label">Status</span>
+                <span className="meta-value" style={{ fontSize: 20 }}>Open to roles &amp; apprenticeships</span>
+                <div className="facts-subitem">
+                  <span className="meta-label">Tools</span>
+                  <ToolsTicker />
+                </div>
+              </div>
             </Reveal>
           </div>
         </section>
