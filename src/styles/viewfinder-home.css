@@ -128,7 +128,12 @@
 }
 .vf-home .vf-pillnav-pill.is-active .vf-pillnav-circle {
   background: rgba(26, 26, 26, 0.55);
-  backdrop-filter: blur(10px) saturate(160%); -webkit-backdrop-filter: blur(10px) saturate(160%);
+  /* Plain blur first as the fallback; browsers that don't understand an
+     SVG-filter reference inside backdrop-filter drop the second
+     declaration entirely and keep this one. */
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  backdrop-filter: url(#pill-glass-distortion) blur(4px) brightness(1.08) saturate(160%);
 }
 .vf-home .vf-pillnav-toggle {
   display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
