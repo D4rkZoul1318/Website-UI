@@ -1,20 +1,6 @@
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { Reveal, staggerDelay } from '../camera/Reveal';
-import { ROUTES } from '../../routes';
-
-function useScrollProgress() {
-  const [pct, setPct] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-  return pct;
-}
+import { Nav } from '../home/Nav';
 
 const systemFeatures = [
   { ord: '01 — Disc rail', title: 'Load, don’t queue', body: 'Tracks are uploaded to a shelf, then loaded into one of six slots. A frosted-glass carriage slides over the active disc. Selection is a deliberate act, not a scroll.' },
@@ -86,22 +72,10 @@ function LiveUnit() {
 
 export default function RewindCaseStudy() {
   useEffect(() => { document.title = 'REWIND — Sohum Bhatnagar'; }, []);
-  const scrollPct = useScrollProgress();
 
   return (
     <div className="camera-theme">
-      {createPortal(
-        <>
-          <header className="topbar">
-            <span className="mark">REWIND — Case Study</span>
-            <a className="focus-cue" href={`${ROUTES.home}#sheet`}>
-              <span className="arrow" aria-hidden="true">←</span><span>Back to Projects</span>
-            </a>
-          </header>
-          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
-        </>,
-        document.getElementById('fixed-ui-root')!
-      )}
+      <Nav />
 
       <main>
         {/* SEC.00 — HERO */}

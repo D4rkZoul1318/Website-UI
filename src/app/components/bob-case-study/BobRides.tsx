@@ -2,20 +2,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { CountUp } from '../camera/CountUp';
-import { ROUTES } from '../../routes';
-
-function useScrollProgress() {
-  const [pct, setPct] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-  return pct;
-}
+import { Nav } from '../home/Nav';
 
 const NAV_SECTIONS = [
   { id: 'hero', num: '00', title: 'BOB Rides' },
@@ -127,22 +114,14 @@ const taskMappingRows: { label: string; cells: string[] }[] = [
 
 export default function BobRides() {
   useEffect(() => { document.title = 'BOB Rides — Sohum Bhatnagar'; }, []);
-  const scrollPct = useScrollProgress();
   const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
   const navOnDark = DARK_SECTION_IDS.has(activeSection);
 
   return (
     <div className="camera-theme">
+      <Nav />
       {createPortal(
         <>
-          <header className="topbar">
-            <span className="mark">BOB RIDES — Case Study</span>
-            <a className="focus-cue" href={`${ROUTES.home}#sheet`}>
-              <span className="arrow" aria-hidden="true">←</span><span>Back to Projects</span>
-            </a>
-          </header>
-          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
-
           <nav
             aria-label="Case study sections"
             className="mobile-nav-fallback"

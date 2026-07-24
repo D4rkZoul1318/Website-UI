@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { Reveal, staggerDelay } from './camera/Reveal';
-import { ROUTES } from '../routes';
+import { Nav } from './home/Nav';
 
 const researchCards = [
   { eyebrow: 'Personal Observation', title: 'First-hand Experience', body: 'As a direct user of UUCMS, navigation patterns and failure states were documented through repeated use. Initial attempts to locate the marks card required navigating through multiple misleading subsections — results were filed under exam and fee categories with no logical grouping.' },
@@ -26,19 +25,6 @@ const outcomeSlides = [
   { src: '/images/redesigned-dashboard.webp', alt: 'Redesigned Dashboard', caption: 'Simplified navigation with clear hierarchy and quick access to key student actions' },
   { src: '/images/results.webp', alt: 'Results and Outcomes', caption: 'Time, clicks, and independence — the three metrics measured below' },
 ];
-
-function useScrollProgress() {
-  const [pct, setPct] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-  return pct;
-}
 
 function CompareSlider() {
   const [pct, setPct] = useState(50);
@@ -151,22 +137,10 @@ function OutcomeCarousel() {
 
 export default function CaseStudy() {
   useEffect(() => { document.title = 'UUCMS Redesign — Sohum Bhatnagar'; }, []);
-  const scrollPct = useScrollProgress();
 
   return (
     <div className="camera-theme uucms">
-      {createPortal(
-        <>
-          <header className="topbar">
-            <span className="mark">UUCMS — Case Study</span>
-            <a className="focus-cue" href={`${ROUTES.home}#sheet`}>
-              <span className="arrow" aria-hidden="true">←</span><span>Back to Projects</span>
-            </a>
-          </header>
-          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
-        </>,
-        document.getElementById('fixed-ui-root')!
-      )}
+      <Nav />
 
       <main>
         {/* HERO */}

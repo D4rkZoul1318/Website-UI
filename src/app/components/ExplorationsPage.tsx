@@ -6,7 +6,7 @@ import { PhotoBurst } from './PhotoBurst';
 import { HolographicCard } from './HolographicCard';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { ClippedTab } from './camera/ClippedTab';
-import { ROUTES } from '../routes';
+import { Nav } from './home/Nav';
 
 type LiveKind = 'rewind' | 'octopus';
 
@@ -37,19 +37,6 @@ function LiveProjectPanel({ kind, onClose }: { kind: LiveKind; onClose: () => vo
       </div>
     </Reveal>
   );
-}
-
-function useScrollProgress() {
-  const [pct, setPct] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-  return pct;
 }
 
 const allItems = [
@@ -187,7 +174,6 @@ export function ExplorationsPage() {
   const [active, setActive] = useState(initialFilter);
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [activeLive, setActiveLive] = useState<LiveKind | null>(null);
-  const scrollPct = useScrollProgress();
 
   useEffect(() => { document.title = 'Explorations — Sohum Bhatnagar'; }, []);
 
@@ -195,18 +181,7 @@ export function ExplorationsPage() {
 
   return (
     <div className="camera-theme">
-      {createPortal(
-        <>
-          <header className="topbar">
-            <span className="mark">EXPLORATIONS</span>
-            <a className="focus-cue" href={ROUTES.home}>
-              <span className="arrow" aria-hidden="true">←</span><span>Back to Home</span>
-            </a>
-          </header>
-          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
-        </>,
-        document.getElementById('fixed-ui-root')!
-      )}
+      <Nav />
 
       <main>
         {/* Hero */}

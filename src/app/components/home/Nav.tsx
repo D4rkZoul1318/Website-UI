@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useLocation } from 'react-router-dom';
 import { ROUTES } from '../../routes';
+import { PillNav } from './PillNav';
 
+// Work/Contact are same-page anchors on the homepage; prefixing the route
+// makes them work as "go home, then scroll" links from every other page too
+// (App.tsx's useHashScroll handles the scroll-into-view once we land there).
 const LINKS = [
-  { href: '#work', index: '01', label: 'Work' },
-  { href: ROUTES.explorations, index: '02', label: 'Explorations' },
-  { href: ROUTES.about, index: '03', label: 'About' },
-  { href: '#contact', index: '04', label: 'Contact' },
+  { href: `${ROUTES.home}#work`, label: 'Work' },
+  { href: ROUTES.explorations, label: 'Explorations' },
+  { href: ROUTES.about, label: 'About' },
+  { href: `${ROUTES.home}#contact`, label: 'Contact' },
 ];
 
 function useScrollProgress() {
@@ -41,22 +46,29 @@ function useISTClock() {
 export function Nav() {
   const pct = useScrollProgress();
   const time = useISTClock();
+  const location = useLocation();
+
+  const activeHref =
+    location.pathname === ROUTES.explorations ? ROUTES.explorations
+    : location.pathname === ROUTES.about ? ROUTES.about
+    : '';
 
   return createPortal(
     <header className="vf-nav">
       <div className="vf-nav-bar">
-        <a href="#top" className="vf-logo">
+        <a href={ROUTES.home} className="vf-logo">
           <span className="vf-logo-dot" aria-hidden="true"></span>
           <span>SB / Viewfinder</span>
         </a>
-        <nav className="vf-nav-links">
-          {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="vf-nav-link">
-              <span className="vf-nav-idx">{l.index}</span>
-              <span>{l.label}</span>
-            </a>
-          ))}
-        </nav>
+        <PillNav
+          items={LINKS}
+          activeHref={activeHref}
+          baseColor="var(--ink)"
+          pillColor="var(--paper)"
+          pillTextColor="var(--ink)"
+          hoveredPillTextColor="var(--paper)"
+          theme="light"
+        />
         <div className="vf-nav-right">
           <span className="vf-nav-clock">IST · {time}</span>
           <a href="mailto:sohum1311@gmail.com" className="vf-nav-cta">●&nbsp;&nbsp;Available</a>

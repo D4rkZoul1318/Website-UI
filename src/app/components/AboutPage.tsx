@@ -1,21 +1,7 @@
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useEffect } from 'react';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { RollingCounter } from './camera/DigitReel';
-import { ROUTES } from '../routes';
-
-function useScrollProgress() {
-  const [pct, setPct] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-  return pct;
-}
+import { Nav } from './home/Nav';
 
 const experience = [
   {
@@ -54,22 +40,10 @@ const toolkit = [
 
 export function AboutPage() {
   useEffect(() => { document.title = 'About — Sohum Bhatnagar'; }, []);
-  const scrollPct = useScrollProgress();
 
   return (
     <div className="camera-theme">
-      {createPortal(
-        <>
-          <header className="topbar">
-            <span className="mark">ABOUT</span>
-            <a className="focus-cue" href={`${ROUTES.home}#notes`}>
-              <span className="arrow" aria-hidden="true">←</span><span>Back to Home</span>
-            </a>
-          </header>
-          <div className="progress-track"><div className="progress-fill" style={{ width: `${scrollPct}%` }} /></div>
-        </>,
-        document.getElementById('fixed-ui-root')!
-      )}
+      <Nav />
 
       <main>
         {/* HERO */}
