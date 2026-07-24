@@ -103,7 +103,7 @@ export function PillNav({
 
   return (
     <div className={`vf-pillnav vf-pillnav--${theme} ${className}`.trim()} style={{ ['--pillnav-base' as string]: baseColor }}>
-      <ul className="vf-pillnav-list" role="menubar" style={{ background: baseColor }}>
+      <ul className="vf-pillnav-list" role="menubar">
         {items.map((item, i) => {
           const isActive = item.href === activeHref;
           return (
@@ -123,7 +123,6 @@ export function PillNav({
                   ref={(el) => { circleRefs.current[i] = el; }}
                   className="vf-pillnav-circle"
                   aria-hidden="true"
-                  style={{ background: baseColor }}
                 />
                 <span
                   ref={(el) => { labelRefs.current[i] = el; }}
@@ -156,7 +155,7 @@ export function PillNav({
             key={item.href}
             href={item.href}
             className={`vf-pillnav-mobile-link${item.href === activeHref ? ' is-active' : ''}`}
-            style={{ color: pillColor }}
+            style={{ color: hoveredPillTextColor }}
             onClick={() => setMobileOpen(false)}
           >
             {item.label}

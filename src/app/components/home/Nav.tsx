@@ -63,8 +63,8 @@ export function Nav() {
         <PillNav
           items={LINKS}
           activeHref={activeHref}
-          baseColor="rgba(26, 26, 26, 0.38)"
-          pillColor="rgba(244, 243, 240, 0.28)"
+          baseColor="var(--ink)"
+          pillColor="transparent"
           pillTextColor="var(--ink)"
           hoveredPillTextColor="var(--paper)"
           theme="light"
