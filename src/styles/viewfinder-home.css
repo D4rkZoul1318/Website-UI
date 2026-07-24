@@ -132,12 +132,22 @@
 .vf-home .vf-hero-tagline { margin-top: 20px; font-family: var(--font-display); font-size: clamp(1.15rem, 2.4vw, 1.75rem); line-height: 1.3; }
 .vf-home .vf-hero-tagline .vf-italic { font-style: italic; font-weight: 400; color: var(--ink-60); }
 .vf-home .vf-hero-grid { position: relative; z-index: 1; margin-top: 40px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; align-items: start; padding: 0 24px; }
-.vf-home .vf-hero-col-main { grid-column: span 12; }
+.vf-home .vf-hero-col-main { grid-column: span 12; text-align: center; }
 .vf-home .vf-hero-col-side { grid-column: span 12; display: flex; flex-direction: column; gap: 24px; margin-top: 40px; }
-.vf-home .vf-dial-wrap { position: relative; width: 100%; max-width: 280px; aspect-ratio: 1; }
-.vf-home .vf-dial-wrap svg { width: 100%; height: 100%; }
-.vf-home .vf-dial-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-.vf-home .vf-dial-label span { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.24em; color: var(--ink-60); }
+.vf-home .vf-hero-photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 320px; margin: 0 auto; }
+.vf-home .vf-hero-photo {
+  position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 2px;
+  background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper-band) 100%);
+  box-shadow: 0 2px 6px var(--ink-12);
+}
+.vf-home .vf-hero-photo:nth-child(1) { transform: rotate(-2deg); }
+.vf-home .vf-hero-photo:nth-child(2) { transform: rotate(1.5deg); margin-top: 20px; }
+.vf-home .vf-hero-photo:nth-child(3) { transform: rotate(1deg); margin-top: -12px; }
+.vf-home .vf-hero-photo:nth-child(4) { transform: rotate(-1.5deg); margin-top: 8px; }
+.vf-home .vf-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .vf-home .vf-hero-photo:hover img { transform: scale(1.06); }
+}
 .vf-home .vf-frame-count { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-40); }
 .vf-home .vf-hero-side-copy { font-family: var(--font-display); font-size: 1.125rem; line-height: 1.35; max-width: 36ch; }
 .vf-home .vf-hero-foot { position: relative; z-index: 1; margin-top: 56px; padding: 0 24px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; align-items: end; }

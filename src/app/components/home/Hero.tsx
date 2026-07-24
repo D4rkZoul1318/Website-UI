@@ -1,31 +1,20 @@
 import { LineMask } from './LineMask';
 
-function ApertureDial() {
-  const sectors = [0, 60, 120, 180, 240, 300];
+const HERO_PHOTOS = [
+  { src: '/images/about-photos/rocks.webp', alt: 'Sohum relaxing by a rocky stream' },
+  { src: '/images/about-photos/cafe.webp', alt: 'Sohum at a café' },
+  { src: '/images/about-photos/camera.webp', alt: 'Sohum shooting with a telephoto lens' },
+  { src: '/images/about-photos/macaques.webp', alt: 'Macaques photographed on a riverside rock' },
+];
+
+function HeroPhotos() {
   return (
-    <div className="vf-dial-wrap">
-      <svg viewBox="0 0 240 240" fill="none" aria-hidden="true">
-        <circle cx="120" cy="120" r="118" stroke="var(--ink)" strokeWidth="1" />
-        <circle cx="120" cy="120" r="102" stroke="var(--ink)" strokeWidth="1" strokeDasharray="2 4" opacity="0.55" />
-        <g className="aperture-spin" style={{ transformOrigin: '120px 120px' }}>
-          {sectors.map((deg, i) => (
-            <path
-              key={deg}
-              d="M120 120 L120 22 A98 98 0 0 1 204.85 71 Z"
-              fill="var(--ink)"
-              opacity={0.06 + i * 0.015}
-              transform={`rotate(${deg} 120 120)`}
-            />
-          ))}
-          {sectors.map((deg) => (
-            <line key={deg} x1="120" y1="120" x2="120" y2="22" stroke="var(--ink)" strokeWidth="1" opacity="0.35" transform={`rotate(${deg} 120 120)`} />
-          ))}
-        </g>
-        <circle cx="120" cy="120" r="6" fill="var(--ink)" />
-      </svg>
-      <div className="vf-dial-label">
-        <span>F 2.8</span>
-      </div>
+    <div className="vf-hero-photo-grid">
+      {HERO_PHOTOS.map((photo) => (
+        <div className="vf-hero-photo" key={photo.src}>
+          <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+        </div>
+      ))}
     </div>
   );
 }
@@ -61,7 +50,7 @@ export function Hero() {
         </div>
 
         <div className="vf-hero-col-side">
-          <ApertureDial />
+          <HeroPhotos />
           <div>
             <p className="vf-frame-count">Frame &middot; 001 / 128</p>
             <p className="vf-hero-side-copy" style={{ marginTop: 12 }}>
