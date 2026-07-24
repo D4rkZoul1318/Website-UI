@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { ROUTES } from '../../routes';
 
 const LINKS = [
   { href: '#work', index: '01', label: 'Work' },
-  { href: '#about', index: '02', label: 'About' },
-  { href: '#contact', index: '03', label: 'Contact' },
+  { href: ROUTES.explorations, index: '02', label: 'Explorations' },
+  { href: ROUTES.about, index: '03', label: 'About' },
+  { href: '#contact', index: '04', label: 'Contact' },
 ];
 
 function useScrollProgress() {

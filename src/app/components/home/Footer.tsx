@@ -1,8 +1,10 @@
 import { Reveal } from '../camera/Reveal';
+import { ROUTES } from '../../routes';
 
 const DIRECTORY = [
   { href: '#work', label: 'Work' },
-  { href: '#about', label: 'About' },
+  { href: ROUTES.explorations, label: 'Explorations' },
+  { href: ROUTES.about, label: 'About' },
   { href: '#contact', label: 'Contact' },
 ];
 
