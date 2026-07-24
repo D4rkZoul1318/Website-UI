@@ -127,9 +127,16 @@
   transform-origin: 50% 50%;
   transition: transform 300ms var(--ease-out);
 }
-.vf-home .vf-pillnav-label { position: relative; z-index: 1; transition: color 150ms; }
-.vf-home .vf-pillnav-pill:hover .vf-pillnav-label,
-.vf-home .vf-pillnav-pill.is-active .vf-pillnav-label { color: var(--paper); }
+/* Roll: two stacked copies of the label in an overflow-hidden window, one
+   pre-colored for rest, one for hover/active. Hovering slides the whole
+   two-line stack up by exactly half its own height (a 2-line stack, so
+   -50% is one line) — the label appears to swap color by rolling to a
+   fresh copy rather than a plain color transition. */
+.vf-home .vf-pillnav-roll { position: relative; z-index: 1; display: block; overflow: hidden; height: 1em; line-height: 1; }
+.vf-home .vf-pillnav-roll-track { display: flex; flex-direction: column; transition: transform 320ms var(--ease-out); }
+.vf-home .vf-pillnav-roll-line { display: block; height: 1em; line-height: 1; }
+.vf-home .vf-pillnav-pill:hover .vf-pillnav-roll-track,
+.vf-home .vf-pillnav-pill.is-active .vf-pillnav-roll-track { transform: translateY(-50%); }
 @media (hover: hover) and (pointer: fine) {
   .vf-home .vf-pillnav-pill:hover .vf-pillnav-circle { transform: scale(1); }
 }

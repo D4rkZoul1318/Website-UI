@@ -100,11 +100,11 @@ export function PillNav({
                 style={{ background: pillColor, color: pillTextColor }}
               >
                 <span className="vf-pillnav-circle" aria-hidden="true" />
-                <span
-                  className="vf-pillnav-label"
-                  style={{ color: isActive ? hoveredPillTextColor : undefined }}
-                >
-                  {item.label}
+                <span className="vf-pillnav-roll" aria-hidden="true">
+                  <span className="vf-pillnav-roll-track">
+                    <span className="vf-pillnav-roll-line" style={{ color: pillTextColor }}>{item.label}</span>
+                    <span className="vf-pillnav-roll-line" style={{ color: hoveredPillTextColor }}>{item.label}</span>
+                  </span>
                 </span>
               </a>
             </li>
