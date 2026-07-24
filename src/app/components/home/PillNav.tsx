@@ -29,7 +29,16 @@ export interface PillNavProps {
  * circle up from its center (clipped by the pill's own rounded corners) while
  * the label crossfades between `pillTextColor` and `hoveredPillTextColor`.
  * The active item is pinned in that same "hovered" state so the current
- * section/page is always visually distinct from the rest. */
+ * section/page is always visually distinct from the rest.
+ *
+ * The circle's scale is driven entirely by CSS `:hover`/`.is-active`, not by
+ * JS mouseenter/mouseleave handlers calling gsap.to(). An earlier version
+ * did that, and under main-thread contention (e.g. switching Explorations'
+ * filter tabs, which fires GSAP tweens across a dozen-plus masonry items)
+ * the browser can coalesce or drop a mouseleave event — the "scale up" tween
+ * would finish with no matching "scale down" ever firing, leaving a pill
+ * permanently stuck solid-black with unreadable dark-on-dark text. CSS
+ * `:hover` can't desync from the real pointer state like that. */
 export function PillNav({
   items,
   activeHref = '',
@@ -42,19 +51,11 @@ export function PillNav({
   theme = 'light',
   initialLoadAnimation = true,
 }: PillNavProps) {
-  const circleRefs = useRef<Array<HTMLSpanElement | null>>([]);
-  const labelRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const pillRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // The circle's resting scale (0 normally, 1 when active) is a CSS
-    // default now, not something JS sets on mount — writing it here too
-    // used to leave a brief window, before this effect ran, where the
-    // circle rendered at its unset natural size (fully opaque, covering
-    // the label) until GSAP caught up and hid it. GSAP now only ever
-    // touches these circles in response to a real hover.
     if (initialLoadAnimation) {
       gsap.fromTo(
         pillRefs.current.filter(Boolean),
@@ -63,18 +64,6 @@ export function PillNav({
       );
     }
   }, [items, ease, initialLoadAnimation]);
-
-  const handleEnter = (i: number, isActive: boolean) => {
-    if (isActive) return;
-    const circle = circleRefs.current[i];
-    if (circle) gsap.to(circle, { scale: 1, duration: 0.4, ease });
-  };
-
-  const handleLeave = (i: number, isActive: boolean) => {
-    if (isActive) return;
-    const circle = circleRefs.current[i];
-    if (circle) gsap.to(circle, { scale: 0, duration: 0.3, ease });
-  };
 
   useEffect(() => {
     const menu = mobileMenuRef.current;
@@ -109,16 +98,9 @@ export function PillNav({
                 aria-current={isActive ? 'page' : undefined}
                 className={`vf-pillnav-pill${isActive ? ' is-active' : ''}`}
                 style={{ background: pillColor, color: pillTextColor }}
-                onMouseEnter={() => handleEnter(i, isActive)}
-                onMouseLeave={() => handleLeave(i, isActive)}
               >
+                <span className="vf-pillnav-circle" aria-hidden="true" />
                 <span
-                  ref={(el) => { circleRefs.current[i] = el; }}
-                  className="vf-pillnav-circle"
-                  aria-hidden="true"
-                />
-                <span
-                  ref={(el) => { labelRefs.current[i] = el; }}
                   className="vf-pillnav-label"
                   style={{ color: isActive ? hoveredPillTextColor : undefined }}
                 >
