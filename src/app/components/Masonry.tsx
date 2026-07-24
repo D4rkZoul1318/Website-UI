@@ -28,11 +28,20 @@ const useMeasure = () => {
   return [ref, size] as const;
 };
 
+// A slow or unreachable external image (the grid mixes local /images assets
+// with hotlinked artstation.com URLs) must never hold up the whole gallery —
+// without a per-image timeout, one straggling host can block layout and
+// every entrance animation for as long as the browser takes to give up on
+// that connection, which on some networks is many seconds.
+const IMAGE_LOAD_TIMEOUT = 2500;
+
 const preloadImages = async (urls: string[]) => {
   await Promise.all(urls.map(src => new Promise(resolve => {
     const img = new Image();
+    const done = () => resolve(null);
+    const timer = setTimeout(done, IMAGE_LOAD_TIMEOUT);
+    img.onload = img.onerror = () => { clearTimeout(timer); done(); };
     img.src = src;
-    img.onload = img.onerror = () => resolve(null);
   })));
 };
 
