@@ -49,19 +49,12 @@ export function PillNav({
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // Park each circle fully shrunk and centered so it can scale up from a
-    // single point on hover instead of popping in at full size.
-    circleRefs.current.forEach((circle) => {
-      if (!circle) return;
-      gsap.set(circle, { scale: 0, transformOrigin: '50% 50%' });
-    });
-
-    items.forEach((item, i) => {
-      const isActive = item.href === activeHref;
-      const circle = circleRefs.current[i];
-      if (circle) gsap.set(circle, { scale: isActive ? 1 : 0 });
-    });
-
+    // The circle's resting scale (0 normally, 1 when active) is a CSS
+    // default now, not something JS sets on mount — writing it here too
+    // used to leave a brief window, before this effect ran, where the
+    // circle rendered at its unset natural size (fully opaque, covering
+    // the label) until GSAP caught up and hid it. GSAP now only ever
+    // touches these circles in response to a real hover.
     if (initialLoadAnimation) {
       gsap.fromTo(
         pillRefs.current.filter(Boolean),
@@ -69,7 +62,7 @@ export function PillNav({
         { y: 0, opacity: 1, duration: 0.5, ease, stagger: 0.06 }
       );
     }
-  }, [items, activeHref, ease, initialLoadAnimation]);
+  }, [items, ease, initialLoadAnimation]);
 
   const handleEnter = (i: number, isActive: boolean) => {
     if (isActive) return;

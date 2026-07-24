@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { PillNav } from './PillNav';
-import { GlassFilter } from './GlassFilter';
 
 // Work/Contact are same-page anchors on the homepage; prefixing the route
 // makes them work as "go home, then scroll" links from every other page too
@@ -56,7 +55,6 @@ export function Nav() {
 
   return createPortal(
     <header className="vf-nav">
-      <GlassFilter id="pill-glass-distortion" />
       <div className="vf-nav-bar">
         <a href={ROUTES.home} className="vf-logo">
           <span className="vf-logo-dot" aria-hidden="true"></span>
