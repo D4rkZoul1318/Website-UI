@@ -104,48 +104,67 @@
 .vf-home .vf-logo-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--terracotta); }
 /* ---- PillNav (rolling text-swap links, no pill chrome) -----------------
    Plain text links — no background, border, or fill. The only hover/active
-   treatment is the label rolling from ink to the terracotta accent. */
-.vf-home .vf-pillnav { display: flex; align-items: center; position: relative; }
-.vf-home .vf-pillnav-list { display: none; align-items: center; gap: 32px; list-style: none; margin: 0; padding: 0; }
-.vf-home .vf-pillnav-link {
+   treatment is the label rolling from ink to the terracotta accent.
+   Scoped to :where(.vf-home, .camera-theme) since PillNav is used both
+   portaled under the homepage's nav (inside #fixed-ui-root, which carries
+   .vf-home) and embedded directly on chapter pages that only ever set
+   .camera-theme on their root (e.g. Explorations' filter tabs). */
+:where(.vf-home, .camera-theme) .vf-pillnav { display: flex; align-items: center; position: relative; }
+:where(.vf-home, .camera-theme) .vf-pillnav-list { display: none; align-items: center; gap: 32px; list-style: none; margin: 0; padding: 0; }
+:where(.vf-home, .camera-theme) .vf-pillnav-list.is-always-visible { display: flex; }
+:where(.vf-home, .camera-theme) .vf-pillnav-link {
   position: relative; display: inline-flex; align-items: center;
   padding: 4px 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  background: none; border: none; cursor: pointer;
 }
-.vf-home .vf-pillnav-link::after {
+:where(.vf-home, .camera-theme) .vf-pillnav-link::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px;
   background: var(--terracotta-ink); transform: scaleX(0); transform-origin: left; transition: transform 250ms var(--ease-out);
 }
-.vf-home .vf-pillnav-link.is-active::after { transform: scaleX(1); }
+:where(.vf-home, .camera-theme) .vf-pillnav-link.is-active::after { transform: scaleX(1); }
 /* Roll: two stacked copies of the label in an overflow-hidden window, one
    pre-colored for rest, one for hover/active. Hovering slides the whole
    two-line stack up by exactly half its own height (a 2-line stack, so
    -50% is one line) — the label appears to roll a fresh, differently
    colored copy into view rather than just crossfading. */
-.vf-home .vf-pillnav-roll { position: relative; z-index: 1; display: block; overflow: hidden; height: 1em; line-height: 1; }
-.vf-home .vf-pillnav-roll-track { display: flex; flex-direction: column; transition: transform 320ms var(--ease-out); }
-.vf-home .vf-pillnav-roll-line { display: block; height: 1em; line-height: 1; }
-.vf-home .vf-pillnav-link.is-active .vf-pillnav-roll-track { transform: translateY(-50%); }
+:where(.vf-home, .camera-theme) .vf-pillnav-roll { position: relative; z-index: 1; display: block; overflow: hidden; height: 1em; line-height: 1; }
+:where(.vf-home, .camera-theme) .vf-pillnav-roll-track { display: flex; flex-direction: column; transition: transform 320ms var(--ease-out); }
+:where(.vf-home, .camera-theme) .vf-pillnav-roll-line { display: block; height: 1em; line-height: 1; }
+:where(.vf-home, .camera-theme) .vf-pillnav-link.is-active .vf-pillnav-roll-track { transform: translateY(-50%); }
 @media (hover: hover) and (pointer: fine) {
-  .vf-home .vf-pillnav-link:hover .vf-pillnav-roll-track { transform: translateY(-50%); }
+  :where(.vf-home, .camera-theme) .vf-pillnav-link:hover .vf-pillnav-roll-track { transform: translateY(-50%); }
 }
-.vf-home .vf-pillnav-toggle {
+:where(.vf-home, .camera-theme) .vf-pillnav-toggle {
   display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
   width: 36px; height: 36px; border-radius: 50%; border: none; cursor: pointer;
 }
-.vf-home .vf-pillnav-toggle span { display: block; width: 16px; height: 1.5px; background: var(--paper); transition: transform 200ms; }
-.vf-home .vf-pillnav-toggle.is-open span:first-child { transform: translateY(3.25px) rotate(45deg); }
-.vf-home .vf-pillnav-toggle.is-open span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
-.vf-home .vf-pillnav-mobile {
+:where(.vf-home, .camera-theme) .vf-pillnav-toggle span { display: block; width: 16px; height: 1.5px; background: var(--paper); transition: transform 200ms; }
+:where(.vf-home, .camera-theme) .vf-pillnav-toggle.is-open span:first-child { transform: translateY(3.25px) rotate(45deg); }
+:where(.vf-home, .camera-theme) .vf-pillnav-toggle.is-open span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+:where(.vf-home, .camera-theme) .vf-pillnav-mobile {
   position: absolute; top: calc(100% + 8px); right: 0; flex-direction: column; gap: 4px;
   padding: 12px; border-radius: 16px; min-width: 180px; overflow: hidden; z-index: 60;
   box-shadow: 0 8px 24px rgba(26, 26, 26, 0.18);
 }
-.vf-home .vf-pillnav-mobile-link { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; padding: 10px 12px; border-radius: 9999px; transition: background 150ms; }
-.vf-home .vf-pillnav-mobile-link:hover, .vf-home .vf-pillnav-mobile-link.is-active { background: rgba(244, 243, 240, 0.14); }
+:where(.vf-home, .camera-theme) .vf-pillnav-mobile-link { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; padding: 10px 12px; border-radius: 9999px; transition: background 150ms; background: none; border: none; cursor: pointer; }
+:where(.vf-home, .camera-theme) .vf-pillnav-mobile-link:hover, :where(.vf-home, .camera-theme) .vf-pillnav-mobile-link.is-active { background: rgba(244, 243, 240, 0.14); }
+
+/* ---- PillNav "tabs" variant: same roll links, grouped in one large pill -- */
+:where(.vf-home, .camera-theme) .vf-pillnav--tabs .vf-pillnav-list {
+  background: var(--ink); border-radius: 9999px; padding: 6px; gap: 2px; max-width: 100%;
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+:where(.vf-home, .camera-theme) .vf-pillnav--tabs .vf-pillnav-list::-webkit-scrollbar { display: none; }
+:where(.vf-home, .camera-theme) .vf-pillnav--tabs .vf-pillnav-link {
+  padding: 10px 20px; border-radius: 9999px; white-space: nowrap; flex: 0 0 auto;
+  transition: background 200ms var(--ease-out);
+}
+:where(.vf-home, .camera-theme) .vf-pillnav--tabs .vf-pillnav-link::after { display: none; }
+:where(.vf-home, .camera-theme) .vf-pillnav--tabs .vf-pillnav-link.is-active { background: var(--paper); }
 @media (min-width: 768px) {
-  .vf-home .vf-pillnav-list { display: flex; }
-  .vf-home .vf-pillnav-toggle { display: none; }
-  .vf-home .vf-pillnav-mobile { display: none !important; }
+  :where(.vf-home, .camera-theme) .vf-pillnav-list { display: flex; }
+  :where(.vf-home, .camera-theme) .vf-pillnav-toggle { display: none; }
+  :where(.vf-home, .camera-theme) .vf-pillnav-mobile { display: none !important; }
 }
 
 .vf-home .vf-nav-right { display: flex; align-items: center; gap: 16px; }

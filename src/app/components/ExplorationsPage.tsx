@@ -4,9 +4,9 @@ import Masonry from './Masonry';
 import { ScrollToTop } from './ScrollToTop';
 import { PhotoBurst } from './PhotoBurst';
 import { HolographicCard } from './HolographicCard';
-import { Reveal, staggerDelay } from './camera/Reveal';
-import { ClippedTab } from './camera/ClippedTab';
+import { Reveal } from './camera/Reveal';
 import { Nav } from './home/Nav';
+import { PillNav } from './home/PillNav';
 
 type LiveKind = 'rewind' | 'octopus';
 
@@ -194,18 +194,16 @@ export function ExplorationsPage() {
             </Reveal>
 
             <Reveal className="explore-filters">
-              <div className="clipped-tab-bar">
-                {categories.map((cat, i) => (
-                  <ClippedTab
-                    key={cat}
-                    active={active === cat}
-                    onClick={() => setActive(cat)}
-                    style={{ transitionDelay: `${staggerDelay(i)}ms` }}
-                  >
-                    {cat}
-                  </ClippedTab>
-                ))}
-              </div>
+              <PillNav
+                items={categories.map((cat) => ({ label: cat, onClick: () => setActive(cat) }))}
+                activeHref={active}
+                className="vf-pillnav--tabs"
+                baseColor="var(--ink)"
+                pillTextColor="var(--paper)"
+                hoveredPillTextColor="var(--terracotta)"
+                theme="light"
+                alwaysShowList
+              />
             </Reveal>
           </div>
         </section>

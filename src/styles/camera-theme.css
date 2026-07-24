@@ -15,6 +15,11 @@
   --accent-dim: rgba(255, 77, 0, 0.14);
   --screen-bg: #141414;
   --soft-grey: #dad8d3;
+  /* Shared with .vf-home so PillNav (used both portaled under the homepage
+     nav and embedded directly on chapter pages, e.g. Explorations' filter
+     tabs) resolves to the same accent regardless of which wrapper it's in. */
+  --terracotta: #e8734a;
+  --terracotta-ink: #c85a34;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -477,37 +482,3 @@
   .camera-theme .retro-grid__lines { animation: none; }
 }
 
-/* ---- Motif: clipped tab (concave-corner tab bar) ------------------------ */
-.camera-theme .clipped-tab-bar {
-  display: inline-flex; align-items: flex-end; gap: 2px; max-width: 100%;
-  padding: 0 var(--space-3); background: var(--screen-bg); border-radius: 10px 10px 0 0;
-  overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-}
-.camera-theme .clipped-tab-bar::-webkit-scrollbar { display: none; }
-.camera-theme .clipped-tab {
-  position: relative; display: inline-flex; align-items: center; justify-content: center;
-  flex: 0 0 auto; white-space: nowrap;
-  height: 36px; padding: 0 var(--space-4); margin: 0; border: none; cursor: pointer;
-  border-radius: 10px 10px 0 0; background: transparent;
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: rgba(244, 243, 240, 0.45);
-  transition: color 200ms var(--ease-out), background 200ms var(--ease-out);
-}
-.camera-theme .clipped-tab:hover { color: rgba(244, 243, 240, 0.75); }
-.camera-theme .clipped-tab.active { color: var(--ink); background: var(--paper); }
-.camera-theme .clipped-tab__notch {
-  position: absolute; bottom: 0; width: 10px; height: 10px; opacity: 0;
-  transition: opacity 160ms var(--ease-out);
-}
-.camera-theme .clipped-tab.active .clipped-tab__notch { opacity: 1; }
-.camera-theme .clipped-tab__notch--left {
-  left: -10px;
-  background: radial-gradient(circle at top left, transparent 10px, var(--paper) 10px);
-}
-.camera-theme .clipped-tab__notch--right {
-  right: -10px;
-  background: radial-gradient(circle at top right, transparent 10px, var(--paper) 10px);
-}
-.camera-theme .clipped-tab:focus-visible {
-  outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 6px;
-}
