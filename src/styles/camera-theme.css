@@ -313,6 +313,17 @@
 .camera-theme .feature-cell p { color: var(--ink-soft); line-height: 1.6; font-size: 0.96rem; }
 @media (max-width: 860px) { .camera-theme .feature-grid { grid-template-columns: 1fr; } }
 
+.camera-theme .feature-cell-icon {
+  display: flex; align-items: center; justify-content: center; width: 48px; height: 48px;
+  border-radius: 50%; background: var(--accent-soft, rgba(232, 115, 74, 0.12)); color: var(--accent);
+  margin-bottom: var(--space-4);
+}
+.camera-theme .feature-cell-icon svg { width: 22px; height: 22px; }
+
+.camera-theme .arrow-point { display: flex; gap: var(--space-3); align-items: flex-start; max-width: 68ch; }
+.camera-theme .arrow-point-icon { flex: 0 0 auto; width: 18px; height: 18px; margin-top: 3px; color: var(--accent); }
+.camera-theme .arrow-point p { color: var(--ink-soft); line-height: 1.6; font-size: 0.96rem; }
+
 .camera-theme .sheet-subtitle { font-family: var(--font-mono); font-size: 12px; color: var(--ink-faint); letter-spacing: 0.02em; margin-top: var(--space-2); }
 
 .camera-theme table.ed { width: 100%; border-collapse: collapse; margin-top: var(--space-7); font-family: var(--font-display); }

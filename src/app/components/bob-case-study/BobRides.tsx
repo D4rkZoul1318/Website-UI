@@ -1,8 +1,29 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
+import { LuUsers, LuCar, LuWallet, LuArrowRight } from 'react-icons/lu';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { CountUp } from '../camera/CountUp';
 import { Nav } from '../home/Nav';
+
+// Anchor links don't work under ScrollSmoother: it fixes #smooth-wrapper in
+// place and drives scroll entirely through a transform on #smooth-content,
+// so the browser's native hash-jump (which tries to move window.scrollY)
+// has nothing to act on. Route section links through the smoother's own
+// scrollTo instead, with a top offset so content doesn't land under the
+// fixed Nav bar.
+function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  e.preventDefault();
+  const target = document.getElementById(id);
+  if (!target) return;
+  const smoother = ScrollSmoother.get();
+  if (smoother) {
+    smoother.scrollTo(target, true, 'top top+=80');
+  } else {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  history.pushState(null, '', `#${id}`);
+}
 
 const NAV_SECTIONS = [
   { id: 'hero', num: '00', title: 'BOB Rides' },
@@ -58,6 +79,13 @@ const businessChallenges = [
   'The aggregator model required a single visual system that could represent competing brands (Rapido, Uber, Ola) without visual conflict',
 ];
 
+const productUserChallenges = [
+  'Users switching between 3 or more apps to compare prices before booking, adding friction to every ride decision',
+  'Flat, generic icons across existing apps make vehicle type selection feel utilitarian and unmemorable',
+  'Dark environments (night travel, low screen brightness) make standard light-mode icon systems difficult to read',
+  'No single app surfaces price comparisons transparently — users have to manually open each app',
+];
+
 const decisions = [
   {
     name: 'Vehicle direction: left-facing to isometric right-facing',
@@ -91,9 +119,9 @@ const userNeeds = [
 ];
 
 const features = [
-  { ord: '01', text: 'Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen' },
-  { ord: '02', text: '3D vehicle icon system — custom bike, auto, and cab icons across all booking states' },
-  { ord: '03', text: 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing' },
+  { ord: '01', Icon: LuUsers, text: 'Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen' },
+  { ord: '02', Icon: LuCar, text: '3D vehicle icon system — custom bike, auto, and cab icons across all booking states' },
+  { ord: '03', Icon: LuWallet, text: 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing' },
 ];
 
 const uniqueFeatures = [
@@ -137,6 +165,7 @@ export default function BobRides() {
               <a
                 key={s.id}
                 href={`#${s.id}`}
+                onClick={(e) => scrollToSection(e, s.id)}
                 title={s.title}
                 aria-current={activeSection === s.id ? 'true' : undefined}
                 style={{
@@ -159,6 +188,7 @@ export default function BobRides() {
               <a
                 key={s.id}
                 href={`#${s.id}`}
+                onClick={(e) => scrollToSection(e, s.id)}
                 aria-label={s.title}
                 aria-current={activeSection === s.id ? 'true' : undefined}
                 className={`side-nav__item${activeSection === s.id ? ' active' : ''}`}
@@ -285,8 +315,9 @@ export default function BobRides() {
           </div>
           <div className="wrap" style={{ marginTop: 'var(--space-7)' }}>
             {competitorPoints.map((text, i) => (
-              <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 0 : 'var(--space-5)' }}>
-                <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
+              <Reveal key={i} className="arrow-point" style={{ marginTop: i === 0 ? 0 : 'var(--space-5)' }}>
+                <LuArrowRight className="arrow-point-icon" aria-hidden="true" />
+                <p>{text}</p>
               </Reveal>
             ))}
           </div>
@@ -363,13 +394,11 @@ export default function BobRides() {
             <div className="feature-grid">
               {features.map((f, i) => (
                 <Reveal key={f.ord} variant="scale" delay={staggerDelay(i)} className="feature-cell">
+                  <span className="feature-cell-icon"><f.Icon /></span>
                   <span className="ord">{f.ord}</span><p>{f.text}</p>
                 </Reveal>
               ))}
             </div>
-            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-7)' }}>
-              <img src="/images/bob-redesign/features-functionalities-v2.webp" alt="Features and Functionalities" loading="lazy" decoding="async" />
-            </Reveal>
           </div>
         </section>
 
@@ -378,9 +407,14 @@ export default function BobRides() {
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>11</b> — DESIGN</Reveal>
             <Reveal as="h2">What was actually broken for users</Reveal>
-            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/product-user-challenges.webp" alt="Product User Challenges" loading="lazy" decoding="async" />
-            </Reveal>
+            <div style={{ marginTop: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+              {productUserChallenges.map((text, i) => (
+                <Reveal key={i} delay={staggerDelay(i)} className="arrow-point">
+                  <LuArrowRight className="arrow-point-icon" aria-hidden="true" />
+                  <p>{text}</p>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -402,9 +436,6 @@ export default function BobRides() {
           <div className="wrap-wide cinema-head">
             <Reveal className="section-index">SEC.<b>13</b> — DESIGN</Reveal>
             <Reveal as="h2">Every tap is a decision point</Reveal>
-            <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-redesign/task-mapping-v2.webp" alt="Task Mapping" loading="lazy" decoding="async" />
-            </Reveal>
           </div>
           <div className="wrap-wide">
             <Reveal style={{ overflowX: 'auto', marginTop: 'var(--space-7)' }}>
