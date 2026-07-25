@@ -81,10 +81,10 @@ export function AboutPage() {
               <div>
                 <span className="meta-label">Status</span>
                 <span className="meta-value" style={{ fontSize: 20 }}>Open to roles &amp; apprenticeships</span>
-                <div className="facts-subitem">
-                  <span className="meta-label">Tools</span>
-                  <ToolsWheel />
-                </div>
+              </div>
+              <div className="facts-subitem">
+                <span className="meta-label">Tools</span>
+                <ToolsWheel />
               </div>
             </Reveal>
           </div>
