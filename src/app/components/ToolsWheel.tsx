@@ -14,6 +14,10 @@ const TOOLS = [
 
 const STEP = 360 / TOOLS.length;
 
+/** Toolkit-list labels already represented as logos on the wheel, so the
+ * Skills & Tools section further down can skip them and avoid duplicates. */
+export const WHEEL_TOOL_NAMES = TOOLS.map((tool) => (tool.name === 'Unreal' ? 'Unreal Engine' : tool.name));
+
 /** Every tool from the toolkit list that has a real brand logo, shown
  * orbiting a spinning wheel — same aperture-spin rotation used by the
  * old hero dial, with each logo counter-rotating to stay upright as it

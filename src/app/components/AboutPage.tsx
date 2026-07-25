@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { RollingCounter } from './camera/DigitReel';
 import { Nav } from './home/Nav';
-import { ToolsWheel } from './ToolsWheel';
+import { ToolsWheel, WHEEL_TOOL_NAMES } from './ToolsWheel';
 
 const experience = [
   {
@@ -38,6 +38,8 @@ const toolkit = [
   { category: 'Dev', items: ['Git', 'Vercel', 'Reaper'] },
   { category: 'Methods', items: ['UX Research', 'Wireframing', '3D Iconography', 'PBR Asset Creation'] },
 ];
+
+const remainingSkills = toolkit.flatMap((group) => group.items).filter((item) => !WHEEL_TOOL_NAMES.includes(item));
 
 export function AboutPage() {
   useEffect(() => { document.title = 'About — Sohum Bhatnagar'; }, []);
@@ -84,7 +86,15 @@ export function AboutPage() {
               </div>
               <div className="facts-subitem">
                 <span className="meta-label">Tools</span>
-                <ToolsWheel />
+                <div className="tools-subrow">
+                  <ToolsWheel />
+                  <div className="tools-remaining">
+                    <span className="meta-label">Also</span>
+                    <div className="hero-tags">
+                      {remainingSkills.map((item) => <span key={item}>{item}</span>)}
+                    </div>
+                  </div>
+                </div>
               </div>
             </Reveal>
           </div>
