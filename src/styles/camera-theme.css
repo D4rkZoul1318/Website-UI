@@ -363,9 +363,9 @@
 @media (max-width: 640px) { .camera-theme .facts-row--four { grid-template-columns: 1fr; } }
 
 .camera-theme .facts-subitem { grid-column: 1 / -1; margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--line); }
-.camera-theme .tools-subrow { display: flex; align-items: flex-start; gap: var(--space-7); flex-wrap: wrap; }
+.camera-theme .tools-subrow { display: flex; align-items: flex-start; gap: var(--space-8); flex-wrap: wrap; }
 .camera-theme .tools-wheel-col { flex: 0 0 auto; }
-.camera-theme .tools-remaining { flex: 1 1 200px; min-width: 200px; }
+.camera-theme .tools-remaining { flex: 1 1 160px; min-width: 160px; }
 .camera-theme .tools-remaining .meta-label { margin-bottom: var(--space-3); }
 .camera-theme .tools-remaining-groups { display: flex; flex-direction: column; gap: var(--space-3); }
 .camera-theme .tools-remaining-group-label { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: 4px; }
