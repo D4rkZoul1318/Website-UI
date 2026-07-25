@@ -72,6 +72,11 @@ function useActiveSection(ids: readonly string[]) {
   return active;
 }
 
+const objectivesGoals = [
+  'Design a 3D vehicle icon system (bike, auto, cab) that is instantly legible at small UI sizes and visually distinct from every competitor in the Indian ride-hailing market',
+  'Build icons for a dark-mode-native UI for a ride aggregator that consolidates multiple taxi apps like Rapido, Uber, and Ola into a single booking interface',
+];
+
 const businessChallenges = [
   'Existing ride-hailing apps in India use flat, generic vehicle icons that offer no brand differentiation',
   'No established design reference for 3D vehicle icons in a dark-mode mobile context',
@@ -287,9 +292,13 @@ export default function BobRides() {
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>04</b> — STRATEGY</Reveal>
             <Reveal as="h2">Objectives &amp; Goals</Reveal>
-            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/objectives-goals.webp" alt="Objectives and Goals" loading="lazy" decoding="async" />
-            </Reveal>
+            <div className="feature-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+              {objectivesGoals.map((text, i) => (
+                <Reveal key={i} variant="scale" delay={staggerDelay(i)} className="feature-cell">
+                  <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -320,12 +329,6 @@ export default function BobRides() {
                 <p>{text}</p>
               </Reveal>
             ))}
-          </div>
-          <div className="wrap-wide" style={{ marginTop: 'var(--space-7)' }}>
-            <Reveal as="span" className="meta-label">References from competitors</Reveal>
-            <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-3)' }}>
-              <img src="/images/bob-images/competitor-analysis.webp" alt="Competitor screenshots" loading="lazy" decoding="async" />
-            </Reveal>
           </div>
         </section>
 
