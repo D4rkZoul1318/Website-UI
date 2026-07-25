@@ -39,7 +39,9 @@ const toolkit = [
   { category: 'Methods', items: ['UX Research', 'Wireframing', '3D Iconography', 'PBR Asset Creation'] },
 ];
 
-const remainingSkills = toolkit.flatMap((group) => group.items).filter((item) => !WHEEL_TOOL_NAMES.includes(item));
+const remainingToolkit = toolkit
+  .map((group) => ({ category: group.category, items: group.items.filter((item) => !WHEEL_TOOL_NAMES.includes(item)) }))
+  .filter((group) => group.items.length > 0);
 
 export function AboutPage() {
   useEffect(() => { document.title = 'About — Sohum Bhatnagar'; }, []);
@@ -90,8 +92,15 @@ export function AboutPage() {
                   <ToolsWheel />
                   <div className="tools-remaining">
                     <span className="meta-label">Also</span>
-                    <div className="hero-tags">
-                      {remainingSkills.map((item) => <span key={item}>{item}</span>)}
+                    <div className="tools-remaining-groups">
+                      {remainingToolkit.map((group) => (
+                        <div className="tools-remaining-group" key={group.category}>
+                          <span className="tools-remaining-group-label">{group.category}</span>
+                          <div className="hero-tags">
+                            {group.items.map((item) => <span key={item}>{item}</span>)}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
