@@ -362,15 +362,16 @@
 .camera-theme .facts-row--four { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 640px) { .camera-theme .facts-row--four { grid-template-columns: 1fr; } }
 
-.camera-theme .facts-subitem { margin-top: var(--space-4); padding-left: var(--space-3); border-left: 1px solid var(--line); }
+.camera-theme .facts-subitem { margin-top: var(--space-5); padding-left: var(--space-4); border-left: 2px solid var(--line); }
+.camera-theme .facts-subitem .meta-label { font-size: 11px; color: var(--ink-soft); margin-bottom: var(--space-3); }
 .camera-theme .tools-ticker {
-  position: relative; overflow: hidden; max-width: 220px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 12px, black calc(100% - 12px), transparent);
-  mask-image: linear-gradient(90deg, transparent, black 12px, black calc(100% - 12px), transparent);
+  position: relative; overflow: hidden; max-width: 340px; width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 16px, black calc(100% - 16px), transparent);
+  mask-image: linear-gradient(90deg, transparent, black 16px, black calc(100% - 16px), transparent);
 }
-.camera-theme .tools-ticker-track { display: flex; align-items: center; gap: 18px; width: max-content; animation: tools-ticker-scroll 14s linear infinite; }
-.camera-theme .tools-ticker-item { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-soft); white-space: nowrap; }
-.camera-theme .tools-ticker-item svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--ink); }
+.camera-theme .tools-ticker-track { display: flex; align-items: center; gap: 28px; width: max-content; animation: tools-ticker-scroll 14s linear infinite; }
+.camera-theme .tools-ticker-item { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 15px; font-weight: 700; letter-spacing: 0.01em; color: var(--ink); white-space: nowrap; }
+.camera-theme .tools-ticker-item svg { width: 22px; height: 22px; flex-shrink: 0; }
 @keyframes tools-ticker-scroll { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 
 .camera-theme footer { max-width: 1100px; margin: 0 auto; padding: var(--space-6) var(--space-6) var(--space-8); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); }
