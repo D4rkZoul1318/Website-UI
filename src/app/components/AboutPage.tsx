@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { RollingCounter } from './camera/DigitReel';
 import { Nav } from './home/Nav';
-import { ToolsTicker } from './ToolsTicker';
+import { ToolsWheel } from './ToolsWheel';
 
 const experience = [
   {
@@ -83,7 +83,7 @@ export function AboutPage() {
                 <span className="meta-value" style={{ fontSize: 20 }}>Open to roles &amp; apprenticeships</span>
                 <div className="facts-subitem">
                   <span className="meta-label">Tools</span>
-                  <ToolsTicker />
+                  <ToolsWheel />
                 </div>
               </div>
             </Reveal>

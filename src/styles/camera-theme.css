@@ -364,15 +364,16 @@
 
 .camera-theme .facts-subitem { margin-top: var(--space-5); padding-left: var(--space-4); border-left: 2px solid var(--line); }
 .camera-theme .facts-subitem .meta-label { font-size: 11px; color: var(--ink-soft); margin-bottom: var(--space-3); }
-.camera-theme .tools-ticker {
-  position: relative; overflow: hidden; max-width: 340px; width: 100%;
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 16px, black calc(100% - 16px), transparent);
-  mask-image: linear-gradient(90deg, transparent, black 16px, black calc(100% - 16px), transparent);
-}
-.camera-theme .tools-ticker-track { display: flex; align-items: center; gap: 28px; width: max-content; animation: tools-ticker-scroll 14s linear infinite; }
-.camera-theme .tools-ticker-item { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 15px; font-weight: 700; letter-spacing: 0.01em; color: var(--ink); white-space: nowrap; }
-.camera-theme .tools-ticker-item svg { width: 22px; height: 22px; flex-shrink: 0; }
-@keyframes tools-ticker-scroll { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+
+.camera-theme .tools-wheel { position: relative; width: 168px; height: 168px; margin-top: var(--space-2); }
+.camera-theme .tools-wheel-track { position: absolute; inset: 0; animation: tools-wheel-spin 30s linear infinite; }
+.camera-theme .tools-wheel-center { position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--line); }
+.camera-theme .tools-wheel-item { position: absolute; top: 50%; left: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px; display: flex; align-items: center; justify-content: center; }
+.camera-theme .tools-wheel-item-inner { display: flex; flex-direction: column; align-items: center; gap: 5px; animation: tools-wheel-spin-reverse 30s linear infinite; }
+.camera-theme .tools-wheel-item-inner svg { width: 24px; height: 24px; flex-shrink: 0; }
+.camera-theme .tools-wheel-item-inner span { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.04em; color: var(--ink-soft); white-space: nowrap; }
+@keyframes tools-wheel-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes tools-wheel-spin-reverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
 .camera-theme footer { max-width: 1100px; margin: 0 auto; padding: var(--space-6) var(--space-6) var(--space-8); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); }
 .camera-theme footer span, .camera-theme footer a { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.04em; text-decoration: none; }

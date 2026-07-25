@@ -7,21 +7,29 @@ const TOOLS = [
   { name: 'React', Icon: SiReact, color: '#61DAFB' },
 ];
 
-/** Compact infinite ticker-tape for the About page's "Tools" line — doubles
- * the list and scrolls it by exactly -50% (one full set) for a seamless
- * loop, same mechanic as the homepage marquee. */
-export function ToolsTicker() {
-  const loop = [...TOOLS, ...TOOLS];
+const STEP = 360 / TOOLS.length;
+
+/** Tools shown as logos on a spinning wheel — the set orbits around the
+ * center on the same aperture-spin rotation used in the old hero dial,
+ * while each logo counter-rotates to stay upright as it travels. */
+export function ToolsWheel() {
   return (
-    <div className="tools-ticker" aria-hidden="true">
-      <div className="tools-ticker-track">
-        {loop.map((tool, i) => (
-          <span className="tools-ticker-item" key={`${tool.name}-${i}`}>
-            <tool.Icon style={{ color: tool.color }} />
-            {tool.name}
-          </span>
+    <div className="tools-wheel" aria-hidden="true">
+      <div className="tools-wheel-track">
+        {TOOLS.map((tool, i) => (
+          <div
+            className="tools-wheel-item"
+            key={tool.name}
+            style={{ transform: `rotate(${i * STEP}deg) translateY(-72px) rotate(${-i * STEP}deg)` }}
+          >
+            <div className="tools-wheel-item-inner">
+              <tool.Icon style={{ color: tool.color }} />
+              <span>{tool.name}</span>
+            </div>
+          </div>
         ))}
       </div>
+      <span className="tools-wheel-center" />
     </div>
   );
 }
