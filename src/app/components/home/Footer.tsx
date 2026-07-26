@@ -2,20 +2,32 @@ import { Reveal } from '../camera/Reveal';
 import { ROUTES } from '../../routes';
 import { ContactForm } from '../ContactForm';
 
+// Work/Contact are same-page anchors on the homepage; prefixing the route
+// makes them work as "go home, then scroll" links from every other page too
+// (App.tsx's useHashScroll handles the scroll-into-view once we land there).
 const DIRECTORY = [
-  { href: '#work', label: 'Work' },
+  { href: `${ROUTES.home}#work`, label: 'Work' },
   { href: ROUTES.explorations, label: 'Explorations' },
   { href: ROUTES.about, label: 'About' },
-  { href: '#contact', label: 'Contact' },
+  { href: `${ROUTES.home}#contact`, label: 'Contact' },
 ];
 
-const ELSEWHERE = [
-  { href: 'https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/', label: 'LinkedIn' },
-  { href: 'https://www.behance.net/sohumbhatnagar', label: 'Behance' },
-  { href: 'https://www.artstation.com/sohum1311', label: 'ArtStation' },
-];
+type FooterProps = {
+  /** The red "email me" CTA button + role blurb — homepage only. */
+  showEmailCta?: boolean;
+  /** Behance link in Elsewhere; other pages show a mail link instead. */
+  showBehance?: boolean;
+};
 
-export function Footer() {
+export function Footer({ showEmailCta = true, showBehance = true }: FooterProps) {
+  const elsewhere = [
+    { href: 'https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/', label: 'LinkedIn' },
+    showBehance
+      ? { href: 'https://www.behance.net/sohumbhatnagar', label: 'Behance' }
+      : { href: 'mailto:sohum1311@gmail.com', label: 'Email' },
+    { href: 'https://www.artstation.com/sohum1311', label: 'ArtStation' },
+  ];
+
   return (
     <footer id="contact" className="vf-footer" data-testid="footer">
       <div className="vf-footer-top">
@@ -29,14 +41,16 @@ export function Footer() {
           Let&rsquo;s make<br />something <span className="vf-italic">worth</span><br />keeping.
         </Reveal>
 
-        <Reveal className="vf-footer-ctas">
-          <a href="mailto:sohum1311@gmail.com" className="vf-btn-terracotta" data-testid="footer-cta-mail">
-            sohum1311@gmail.com<span className="arrow">↗</span>
-          </a>
-          <span className="vf-footer-link-underline" data-testid="footer-cta-role">
-            Or, talk about a role
-          </span>
-        </Reveal>
+        {showEmailCta && (
+          <Reveal className="vf-footer-ctas">
+            <a href="mailto:sohum1311@gmail.com" className="vf-btn-terracotta" data-testid="footer-cta-mail">
+              sohum1311@gmail.com<span className="arrow">↗</span>
+            </a>
+            <span className="vf-footer-link-underline" data-testid="footer-cta-role">
+              Or, talk about a role
+            </span>
+          </Reveal>
+        )}
       </div>
 
       <div style={{ padding: '40px 24px 0' }}>
@@ -65,9 +79,16 @@ export function Footer() {
         <div className="vf-footer-col-elsewhere">
           <span className="vf-footer-col-label">Elsewhere</span>
           <ul className="vf-footer-list">
-            {ELSEWHERE.map((l) => (
-              <li key={l.href}><a href={l.href} target="_blank" rel="noopener noreferrer">↗ {l.label}</a></li>
-            ))}
+            {elsewhere.map((l) => {
+              const isMail = l.href.startsWith('mailto:');
+              return (
+                <li key={l.href}>
+                  <a href={l.href} target={isMail ? undefined : '_blank'} rel={isMail ? undefined : 'noopener noreferrer'}>
+                    ↗ {l.label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

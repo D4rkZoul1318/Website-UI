@@ -438,30 +438,9 @@
 .viewfinder-theme .vf-contact-cta { display: flex; align-items: center; gap: var(--vf-space-6); flex-wrap: wrap; }
 .viewfinder-theme .vf-text-link--on-dark { color: var(--vf-paper-soft); border-color: var(--vf-line-on-dark); }
 
-/* =========================================================================
-   FOOTER
-   ========================================================================= */
-.viewfinder-theme .vf-footer { background: #0f0f0f; padding: var(--vf-space-9) var(--vf-space-6) var(--vf-space-6); position: relative; overflow: hidden; }
-.viewfinder-theme .vf-footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--vf-space-7); max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
-@media (max-width: 760px) { .viewfinder-theme .vf-footer-cols { grid-template-columns: 1fr; } }
-.viewfinder-theme .vf-footer-col-title { font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vf-paper-faint); margin-bottom: var(--vf-space-4); }
-.viewfinder-theme .vf-footer-col p { font-size: 0.85rem; color: var(--vf-paper-soft); margin: 0 0 var(--vf-space-2); }
-.viewfinder-theme .vf-footer-col p .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #6fce7f; margin-right: var(--vf-space-2); }
-.viewfinder-theme .vf-footer-col a {
-  display: block; color: var(--vf-paper-soft); text-decoration: none; font-size: 0.85rem; margin-bottom: var(--vf-space-2);
-  transition: color 200ms var(--vf-ease-out);
-}
-
-.viewfinder-theme .vf-footer-watermark {
-  font-family: var(--vf-font-display); font-weight: 800; font-size: clamp(4rem, 14vw, 9rem);
-  color: rgba(239, 237, 235, 0.05); line-height: 1; margin-top: var(--vf-space-9); user-select: none;
-}
-.viewfinder-theme .vf-footer-fine {
-  display: flex; justify-content: flex-end; flex-direction: column; align-items: flex-end;
-  font-family: var(--vf-font-mono); font-size: 9.5px; letter-spacing: 0.06em; color: var(--vf-paper-faint);
-  gap: 2px; margin-top: var(--vf-space-5); position: relative; z-index: 1;
-}
-@media (max-width: 760px) { .viewfinder-theme .vf-footer-fine { align-items: flex-start; } }
+/* Footer is the shared home/Footer.tsx component (wrapped in a nested
+   .camera-theme div for its tokens) — styled in viewfinder-home.css, not
+   here; no .viewfinder-theme-scoped footer rules needed. */
 
 /* =========================================================================
    MOUSE-ONLY HOVER (touch triggers :hover on tap with no matching
@@ -479,7 +458,6 @@
   .viewfinder-theme .vf-frame:hover .vf-frame-photo,
   .viewfinder-theme .vf-frame:hover .vf-frame-triptych img { transform: scale(1.03); }
   .viewfinder-theme .vf-work-title a:hover { background-size: 100% 1px; }
-  .viewfinder-theme .vf-footer-col a:hover { color: var(--vf-paper); }
   .viewfinder-theme .vf-marquee:hover .vf-marquee-track { animation-play-state: paused; }
 }
 
@@ -495,4 +473,3 @@
 .viewfinder-theme .vf-frame:active .vf-frame-photo,
 .viewfinder-theme .vf-frame:active .vf-frame-triptych img { transform: scale(0.99); transition-duration: 100ms; }
 .viewfinder-theme .vf-work-title a:active { background-size: 100% 1px; }
-.viewfinder-theme .vf-footer-col a:active { color: var(--vf-paper); }

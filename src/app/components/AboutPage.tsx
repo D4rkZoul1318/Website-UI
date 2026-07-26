@@ -3,7 +3,7 @@ import { Reveal, staggerDelay } from './camera/Reveal';
 import { RollingCounter } from './camera/DigitReel';
 import { Nav } from './home/Nav';
 import { ToolsWheel, WHEEL_TOOL_NAMES } from './ToolsWheel';
-import { ContactForm } from './ContactForm';
+import { Footer } from './home/Footer';
 
 const experience = [
   {
@@ -206,14 +206,7 @@ export function AboutPage() {
         </section>
       </main>
 
-      <div className="wrap" style={{ padding: '0 0 var(--space-6)' }}>
-        <ContactForm />
-      </div>
-
-      <footer>
-        <span>© 2026 Sohum Bhatnagar</span>
-        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Designed and built in React.</span>
-      </footer>
+      <Footer showEmailCta={false} showBehance={false} />
     </div>
   );
 }

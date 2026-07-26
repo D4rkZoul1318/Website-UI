@@ -5,7 +5,7 @@ import { LuUsers, LuCar, LuWallet, LuArrowRight } from 'react-icons/lu';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { CountUp } from '../camera/CountUp';
 import { Nav } from '../home/Nav';
-import { ContactForm } from '../ContactForm';
+import { Footer } from '../home/Footer';
 
 // Anchor links don't work under ScrollSmoother: it fixes #smooth-wrapper in
 // place and drives scroll entirely through a transform on #smooth-content,
@@ -591,19 +591,7 @@ export default function BobRides() {
         </section>
       </main>
 
-      <div className="wrap" style={{ padding: '0 0 var(--space-6)' }}>
-        <ContactForm />
-      </div>
-
-      <footer>
-        <span>© 2026 Sohum Bhatnagar</span>
-        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Designed and built in React.</span>
-        <span>
-          <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          {' · '}
-          <a href="https://www.behance.net/sohumbhatnagar" target="_blank" rel="noopener noreferrer">Behance</a>
-        </span>
-      </footer>
+      <Footer showEmailCta={false} showBehance={false} />
     </div>
   );
 }

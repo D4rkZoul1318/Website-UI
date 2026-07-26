@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { Nav } from './home/Nav';
-import { ContactForm } from './ContactForm';
+import { Footer } from './home/Footer';
 
 const researchCards = [
   { eyebrow: 'Personal Observation', title: 'First-hand Experience', body: 'As a direct user of UUCMS, navigation patterns and failure states were documented through repeated use. Initial attempts to locate the marks card required navigating through multiple misleading subsections — results were filed under exam and fee categories with no logical grouping.' },
@@ -285,14 +285,7 @@ export default function CaseStudy() {
         </Reveal>
       </main>
 
-      <div className="wrap" style={{ padding: '0 0 var(--space-6)' }}>
-        <ContactForm />
-      </div>
-
-      <footer>
-        <span>© 2026 Sohum Bhatnagar</span>
-        <span>Designed in Figma. Designed and built in React.</span>
-      </footer>
+      <Footer showEmailCta={false} showBehance={false} />
     </div>
   );
 }

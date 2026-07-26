@@ -7,7 +7,7 @@ import { HolographicCard } from './HolographicCard';
 import { Reveal } from './camera/Reveal';
 import { Nav } from './home/Nav';
 import { PillNav } from './home/PillNav';
-import { ContactForm } from './ContactForm';
+import { Footer } from './home/Footer';
 
 type LiveKind = 'rewind' | 'octopus';
 
@@ -240,14 +240,7 @@ export function ExplorationsPage() {
         </section>
       </main>
 
-      <div className="wrap" style={{ padding: '0 0 var(--space-6)' }}>
-        <ContactForm />
-      </div>
-
-      <footer>
-        <span>© 2026 Sohum Bhatnagar</span>
-        <span style={{ fontStyle: 'italic' }}>Designed in Figma. Designed and built in React.</span>
-      </footer>
+      <Footer showEmailCta={false} showBehance={false} />
 
       <ScrollToTop />
 

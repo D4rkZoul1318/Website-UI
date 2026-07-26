@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { ROUTES } from '../../routes';
-import { ContactForm } from '../ContactForm';
+import { Footer } from '../home/Footer';
 
 /* VIEWFINDER — an alternate homepage exploration reconstructed from a
  * frame-sampled screen recording of an "Emergent" preview pane, not from
@@ -347,37 +347,9 @@ export default function Viewfinder() {
         </div>
       </section>
 
-      <footer className="vf-footer">
-        <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 0 var(--vf-space-7)' }}>
-          <ContactForm />
-        </div>
-        <div className="vf-footer-cols">
-          <div className="vf-footer-col">
-            <div className="vf-footer-col-title">CURRENTLY</div>
-            <p><span className="dot" />Open to roles &amp; apprenticeships.</p>
-            <p>Based in New Delhi · Working globally</p>
-          </div>
-          <div className="vf-footer-col">
-            <div className="vf-footer-col-title">DIRECTORY</div>
-            <a href="#work">→ WORK</a>
-            <a href="#about">→ ABOUT</a>
-            <a href="#explorations">→ EXPLORATIONS</a>
-            <a href="#contact">→ CONTACT</a>
-          </div>
-          <div className="vf-footer-col">
-            <div className="vf-footer-col-title">ELSEWHERE</div>
-            <a href="mailto:sohum1311@gmail.com">↗ EMAIL</a>
-            <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer">↗ LINKEDIN</a>
-            <a href="https://www.artstation.com/sohum1311" target="_blank" rel="noopener noreferrer">↗ ARTSTATION</a>
-          </div>
-        </div>
-        <div className="vf-footer-watermark">SB · 00</div>
-        <div className="vf-footer-fine">
-          <span>© 2026 SOHUM BHATNAGAR</span>
-          <span>SET IN BRICOLAGE GROTESQUE &amp; JETBRAINS MONO</span>
-          <span>BUILT AS A VIEWFINDER, NOT A CANVAS.</span>
-        </div>
-      </footer>
+      <div className="camera-theme">
+        <Footer showEmailCta={false} showBehance={false} />
+      </div>
     </div>
   );
 }
