@@ -584,7 +584,7 @@ export default function BobRides() {
         {/* SEC.21 — CLOSE */}
         <section id="close" className="section section--roomy bg-paper">
           <div className="wrap" style={{ display: 'flex', justifyContent: 'center' }}>
-            <Reveal className="media-frame" style={{ maxWidth: 720 }}>
+            <Reveal className="media-frame" style={{ maxWidth: 480 }}>
               <img src="/images/bob-images/thank-you.webp" alt="Thank You" loading="lazy" decoding="async" />
             </Reveal>
           </div>
@@ -596,7 +596,7 @@ export default function BobRides() {
       </div>
 
       <footer>
-        <span>© 2025 Sohum Bhatnagar</span>
+        <span>© 2026 Sohum Bhatnagar</span>
         <span style={{ fontStyle: 'italic' }}>Designed in Figma. Designed and built in React.</span>
         <span>
           <a href="https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/" target="_blank" rel="noopener noreferrer">LinkedIn</a>

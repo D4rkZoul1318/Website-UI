@@ -290,7 +290,7 @@ export default function CaseStudy() {
       </div>
 
       <footer>
-        <span>© 2025 Sohum Bhatnagar</span>
+        <span>© 2026 Sohum Bhatnagar</span>
         <span>Designed in Figma. Designed and built in React.</span>
       </footer>
     </div>

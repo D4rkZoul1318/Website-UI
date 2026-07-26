@@ -373,7 +373,7 @@ export default function Viewfinder() {
         </div>
         <div className="vf-footer-watermark">SB · 00</div>
         <div className="vf-footer-fine">
-          <span>© 2025 SOHUM BHATNAGAR</span>
+          <span>© 2026 SOHUM BHATNAGAR</span>
           <span>SET IN BRICOLAGE GROTESQUE &amp; JETBRAINS MONO</span>
           <span>BUILT AS A VIEWFINDER, NOT A CANVAS.</span>
         </div>
