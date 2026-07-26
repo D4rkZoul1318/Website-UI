@@ -18,8 +18,8 @@
   /* Shared with .vf-home so PillNav (used both portaled under the homepage
      nav and embedded directly on chapter pages, e.g. Explorations' filter
      tabs) resolves to the same accent regardless of which wrapper it's in. */
-  --terracotta: #e8734a;
-  --terracotta-ink: #c85a34;
+  --terracotta: #d91e18;
+  --terracotta-ink: #ae1813;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -315,7 +315,7 @@
 
 .camera-theme .feature-cell-icon {
   display: flex; align-items: center; justify-content: center; width: 48px; height: 48px;
-  border-radius: 50%; background: var(--accent-soft, rgba(232, 115, 74, 0.12)); color: var(--accent);
+  border-radius: 50%; background: var(--accent-dim); color: var(--accent);
   margin-bottom: var(--space-4);
 }
 .camera-theme .feature-cell-icon svg { width: 22px; height: 22px; }
