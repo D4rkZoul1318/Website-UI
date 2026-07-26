@@ -28,7 +28,7 @@ const controlLedger = [
 const craftFeatures = [
   { ord: 'Ground', body: <>Concrete grey <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85em' }}>#E2E0DC</span> body, <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85em' }}>#111111</span> display glass — the same tokens this portfolio now runs on.</> },
   { ord: 'Type', body: 'JetBrains Mono for every label, readout, and status line. Inter for track titles only — content is the one thing that isn’t machinery.' },
-  { ord: 'Accent', body: <>One accent per disc, set as a CSS variable. Disc 01 is <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85em', color: 'var(--accent)' }}>#FF4D00</span> — the orange this site inherited.</> },
+  { ord: 'Accent', body: <>One accent per disc, set as a CSS variable. Disc 01 is <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85em', color: 'var(--accent)' }}>#D91E18</span> — the darkroom red this site runs on now.</> },
 ];
 
 const processFeatures = [

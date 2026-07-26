@@ -11,8 +11,8 @@
   --ink-faint: #8c8a86;
   --line: rgba(26, 26, 26, 0.14);
   --line-soft: rgba(26, 26, 26, 0.07);
-  --accent: #ff4d00;
-  --accent-dim: rgba(255, 77, 0, 0.14);
+  --accent: #d91e18;
+  --accent-dim: rgba(217, 30, 24, 0.14);
   --screen-bg: #141414;
   --soft-grey: #dad8d3;
   /* Shared with .vf-home so PillNav (used both portaled under the homepage
@@ -361,7 +361,7 @@
 .camera-theme .flow-node { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: var(--space-4) var(--space-5); background: var(--paper); text-align: center; }
 .camera-theme .flow-node .flow-label { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; color: var(--ink-faint); text-transform: uppercase; margin-bottom: 6px; }
 .camera-theme .flow-node p { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.55; }
-.camera-theme .flow-node--accent { background: var(--accent-dim); border-color: rgba(255, 77, 0, 0.35); }
+.camera-theme .flow-node--accent { background: var(--accent-dim); border-color: rgba(217, 30, 24, 0.35); }
 .camera-theme .flow-node--accent .flow-label { color: var(--accent); }
 .camera-theme .flow-connector { width: 1px; height: var(--space-6); background: var(--line); }
 .camera-theme .flow-tap { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; margin: var(--space-2) 0; }
