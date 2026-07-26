@@ -1,0 +1,122 @@
+/* Self-contained contact box — deliberately avoids each theme's own CSS
+   variables (--ink, --vf-paper, ...) since it's dropped into six differently
+   themed footers. currentColor + neutral rgba fills read correctly on both
+   the light camera-theme footers and the dark vf-footer/viewfinder ones. */
+
+.contact-box {
+  width: 100%;
+  max-width: 640px;
+}
+
+.contact-box-label {
+  display: block;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 16px;
+}
+
+.contact-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 4px;
+  background: rgba(128, 128, 128, 0.06);
+}
+
+.contact-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (min-width: 560px) {
+  .contact-form-row {
+    flex-direction: row;
+  }
+}
+
+.contact-form input[type='text'],
+.contact-form input[type='email'],
+.contact-form textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.35);
+  color: inherit;
+  font-family: 'Bricolage Grotesque', -apple-system, sans-serif;
+  font-size: 0.95rem;
+  padding: 8px 2px;
+  resize: none;
+  transition: border-color 150ms;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: currentColor;
+  opacity: 0.45;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #d91e18;
+}
+
+.contact-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-form-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.contact-submit {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  background: #d91e18;
+  color: #f4f3f0;
+  border: none;
+  cursor: pointer;
+  transition: opacity 150ms, transform 150ms;
+}
+
+.contact-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.contact-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.contact-status {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.contact-status--ok {
+  color: #4caf6e;
+}
+
+.contact-status--err {
+  color: #d91e18;
+}

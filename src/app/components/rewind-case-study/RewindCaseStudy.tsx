@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { Nav } from '../home/Nav';
+import { ContactForm } from '../ContactForm';
 
 const systemFeatures = [
   { ord: '01 — Disc rail', title: 'Load, don’t queue', body: 'Tracks are uploaded to a shelf, then loaded into one of six slots. A frosted-glass carriage slides over the active disc. Selection is a deliberate act, not a scroll.' },
@@ -289,6 +290,10 @@ export default function RewindCaseStudy() {
           </div>
         </section>
       </main>
+
+      <div className="wrap" style={{ padding: '0 0 var(--space-6)' }}>
+        <ContactForm />
+      </div>
 
       <footer>
         <span>© 2026 Sohum Bhatnagar</span>

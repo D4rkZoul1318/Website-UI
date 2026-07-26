@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { ROUTES } from '../../routes';
+import { ContactForm } from '../ContactForm';
 
 /* VIEWFINDER — an alternate homepage exploration reconstructed from a
  * frame-sampled screen recording of an "Emergent" preview pane, not from
@@ -347,6 +348,9 @@ export default function Viewfinder() {
       </section>
 
       <footer className="vf-footer">
+        <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 0 var(--vf-space-7)' }}>
+          <ContactForm />
+        </div>
         <div className="vf-footer-cols">
           <div className="vf-footer-col">
             <div className="vf-footer-col-title">CURRENTLY</div>

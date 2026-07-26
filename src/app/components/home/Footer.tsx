@@ -1,5 +1,6 @@
 import { Reveal } from '../camera/Reveal';
 import { ROUTES } from '../../routes';
+import { ContactForm } from '../ContactForm';
 
 const DIRECTORY = [
   { href: '#work', label: 'Work' },
@@ -36,6 +37,10 @@ export function Footer() {
             Or, talk about a role
           </a>
         </Reveal>
+      </div>
+
+      <div style={{ padding: '40px 24px 0' }}>
+        <ContactForm />
       </div>
 
       <div className="vf-footer-cols">

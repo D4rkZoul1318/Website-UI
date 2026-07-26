@@ -5,6 +5,7 @@ import { LuUsers, LuCar, LuWallet, LuArrowRight } from 'react-icons/lu';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { CountUp } from '../camera/CountUp';
 import { Nav } from '../home/Nav';
+import { ContactForm } from '../ContactForm';
 
 // Anchor links don't work under ScrollSmoother: it fixes #smooth-wrapper in
 // place and drives scroll entirely through a transform on #smooth-content,
@@ -589,6 +590,10 @@ export default function BobRides() {
           </div>
         </section>
       </main>
+
+      <div className="wrap" style={{ padding: '0 0 var(--space-6)' }}>
+        <ContactForm />
+      </div>
 
       <footer>
         <span>© 2025 Sohum Bhatnagar</span>
