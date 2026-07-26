@@ -389,8 +389,16 @@
 :where(.vf-home, .camera-theme) .vf-footer-eyebrow { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
 :where(.vf-home, .camera-theme) .vf-footer-eyebrow span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.6; }
 :where(.vf-home, .camera-theme) .vf-footer-eyebrow .rule { height: 1px; flex: 1; background: rgba(244, 243, 240, 0.2); }
-:where(.vf-home, .camera-theme) .vf-footer-title { font-family: var(--font-display); font-weight: 600; line-height: 0.9; letter-spacing: -0.045em; font-size: clamp(3rem, 10vw, 10rem); font-variation-settings: "opsz" 96; }
+:where(.vf-home, .camera-theme) .vf-footer-title { font-family: var(--font-display); font-weight: 600; line-height: 0.9; letter-spacing: -0.045em; font-variation-settings: "opsz" 96; }
 :where(.vf-home, .camera-theme) .vf-footer-title .vf-italic { font-style: italic; font-weight: 400; opacity: 0.7; }
+/* Homepage's own hero type runs huge, so the footer echoing that scale
+   fits there. Every other page's own h1 tops out at 4.4rem (camera-theme
+   .section h1), so the same footer used there needs a smaller cap or it
+   reads bigger than the page it's closing out. .vf-home.camera-theme
+   (Home carries both classes) outguns the plain .camera-theme rule below
+   regardless of source order. */
+.camera-theme .vf-footer-title { font-size: clamp(2rem, 5vw, 3.25rem); }
+.vf-home.camera-theme .vf-footer-title { font-size: clamp(3rem, 10vw, 10rem); }
 :where(.vf-home, .camera-theme) .vf-footer-ctas { margin-top: 56px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
 :where(.vf-home, .camera-theme) .vf-btn-terracotta {
   display: inline-flex; align-items: center; gap: 16px; font-family: var(--font-mono);
