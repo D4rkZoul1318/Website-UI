@@ -33,9 +33,9 @@ export function Footer() {
           <a href="mailto:sohum1311@gmail.com" className="vf-btn-terracotta" data-testid="footer-cta-mail">
             sohum1311@gmail.com<span className="arrow">↗</span>
           </a>
-          <a href="mailto:sohum1311@gmail.com?subject=Apprenticeship" className="vf-footer-link-underline" data-testid="footer-cta-role">
+          <span className="vf-footer-link-underline" data-testid="footer-cta-role">
             Or, talk about a role
-          </a>
+          </span>
         </Reveal>
       </div>
 

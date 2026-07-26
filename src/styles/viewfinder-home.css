@@ -396,9 +396,8 @@
 .vf-home .vf-footer-link-underline {
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
   text-decoration: underline; text-underline-offset: 6px; text-decoration-color: rgba(244,243,240,0.4);
-  transition: color 150ms, text-decoration-color 150ms;
+  opacity: 0.6;
 }
-.vf-home .vf-footer-link-underline:hover { text-decoration-color: var(--terracotta); color: var(--terracotta); }
 .vf-home .vf-footer-cols {
   margin-top: auto; padding-top: 32px; padding-left: 24px; padding-right: 24px;
   border-top: 1px solid rgba(244, 243, 240, 0.15);
