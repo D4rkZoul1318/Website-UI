@@ -28,29 +28,37 @@ function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
 }
 
 const NAV_SECTIONS = [
-  { id: 'hero', num: '00', title: 'BOB Rides' },
-  { id: 'at-a-glance', num: 'TL;DR', title: 'At a Glance' },
-  { id: 'the-challenge', num: '01', title: 'The Challenge' },
-  { id: 'problem-statement', num: '02', title: 'Problem Statement' },
-  { id: 'objectives-goals', num: '04', title: 'Objectives & Goals' },
-  { id: 'business-challenges', num: '05', title: 'Business Challenges' },
-  { id: 'competitor-analysis', num: '06', title: 'Competitor Analysis' },
-  { id: 'product-users', num: '07', title: 'Product Users' },
-  { id: 'user-persona', num: '08', title: 'User Persona' },
-  { id: 'user-needs', num: '09', title: 'User Needs' },
-  { id: 'features-functionalities', num: '10', title: 'Features & Functionalities' },
-  { id: 'product-user-challenges', num: '11', title: 'Product User Challenges' },
-  { id: 'unique-features', num: '12', title: 'Unique Features' },
-  { id: 'task-mapping', num: '13', title: 'Task Mapping' },
-  { id: 'eisenhower-matrix', num: '14', title: 'Eisenhower Matrix' },
-  { id: 'key-decisions', num: '15', title: 'Three Decisions' },
-  { id: 'sketches', num: '16', title: 'Sketches' },
-  { id: 'final-icons', num: '17', title: 'Final Icons' },
-  { id: 'icon-system', num: '18', title: 'Icon System' },
-  { id: 'major-screens', num: '19', title: 'Major Screens' },
-  { id: 'what-we-built', num: '20', title: 'What We Built' },
-  { id: 'close', num: '21', title: 'Close' },
+  { id: 'hero', num: '00', title: 'BOB Rides', category: 'Overview' },
+  { id: 'at-a-glance', num: 'TL;DR', title: 'At a Glance', category: 'Overview' },
+  { id: 'the-challenge', num: '01', title: 'The Challenge', category: 'Discovery' },
+  { id: 'problem-statement', num: '02', title: 'Problem Statement', category: 'Discovery' },
+  { id: 'objectives-goals', num: '04', title: 'Objectives & Goals', category: 'Discovery' },
+  { id: 'business-challenges', num: '05', title: 'Business Challenges', category: 'Discovery' },
+  { id: 'competitor-analysis', num: '06', title: 'Competitor Analysis', category: 'Discovery' },
+  { id: 'product-users', num: '07', title: 'Product Users', category: 'Research' },
+  { id: 'user-persona', num: '08', title: 'User Persona', category: 'Research' },
+  { id: 'user-needs', num: '09', title: 'User Needs', category: 'Research' },
+  { id: 'features-functionalities', num: '10', title: 'Features & Functionalities', category: 'Design Process' },
+  { id: 'product-user-challenges', num: '11', title: 'Product User Challenges', category: 'Design Process' },
+  { id: 'unique-features', num: '12', title: 'Unique Features', category: 'Design Process' },
+  { id: 'task-mapping', num: '13', title: 'Task Mapping', category: 'Design Process' },
+  { id: 'eisenhower-matrix', num: '14', title: 'Eisenhower Matrix', category: 'Design Process' },
+  { id: 'key-decisions', num: '15', title: 'Three Decisions', category: 'Design Process' },
+  { id: 'sketches', num: '16', title: 'Sketches', category: 'Execution' },
+  { id: 'final-icons', num: '17', title: 'Final Icons', category: 'Execution' },
+  { id: 'icon-system', num: '18', title: 'Icon System', category: 'Execution' },
+  { id: 'major-screens', num: '19', title: 'Major Screens', category: 'Execution' },
+  { id: 'what-we-built', num: '20', title: 'What We Built', category: 'Outcome' },
+  { id: 'close', num: '21', title: 'Close', category: 'Outcome' },
 ] as const;
+
+// Maps the first index of each new category to its heading, for
+// LineSidebar to render as a divider — 22 flat sections read as a wall
+// of text otherwise.
+const NAV_HEADINGS = NAV_SECTIONS.reduce<Record<number, string>>((acc, s, i) => {
+  if (i === 0 || s.category !== NAV_SECTIONS[i - 1].category) acc[i] = s.category;
+  return acc;
+}, {});
 
 // Sections rendered with the bg-dark/band treatment — used to flip the
 // side-nav rail's numerals/line to a light palette while scrolled over them.
@@ -191,21 +199,23 @@ export default function BobRides() {
 
           <LineSidebar
             items={NAV_SECTIONS.map((s) => s.title)}
+            headings={NAV_HEADINGS}
             accentColor="var(--accent)"
             textColor={navOnDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(26, 26, 26, 0.55)'}
             markerColor={navOnDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(26, 26, 26, 0.15)'}
+            headingColor={navOnDark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(26, 26, 26, 0.4)'}
             showIndex
             showMarker
-            proximityRadius={100}
-            maxShift={32}
+            proximityRadius={70}
+            maxShift={20}
             falloff="smooth"
-            markerLength={60}
+            markerLength={32}
             markerGap={0}
             tickScale={0.44}
             scaleTick
-            itemGap={20}
-            fontSize={1.1}
-            smoothing={280}
+            itemGap={8}
+            fontSize={0.85}
+            smoothing={220}
             activeIndex={NAV_SECTIONS.findIndex((s) => s.id === activeSection)}
             onItemClick={(index) => {
               const target = document.getElementById(NAV_SECTIONS[index].id);

@@ -33,6 +33,16 @@
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.line-sidebar__heading {
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-top: 10px;
+}
+
 .line-sidebar__marker {
   flex: 0 0 auto;
   height: 1px;

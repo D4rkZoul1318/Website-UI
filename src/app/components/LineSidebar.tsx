@@ -29,6 +29,14 @@ export interface LineSidebarProps {
    * click state when provided.
    */
   activeIndex?: number;
+  /**
+   * Also not in the original spec: a heading to render above the item at
+   * a given index, for grouping a long flat list under section headers
+   * (e.g. {0: 'Overview', 2: 'Discovery'}). Purely a visual divider — item
+   * indices stay flat and sequential, unaffected by grouping.
+   */
+  headings?: Record<number, string>;
+  headingColor?: string;
   onItemClick?: (index: number, label: string) => void;
   className?: string;
 }
@@ -67,6 +75,8 @@ export default function LineSidebar({
   smoothing = 200,
   defaultActive = 0,
   activeIndex,
+  headings,
+  headingColor = 'currentColor',
   onItemClick,
   className = '',
 }: LineSidebarProps) {
@@ -114,10 +124,20 @@ export default function LineSidebar({
         const color = isActive ? accentColor : textColor;
         const mColor = isActive ? accentColor : markerColor;
         const labelOpacity = isActive ? 1 : influence;
+        const heading = headings?.[i];
 
         return (
+          <div key={label} className="line-sidebar__group" style={{ display: 'contents' }}>
+          {heading && (
+            <span
+              className="line-sidebar__heading"
+              aria-hidden="true"
+              style={{ color: headingColor, marginTop: i === 0 ? 0 : undefined }}
+            >
+              {heading}
+            </span>
+          )}
           <button
-            key={label}
             type="button"
             ref={(node) => { itemRefs.current[i] = node; }}
             className={`line-sidebar__item${isActive ? ' is-active' : ''}`}
@@ -155,6 +175,7 @@ export default function LineSidebar({
               {label}
             </span>
           </button>
+          </div>
         );
       })}
     </div>
