@@ -408,7 +408,7 @@
 .camera-theme .vf-footer-eyebrow .rule { height: 1px; flex: 1; background: rgba(244, 243, 240, 0.2); }
 /* Matches .camera-theme .section h1's own clamp exactly (camera-theme.css)
    so the footer title never outsizes the real page heading it follows. */
-.camera-theme .vf-footer-title { font-family: var(--font-display); font-weight: 600; line-height: 0.9; letter-spacing: -0.045em; font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-variation-settings: "opsz" 96; }
+.camera-theme .vf-footer-title { font-family: var(--font-display); font-weight: 600; line-height: 0.9; letter-spacing: -0.045em; font-size: clamp(2.3125rem, 5vw, 3.5625rem); font-variation-settings: "opsz" 96; }
 /* color: inherit is load-bearing — camera-theme.css's ".camera-theme
    footer span" (for the old plain footers) sets color: var(--ink-faint)
    on any <span> inside any <footer>, this .vf-italic span included, and
