@@ -166,29 +166,10 @@ export function AboutPage() {
           </div>
         </section>
 
-        {/* TOOLKIT */}
-        <section className="section index-bleed num-left">
-          <span className="index-num" data-speed="0.65" aria-hidden="true">04</span>
-          <div className="wrap-wide wrap-lean-left">
-            <Reveal className="section-index">SEC.<b>04</b> — TOOLKIT</Reveal>
-            <Reveal as="h2">Skills &amp; Tools</Reveal>
-            <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
-              {toolkit.map((group, i) => (
-                <Reveal key={group.category} delay={staggerDelay(i)} className="split">
-                  <span className="meta-label" style={{ paddingTop: 4 }}>{group.category}</span>
-                  <div className="hero-tags" style={{ marginTop: 0 }}>
-                    {group.items.map((item) => <span key={item}>{item}</span>)}
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* CONTACT */}
         <section className="section band bg-dark" style={{ textAlign: 'center' }}>
           <div className="band-inner wrap cinema-head">
-            <Reveal className="section-index">SEC.<b>05</b> — CONTACT</Reveal>
+            <Reveal className="section-index">SEC.<b>04</b> — CONTACT</Reveal>
             <Reveal as="h2">Get in touch.</Reveal>
             <Reveal as="p">Open to product design roles and apprenticeships.</Reveal>
             <div style={{ display: 'flex', gap: 'var(--space-3)', justifyContent: 'center', flexWrap: 'wrap', marginTop: 'var(--space-6)' }}>
