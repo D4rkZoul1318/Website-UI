@@ -34,8 +34,8 @@ const education = [
 
 const toolkit = [
   { category: 'Design', items: ['Figma', 'Photoshop', 'Maya', 'Blender', 'ZBrush', 'Substance Painter'] },
-  { category: 'Prototyping', items: ['Figma Make', 'Unreal Engine'] },
-  { category: 'AI', items: ['Claude', 'Gemini', 'ChatGPT', 'DALL·E', 'Midjourney'] },
+  { category: 'Prototyping', items: ['Figma Make', 'Unreal Engine', 'Google Stitch'] },
+  { category: 'AI', items: ['Claude', 'Gemini', 'ChatGPT'] },
   { category: 'Dev', items: ['Git', 'Vercel', 'Reaper'] },
   { category: 'Methods', items: ['UX Research', 'Wireframing', '3D Iconography', 'PBR Asset Creation'] },
 ];
