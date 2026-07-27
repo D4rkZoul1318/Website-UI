@@ -1,10 +1,13 @@
+import { useLocation } from 'react-router-dom';
 import { Reveal } from '../camera/Reveal';
 import { ROUTES } from '../../routes';
 import { ContactForm } from '../ContactForm';
+import { handleHashLinkClick } from '../../lib/scrollToHash';
 
 // Work/Contact are same-page anchors on the homepage; prefixing the route
 // makes them work as "go home, then scroll" links from every other page too
-// (App.tsx's useHashScroll handles the scroll-into-view once we land there).
+// (App.tsx's useHashScroll handles the scroll-into-view once we land there;
+// handleHashLinkClick below handles clicking them while already on Home).
 const DIRECTORY = [
   { href: `${ROUTES.home}#work`, label: 'Work' },
   { href: ROUTES.explorations, label: 'Explorations' },
@@ -20,6 +23,7 @@ type FooterProps = {
 };
 
 export function Footer({ showEmailCta = true, showBehance = true }: FooterProps) {
+  const location = useLocation();
   const elsewhere = [
     { href: 'https://www.linkedin.com/in/sohum-bhatnagar-9b2301276/', label: 'LinkedIn' },
     showBehance
@@ -71,7 +75,9 @@ export function Footer({ showEmailCta = true, showBehance = true }: FooterProps)
           <span className="vf-footer-col-label">Directory</span>
           <ul className="vf-footer-list">
             {DIRECTORY.map((l) => (
-              <li key={l.href}><a href={l.href}>→ {l.label}</a></li>
+              <li key={l.href}>
+                <a href={l.href} onClick={(e) => handleHashLinkClick(e, l.href, location.pathname)}>→ {l.label}</a>
+              </li>
             ))}
           </ul>
         </div>

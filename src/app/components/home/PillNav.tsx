@@ -5,7 +5,12 @@ export interface PillNavItem {
   label: string;
   /** Omit for a client-side item (e.g. a filter tab) driven by onClick instead. */
   href?: string;
-  onClick?: () => void;
+  /**
+   * With href: an interceptor (e.g. same-page hash-scroll handling) run
+   * alongside normal anchor behavior — call preventDefault() to override.
+   * Without href: the item's entire action (renders as a button instead).
+   */
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
   ariaLabel?: string;
 }
 
@@ -102,7 +107,20 @@ export function PillNav({
           );
           return (
             <li key={itemKey} role="none">
-              {item.onClick ? (
+              {item.href ? (
+                <a
+                  ref={(el) => { pillRefs.current[i] = el; }}
+                  href={item.href}
+                  onClick={item.onClick}
+                  role="menuitem"
+                  aria-label={item.ariaLabel ?? item.label}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`vf-pillnav-link${isActive ? ' is-active' : ''}`}
+                  style={{ color: pillTextColor }}
+                >
+                  {roll}
+                </a>
+              ) : (
                 <button
                   type="button"
                   ref={(el) => { pillRefs.current[i] = el; }}
@@ -115,18 +133,6 @@ export function PillNav({
                 >
                   {roll}
                 </button>
-              ) : (
-                <a
-                  ref={(el) => { pillRefs.current[i] = el; }}
-                  href={item.href}
-                  role="menuitem"
-                  aria-label={item.ariaLabel ?? item.label}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`vf-pillnav-link${isActive ? ' is-active' : ''}`}
-                  style={{ color: pillTextColor }}
-                >
-                  {roll}
-                </a>
               )}
             </li>
           );
@@ -150,26 +156,26 @@ export function PillNav({
           <div ref={mobileMenuRef} className="vf-pillnav-mobile" style={{ display: 'none', background: baseColor }}>
             {items.map((item) => {
               const itemKey = item.href ?? item.label;
-              return item.onClick ? (
-                <button
-                  key={itemKey}
-                  type="button"
-                  className={`vf-pillnav-mobile-link${itemKey === activeHref ? ' is-active' : ''}`}
-                  style={{ color: hoveredPillTextColor }}
-                  onClick={() => { item.onClick!(); setMobileOpen(false); }}
-                >
-                  {item.label}
-                </button>
-              ) : (
+              return item.href ? (
                 <a
                   key={itemKey}
                   href={item.href}
                   className={`vf-pillnav-mobile-link${itemKey === activeHref ? ' is-active' : ''}`}
                   style={{ color: hoveredPillTextColor }}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => { item.onClick?.(e); setMobileOpen(false); }}
                 >
                   {item.label}
                 </a>
+              ) : (
+                <button
+                  key={itemKey}
+                  type="button"
+                  className={`vf-pillnav-mobile-link${itemKey === activeHref ? ' is-active' : ''}`}
+                  style={{ color: hoveredPillTextColor }}
+                  onClick={(e) => { item.onClick?.(e); setMobileOpen(false); }}
+                >
+                  {item.label}
+                </button>
               );
             })}
           </div>

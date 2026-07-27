@@ -3,10 +3,12 @@ import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { PillNav } from './PillNav';
+import { handleHashLinkClick } from '../../lib/scrollToHash';
 
 // Work/Contact are same-page anchors on the homepage; prefixing the route
 // makes them work as "go home, then scroll" links from every other page too
-// (App.tsx's useHashScroll handles the scroll-into-view once we land there).
+// (App.tsx's useHashScroll handles the scroll-into-view once we land there;
+// handleHashLinkClick below handles clicking them while already on Home).
 const LINKS = [
   { href: `${ROUTES.home}#work`, label: 'Work' },
   { href: ROUTES.explorations, label: 'Explorations' },
@@ -61,7 +63,10 @@ export function Nav() {
           <span>SB / Viewfinder</span>
         </a>
         <PillNav
-          items={LINKS}
+          items={LINKS.map((l) => ({
+            ...l,
+            onClick: (e) => handleHashLinkClick(e as React.MouseEvent<HTMLAnchorElement>, l.href, location.pathname),
+          }))}
           activeHref={activeHref}
           baseColor="var(--ink)"
           pillTextColor="var(--ink)"

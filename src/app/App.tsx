@@ -9,24 +9,31 @@ import Viewfinder from "./components/viewfinder/Viewfinder";
 import { ROUTES } from "./routes";
 import { useEffect } from "react";
 import { SmoothScroll } from "./components/SmoothScroll";
+import { scrollToHashTarget } from "./lib/scrollToHash";
 
+// Handles a hash landing on a fresh page load (e.g. navigating in from
+// another page via a `/#work`-style link) — the effect's empty deps mean
+// this only runs once, on the initial mount. Clicking a hash link while
+// already on the page it points to (e.g. WORK from the homepage itself)
+// is a different case — no navigation/remount happens, so this never
+// re-fires — and is handled separately via onClick directly on those
+// links (Nav.tsx, home/Footer.tsx), the same pattern BobRides.tsx's own
+// in-page nav already uses. A document-level click listener here was
+// tried first and dropped: it raced unpredictably against ScrollSmoother's
+// own rAF-deferred setup and produced a wildly wrong scroll position,
+// where React's synthetic onClick (registered at app bootstrap, well
+// before that race window) reliably doesn't.
 function useHashScroll() {
   useEffect(() => {
     const scrollTarget = sessionStorage.getItem("scrollTo");
     if (scrollTarget) {
       sessionStorage.removeItem("scrollTo");
-      setTimeout(() => {
-        const el = document.getElementById(scrollTarget);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      scrollToHashTarget(scrollTarget);
       return;
     }
     const hash = window.location.hash;
     if (hash) {
-      setTimeout(() => {
-        const el = document.getElementById(hash.replace("#", ""));
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-      }, 200);
+      scrollToHashTarget(hash.replace("#", ""));
     }
   }, []);
 }
