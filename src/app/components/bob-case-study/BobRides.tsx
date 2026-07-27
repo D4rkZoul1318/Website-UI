@@ -206,15 +206,15 @@ export default function BobRides() {
             headingColor={navOnDark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(26, 26, 26, 0.4)'}
             showIndex
             showMarker
-            proximityRadius={70}
-            maxShift={20}
+            proximityRadius={60}
+            maxShift={14}
             falloff="smooth"
-            markerLength={32}
+            markerLength={20}
             markerGap={0}
             tickScale={0.44}
             scaleTick
-            itemGap={8}
-            fontSize={0.85}
+            itemGap={4}
+            fontSize={0.7}
             smoothing={220}
             activeIndex={NAV_SECTIONS.findIndex((s) => s.id === activeSection)}
             onItemClick={(index) => {

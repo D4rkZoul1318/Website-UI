@@ -11,13 +11,27 @@
   flex-direction: column;
   align-items: flex-end;
   gap: var(--ls-item-gap, 16px);
-  max-height: 80vh;
+  max-height: 74vh;
   overflow-y: auto;
-  scrollbar-width: none;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 12px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
 }
 
 .line-sidebar::-webkit-scrollbar {
-  display: none;
+  width: 3px;
+}
+
+.line-sidebar::-webkit-scrollbar-thumb {
+  background: currentColor;
+  opacity: 0.2;
+  border-radius: 2px;
 }
 
 .line-sidebar__item {
@@ -26,7 +40,7 @@
   align-items: center;
   background: none;
   border: none;
-  padding: 3px 2px;
+  padding: 2px;
   cursor: pointer;
   font-family: var(--font-mono, monospace);
   transition-property: transform;
@@ -35,12 +49,12 @@
 
 .line-sidebar__heading {
   font-family: var(--font-mono, monospace);
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 0.5;
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 .line-sidebar__marker {
@@ -53,19 +67,19 @@
 
 .line-sidebar__index {
   flex: 0 0 auto;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.06em;
-  margin-left: 10px;
+  margin-left: 8px;
   transition-property: color;
   transition-timing-function: ease-out;
 }
 
 .line-sidebar__label {
   flex: 0 0 auto;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   white-space: nowrap;
   text-transform: uppercase;
-  margin-left: 10px;
+  margin-left: 8px;
   transition-property: opacity, color;
   transition-timing-function: ease-out;
 }
