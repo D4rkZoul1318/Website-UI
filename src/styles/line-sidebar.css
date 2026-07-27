@@ -1,0 +1,67 @@
+/* LineSidebar — proximity-based vertical nav. Colors/sizing are entirely
+   prop-driven (set inline per instance); only structural layout lives here. */
+
+.line-sidebar {
+  position: fixed;
+  right: var(--space-5, 24px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ls-item-gap, 16px);
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.line-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.line-sidebar__item {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 3px 2px;
+  cursor: pointer;
+  font-family: var(--font-mono, monospace);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.line-sidebar__marker {
+  flex: 0 0 auto;
+  height: 1px;
+  transform-origin: right center;
+  transition-property: transform, background-color;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.line-sidebar__index {
+  flex: 0 0 auto;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  margin-left: 10px;
+  transition-property: color;
+  transition-timing-function: ease-out;
+}
+
+.line-sidebar__label {
+  flex: 0 0 auto;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  margin-left: 10px;
+  transition-property: opacity, color;
+  transition-timing-function: ease-out;
+}
+
+@media (max-width: 860px) {
+  .line-sidebar {
+    display: none;
+  }
+}

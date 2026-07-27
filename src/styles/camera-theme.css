@@ -77,63 +77,8 @@
   .camera-theme main.has-mobile-nav { padding-top: calc(63px + 53px); }
 }
 
-/* Right-vertical section rail — same visual/interaction vocabulary as the
-   homepage's .floating-nav (line, dot-equivalent, hover/active label
-   reveal), but the "dot" is the always-visible section number instead of
-   a bare dot, since this page's identity is numbers not words. Gap is
-   much tighter than the homepage's 22px since this page has ~4x the
-   sections; capped at 80vh with a hidden scrollbar so it never runs off
-   a short viewport. Hidden below 861px in favor of the horizontal
-   .mobile-nav-fallback above, since this page is long enough that
-   section nav still matters on mobile.
-
-   Unlike the homepage, this page has long solid bg-dark bands (Final
-   Icons, Key Decisions, Major Screens) that the rail scrolls over. A
-   mix-blend-mode: difference approach was tried first to auto-invert
-   contrast without any scroll-position detection, but proved unreliable
-   in real (GPU-composited) browsers — fixed-position blend elements can
-   silently fall back to unblended color against certain layered content,
-   which read as invisible white-on-white. Reverted to an explicit
-   light/dark palette instead, toggled via a `side-nav--on-dark` class
-   driven by the already-existing activeSection state (its
-   IntersectionObserver rootMargin already centers on the same point the
-   fixed rail sits at, so this needed no second observer) — deterministic
-   rather than relying on browser blend-mode compositing. */
-.camera-theme .side-nav {
-  position: fixed; right: var(--space-5); top: 50%; transform: translateY(-50%); z-index: 60;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 7px;
-  max-height: 80vh; overflow-y: auto; scrollbar-width: none;
-  --fnav-label: rgba(26, 26, 26, 0.55);
-  --fnav-label-active: #1a1a1a;
-  --fnav-num: rgba(26, 26, 26, 0.4);
-  --fnav-num-active: var(--accent);
-  --fnav-line: rgba(26, 26, 26, 0.15);
-  transition: color 250ms var(--ease-out);
-}
-.camera-theme .side-nav--on-dark {
-  --fnav-label: rgba(255, 255, 255, 0.7);
-  --fnav-label-active: #ffffff;
-  --fnav-num: rgba(255, 255, 255, 0.85);
-  --fnav-line: rgba(255, 255, 255, 0.5);
-}
-.camera-theme .side-nav::-webkit-scrollbar { display: none; }
-.camera-theme .side-nav__line { position: absolute; top: 4px; bottom: 4px; right: 3.5px; width: 1px; background: var(--fnav-line); z-index: 0; transition: background-color 250ms var(--ease-out); }
-.camera-theme .side-nav__item {
-  position: relative; z-index: 1; display: flex; flex-direction: row-reverse; align-items: center; gap: 10px;
-  text-decoration: none; padding: 3px 2px; cursor: pointer;
-}
-.camera-theme .side-nav__num { flex: 0 0 auto; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--fnav-num); transition: color 250ms var(--ease-out); }
-.camera-theme .side-nav__item.active .side-nav__num { color: var(--fnav-num-active); font-weight: 700; }
-.camera-theme .side-nav__label {
-  flex: 0 0 auto; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; color: var(--fnav-label);
-  text-transform: uppercase; white-space: nowrap; opacity: 0; transform: translateX(4px);
-  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), color 250ms var(--ease-out);
-}
-.camera-theme .side-nav__item:hover .side-nav__label, .camera-theme .side-nav__item.active .side-nav__label { opacity: 1; transform: translateX(0); color: var(--fnav-label-active); }
-.camera-theme .side-nav__item:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
-@media (max-width: 860px) {
-  .camera-theme .side-nav { display: none; }
-}
+/* The desktop section rail is now LineSidebar (src/app/components/
+   LineSidebar.tsx, styles in line-sidebar.css) — .side-nav* is gone. */
 .camera-theme .mobile-nav-fallback { display: flex; }
 @media (min-width: 861px) {
   .camera-theme .mobile-nav-fallback { display: none; }

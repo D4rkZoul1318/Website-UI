@@ -6,6 +6,7 @@ import { Reveal, staggerDelay } from '../camera/Reveal';
 import { CountUp } from '../camera/CountUp';
 import { Nav } from '../home/Nav';
 import { Footer } from '../home/Footer';
+import LineSidebar from '../LineSidebar';
 
 // Anchor links don't work under ScrollSmoother: it fixes #smooth-wrapper in
 // place and drives scroll entirely through a transform on #smooth-content,
@@ -188,22 +189,33 @@ export default function BobRides() {
             ))}
           </nav>
 
-          <nav aria-label="Case study sections (desktop)" className={`side-nav${navOnDark ? ' side-nav--on-dark' : ''}`}>
-            <div className="side-nav__line" />
-            {NAV_SECTIONS.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                onClick={(e) => scrollToSection(e, s.id)}
-                aria-label={s.title}
-                aria-current={activeSection === s.id ? 'true' : undefined}
-                className={`side-nav__item${activeSection === s.id ? ' active' : ''}`}
-              >
-                <span className="side-nav__num">{s.num}</span>
-                <span className="side-nav__label">{s.title}</span>
-              </a>
-            ))}
-          </nav>
+          <LineSidebar
+            items={NAV_SECTIONS.map((s) => s.title)}
+            accentColor="var(--accent)"
+            textColor={navOnDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(26, 26, 26, 0.55)'}
+            markerColor={navOnDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(26, 26, 26, 0.15)'}
+            showIndex
+            showMarker
+            proximityRadius={100}
+            maxShift={32}
+            falloff="smooth"
+            markerLength={60}
+            markerGap={0}
+            tickScale={0.44}
+            scaleTick
+            itemGap={20}
+            fontSize={1.1}
+            smoothing={280}
+            activeIndex={NAV_SECTIONS.findIndex((s) => s.id === activeSection)}
+            onItemClick={(index) => {
+              const target = document.getElementById(NAV_SECTIONS[index].id);
+              if (!target) return;
+              const smoother = ScrollSmoother.get();
+              if (smoother) smoother.scrollTo(target, true, 'top top+=80');
+              else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              history.pushState(null, '', `#${NAV_SECTIONS[index].id}`);
+            }}
+          />
         </>,
         document.getElementById('fixed-ui-root')!
       )}
