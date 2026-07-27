@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { ROUTES } from '../../routes';
@@ -55,6 +55,20 @@ export function Nav() {
     : location.pathname === ROUTES.about ? ROUTES.about
     : '';
 
+  // Memoized so PillNav's items prop keeps the same array/function
+  // references across re-renders that don't actually change the route
+  // (the clock ticking every second, scroll-progress updates, ...) — its
+  // load-in animation effect depends on `items`, and a fresh array every
+  // second was replaying that fade/slide-in on every tick, reading as a
+  // constant jitter in the nav links.
+  const navItems = useMemo(
+    () => LINKS.map((l) => ({
+      ...l,
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => handleHashLinkClick(e, l.href, location.pathname),
+    })),
+    [location.pathname]
+  );
+
   return createPortal(
     <header className="vf-nav">
       <div className="vf-nav-bar">
@@ -63,10 +77,7 @@ export function Nav() {
           <span>SB / Viewfinder</span>
         </a>
         <PillNav
-          items={LINKS.map((l) => ({
-            ...l,
-            onClick: (e) => handleHashLinkClick(e as React.MouseEvent<HTMLAnchorElement>, l.href, location.pathname),
-          }))}
+          items={navItems}
           activeHref={activeHref}
           baseColor="var(--ink)"
           pillTextColor="var(--ink)"
