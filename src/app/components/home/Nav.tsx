@@ -73,8 +73,8 @@ export function Nav() {
     <header className="vf-nav">
       <div className="vf-nav-bar">
         <a href={ROUTES.home} className="vf-logo">
-          <span className="vf-logo-dot" aria-hidden="true"></span>
-          <span>SB / Viewfinder</span>
+          <img src="/SB.png" alt="Sohum Bhatnagar" className="vf-logo-mark" />
+          <span>/ Viewfinder</span>
         </a>
         <PillNav
           items={navItems}

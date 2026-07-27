@@ -103,8 +103,10 @@
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 24px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(6px);
 }
-.vf-home .vf-logo { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
-.vf-home .vf-logo-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--terracotta); }
+.vf-home .vf-logo { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+/* The mark is a white silhouette (transparent elsewhere) — inverted to
+   read dark against the nav bar's light (rgba(255,255,255,0.85)) background. */
+.vf-home .vf-logo-mark { height: 18px; width: auto; display: block; filter: invert(1); }
 /* ---- PillNav (rolling text-swap links, no pill chrome) -----------------
    Plain text links — no background, border, or fill. The only hover/active
    treatment is the label rolling from ink to the terracotta accent.
