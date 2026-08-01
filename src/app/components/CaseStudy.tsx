@@ -9,6 +9,13 @@ const researchCards = [
   { eyebrow: 'Heuristic Evaluation', title: 'System Audit', body: "The portal was evaluated against Nielsen's 10 Usability Heuristics. Critical violations found: no system feedback, admin-centric labelling, zero back navigation, hover flyouts requiring pixel-precise interaction, and no wayfinding or breadcrumbs." },
 ];
 
+const keyFindings = [
+  { num: '01', observation: "Students searched for information according to their academic goals rather than the university's administrative categories.", opportunity: 'Reorganise navigation around student tasks instead of backend structure.' },
+  { num: '02', observation: 'Students frequently relied on classmates when attempting to complete common academic tasks.', opportunity: 'Reduce navigation complexity and improve information discoverability.' },
+  { num: '03', observation: 'Users regularly lost their place because the portal lacked navigation context and clear wayfinding.', opportunity: 'Introduce breadcrumbs, active navigation states and consistent page hierarchy.' },
+  { num: '04', observation: 'Important academic information was buried beneath multiple navigation levels.', opportunity: 'Surface high-priority information directly on the dashboard.' },
+];
+
 const competitiveRows = [
   { platform: 'Manipal University Portal', observation: 'Calendar highlights upcoming exams on dashboard', influence: 'Inspired Updates + Calendar section' },
   { platform: 'Google Classroom', observation: 'Card-based layout for course information', influence: 'Informed Results and Payments card layout' },
@@ -188,6 +195,9 @@ export default function CaseStudy() {
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>02</b> — RESEARCH</Reveal>
             <Reveal as="h2">Understanding the Failure</Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>The redesign began by understanding why students struggled to complete everyday academic tasks. Rather than immediately redesigning screens, I focused on identifying recurring usability failures through first-hand observation, conversations with students, and heuristic evaluation of the existing portal.</p>
+            </Reveal>
             <div className="research-grid">
               {researchCards.map((c, i) => (
                 <Reveal key={c.title} delay={staggerDelay(i)} className="narrative-block">
@@ -200,17 +210,39 @@ export default function CaseStudy() {
           </div>
         </section>
 
+        {/* KEY RESEARCH FINDINGS */}
+        <section className="section bg-paper">
+          <div className="wrap-wide">
+            <Reveal className="section-index">SEC.<b>03</b> — RESEARCH</Reveal>
+            <Reveal as="h2">Key Research Findings</Reveal>
+            <div className="research-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+              {keyFindings.map((f, i) => (
+                <Reveal key={f.num} variant="scale" delay={staggerDelay(i)} className="spec-plate" style={{ padding: 'var(--space-5)' }}>
+                  <span className="spec-label">Finding {f.num}</span>
+                  <span className="meta-label" style={{ marginTop: 'var(--space-5)' }}>Observation</span>
+                  <p style={{ color: 'var(--ink-soft)', fontSize: '0.92rem', lineHeight: 1.6 }}>{f.observation}</p>
+                  <span className="meta-label" style={{ marginTop: 'var(--space-4)' }}>Design Opportunity</span>
+                  <p style={{ color: 'var(--ink-soft)', fontSize: '0.92rem', lineHeight: 1.6 }}>{f.opportunity}</p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* COMPETITIVE ANALYSIS */}
         <section className="section bg-soft">
           <div className="wrap-wide">
             <div className="competitive-head">
               <div>
-                <Reveal className="section-index">SEC.<b>03</b> — RESEARCH</Reveal>
-                <Reveal as="h2">What Others Got Right</Reveal>
+                <Reveal className="section-index">SEC.<b>04</b> — RESEARCH</Reveal>
+                <Reveal as="h2">Competitive Analysis</Reveal>
               </div>
               <Reveal as="p" className="lede competitive-intro">Four reference points studied to identify patterns worth adopting.</Reveal>
             </div>
-            <Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-6)' }}>
+              <p>The objective of this analysis was not to replicate existing interfaces, but to identify interaction patterns that consistently reduced cognitive load and improved discoverability across successful digital products.</p>
+            </Reveal>
+            <Reveal style={{ marginTop: 'var(--space-6)' }}>
               <table className="ed">
                 <thead><tr><th scope="col">Platform</th><th scope="col">Key Observation</th><th scope="col">Influence on Redesign</th></tr></thead>
                 <tbody>
@@ -230,7 +262,7 @@ export default function CaseStudy() {
         {/* BEFORE / AFTER */}
         <section className="section section--cinema bg-dark">
           <div className="wrap-wide cinema-head">
-            <Reveal className="section-index">SEC.<b>04</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>05</b> — DESIGN</Reveal>
             <Reveal as="h2">Before and After</Reveal>
             <Reveal as="p" className="drag-cue">Drag to compare</Reveal>
           </div>
@@ -240,7 +272,7 @@ export default function CaseStudy() {
         {/* DESIGN DECISIONS */}
         <section className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>05</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>06</b> — DESIGN</Reveal>
             <Reveal as="h2">Decisions That Mattered</Reveal>
             <ol className="decision-column">
               {decisions.map((d, i) => (
@@ -259,7 +291,7 @@ export default function CaseStudy() {
         {/* OUTCOME */}
         <section className="section bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>06</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>07</b> — OUTCOME</Reveal>
             <Reveal as="h2">The Redesign</Reveal>
             <Reveal as="p" className="lede">Task completion time dropped from 15 minutes to under 60 seconds.</Reveal>
             <OutcomeCarousel />
@@ -269,12 +301,43 @@ export default function CaseStudy() {
         {/* WHAT CHANGED */}
         <section className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>07</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>08</b> — OUTCOME</Reveal>
             <Reveal as="h2">What Changed</Reveal>
             <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">To access results from dashboard</span><span className="meta-value">2 clicks</span></div>
               <div><span className="meta-label">Task completion time reduction</span><span className="meta-value">15 min → 60 sec</span></div>
-              <div><span className="meta-label">Students could navigate independently</span><span className="meta-value">100%</span></div>
+              <div><span className="meta-label">Student feedback</span><span className="meta-value">Positive validation</span></div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* CONCEPT VALIDATION */}
+        <section className="section bg-soft">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>09</b> — OUTCOME</Reveal>
+            <Reveal as="h2">Concept Validation</Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>Before finalising the redesign, the prototype was reviewed by five university students through guided walkthroughs. Because the prototype was not fully interactive, the sessions focused on whether participants could understand the information architecture, predict navigation paths, and locate key academic tasks without assistance.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>Participants consistently found the redesigned structure easier to understand than the existing UUCMS portal. While several improvements were identified during these walkthroughs, the feedback confirmed that organising the interface around student goals rather than administrative categories significantly improved the overall experience.</p>
+            </Reveal>
+            <Reveal variant="scale" className="facts-row facts-row--four" style={{ marginTop: 'var(--space-7)' }}>
+              <div><span className="meta-label">Participants</span><span className="meta-value">5 Students</span></div>
+              <div><span className="meta-label">Evaluation Method</span><span className="meta-value">Guided Walkthrough</span></div>
+              <div><span className="meta-label">Focus</span><span className="meta-value">Navigation &amp; IA</span></div>
+              <div><span className="meta-label">Outcome</span><span className="meta-value">Positive Direction</span></div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* REFLECTION */}
+        <section className="section bg-paper">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>10</b> — OUTCOME</Reveal>
+            <Reveal as="h2">Reflection</Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>This project reinforced that improving usability is often less about adding new functionality and more about organising information around how people naturally think. Designing for students required shifting the system from an administrative perspective to a task-oriented experience.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>This project also highlighted how government digital services can benefit from applying user-centred design principles commonly found in consumer products, without increasing system complexity.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>If this project were taken further, I would build a fully interactive prototype and conduct moderated usability testing to measure task completion time, navigation success rates, and long-term usability improvements.</p>
             </Reveal>
           </div>
         </section>
