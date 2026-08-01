@@ -34,22 +34,24 @@ const NAV_SECTIONS = [
   { id: 'problem-statement', num: '02', title: 'Problem Statement', category: 'Discovery' },
   { id: 'objectives-goals', num: '04', title: 'Objectives & Goals', category: 'Discovery' },
   { id: 'business-challenges', num: '05', title: 'Business Challenges', category: 'Discovery' },
-  { id: 'competitor-analysis', num: '06', title: 'Competitor Analysis', category: 'Discovery' },
-  { id: 'product-users', num: '07', title: 'Product Users', category: 'Research' },
-  { id: 'user-persona', num: '08', title: 'User Persona', category: 'Research' },
-  { id: 'user-needs', num: '09', title: 'User Needs', category: 'Research' },
-  { id: 'features-functionalities', num: '10', title: 'Features & Functionalities', category: 'Design Process' },
-  { id: 'product-user-challenges', num: '11', title: 'Product User Challenges', category: 'Design Process' },
-  { id: 'unique-features', num: '12', title: 'Unique Features', category: 'Design Process' },
-  { id: 'task-mapping', num: '13', title: 'Task Mapping', category: 'Design Process' },
-  { id: 'eisenhower-matrix', num: '14', title: 'Eisenhower Matrix', category: 'Design Process' },
-  { id: 'key-decisions', num: '15', title: 'Three Decisions', category: 'Design Process' },
-  { id: 'sketches', num: '16', title: 'Sketches', category: 'Execution' },
-  { id: 'final-icons', num: '17', title: 'Final Icons', category: 'Execution' },
-  { id: 'icon-system', num: '18', title: 'Icon System', category: 'Execution' },
-  { id: 'major-screens', num: '19', title: 'Major Screens', category: 'Execution' },
-  { id: 'what-we-built', num: '20', title: 'What We Built', category: 'Outcome' },
-  { id: 'close', num: '21', title: 'Close', category: 'Outcome' },
+  { id: 'research-approach', num: '06', title: 'Research Approach', category: 'Discovery' },
+  { id: 'competitor-analysis', num: '07', title: 'Competitor Analysis', category: 'Discovery' },
+  { id: 'product-users', num: '08', title: 'Product Users', category: 'Research' },
+  { id: 'user-persona', num: '09', title: 'User Persona', category: 'Research' },
+  { id: 'user-needs', num: '10', title: 'User Needs', category: 'Research' },
+  { id: 'features-functionalities', num: '11', title: 'Features & Functionalities', category: 'Design Process' },
+  { id: 'product-user-challenges', num: '12', title: 'Product User Challenges', category: 'Design Process' },
+  { id: 'unique-features', num: '13', title: 'Unique Features', category: 'Design Process' },
+  { id: 'task-mapping', num: '14', title: 'Task Mapping', category: 'Design Process' },
+  { id: 'eisenhower-matrix', num: '15', title: 'Eisenhower Matrix', category: 'Design Process' },
+  { id: 'key-decisions', num: '16', title: 'Three Decisions', category: 'Design Process' },
+  { id: 'sketches', num: '17', title: 'Sketches', category: 'Execution' },
+  { id: 'final-icons', num: '18', title: 'Final Icons', category: 'Execution' },
+  { id: 'icon-system', num: '19', title: 'Icon System', category: 'Execution' },
+  { id: 'major-screens', num: '20', title: 'Major Screens', category: 'Execution' },
+  { id: 'what-we-built', num: '21', title: 'What We Built', category: 'Outcome' },
+  { id: 'validation', num: '22', title: 'Validation', category: 'Outcome' },
+  { id: 'close', num: '23', title: 'Close', category: 'Outcome' },
 ] as const;
 
 // Maps the first index of each new category to its heading, for
@@ -153,6 +155,32 @@ const taskMappingRows: { label: string; cells: string[] }[] = [
   { label: 'Thoughts', cells: ['"Is this faster than opening three apps separately?"', '"Which one is actually cheapest right now?"', '"Is that icon a bike or an auto? Is Best Price actually the best?"', '"Did it book the right vehicle? When does it arrive?"'] },
   { label: 'Urgency Level', cells: ['Medium — user has a destination in mind and is ready to book', 'High — fare comparison is time-sensitive due to surge pricing', 'High — selection decision happens in under 30 seconds', 'Low — passive monitoring state'] },
   { label: 'Design Opportunity', cells: ['Home screen icons (bike, auto, cab) must communicate vehicle category at 48px without any label', 'Available Rides screen is the primary icon performance test — all three vehicle types appear simultaneously at 32px', 'Best Price badge and icon must work together to guide the decision without requiring the user to read every row', 'Activity screen must clearly confirm vehicle type icon and provider — same icon system, confirmation context'] },
+];
+
+const researchActivities: { label: string; text: string }[] = [
+  {
+    label: 'User Interviews',
+    text: 'Conducted interviews with approximately 20–30 frequent ride-hailing users, including friends, family members, and college students. The interviews focused on booking behaviour, fare comparison, vehicle selection, and frustrations with existing ride-hailing applications.',
+  },
+  {
+    label: 'Competitive Product Analysis',
+    text: 'Compared Uber, Ola, Rapido and Namma Yatri by analysing booking flows, navigation patterns, pricing presentation, vehicle iconography, and overall interaction design.',
+  },
+  {
+    label: 'Visual Interface Audit',
+    text: 'Evaluated existing vehicle icon systems for recognisability, consistency, scalability, and performance across light and dark interfaces.',
+  },
+  {
+    label: 'Beta Product Validation',
+    text: "Following implementation, the complete icon system and interface redesign were deployed through the application's TestFlight beta programme, making the redesign available to a substantial portion of the application's ~40,000 beta-user community before production release.",
+  },
+];
+
+const researchGoals = [
+  'How do riders compare prices before booking?',
+  'What creates friction during ride selection?',
+  'Why do existing ride-hailing applications feel visually similar?',
+  'How can BOB Rides establish a distinctive visual identity without sacrificing usability?',
 ];
 
 export default function BobRides() {
@@ -338,10 +366,50 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.06 — RESEARCH: Competitor Analysis */}
+        {/* SEC.06 — RESEARCH: Research Approach */}
+        <section id="research-approach" className="section">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>06</b> — RESEARCH</Reveal>
+            <Reveal as="h2">Research Approach</Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>To understand how users compare ride-hailing services and identify opportunities for product differentiation, I combined qualitative user research with competitive product analysis. Rather than relying on secondary sources, the research was grounded in direct conversations with riders and hands-on evaluation of existing ride-hailing platforms.</p>
+            </Reveal>
+
+            <Reveal as="p" className="sheet-subtitle" style={{ marginTop: 'var(--space-7)' }}>Research Activities</Reveal>
+            <Reveal style={{ overflowX: 'auto' }}>
+              <table className="ed">
+                <thead>
+                  <tr>
+                    <th scope="col">Activity</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {researchActivities.map((row) => (
+                    <tr key={row.label}>
+                      <td>{row.label}</td>
+                      <td>{row.text}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Reveal>
+
+            <Reveal as="p" className="sheet-subtitle" style={{ marginTop: 'var(--space-7)' }}>Research Goals</Reveal>
+            <div className="feature-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+              {researchGoals.map((text, i) => (
+                <Reveal key={i} variant="scale" delay={staggerDelay(i)} className="feature-cell">
+                  <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SEC.07 — RESEARCH: Competitor Analysis */}
         <section id="competitor-analysis" className="section section--roomy bg-soft">
           <div className="wrap-wide" style={{ textAlign: 'center' }}>
-            <Reveal className="section-index">SEC.<b>06</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>07</b> — RESEARCH</Reveal>
             <Reveal as="h2">What every competitor got wrong</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>Competitors: OLA, Rapido, Uber, Namma Yatri</Reveal>
           </div>
@@ -355,10 +423,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.07 — RESEARCH: Product Users */}
+        {/* SEC.08 — RESEARCH: Product Users */}
         <section id="product-users" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>07</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>08</b> — RESEARCH</Reveal>
             <Reveal as="h2">The user was never the hard part</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/product-users.webp" alt="Product Users" loading="lazy" decoding="async" />
@@ -366,11 +434,12 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.08 — RESEARCH: User Persona */}
+        {/* SEC.09 — RESEARCH: User Persona */}
         <section id="user-persona" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>08</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>09</b> — RESEARCH</Reveal>
             <Reveal as="h2">Meet Rahul</Reveal>
+            <Reveal as="p" className="sheet-subtitle" style={{ maxWidth: 640 }}>Note: This persona is a synthesis of recurring behaviours and patterns observed during user interviews. It represents the common needs and frustrations of frequent ride-hailing users rather than a single individual.</Reveal>
             <div style={{ marginTop: 'var(--space-6)', maxWidth: 640 }}>
               <Reveal as="h3" style={{ fontSize: '1.15rem', fontWeight: 700, letterSpacing: '-0.005em' }}>Rahul Kumar</Reveal>
               <Reveal as="p" style={{ fontFamily: 'var(--font-mono)', fontSize: '10.5px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginTop: 4 }}>Community Manager</Reveal>
@@ -398,10 +467,10 @@ export default function BobRides() {
           <p>"I just want to see all my options in one place and book the cheapest one. Why do I have to open three apps for that?"</p>
         </Reveal>
 
-        {/* SEC.09 — RESEARCH: User Needs */}
+        {/* SEC.10 — RESEARCH: User Needs */}
         <section id="user-needs" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>09</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>10</b> — RESEARCH</Reveal>
             <Reveal as="h2">What riders actually needed</Reveal>
             {userNeeds.map((text, i) => (
               <Reveal key={i} variant="scale" className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
@@ -411,10 +480,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.10 — DESIGN: Features & Functionalities */}
+        {/* SEC.11 — DESIGN: Features & Functionalities */}
         <section id="features-functionalities" className="section bg-soft">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>10</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>11</b> — DESIGN</Reveal>
             <Reveal as="h2">Features &amp; Functionalities</Reveal>
             <Reveal as="p" className="sheet-subtitle">To resolve user needs</Reveal>
             <div className="feature-grid">
@@ -428,10 +497,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.11 — DESIGN: Product User Challenges */}
+        {/* SEC.12 — DESIGN: Product User Challenges */}
         <section id="product-user-challenges" className="section">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>11</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>12</b> — DESIGN</Reveal>
             <Reveal as="h2">What was actually broken for users</Reveal>
             <div style={{ marginTop: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               {productUserChallenges.map((text, i) => (
@@ -444,10 +513,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.12 — DESIGN: Unique Features */}
+        {/* SEC.13 — DESIGN: Unique Features */}
         <section id="unique-features" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>12</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>13</b> — DESIGN</Reveal>
             <Reveal as="h2">Unique Features</Reveal>
             {uniqueFeatures.map((text, i) => (
               <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
@@ -457,10 +526,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.13 — DESIGN: Task Mapping */}
+        {/* SEC.14 — DESIGN: Task Mapping */}
         <section id="task-mapping" className="section">
           <div className="wrap-wide cinema-head">
-            <Reveal className="section-index">SEC.<b>13</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>14</b> — DESIGN</Reveal>
             <Reveal as="h2">Every tap is a decision point</Reveal>
           </div>
           <div className="wrap-wide">
@@ -488,10 +557,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.14 — DESIGN: Eisenhower Matrix */}
+        {/* SEC.15 — DESIGN: Eisenhower Matrix */}
         <section id="eisenhower-matrix" className="section bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>14</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>15</b> — DESIGN</Reveal>
             <Reveal as="h2">Eisenhower Matrix</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/eisen-hover-matrix.webp" alt="Eisenhower Matrix" loading="lazy" decoding="async" />
@@ -499,10 +568,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.15 — ANALYSIS: Three decisions that shaped the system */}
+        {/* SEC.16 — ANALYSIS: Three decisions that shaped the system */}
         <section id="key-decisions" className="section band bg-dark">
           <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>15</b> — ANALYSIS</Reveal>
+            <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
             <Reveal as="h2">Three decisions that shaped the system</Reveal>
             <div className="feature-grid">
               {decisions.map((d, i) => (
@@ -519,10 +588,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.16 — DESIGN: Sketches */}
+        {/* SEC.17 — DESIGN: Sketches */}
         <section id="sketches" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>16</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>17</b> — DESIGN</Reveal>
             <Reveal as="h2">Sketches</Reveal>
             <Reveal variant="rotate" className="media-frame" style={{ maxWidth: 880, marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/sketches.webp" alt="Sketches" loading="lazy" decoding="async" />
@@ -530,10 +599,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.17 — DESIGN: Final Icons */}
+        {/* SEC.18 — DESIGN: Final Icons */}
         <section id="final-icons" className="section section--roomy band bg-dark">
           <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>17</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>18</b> — DESIGN</Reveal>
             <Reveal as="h2">Final Icons</Reveal>
             <div className="icons-row">
               <Reveal variant="scale" delay={staggerDelay(0)} className="icon-cell"><img src="/images/bob-images/Car.webp" alt="BOB Rides 3D cab icon" loading="lazy" decoding="async" /><span>Cab</span></Reveal>
@@ -543,10 +612,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.18 — DESIGN SYSTEM */}
+        {/* SEC.19 — DESIGN SYSTEM */}
         <section id="icon-system" className="section section--roomy bg-paper">
           <div className="wrap cinema-head">
-            <Reveal className="section-index">SEC.<b>18</b> — DESIGN SYSTEM</Reveal>
+            <Reveal className="section-index">SEC.<b>19</b> — DESIGN SYSTEM</Reveal>
             <Reveal as="h2">Icon System</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>
               The icon system spans two production generations — flat 2D isometric to full-colour 3D with cast shadows. View the full version history, evolution rationale, and spec documentation in Figma.
@@ -557,10 +626,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.19 — DESIGN: Major Screens */}
+        {/* SEC.20 — DESIGN: Major Screens */}
         <section id="major-screens" className="section section--roomy band bg-dark">
           <div className="band-inner cinema-head">
-            <Reveal className="section-index">SEC.<b>19</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>20</b> — DESIGN</Reveal>
             <Reveal as="h2">Major Screens</Reveal>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)', marginTop: 'var(--space-7)', maxWidth: 1800, marginInline: 'auto', paddingInline: 'var(--space-5)' }}>
@@ -590,10 +659,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.20 — OUTCOME */}
+        {/* SEC.21 — OUTCOME */}
         <section id="what-we-built" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>20</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>21</b> — OUTCOME</Reveal>
             <Reveal as="h2">What We Built</Reveal>
             <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">First Indian ride app with 3D icon system</span><span className="meta-value">3D</span></div>
@@ -603,7 +672,26 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.21 — CLOSE */}
+        {/* SEC.22 — OUTCOME: Validation */}
+        <section id="validation" className="section section--tight bg-soft">
+          <div className="wrap">
+            <Reveal className="section-index">SEC.<b>22</b> — OUTCOME</Reveal>
+            <Reveal as="h2">Validation</Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>Following implementation, the redesigned icon system and interface were released through the application's TestFlight beta programme before being promoted to production.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>This beta release made the redesigned experience available to a substantial portion of the product's approximately 40,000 beta users, allowing the team to observe real-world usage and gather feedback before production rollout.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>Feedback from the beta release was positive, supporting the decision to promote the redesigned experience to the live product.</p>
+            </Reveal>
+            <Reveal variant="scale" className="facts-row facts-row--four" style={{ marginTop: 'var(--space-7)' }}>
+              <div><span className="meta-label">User Interviews</span><span className="meta-value">20–30</span></div>
+              <div><span className="meta-label">Competitor Products Analysed</span><span className="meta-value">4</span></div>
+              <div><span className="meta-label">Beta Users Exposed</span><span className="meta-value">~40K</span></div>
+              <div><span className="meta-label">Release Status</span><span className="meta-value">Production</span></div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* SEC.23 — CLOSE */}
         <section id="close" className="section section--roomy bg-paper">
           <div className="wrap" style={{ display: 'flex', justifyContent: 'center' }}>
             <Reveal className="media-frame" style={{ maxWidth: 480 }}>
