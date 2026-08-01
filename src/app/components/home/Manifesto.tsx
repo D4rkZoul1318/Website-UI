@@ -4,19 +4,19 @@ const CHAPTERS = [
   {
     n: '01', tag: 'PRINCIPLE',
     title: 'Composition before decoration.',
-    body: 'Structure earns attention; ornament borrows it. Every layout is a lens choice — where the eye lands, what falls out of frame, what stays in focus. I begin with hierarchy and negative space, not with textures.',
+    body: 'Every layout is a decision about what the eye finds first and what waits its turn. I start with hierarchy and negative space — structure earns attention, ornament only borrows it — because a screen that reads clearly in silence keeps reading clearly under noise.',
     active: false,
   },
   {
     n: '02', tag: 'METHOD',
-    title: 'Exposure is a design decision.',
-    body: 'Interfaces, like photographs, are governed by contrast. What is loud, what is quiet, what is legible under low light. I treat typography, motion, and color as exposure controls — each one deliberately set, never automatic.',
+    title: 'Exposure is never automatic.',
+    body: 'Typography, motion, color, and timing all behave like exposure controls — how loud, how quiet, how legible under pressure. I set every one of them by hand, because a system running on defaults eventually feels like nobody was behind the camera.',
     active: true,
   },
   {
     n: '03', tag: 'PRACTICE',
     title: 'Ship the whole system, not the shot.',
-    body: 'A single hero screen is a portrait; a product is a documentary. I design end-to-end — component libraries, motion grammars, and copy voice — so the work stays coherent long after the launch frame.',
+    body: 'A single screen is a portrait; a product is everything that happens between screens — how a component behaves across states, how motion carries intent from one interaction to the next. I design those connections as deliberately as the surfaces, because that is where a system holds together or falls apart.',
     active: false,
   },
 ];

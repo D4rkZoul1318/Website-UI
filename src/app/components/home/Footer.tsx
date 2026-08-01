@@ -51,7 +51,7 @@ export function Footer({ showEmailCta = true, showBehance = true }: FooterProps)
               sohum1311@gmail.com<span className="arrow">↗</span>
             </a>
             <span className="vf-footer-link-underline" data-testid="footer-cta-role">
-              Or, talk about a role
+              Or, talk about a role, a programme, or a collaboration
             </span>
           </Reveal>
         )}
@@ -66,7 +66,7 @@ export function Footer({ showEmailCta = true, showBehance = true }: FooterProps)
           <span className="vf-footer-col-label">Currently</span>
           <div className="vf-footer-status-row">
             <span className="vf-footer-status-dot vf-blink" aria-hidden="true"></span>
-            <span className="vf-footer-status-text" data-testid="currently-status">Open to roles &amp; apprenticeships.</span>
+            <span className="vf-footer-status-text" data-testid="currently-status">Open to product &amp; interaction design roles, master&rsquo;s programmes, and collaborations.</span>
           </div>
           <p className="vf-footer-location">Based in Bengaluru &middot; Working globally</p>
         </div>

@@ -52,10 +52,10 @@ export function Hero() {
         <div className="vf-hero-col-main">
           <p className="vf-frame-count">About</p>
           <p className="vf-hero-side-copy" style={{ marginTop: 12 }}>
-            Multidisciplinary creative with 4+ years spanning UI/UX, 3D visual production, brand design, and AI-assisted workflows. My process starts with real problems and ends with interfaces that feel obvious in hindsight. When I&rsquo;m not in Figma, I&rsquo;m somewhere quiet with a 600mm lens.
+            I think about products as systems in motion — hierarchy, timing and behaviour, not just static screens. My work lives at the intersection of product and interaction design: less concerned with how something looks the moment it&rsquo;s still, more with how it behaves the moment someone touches it.
           </p>
           <p className="vf-hero-side-copy" style={{ marginTop: 16 }}>
-            I studied Animation at Chitrakala Parishath in Bengaluru before moving into product design, so I still think in composition, narrative and visual weight before I think in components.
+            That instinct comes from two unlikely places: years of animation, where timing and composition come before any tool, and wildlife photography, where you learn to watch quietly before you act. Both still shape how I design — observe first, move with intention second.
           </p>
           <div className="vf-hero-foot-ctas">
             <a href="#work" className="vf-btn-solid" data-testid="hero-cta-work">
