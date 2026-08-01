@@ -1,7 +1,64 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { Nav } from '../home/Nav';
 import { Footer } from '../home/Footer';
+import LineSidebar from '../LineSidebar';
+
+function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  e.preventDefault();
+  const target = document.getElementById(id);
+  if (!target) return;
+  const smoother = ScrollSmoother.get();
+  if (smoother) {
+    smoother.scrollTo(target, true, 'top top+=80');
+  } else {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  history.pushState(null, '', `#${id}`);
+}
+
+const NAV_SECTIONS = [
+  { id: 'hero', num: '00', title: 'REWIND', category: 'Overview' },
+  { id: 'problem', num: '01', title: 'The Problem', category: 'Discovery' },
+  { id: 'thesis', num: '02', title: 'Thesis', category: 'Discovery' },
+  { id: 'instrument', num: '03', title: 'The Instrument', category: 'Build' },
+  { id: 'how-its-built', num: '04', title: "How It's Built", category: 'Build' },
+  { id: 'interaction-system', num: '05', title: 'Interaction System', category: 'System' },
+  { id: 'control-ledger', num: '06', title: 'Control Ledger', category: 'System' },
+  { id: 'design-language', num: '07', title: 'Design Language', category: 'Craft' },
+  { id: 'process', num: '08', title: 'Process', category: 'Process' },
+  { id: 'tradeoff', num: '09', title: 'Tradeoff', category: 'Decision' },
+  { id: 'outcome', num: '10', title: 'What Shipped', category: 'Outcome' },
+  { id: 'live-unit', num: '11', title: 'Live Unit', category: 'Outcome' },
+  { id: 'reflection', num: '12', title: 'Reflection', category: 'Outcome' },
+] as const;
+
+const NAV_HEADINGS = NAV_SECTIONS.reduce<Record<number, string>>((acc, s, i) => {
+  if (i === 0 || s.category !== NAV_SECTIONS[i - 1].category) acc[i] = s.category;
+  return acc;
+}, {});
+
+const DARK_SECTION_IDS = new Set(['instrument', 'process', 'live-unit']);
+
+function useActiveSection(ids: readonly string[]) {
+  const [active, setActive] = useState<string>(ids[0] ?? '');
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    );
+    const els = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [ids]);
+  return active;
+}
 
 const systemFeatures = [
   { ord: '01 — Disc rail', title: 'Load, don’t queue', body: 'Tracks are uploaded to a shelf, then loaded into one of six slots. A frosted-glass carriage slides over the active disc. Selection is a deliberate act, not a scroll.' },
@@ -73,14 +130,82 @@ function LiveUnit() {
 
 export default function RewindCaseStudy() {
   useEffect(() => { document.title = 'REWIND — Sohum Bhatnagar'; }, []);
+  const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
+  const navOnDark = DARK_SECTION_IDS.has(activeSection);
 
   return (
     <div className="camera-theme">
       <Nav />
+      {createPortal(
+        <>
+          <nav
+            aria-label="Case study sections"
+            className="mobile-nav-fallback"
+            style={{
+              position: 'fixed', top: 63, left: 0, right: 0, zIndex: 8,
+              gap: 'var(--space-4)', overflowX: 'auto',
+              padding: 'var(--space-2) var(--space-6)',
+              background: 'rgba(226, 224, 220, 0.97)', borderBottom: '1px solid var(--line-soft)',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {NAV_SECTIONS.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                onClick={(e) => scrollToSection(e, s.id)}
+                title={s.title}
+                aria-current={activeSection === s.id ? 'true' : undefined}
+                style={{
+                  flex: '0 0 auto', display: 'inline-flex', alignItems: 'center',
+                  padding: '13px 6px',
+                  fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em',
+                  textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap',
+                  color: activeSection === s.id ? 'var(--accent)' : 'var(--ink-faint)',
+                  fontWeight: activeSection === s.id ? 700 : 500,
+                }}
+              >
+                {s.num}
+              </a>
+            ))}
+          </nav>
 
-      <main>
+          <LineSidebar
+            items={NAV_SECTIONS.map((s) => s.title)}
+            headings={NAV_HEADINGS}
+            accentColor="var(--accent)"
+            textColor={navOnDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(26, 26, 26, 0.55)'}
+            markerColor={navOnDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(26, 26, 26, 0.15)'}
+            headingColor={navOnDark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(26, 26, 26, 0.4)'}
+            showIndex
+            showMarker
+            proximityRadius={60}
+            maxShift={14}
+            falloff="smooth"
+            markerLength={20}
+            markerGap={0}
+            tickScale={0.44}
+            scaleTick
+            itemGap={4}
+            fontSize={0.7}
+            smoothing={220}
+            activeIndex={NAV_SECTIONS.findIndex((s) => s.id === activeSection)}
+            onItemClick={(index) => {
+              const target = document.getElementById(NAV_SECTIONS[index].id);
+              if (!target) return;
+              const smoother = ScrollSmoother.get();
+              if (smoother) smoother.scrollTo(target, true, 'top top+=80');
+              else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              history.pushState(null, '', `#${NAV_SECTIONS[index].id}`);
+            }}
+          />
+        </>,
+        document.getElementById('fixed-ui-root')!
+      )}
+
+      <main className="has-mobile-nav">
         {/* SEC.00 — HERO */}
-        <section className="section bg-paper">
+        <section id="hero" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>00</b> — Hardware UI · Figma Config Makeathon · 2026</Reveal>
             <Reveal as="h1">REWIND</Reveal>
@@ -106,7 +231,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.01 — PROBLEM */}
-        <section className="section bg-soft">
+        <section id="problem" className="section bg-soft">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>01</b> — PROBLEM</Reveal>
             <Reveal as="h2">Every Control Is the Same Tap</Reveal>
@@ -125,7 +250,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.02 — THESIS */}
-        <section className="section section--roomy">
+        <section id="thesis" className="section section--roomy">
           <div className="wrap">
             <Reveal className="section-index" style={{ textAlign: 'center' }}>SEC.<b>02</b> — THESIS</Reveal>
             <Reveal as="p" className="thesis">"What if choosing a song was a <em>ritual</em>, not a reflex?"</Reveal>
@@ -133,7 +258,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.03 — THE INSTRUMENT */}
-        <section className="section band bg-dark">
+        <section id="instrument" className="section band bg-dark">
           <div className="band-inner wrap-wide cinema-head">
             <Reveal className="section-index">SEC.<b>03</b> — BUILD</Reveal>
             <Reveal as="h2">The Instrument</Reveal>
@@ -145,7 +270,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.04 — HOW IT'S BUILT */}
-        <section className="section bg-paper">
+        <section id="how-its-built" className="section bg-paper">
           <div className="wrap cinema-head">
             <Reveal className="section-index">SEC.<b>04</b> — BUILD</Reveal>
             <Reveal as="h2">How It's Built</Reveal>
@@ -170,7 +295,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.05 — INTERACTION SYSTEM */}
-        <section className="section">
+        <section id="interaction-system" className="section">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>05</b> — SYSTEM</Reveal>
             <Reveal as="h2">One Control, One Job</Reveal>
@@ -186,7 +311,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.06 — CONTROL LEDGER */}
-        <section className="section section--tight bg-soft">
+        <section id="control-ledger" className="section section--tight bg-soft">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>06</b> — SYSTEM</Reveal>
             <Reveal as="h2">Control → Node Mapping</Reveal>
@@ -209,7 +334,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.07 — DESIGN LANGUAGE */}
-        <section className="section">
+        <section id="design-language" className="section">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>07</b> — CRAFT</Reveal>
             <Reveal as="h2">Brutalist on Purpose</Reveal>
@@ -225,7 +350,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.08 — PROCESS */}
-        <section className="section band bg-dark">
+        <section id="process" className="section band bg-dark">
           <div className="band-inner wrap-wide">
             <Reveal className="section-index">SEC.<b>08</b> — PROCESS</Reveal>
             <Reveal as="h2">Built Inside the Figma Ecosystem</Reveal>
@@ -241,7 +366,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.09 — TRADEOFF */}
-        <section className="section bg-paper">
+        <section id="tradeoff" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>09</b> — DECISION</Reveal>
             <Reveal as="h2">Fidelity Over Breadth</Reveal>
@@ -253,7 +378,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.10 — OUTCOME */}
-        <section className="section section--tight">
+        <section id="outcome" className="section section--tight">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>10</b> — OUTCOME</Reveal>
             <Reveal as="h2">What Shipped</Reveal>
@@ -269,7 +394,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.10.5 — LIVE UNIT */}
-        <section className="section band bg-dark">
+        <section id="live-unit" className="section band bg-dark">
           <div className="band-inner wrap-wide cinema-head">
             <Reveal className="section-index">SEC.<b>10</b> — LIVE</Reveal>
             <Reveal as="h2">Don't Take the Case Study's Word for It</Reveal>
@@ -279,7 +404,7 @@ export default function RewindCaseStudy() {
         </section>
 
         {/* SEC.11 — REFLECTION */}
-        <section className="section bg-soft">
+        <section id="reflection" className="section bg-soft">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>11</b> — REFLECTION</Reveal>
             <Reveal as="h2">What I Learned</Reveal>

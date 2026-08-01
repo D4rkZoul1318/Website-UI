@@ -1,7 +1,62 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { Reveal, staggerDelay } from './camera/Reveal';
 import { Nav } from './home/Nav';
 import { Footer } from './home/Footer';
+import LineSidebar from './LineSidebar';
+
+function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  e.preventDefault();
+  const target = document.getElementById(id);
+  if (!target) return;
+  const smoother = ScrollSmoother.get();
+  if (smoother) {
+    smoother.scrollTo(target, true, 'top top+=80');
+  } else {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  history.pushState(null, '', `#${id}`);
+}
+
+const NAV_SECTIONS = [
+  { id: 'hero', num: '00', title: 'UUCMS Portal', category: 'Overview' },
+  { id: 'the-problem', num: '01', title: 'The Problem', category: 'Discovery' },
+  { id: 'understanding-the-failure', num: '02', title: 'Understanding the Failure', category: 'Research' },
+  { id: 'key-research-findings', num: '03', title: 'Key Research Findings', category: 'Research' },
+  { id: 'competitive-analysis', num: '04', title: 'Competitive Analysis', category: 'Research' },
+  { id: 'before-after', num: '05', title: 'Before and After', category: 'Design' },
+  { id: 'decisions', num: '06', title: 'Decisions That Mattered', category: 'Design' },
+  { id: 'the-redesign', num: '07', title: 'The Redesign', category: 'Outcome' },
+  { id: 'what-changed', num: '08', title: 'What Changed', category: 'Outcome' },
+  { id: 'concept-validation', num: '09', title: 'Concept Validation', category: 'Outcome' },
+  { id: 'reflection', num: '10', title: 'Reflection', category: 'Outcome' },
+] as const;
+
+const NAV_HEADINGS = NAV_SECTIONS.reduce<Record<number, string>>((acc, s, i) => {
+  if (i === 0 || s.category !== NAV_SECTIONS[i - 1].category) acc[i] = s.category;
+  return acc;
+}, {});
+
+const DARK_SECTION_IDS = new Set(['before-after']);
+
+function useActiveSection(ids: readonly string[]) {
+  const [active, setActive] = useState<string>(ids[0] ?? '');
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    );
+    const els = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [ids]);
+  return active;
+}
 
 const researchCards = [
   { eyebrow: 'Personal Observation', title: 'First-hand Experience', body: 'As a direct user of UUCMS, navigation patterns and failure states were documented through repeated use. Initial attempts to locate the marks card required navigating through multiple misleading subsections — results were filed under exam and fee categories with no logical grouping.' },
@@ -145,14 +200,82 @@ function OutcomeCarousel() {
 
 export default function CaseStudy() {
   useEffect(() => { document.title = 'UUCMS Redesign — Sohum Bhatnagar'; }, []);
+  const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
+  const navOnDark = DARK_SECTION_IDS.has(activeSection);
 
   return (
     <div className="camera-theme uucms">
       <Nav />
+      {createPortal(
+        <>
+          <nav
+            aria-label="Case study sections"
+            className="mobile-nav-fallback"
+            style={{
+              position: 'fixed', top: 63, left: 0, right: 0, zIndex: 8,
+              gap: 'var(--space-4)', overflowX: 'auto',
+              padding: 'var(--space-2) var(--space-6)',
+              background: 'rgba(226, 224, 220, 0.97)', borderBottom: '1px solid var(--line-soft)',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {NAV_SECTIONS.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                onClick={(e) => scrollToSection(e, s.id)}
+                title={s.title}
+                aria-current={activeSection === s.id ? 'true' : undefined}
+                style={{
+                  flex: '0 0 auto', display: 'inline-flex', alignItems: 'center',
+                  padding: '13px 6px',
+                  fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em',
+                  textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap',
+                  color: activeSection === s.id ? 'var(--accent)' : 'var(--ink-faint)',
+                  fontWeight: activeSection === s.id ? 700 : 500,
+                }}
+              >
+                {s.num}
+              </a>
+            ))}
+          </nav>
 
-      <main>
+          <LineSidebar
+            items={NAV_SECTIONS.map((s) => s.title)}
+            headings={NAV_HEADINGS}
+            accentColor="var(--accent)"
+            textColor={navOnDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(26, 26, 26, 0.55)'}
+            markerColor={navOnDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(26, 26, 26, 0.15)'}
+            headingColor={navOnDark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(26, 26, 26, 0.4)'}
+            showIndex
+            showMarker
+            proximityRadius={60}
+            maxShift={14}
+            falloff="smooth"
+            markerLength={20}
+            markerGap={0}
+            tickScale={0.44}
+            scaleTick
+            itemGap={4}
+            fontSize={0.7}
+            smoothing={220}
+            activeIndex={NAV_SECTIONS.findIndex((s) => s.id === activeSection)}
+            onItemClick={(index) => {
+              const target = document.getElementById(NAV_SECTIONS[index].id);
+              if (!target) return;
+              const smoother = ScrollSmoother.get();
+              if (smoother) smoother.scrollTo(target, true, 'top top+=80');
+              else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              history.pushState(null, '', `#${NAV_SECTIONS[index].id}`);
+            }}
+          />
+        </>,
+        document.getElementById('fixed-ui-root')!
+      )}
+
+      <main className="has-mobile-nav">
         {/* HERO */}
-        <section className="section bg-paper">
+        <section id="hero" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>00</b> — UI/UX REDESIGN · 2025</Reveal>
             <div className="hero-primary">
@@ -172,7 +295,7 @@ export default function CaseStudy() {
         </section>
 
         {/* THE PROBLEM */}
-        <section className="section bg-soft">
+        <section id="the-problem" className="section bg-soft">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>01</b> — PROBLEM</Reveal>
             <Reveal as="h2">The Problem</Reveal>
@@ -191,7 +314,7 @@ export default function CaseStudy() {
         </section>
 
         {/* RESEARCH */}
-        <section className="section bg-paper">
+        <section id="understanding-the-failure" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>02</b> — RESEARCH</Reveal>
             <Reveal as="h2">Understanding the Failure</Reveal>
@@ -211,7 +334,7 @@ export default function CaseStudy() {
         </section>
 
         {/* KEY RESEARCH FINDINGS */}
-        <section className="section bg-paper">
+        <section id="key-research-findings" className="section bg-paper">
           <div className="wrap-wide">
             <Reveal className="section-index">SEC.<b>03</b> — RESEARCH</Reveal>
             <Reveal as="h2">Key Research Findings</Reveal>
@@ -230,7 +353,7 @@ export default function CaseStudy() {
         </section>
 
         {/* COMPETITIVE ANALYSIS */}
-        <section className="section bg-soft">
+        <section id="competitive-analysis" className="section bg-soft">
           <div className="wrap-wide">
             <div className="competitive-head">
               <div>
@@ -260,7 +383,7 @@ export default function CaseStudy() {
         </section>
 
         {/* BEFORE / AFTER */}
-        <section className="section section--cinema bg-dark">
+        <section id="before-after" className="section section--cinema bg-dark">
           <div className="wrap-wide cinema-head">
             <Reveal className="section-index">SEC.<b>05</b> — DESIGN</Reveal>
             <Reveal as="h2">Before and After</Reveal>
@@ -270,7 +393,7 @@ export default function CaseStudy() {
         </section>
 
         {/* DESIGN DECISIONS */}
-        <section className="section bg-paper">
+        <section id="decisions" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>06</b> — DESIGN</Reveal>
             <Reveal as="h2">Decisions That Mattered</Reveal>
@@ -289,7 +412,7 @@ export default function CaseStudy() {
         </section>
 
         {/* OUTCOME */}
-        <section className="section bg-soft">
+        <section id="the-redesign" className="section bg-soft">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>07</b> — OUTCOME</Reveal>
             <Reveal as="h2">The Redesign</Reveal>
@@ -299,7 +422,7 @@ export default function CaseStudy() {
         </section>
 
         {/* WHAT CHANGED */}
-        <section className="section bg-paper">
+        <section id="what-changed" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>08</b> — OUTCOME</Reveal>
             <Reveal as="h2">What Changed</Reveal>
@@ -312,7 +435,7 @@ export default function CaseStudy() {
         </section>
 
         {/* CONCEPT VALIDATION */}
-        <section className="section bg-soft">
+        <section id="concept-validation" className="section bg-soft">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>09</b> — OUTCOME</Reveal>
             <Reveal as="h2">Concept Validation</Reveal>
@@ -330,7 +453,7 @@ export default function CaseStudy() {
         </section>
 
         {/* REFLECTION */}
-        <section className="section bg-paper">
+        <section id="reflection" className="section bg-paper">
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>10</b> — OUTCOME</Reveal>
             <Reveal as="h2">Reflection</Reveal>
