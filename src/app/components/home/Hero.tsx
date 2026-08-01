@@ -52,10 +52,10 @@ export function Hero() {
         <div className="vf-hero-col-main">
           <p className="vf-frame-count">About</p>
           <p className="vf-hero-side-copy" style={{ marginTop: 12 }}>
-            I think about products as systems in motion — hierarchy, timing and behaviour, not just static screens. My work lives at the intersection of product and interaction design: less concerned with how something looks the moment it&rsquo;s still, more with how it behaves the moment someone touches it.
+            I think about products as systems in motion. Hierarchy, timing and behaviour matter more than static screens. My work lives at the intersection of product and interaction design: less concerned with how something looks the moment it&rsquo;s still, more with how it behaves the moment someone touches it.
           </p>
           <p className="vf-hero-side-copy" style={{ marginTop: 16 }}>
-            That instinct comes from two unlikely places: years of animation, where timing and composition come before any tool, and wildlife photography, where you learn to watch quietly before you act. Both still shape how I design — observe first, move with intention second.
+            That instinct comes from two unlikely places: years of animation, where timing and composition come before any tool, and wildlife photography, where you learn to watch quietly before you act. Both still shape how I design: observe first, move with intention second.
           </p>
           <div className="vf-hero-foot-ctas">
             <a href="#work" className="vf-btn-solid" data-testid="hero-cta-work">

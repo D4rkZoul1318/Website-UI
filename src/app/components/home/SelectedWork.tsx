@@ -21,7 +21,7 @@ const PROJECTS: WorkProject[] = [
   {
     frame: 'A', n: '01',
     title: 'Bob Rides',
-    oneLiner: 'Riders juggle three separate apps just to compare a fare. As sole designer, I built the single-screen aggregator that replaces them — a dark-mode-native system anchored by the market’s first 3D vehicle icon set.',
+    oneLiner: 'Riders juggle three separate apps just to compare a fare. As sole designer, I built the single-screen aggregator that replaces them, a dark-mode-native system anchored by the market’s first 3D vehicle icon set.',
     category: 'Ride-hailing', role: 'Sole Designer', year: '2025', tag: 'Shipped',
     focal: '35mm', ratio: '16:9', url: ROUTES.bobRides,
     image: '/images/bob-thumbnail.webp',
@@ -29,7 +29,7 @@ const PROJECTS: WorkProject[] = [
   {
     frame: 'B', n: '02',
     title: 'UUCMS Redesign',
-    oneLiner: 'A government student portal took 15 minutes to surface your own marks. I led the redesign — rebuilding the architecture around student goals instead of admin categories — down to two clicks.',
+    oneLiner: 'A government student portal took 15 minutes to surface your own marks. I led the redesign, rebuilding the architecture around student goals instead of admin categories, down to two clicks.',
     category: 'EdTech', role: 'Product Designer', year: '2025', tag: 'Completed',
     focal: '50mm', ratio: '3:2', url: ROUTES.caseStudy,
     image: '/images/uucms-thumbnail.webp',
@@ -37,7 +37,7 @@ const PROJECTS: WorkProject[] = [
   {
     frame: 'C', n: '03',
     title: 'Rewind',
-    oneLiner: 'Every control in a modern music app collapses to the same flat tap. I designed and built a hardware-metaphor player instead — disc rail, EQ knobs, click wheel — each one driving real audio through the Web Audio API.',
+    oneLiner: 'Every control in a modern music app collapses to the same flat tap. I designed and built a hardware-metaphor player instead: disc rail, EQ knobs, click wheel, each one driving real audio through the Web Audio API.',
     category: 'Hardware UI', role: 'Designer & Builder', year: '2026', tag: 'Submitted',
     focal: '24mm', ratio: '4:3', url: ROUTES.rewindCaseStudy,
     video: '/videos/rewind-preview.mp4',
@@ -59,7 +59,7 @@ export function SelectedWork() {
           </Reveal>
         </div>
         <div className="vf-section-head-side">
-          <p>Three shipped projects from the current roll — full case studies one click away.</p>
+          <p>Three shipped projects from the current roll. Full case studies one click away.</p>
         </div>
       </div>
 

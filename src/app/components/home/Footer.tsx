@@ -16,7 +16,7 @@ const DIRECTORY = [
 ];
 
 type FooterProps = {
-  /** The red "email me" CTA button + role blurb — homepage only. */
+  /** The red "email me" CTA button + role blurb, homepage only. */
   showEmailCta?: boolean;
   /** Behance link in Elsewhere; other pages show a mail link instead. */
   showBehance?: boolean;
