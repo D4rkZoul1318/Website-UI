@@ -24,7 +24,7 @@ const PROJECTS: WorkProject[] = [
     oneLiner: 'Riders juggle three separate apps just to compare a fare. As sole designer, I built the single-screen aggregator that replaces them, a dark-mode-native system anchored by the market’s first 3D vehicle icon set.',
     category: 'Ride-hailing', role: 'Sole Designer', year: '2025', tag: 'Shipped',
     focal: '35mm', ratio: '16:9', url: ROUTES.bobRides,
-    image: '/images/bob-thumbnail.webp',
+    video: '/videos/bob-rides-preview.mp4',
   },
   {
     frame: 'B', n: '02',
