@@ -52,10 +52,13 @@ export function Hero() {
         <div className="vf-hero-col-main">
           <p className="vf-frame-count">About</p>
           <p className="vf-hero-side-copy" style={{ marginTop: 12 }}>
-            I think about products as systems in motion. Hierarchy, timing and behaviour matter more than static screens. My work lives at the intersection of product and interaction design: less concerned with how something looks the moment it&rsquo;s still, more with how it behaves the moment someone touches it.
+            Hey, I&rsquo;m Sohum. I started out making things move. Somewhere along the way, I became more interested in why people move through products the way they do.
           </p>
           <p className="vf-hero-side-copy" style={{ marginTop: 16 }}>
-            That instinct comes from two unlikely places: years of animation, where timing and composition come before any tool, and wildlife photography, where you learn to watch quietly before you act. Both still shape how I design: observe first, move with intention second.
+            Today I design digital products with a strong focus on interaction, systems, and the little details that make an experience feel effortless. I enjoy untangling complexity and turning it into something people don&rsquo;t have to think twice about.
+          </p>
+          <p className="vf-hero-side-copy" style={{ marginTop: 16 }}>
+            When I&rsquo;m away from my desk, I&rsquo;m usually behind a camera waiting for wildlife to do something interesting. It turns out watching birds for hours teaches the same lesson as designing products: slow down, pay attention, and don&rsquo;t miss the details.
           </p>
           <div className="vf-hero-foot-ctas">
             <a href="#work" className="vf-btn-solid" data-testid="hero-cta-work">
