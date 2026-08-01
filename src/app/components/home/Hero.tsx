@@ -52,7 +52,8 @@ export function Hero() {
         <div className="vf-hero-col-main">
           <p className="vf-frame-count">About</p>
           <p className="vf-hero-side-copy" style={{ marginTop: 12 }}>
-            Hey, I&rsquo;m Sohum. I started out making things move. Somewhere along the way, I became more interested in why people move through products the way they do.
+            Hey, I&rsquo;m Sohum.<br />
+            I started out making things move. Somewhere along the way, I became more interested in why people move through products the way they do.
           </p>
           <p className="vf-hero-side-copy" style={{ marginTop: 16 }}>
             Today I design digital products with a strong focus on interaction, systems, and the little details that make an experience feel effortless. I enjoy untangling complexity and turning it into something people don&rsquo;t have to think twice about.
