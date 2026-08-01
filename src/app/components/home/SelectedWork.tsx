@@ -28,19 +28,19 @@ const PROJECTS: WorkProject[] = [
   },
   {
     frame: 'B', n: '02',
-    title: 'UUCMS Redesign',
-    oneLiner: 'A government student portal took 15 minutes to surface your own marks. I led the redesign, rebuilding the architecture around student goals instead of admin categories, down to two clicks.',
-    category: 'EdTech', role: 'Product Designer', year: '2025', tag: 'Completed',
-    focal: '50mm', ratio: '3:2', url: ROUTES.caseStudy,
-    image: '/images/uucms-thumbnail.webp',
-  },
-  {
-    frame: 'C', n: '03',
     title: 'Rewind',
     oneLiner: 'Every control in a modern music app collapses to the same flat tap. I designed and built a hardware-metaphor player instead: disc rail, EQ knobs, click wheel, each one driving real audio through the Web Audio API.',
     category: 'Hardware UI', role: 'Designer & Builder', year: '2026', tag: 'Submitted',
     focal: '24mm', ratio: '4:3', url: ROUTES.rewindCaseStudy,
     video: '/videos/rewind-preview.mp4',
+  },
+  {
+    frame: 'C', n: '03',
+    title: 'UUCMS Redesign',
+    oneLiner: 'A government student portal took 15 minutes to surface your own marks. I led the redesign, rebuilding the architecture around student goals instead of admin categories, down to two clicks.',
+    category: 'EdTech', role: 'Product Designer', year: '2025', tag: 'Completed',
+    focal: '50mm', ratio: '3:2', url: ROUTES.caseStudy,
+    image: '/images/uucms-thumbnail.webp',
   },
 ];
 
