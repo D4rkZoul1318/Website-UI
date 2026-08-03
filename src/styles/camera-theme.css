@@ -61,6 +61,24 @@
 .camera-theme .reveal--zoom > * { transform: scale(1.06); transition: transform 900ms var(--ease-out); }
 .camera-theme .reveal--zoom.visible > * { transform: scale(1); }
 
+/* On mobile, every variant collapses to the plain fade + slide-up (the
+   About page's treatment — About uses almost none of the heavier
+   scale/rotate/zoom/clip variants, and reads as the calmer scroll-in
+   feel). Desktop keeps each variant's own motion untouched. */
+@media (max-width: 860px) {
+  .camera-theme .reveal--scale, .camera-theme .reveal--rotate, .camera-theme .reveal--clip {
+    opacity: 0; transform: translateY(16px); clip-path: none;
+    transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out);
+  }
+  .camera-theme .reveal--scale.visible, .camera-theme .reveal--rotate.visible, .camera-theme .reveal--clip.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .camera-theme .reveal--zoom { opacity: 0; transform: translateY(16px); transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
+  .camera-theme .reveal--zoom.visible { opacity: 1; transform: translateY(0); }
+  .camera-theme .reveal--zoom > * { transform: none; transition: none; }
+  .camera-theme .reveal--zoom.visible > * { transform: none; }
+}
+
 /* reveal--rotate on a full-width element (e.g. .moment) rotates the box
    itself, so its own bounding rect briefly exceeds 100% width during the
    transition — clip that at the page boundary rather than the element. */
