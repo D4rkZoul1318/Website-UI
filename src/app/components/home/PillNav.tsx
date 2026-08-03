@@ -12,6 +12,9 @@ export interface PillNavItem {
    */
   onClick?: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
   ariaLabel?: string;
+  /** For linking out (e.g. "_blank" to open a PDF in a new tab). */
+  target?: string;
+  rel?: string;
 }
 
 export interface PillNavProps {
@@ -112,6 +115,8 @@ export function PillNav({
                   ref={(el) => { pillRefs.current[i] = el; }}
                   href={item.href}
                   onClick={item.onClick}
+                  target={item.target}
+                  rel={item.rel}
                   role="menuitem"
                   aria-label={item.ariaLabel ?? item.label}
                   aria-current={isActive ? 'page' : undefined}
@@ -160,6 +165,9 @@ export function PillNav({
                 <a
                   key={itemKey}
                   href={item.href}
+                  target={item.target}
+                  rel={item.rel}
+                  aria-label={item.ariaLabel ?? item.label}
                   className={`vf-pillnav-mobile-link${itemKey === activeHref ? ' is-active' : ''}`}
                   style={{ color: hoveredPillTextColor }}
                   onClick={(e) => { item.onClick?.(e); setMobileOpen(false); }}

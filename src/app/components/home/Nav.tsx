@@ -9,11 +9,18 @@ import { handleHashLinkClick } from '../../lib/scrollToHash';
 // makes them work as "go home, then scroll" links from every other page too
 // (App.tsx's useHashScroll handles the scroll-into-view once we land there;
 // handleHashLinkClick below handles clicking them while already on Home).
-const LINKS = [
+const LINKS: { href: string; label: string; target?: string; rel?: string; ariaLabel?: string }[] = [
   { href: `${ROUTES.home}#work`, label: 'Work' },
   { href: ROUTES.explorations, label: 'Explorations' },
   { href: ROUTES.about, label: 'About' },
   { href: `${ROUTES.home}#contact`, label: 'Contact' },
+  {
+    href: '/Sohum_Bhatnagar_Resume.pdf',
+    label: 'Resume ↗',
+    target: '_blank',
+    rel: 'noopener noreferrer',
+    ariaLabel: 'Open résumé (opens in new tab)',
+  },
 ];
 
 function useScrollProgress() {
