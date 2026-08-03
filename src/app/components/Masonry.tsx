@@ -86,6 +86,14 @@ const Masonry = ({
     1
   );
 
+  // Animating `filter: blur()` on a dozen-plus staggered elements at once
+  // forces a separate compositing/blur pass per element — cheap on a
+  // desktop GPU, but enough to visibly drop frames (and, since this runs
+  // on every mount/filter-change while the user may already be scrolling,
+  // reads as general scroll stutter) on mobile hardware. Touch devices get
+  // the same fade + slide entrance, just without the blur step.
+  const skipBlur = useMedia(['(hover: none) and (pointer: coarse)'], [true], false);
+
   const [containerRef, { width }] = useMeasure();
   const [imagesReady, setImagesReady] = useState(false);
 
@@ -145,16 +153,17 @@ const Masonry = ({
       const animationProps = { x: item.x, y: item.y, width: item.w, height: item.h };
       if (!prevIds.has(item.id)) {
         const initialPos = getInitialPosition(item);
+        const useBlur = blurToFocus && !skipBlur;
         gsap.fromTo(selector,
-          { opacity: 0, x: initialPos.x, y: initialPos.y, width: item.w, height: item.h, ...(blurToFocus && { filter: 'blur(10px)' }) },
-          { opacity: 1, ...animationProps, ...(blurToFocus && { filter: 'blur(0px)' }), duration: 0.8, ease: 'power3.out', delay: index * stagger }
+          { opacity: 0, x: initialPos.x, y: initialPos.y, width: item.w, height: item.h, ...(useBlur && { filter: 'blur(10px)' }) },
+          { opacity: 1, ...animationProps, ...(useBlur && { filter: 'blur(0px)' }), duration: 0.8, ease: 'power3.out', delay: index * stagger }
         );
       } else {
         gsap.to(selector, { ...animationProps, duration, ease, overwrite: 'auto' });
       }
     });
     prevIdsRef.current = new Set(grid.map((item) => item.id));
-  }, [grid, imagesReady]);
+  }, [grid, imagesReady, skipBlur]);
 
   const handleMouseEnter = (_: React.MouseEvent, item: any) => {
     if (scaleOnHover) gsap.to(`[data-key="${item.id}"]`, { scale: hoverScale, duration: 0.3, ease: 'power2.out' });
