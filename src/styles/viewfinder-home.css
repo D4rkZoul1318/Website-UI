@@ -114,7 +114,7 @@
    portaled under the homepage's nav (inside #fixed-ui-root, which carries
    .vf-home) and embedded directly on chapter pages that only ever set
    .camera-theme on their root (e.g. Explorations' filter tabs). */
-:where(.vf-home, .camera-theme) .vf-pillnav { display: flex; align-items: center; position: relative; }
+:where(.vf-home, .camera-theme) .vf-pillnav { display: flex; align-items: center; position: relative; min-width: 0; max-width: 100%; }
 :where(.vf-home, .camera-theme) .vf-pillnav-list { display: none; align-items: center; gap: 32px; list-style: none; margin: 0; padding: 0; }
 :where(.vf-home, .camera-theme) .vf-pillnav-list.is-always-visible { display: flex; }
 :where(.vf-home, .camera-theme) .vf-pillnav-link {
@@ -292,13 +292,17 @@
 }
 .vf-home .vf-project-frame img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
 .vf-home .vf-project-frame video { width: 100%; height: 100%; object-fit: contain; position: absolute; inset: 0; }
+.vf-home .vf-project-frame::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(circle at 100% 100%, var(--paper-warm) 0%, rgba(235, 233, 228, 0.92) 35%, rgba(235, 233, 228, 0.55) 55%, transparent 78%);
+}
 .vf-home .vf-project-num {
-  position: absolute; bottom: -16px; right: -12px; pointer-events: none;
+  position: absolute; bottom: -16px; right: -12px; pointer-events: none; z-index: 2;
   font-family: var(--font-display); font-weight: 700; line-height: 1; letter-spacing: -0.05em;
   font-size: clamp(6rem, 14vw, 12rem); color: var(--ink-08);
 }
 .vf-home .vf-project-tag-tl, .vf-home .vf-project-tag-tr, .vf-home .vf-project-tag-bl {
-  position: absolute; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-60);
+  position: absolute; z-index: 2; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-60);
 }
 .vf-home .vf-project-tag-tl { top: 12px; left: 12px; display: flex; align-items: center; gap: 8px; }
 .vf-home .vf-project-tag-tr { top: 12px; right: 12px; }

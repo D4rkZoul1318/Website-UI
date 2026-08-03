@@ -20,7 +20,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
         content: '#smooth-content',
         smooth: 2,
         effects: true,
-        smoothTouch: 0.1,
+        smoothTouch: 0,
         normalizeScroll: { allowNestedScroll: true },
       });
     });
