@@ -233,7 +233,7 @@ export function ExplorationsPage() {
                 />
               )}
             </PhotoBurst>
-            {active === 'UI/UX' && activeLive && (
+            {activeLive && (
               <LiveProjectPanel kind={activeLive} onClose={() => setActiveLive(null)} />
             )}
           </div>
