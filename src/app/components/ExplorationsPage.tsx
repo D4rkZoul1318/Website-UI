@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Masonry from './Masonry';
 import { ScrollToTop } from './ScrollToTop';
@@ -10,6 +10,34 @@ import { PillNav } from './home/PillNav';
 import { Footer } from './home/Footer';
 
 type LiveKind = 'rewind' | 'octopus';
+
+/** Scales a fixed-size child (HolographicCard renders at a hardcoded
+ * 393x852, matching its Figma source) down to fit inside whatever box this
+ * wraps, so it fits the frame instead of overflowing it. Measures the
+ * frame with ResizeObserver and applies a CSS scale transform — every
+ * child inside HolographicCard is already positioned relative to its own
+ * card element, so scaling it as a unit doesn't disturb that layout. */
+function FitToFrame({ width, height, children }: { width: number; height: number; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width: cw, height: ch } = entry.contentRect;
+      if (cw && ch) setScale(Math.min(cw / width, ch / height, 1));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [width, height]);
+
+  return (
+    <div ref={ref} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width, height, transform: `scale(${scale})` }}>{children}</div>
+    </div>
+  );
+}
 
 /** The live/interactive build for a UI-UX thumbnail, revealed as a centered
  * overlay (blurred backdrop over the grid) once its thumbnail is clicked —
@@ -32,7 +60,9 @@ function LiveProjectPanel({ kind, onClose }: { kind: LiveKind; onClose: () => vo
               className="live-tile__iframe"
             />
           ) : (
-            <HolographicCard />
+            <FitToFrame width={393} height={852}>
+              <HolographicCard />
+            </FitToFrame>
           )}
         </div>
         <div className="live-unit__bar">

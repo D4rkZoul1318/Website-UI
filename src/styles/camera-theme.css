@@ -404,10 +404,11 @@
 }
 
 .camera-theme .live-tile { position: relative; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--screen-bg); }
-.camera-theme .live-tile__stage { position: relative; width: 100%; }
+.camera-theme .live-tile__stage { position: relative; width: 100%; border-radius: 10px; overflow: hidden; }
 .camera-theme .live-tile__stage--wide { height: clamp(420px, 56vw, 640px); }
 .camera-theme .live-tile__stage--card {
-  min-height: clamp(480px, 56vw, 820px);
+  height: clamp(420px, 56vw, 640px);
+  padding: var(--space-6);
   display: flex; align-items: center; justify-content: center;
 }
 .camera-theme .live-tile__iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
