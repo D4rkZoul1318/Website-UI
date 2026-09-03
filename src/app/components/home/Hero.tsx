@@ -33,7 +33,7 @@ export function Hero() {
           </div>
           <div className="vf-hero-meta-right">
             <span className="vf-blink" style={{ display: 'inline-block', width: 8, height: 8, background: 'var(--terracotta)', borderRadius: '50%' }} />
-            <span className="vf-meta-text">REC &middot; Portfolio 2025</span>
+            <span className="vf-meta-text">REC &middot; Portfolio 2026</span>
           </div>
         </div>
       </div>

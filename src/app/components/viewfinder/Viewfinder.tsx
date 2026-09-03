@@ -130,7 +130,7 @@ export default function Viewfinder() {
         <span>00 / HOME · VIEWFINDER</span>
         <span className="vf-subbar-rule" />
         <span>F/2.8 · 1/250 · ISO 200</span>
-        <span className="vf-subbar-rec"><span className="dot" /> REC · PORTFOLIO 2025</span>
+        <span className="vf-subbar-rec"><span className="dot" /> REC · PORTFOLIO 2026</span>
       </div>
 
       <section id="hero" className="vf-hero">
