@@ -11,32 +11,37 @@ import { Footer } from './home/Footer';
 
 type LiveKind = 'rewind' | 'octopus';
 
-/** The live/interactive build for a UI-UX thumbnail, revealed in a panel
- * below the grid once its thumbnail is clicked — same masonry thumbnail
- * treatment as every other category, just routed to a live embed instead
- * of a lightbox or external tab. */
+/** The live/interactive build for a UI-UX thumbnail, revealed as a centered
+ * overlay (blurred backdrop over the grid) once its thumbnail is clicked —
+ * portaled to #fixed-ui-root like the lightbox below, for the same reason:
+ * anything inside #root is trapped in ScrollSmoother's transformed
+ * #smooth-content stacking context, so it would render at its position in
+ * the page flow (below the grid) rather than fixed over the viewport. */
 function LiveProjectPanel({ kind, onClose }: { kind: LiveKind; onClose: () => void }) {
   const label = kind === 'rewind' ? 'Rewind · Live Prototype' : 'Octopus Holographic Card · Interactive Component';
-  return (
-    <Reveal variant="scale" className="live-tile" style={{ marginTop: 'var(--space-7)' }}>
-      <div className={`live-tile__stage live-tile__stage--${kind === 'rewind' ? 'wide' : 'card'}`}>
-        {kind === 'rewind' ? (
-          <iframe
-            src="https://rewind-it.vercel.app"
-            title="Rewind: live prototype"
-            loading="eager"
-            allow="autoplay"
-            className="live-tile__iframe"
-          />
-        ) : (
-          <HolographicCard />
-        )}
-      </div>
-      <div className="live-unit__bar">
-        <span>{label}</span>
-        <button onClick={onClose} type="button" aria-label="Close live preview">✕ Close</button>
-      </div>
-    </Reveal>
+  return createPortal(
+    <div className="explore-live-overlay" onClick={onClose}>
+      <Reveal variant="scale" className="live-tile" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+        <div className={`live-tile__stage live-tile__stage--${kind === 'rewind' ? 'wide' : 'card'}`}>
+          {kind === 'rewind' ? (
+            <iframe
+              src="https://rewind-it.vercel.app"
+              title="Rewind: live prototype"
+              loading="eager"
+              allow="autoplay"
+              className="live-tile__iframe"
+            />
+          ) : (
+            <HolographicCard />
+          )}
+        </div>
+        <div className="live-unit__bar">
+          <span>{label}</span>
+          <button onClick={onClose} type="button" aria-label="Close live preview">✕ Close</button>
+        </div>
+      </Reveal>
+    </div>,
+    document.getElementById('fixed-ui-root')!
   );
 }
 
