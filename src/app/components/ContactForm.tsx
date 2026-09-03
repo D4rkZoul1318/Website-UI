@@ -64,7 +64,7 @@ export function ContactForm() {
           </button>
           {status === 'success' && (
             <span className="contact-status contact-status--ok" data-testid="contact-status-ok">
-              Sent — I&rsquo;ll get back to you soon.
+              Sent. I&rsquo;ll get back to you soon.
             </span>
           )}
           {status === 'error' && (

@@ -59,7 +59,7 @@ function useActiveSection(ids: readonly string[]) {
 }
 
 const researchCards = [
-  { eyebrow: 'Personal Observation', title: 'First-hand Experience', body: 'As a direct user of UUCMS, navigation patterns and failure states were documented through repeated use. Initial attempts to locate the marks card required navigating through multiple misleading subsections — results were filed under exam and fee categories with no logical grouping.' },
+  { eyebrow: 'Personal Observation', title: 'First-hand Experience', body: 'As a direct user of UUCMS, navigation patterns and failure states were documented through repeated use. Initial attempts to locate the marks card required navigating through multiple misleading subsections. Results were filed under exam and fee categories with no logical grouping.' },
   { eyebrow: 'User Interviews', title: 'Peer Validation', body: 'Conversations with classmates revealed a consistent pattern. Students less familiar with technology could not navigate independently. Digitally fluent students resorted to phone calls with peers to navigate together. When a digital tool requires human assistance for a primary task, the tool has failed.' },
   { eyebrow: 'Heuristic Evaluation', title: 'System Audit', body: "The portal was evaluated against Nielsen's 10 Usability Heuristics. Critical violations found: no system feedback, admin-centric labelling, zero back navigation, hover flyouts requiring pixel-precise interaction, and no wayfinding or breadcrumbs." },
 ];
@@ -79,14 +79,14 @@ const competitiveRows = [
 ];
 
 const decisions = [
-  { num: '01', title: 'Goal-oriented Information Architecture', body: 'The original portal organised information around administrative categories — Academics, Exam, Reports. Students think in goals — I want to see my marks, I want to pay my fee. Every navigation label was rewritten to reflect student intent, not backend structure.' },
-  { num: '02', title: 'Progressive Disclosure', body: 'The dashboard surfaces the most critical information immediately — current SGPA, payment status, upcoming events. Detail is accessible on demand. Students get answers in seconds without being overwhelmed by the full system complexity.' },
+  { num: '01', title: 'Goal-oriented Information Architecture', body: 'The original portal organised information around administrative categories: Academics, Exam, Reports. Students think in goals: I want to see my marks, I want to pay my fee. Every navigation label was rewritten to reflect student intent, not backend structure.' },
+  { num: '02', title: 'Progressive Disclosure', body: 'The dashboard surfaces the most critical information immediately: current SGPA, payment status, upcoming events. Detail is accessible on demand. Students get answers in seconds without being overwhelmed by the full system complexity.' },
   { num: '03', title: 'Wayfinding by Default', body: 'The original portal had zero back navigation. Every page in the redesign has breadcrumbs, an active sidebar state, and a consistent shell. Users always know where they are and how to get back.' },
 ];
 
 const outcomeSlides = [
   { src: '/images/redesigned-dashboard.webp', alt: 'Redesigned Dashboard', caption: 'Simplified navigation with clear hierarchy and quick access to key student actions' },
-  { src: '/images/results.webp', alt: 'Results and Outcomes', caption: 'Time, clicks, and independence — the three metrics measured below' },
+  { src: '/images/results.webp', alt: 'Results and Outcomes', caption: 'Time, clicks, and independence: the three metrics measured below' },
 ];
 
 function CompareSlider() {
@@ -199,7 +199,7 @@ function OutcomeCarousel() {
 }
 
 export default function CaseStudy() {
-  useEffect(() => { document.title = 'UUCMS Redesign — Sohum Bhatnagar'; }, []);
+  useEffect(() => { document.title = 'UUCMS Redesign , Sohum Bhatnagar'; }, []);
   const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
   const navOnDark = DARK_SECTION_IDS.has(activeSection);
 
@@ -277,7 +277,7 @@ export default function CaseStudy() {
         {/* HERO */}
         <section id="hero" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>00</b> — UI/UX REDESIGN · 2025</Reveal>
+            <Reveal className="section-index">SEC.<b>00</b>: UI/UX REDESIGN · 2025</Reveal>
             <div className="hero-primary">
               <Reveal as="h1">UUCMS Student Portal</Reveal>
               <Reveal as="p" className="lede">Redesigning a government university portal to reduce task completion time from 15 minutes to under 60 seconds.</Reveal>
@@ -297,12 +297,12 @@ export default function CaseStudy() {
         {/* THE PROBLEM */}
         <section id="the-problem" className="section bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>01</b> — PROBLEM</Reveal>
+            <Reveal className="section-index">SEC.<b>01</b>: PROBLEM</Reveal>
             <Reveal as="h2">The Problem</Reveal>
             <div className="problem-composition">
               <Reveal className="problem-copy">
                 <p>UUCMS is the official student portal for Karnataka's Department of Higher Education. Despite being a primary academic tool, finding marks required navigating through an admin-centric structure that had no logical connection to how students think.</p>
-                <p>What should have taken seconds took 10–15 minutes — and for students less familiar with technology, it was impossible without help.</p>
+                <p>What should have taken seconds took 10–15 minutes, and for students less familiar with technology, it was impossible without help.</p>
               </Reveal>
               <Reveal variant="scale" className="spec-plate">
                 <div className="spec-row"><span className="spec-label">Average time to find results</span><span className="spec-value">15 min</span></div>
@@ -316,7 +316,7 @@ export default function CaseStudy() {
         {/* RESEARCH */}
         <section id="understanding-the-failure" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>02</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>02</b>: RESEARCH</Reveal>
             <Reveal as="h2">Understanding the Failure</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>The redesign began by understanding why students struggled to complete everyday academic tasks. Rather than immediately redesigning screens, I focused on identifying recurring usability failures through first-hand observation, conversations with students, and heuristic evaluation of the existing portal.</p>
@@ -336,7 +336,7 @@ export default function CaseStudy() {
         {/* KEY RESEARCH FINDINGS */}
         <section id="key-research-findings" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>03</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>03</b>: RESEARCH</Reveal>
             <Reveal as="h2">Key Research Findings</Reveal>
             <div className="research-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
               {keyFindings.map((f, i) => (
@@ -357,7 +357,7 @@ export default function CaseStudy() {
           <div className="wrap-wide">
             <div className="competitive-head">
               <div>
-                <Reveal className="section-index">SEC.<b>04</b> — RESEARCH</Reveal>
+                <Reveal className="section-index">SEC.<b>04</b>: RESEARCH</Reveal>
                 <Reveal as="h2">Competitive Analysis</Reveal>
               </div>
               <Reveal as="p" className="lede competitive-intro">Four reference points studied to identify patterns worth adopting.</Reveal>
@@ -385,7 +385,7 @@ export default function CaseStudy() {
         {/* BEFORE / AFTER */}
         <section id="before-after" className="section section--cinema bg-dark">
           <div className="wrap-wide cinema-head">
-            <Reveal className="section-index">SEC.<b>05</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>05</b>: DESIGN</Reveal>
             <Reveal as="h2">Before and After</Reveal>
             <Reveal as="p" className="drag-cue">Drag to compare</Reveal>
           </div>
@@ -395,7 +395,7 @@ export default function CaseStudy() {
         {/* DESIGN DECISIONS */}
         <section id="decisions" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>06</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>06</b>: DESIGN</Reveal>
             <Reveal as="h2">Decisions That Mattered</Reveal>
             <ol className="decision-column">
               {decisions.map((d, i) => (
@@ -414,7 +414,7 @@ export default function CaseStudy() {
         {/* OUTCOME */}
         <section id="the-redesign" className="section bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>07</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>07</b>: OUTCOME</Reveal>
             <Reveal as="h2">The Redesign</Reveal>
             <Reveal as="p" className="lede">Task completion time dropped from 15 minutes to under 60 seconds.</Reveal>
             <OutcomeCarousel />
@@ -424,7 +424,7 @@ export default function CaseStudy() {
         {/* WHAT CHANGED */}
         <section id="what-changed" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>08</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>08</b>: OUTCOME</Reveal>
             <Reveal as="h2">What Changed</Reveal>
             <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">To access results from dashboard</span><span className="meta-value">2 clicks</span></div>
@@ -437,7 +437,7 @@ export default function CaseStudy() {
         {/* CONCEPT VALIDATION */}
         <section id="concept-validation" className="section bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>09</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>09</b>: OUTCOME</Reveal>
             <Reveal as="h2">Concept Validation</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>Before finalising the redesign, the prototype was reviewed by five university students through guided walkthroughs. Because the prototype was not fully interactive, the sessions focused on whether participants could understand the information architecture, predict navigation paths, and locate key academic tasks without assistance.</p>
@@ -455,7 +455,7 @@ export default function CaseStudy() {
         {/* REFLECTION */}
         <section id="reflection" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>10</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>10</b>: OUTCOME</Reveal>
             <Reveal as="h2">Reflection</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>This project reinforced that improving usability is often less about adding new functionality and more about organising information around how people naturally think. Designing for students required shifting the system from an administrative perspective to a task-oriented experience.</p>

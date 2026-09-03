@@ -23,7 +23,7 @@ function LiveProjectPanel({ kind, onClose }: { kind: LiveKind; onClose: () => vo
         {kind === 'rewind' ? (
           <iframe
             src="https://rewind-it.vercel.app"
-            title="Rewind — live prototype"
+            title="Rewind: live prototype"
             loading="eager"
             allow="autoplay"
             className="live-tile__iframe"
@@ -176,7 +176,7 @@ export function ExplorationsPage() {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [activeLive, setActiveLive] = useState<LiveKind | null>(null);
 
-  useEffect(() => { document.title = 'Explorations — Sohum Bhatnagar'; }, []);
+  useEffect(() => { document.title = 'Explorations , Sohum Bhatnagar'; }, []);
 
   const filtered = active === 'All' ? allItems : allItems.filter(i => i.category === active);
 
@@ -188,10 +188,10 @@ export function ExplorationsPage() {
         {/* Hero */}
         <section className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>00</b> — EXPLORATIONS</Reveal>
+            <Reveal className="section-index">SEC.<b>00</b>: EXPLORATIONS</Reveal>
             <Reveal as="h1" style={{ maxWidth: '18ch' }}>3D, Graphic &amp; Visual Work</Reveal>
             <Reveal as="p" className="lede">
-              Work outside the case studies — 3D renders, illustrations, catalogues, graphic design, and photography.
+              Work outside the case studies: 3D renders, illustrations, catalogues, graphic design, and photography.
             </Reveal>
 
             <Reveal className="explore-filters">

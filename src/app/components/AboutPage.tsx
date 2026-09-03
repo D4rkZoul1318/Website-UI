@@ -7,11 +7,11 @@ import { Footer } from './home/Footer';
 
 const experience = [
   {
-    role: 'Icon Designer — Freelance', company: 'Bob Rides', duration: '4 weeks',
+    role: 'Icon Designer, Freelance', company: 'Bob Rides', duration: '4 weeks',
     bullets: ['Redesigned icons for the Bob Rides platform, focusing on creating a unique yet highly user-friendly visual language.'],
   },
   {
-    role: '3D Modeler — Intern', company: 'UC Riverside, Dept. of Paleontology', duration: '6 months',
+    role: '3D Modeler, Intern', company: 'UC Riverside, Dept. of Paleontology', duration: '6 months',
     bullets: [
       'Created scientifically accurate 3D fossil models in Blender and ZBrush for research and education.',
       'Delivered optimized assets for academic visualizations, enhancing accessibility for wider audiences.',
@@ -28,7 +28,7 @@ const experience = [
 ];
 
 const education = [
-  { degree: 'Bachelor of Visual Arts (B.Va), Distinction', major: 'Major — Animation', institution: 'Chitrakala Parishath, Bengaluru', year: '2021 – 2025' },
+  { degree: 'Bachelor of Visual Arts (B.Va), Distinction', major: 'Major: Animation', institution: 'Chitrakala Parishath, Bengaluru', year: '2021 – 2025' },
   { degree: 'Class XII', major: '', institution: 'Delhi Public School', year: '2020 – 2021' },
 ];
 
@@ -45,7 +45,7 @@ const remainingToolkit = toolkit
   .filter((group) => group.items.length > 0);
 
 export function AboutPage() {
-  useEffect(() => { document.title = 'About — Sohum Bhatnagar'; }, []);
+  useEffect(() => { document.title = 'About , Sohum Bhatnagar'; }, []);
 
   return (
     <div className="camera-theme">
@@ -56,7 +56,7 @@ export function AboutPage() {
         <section className="section bg-paper index-bleed num-left">
           <span className="index-num" data-speed="0.65" aria-hidden="true">00</span>
           <div className="wrap wrap-lean-left">
-            <Reveal className="section-index">SEC.<b>00</b> — ABOUT</Reveal>
+            <Reveal className="section-index">SEC.<b>00</b>: ABOUT</Reveal>
             <Reveal as="h1" style={{ maxWidth: '22ch' }}>Designer by training.<br />Naturalist by instinct.</Reveal>
             <Reveal as="p" className="lede">
               Multidisciplinary creative with 4+ years spanning UI/UX, 3D visual production, brand design, and AI-assisted workflows. My process starts with real problems and ends with interfaces that feel obvious in hindsight. When I'm not in Figma, I'm somewhere quiet with a 600mm lens.
@@ -74,7 +74,7 @@ export function AboutPage() {
             <div className="polaroid r4"><img src="/images/about-photos/macaques.webp" alt="Macaques photographed on a riverside rock" loading="lazy" decoding="async" /></div>
           </Reveal>
           <div className="wrap wrap-lean-right">
-            <Reveal className="section-index">SEC.<b>01</b> — BACKGROUND</Reveal>
+            <Reveal className="section-index">SEC.<b>01</b>: BACKGROUND</Reveal>
             <Reveal as="h2">I'm Sohum.</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>I studied Animation at Chitrakala Parishath in Bengaluru (B.Va, Distinction) before moving into product design, so I still think in composition, narrative and visual weight before I think in components. Four-plus years span UI/UX, 3D visual production (game-ready PBR assets in Unreal Engine, hard-surface modeling in Maya and Substance Painter, even scientifically accurate 3D fossil models for UC Riverside's Paleontology department), brand design, and AI-assisted workflows.</p>
@@ -116,7 +116,7 @@ export function AboutPage() {
         <section className="section index-bleed index-bleed--split num-left">
           <span className="index-num" data-speed="0.65" aria-hidden="true">02</span>
           <div className="wrap wrap-lean-left">
-            <Reveal className="section-index">SEC.<b>02</b> — EXPERIENCE</Reveal>
+            <Reveal className="section-index">SEC.<b>02</b>: EXPERIENCE</Reveal>
             <Reveal as="h2">Where I've Worked</Reveal>
             <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-7)' }}>
               {experience.map((exp, i) => (
@@ -140,8 +140,8 @@ export function AboutPage() {
             </div>
           </div>
           <Reveal className="photo-cluster photo-cluster--work">
-            <div className="polaroid r2"><img src="/images/about-photos/skull-render.webp" alt="3D still-life render — antique study scene" loading="lazy" decoding="async" /></div>
-            <div className="polaroid r1"><img src="/images/about-photos/lever-render.webp" alt="3D render — sci-fi emergency lever panel, hard-surface modeling" loading="lazy" decoding="async" /></div>
+            <div className="polaroid r2"><img src="/images/about-photos/skull-render.webp" alt="3D still-life render: antique study scene" loading="lazy" decoding="async" /></div>
+            <div className="polaroid r1"><img src="/images/about-photos/lever-render.webp" alt="3D render: sci-fi emergency lever panel, hard-surface modeling" loading="lazy" decoding="async" /></div>
           </Reveal>
         </section>
 
@@ -149,7 +149,7 @@ export function AboutPage() {
         <section className="section bg-soft index-bleed num-right">
           <span className="index-num" data-speed="0.65" aria-hidden="true">03</span>
           <div className="wrap wrap-lean-right">
-            <Reveal className="section-index">SEC.<b>03</b> — EDUCATION</Reveal>
+            <Reveal className="section-index">SEC.<b>03</b>: EDUCATION</Reveal>
             <Reveal as="h2">Where I Studied</Reveal>
             <div style={{ marginTop: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
               {education.map((ed, i) => (
@@ -169,7 +169,7 @@ export function AboutPage() {
         {/* CONTACT */}
         <section className="section band bg-dark" style={{ textAlign: 'center' }}>
           <div className="band-inner wrap cinema-head">
-            <Reveal className="section-index">SEC.<b>04</b> — CONTACT</Reveal>
+            <Reveal className="section-index">SEC.<b>04</b>: CONTACT</Reveal>
             <Reveal as="h2">Get in touch.</Reveal>
             <Reveal as="p">Open to product design roles and apprenticeships.</Reveal>
             <div style={{ display: 'flex', gap: 'var(--space-3)', justifyContent: 'center', flexWrap: 'wrap', marginTop: 'var(--space-6)' }}>

@@ -100,7 +100,7 @@ const productUserChallenges = [
   'Users switching between 3 or more apps to compare prices before booking, adding friction to every ride decision',
   'Flat, generic icons across existing apps make vehicle type selection feel utilitarian and unmemorable',
   'Dark environments (night travel, low screen brightness) make standard light-mode icon systems difficult to read',
-  'No single app surfaces price comparisons transparently — users have to manually open each app',
+  'No single app surfaces price comparisons transparently. Users have to manually open each app',
 ];
 
 const decisions = [
@@ -136,25 +136,25 @@ const userNeeds = [
 ];
 
 const features = [
-  { ord: '01', Icon: LuUsers, text: 'Multi-app aggregation — compare Rapido, Uber, and Ola rides in one screen' },
-  { ord: '02', Icon: LuCar, text: '3D vehicle icon system — custom bike, auto, and cab icons across all booking states' },
-  { ord: '03', Icon: LuWallet, text: 'Best price indicator — real-time fare comparison with savings highlighted against competitor pricing' },
+  { ord: '01', Icon: LuUsers, text: 'Multi-app aggregation: compare Rapido, Uber, and Ola rides in one screen' },
+  { ord: '02', Icon: LuCar, text: '3D vehicle icon system: custom bike, auto, and cab icons across all booking states' },
+  { ord: '03', Icon: LuWallet, text: 'Best price indicator: real-time fare comparison with savings highlighted against competitor pricing' },
 ];
 
 const uniqueFeatures = [
-  'Custom 3D vehicle icons rendered in Blender — the only ride app icon system in the Indian market built with dimensional 3D models rather than flat vectors',
+  'Custom 3D vehicle icons rendered in Blender, the only ride app icon system in the Indian market built with dimensional 3D models rather than flat vectors',
   'Dark-mode-native design system built from the ground up, not adapted from a light-mode base',
   'Cross-app price aggregation with a real-time "Best Price" indicator showing exact savings compared to individual app pricing',
 ];
 
 const taskMappingRows: { label: string; cells: string[] }[] = [
   { label: 'Task', cells: ['User opens BOB Rides and sees home screen with recent destinations and Ride With selector', 'User enters destination, app fetches live prices from Rapido, Uber, and Ola simultaneously', 'User browses Available Rides screen, identifies vehicle type by icon, selects Best Price option', 'User tracks ride in activity screen, journey completes, fare is charged'] },
-  { label: 'Challenges', cells: ['Remembering which app offers the best price today', 'Too many options displayed simultaneously; icons must communicate vehicle type instantly without reading labels', 'Distinguishing between providers (Rapido, Uber, Ola) and vehicle tiers (bike vs auto vs cab) at a glance', 'Confirming the right ride was booked — provider, vehicle type, and ETA must be immediately clear'] },
+  { label: 'Challenges', cells: ['Remembering which app offers the best price today', 'Too many options displayed simultaneously; icons must communicate vehicle type instantly without reading labels', 'Distinguishing between providers (Rapido, Uber, Ola) and vehicle tiers (bike vs auto vs cab) at a glance', 'Confirming the right ride was booked. Provider, vehicle type, and ETA must be immediately clear'] },
   { label: 'Environment', cells: ['Mobile, indoors or commuting, often in a hurry', 'Mobile, standing or seated, may be in low light or outdoor glare', 'Mobile, quick decision context, 10–30 seconds to choose', 'Mobile, background task, app open but user not actively interacting'] },
-  { label: 'Emotions', cells: ['Mild impatience, wants to book fast and move on', 'Cautious scanning for the cheapest fare without missing a better option', 'Decisive but uncertain — does the icon match what they expect to get?', 'Relieved — Booking is done, needs passive confirmation'] },
+  { label: 'Emotions', cells: ['Mild impatience, wants to book fast and move on', 'Cautious scanning for the cheapest fare without missing a better option', 'Decisive but uncertain: does the icon match what they expect to get?', 'Relieved. Booking is done, needs passive confirmation'] },
   { label: 'Thoughts', cells: ['"Is this faster than opening three apps separately?"', '"Which one is actually cheapest right now?"', '"Is that icon a bike or an auto? Is Best Price actually the best?"', '"Did it book the right vehicle? When does it arrive?"'] },
-  { label: 'Urgency Level', cells: ['Medium — user has a destination in mind and is ready to book', 'High — fare comparison is time-sensitive due to surge pricing', 'High — selection decision happens in under 30 seconds', 'Low — passive monitoring state'] },
-  { label: 'Design Opportunity', cells: ['Home screen icons (bike, auto, cab) must communicate vehicle category at 48px without any label', 'Available Rides screen is the primary icon performance test — all three vehicle types appear simultaneously at 32px', 'Best Price badge and icon must work together to guide the decision without requiring the user to read every row', 'Activity screen must clearly confirm vehicle type icon and provider — same icon system, confirmation context'] },
+  { label: 'Urgency Level', cells: ['Medium: user has a destination in mind and is ready to book', 'High: fare comparison is time-sensitive due to surge pricing', 'High: selection decision happens in under 30 seconds', 'Low: passive monitoring state'] },
+  { label: 'Design Opportunity', cells: ['Home screen icons (bike, auto, cab) must communicate vehicle category at 48px without any label', 'Available Rides screen is the primary icon performance test. All three vehicle types appear simultaneously at 32px', 'Best Price badge and icon must work together to guide the decision without requiring the user to read every row', 'Activity screen must clearly confirm vehicle type icon and provider, same icon system, confirmation context'] },
 ];
 
 const researchActivities: { label: string; text: string }[] = [
@@ -184,7 +184,7 @@ const researchGoals = [
 ];
 
 export default function BobRides() {
-  useEffect(() => { document.title = 'BOB Rides — Sohum Bhatnagar'; }, []);
+  useEffect(() => { document.title = 'BOB Rides , Sohum Bhatnagar'; }, []);
   const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
   const navOnDark = DARK_SECTION_IDS.has(activeSection);
 
@@ -262,7 +262,7 @@ export default function BobRides() {
         {/* SEC.00 — HERO */}
         <section id="hero" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>00</b> — Icon Design &amp; UI/UX · 2025</Reveal>
+            <Reveal className="section-index">SEC.<b>00</b>: Icon Design &amp; UI/UX · 2025</Reveal>
             <Reveal as="h1">BOB Rides</Reveal>
             <Reveal as="p" className="lede">Designing a 3D vehicle icon system and dark-mode UI for a taxi aggregator that consolidates Uber, Ola, and Rapido into one app.</Reveal>
             <Reveal className="hero-tags">
@@ -307,11 +307,11 @@ export default function BobRides() {
         {/* SEC.01 — PROBLEM */}
         <section id="the-challenge" className="section bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>01</b> — PROBLEM</Reveal>
+            <Reveal className="section-index">SEC.<b>01</b>: PROBLEM</Reveal>
             <Reveal as="h2">Three apps, one decision, every time</Reveal>
             <div className="problem-composition">
               <Reveal className="problem-copy">
-                <p>Ride-hailing apps in India — Uber, Rapido, Ola, Namma Yatri — all use flat, generic vehicle silhouettes that offer zero brand differentiation. Users switch between 3 apps to compare prices, adding friction to every ride decision. BOB Rides needed a visual identity strong enough to stand apart, while keeping icons legible at 24px in a dark-mode-native interface.</p>
+                <p>Ride-hailing apps in India (Uber, Rapido, Ola, Namma Yatri) all use flat, generic vehicle silhouettes that offer zero brand differentiation. Users switch between 3 apps to compare prices, adding friction to every ride decision. BOB Rides needed a visual identity strong enough to stand apart, while keeping icons legible at 24px in a dark-mode-native interface.</p>
               </Reveal>
               <Reveal variant="scale" className="spec-plate">
                 <div className="spec-row"><span className="spec-label">Apps users open before booking a ride</span><CountUp target={3} suffix="+" className="spec-value" /></div>
@@ -325,11 +325,11 @@ export default function BobRides() {
         {/* SEC.02 — PROBLEM STATEMENT */}
         <section id="problem-statement" className="section">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>02</b> — PROBLEM</Reveal>
+            <Reveal className="section-index">SEC.<b>02</b>: PROBLEM</Reveal>
             <Reveal as="h2">Nobody had solved this for India</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>Ride-hailing apps in the Indian market rely almost entirely on flat, generic vehicle icons that prioritize function over identity. Across Uber, Rapido, Ola, and Namma Yatri, the visual language is interchangeable silhouettes that tell users what vehicle type they are booking, but communicate nothing about the brand they are booking with.</p>
-              <p style={{ marginTop: 'var(--space-4)' }}>The challenge for BOB Rides was to design a vehicle icon system that solved two competing demands simultaneously: icons that are instantly recognisable and legible at small UI sizes, and icons that carry a distinct visual character strong enough to differentiate BOB Rides from every other player in the category. The additional constraint was that the entire system had to be built for a dark-mode-native interface — a context that most existing icon styles in the market were never designed for.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>The challenge for BOB Rides was to design a vehicle icon system that solved two competing demands simultaneously: icons that are instantly recognisable and legible at small UI sizes, and icons that carry a distinct visual character strong enough to differentiate BOB Rides from every other player in the category. The additional constraint was that the entire system had to be built for a dark-mode-native interface, a context that most existing icon styles in the market were never designed for.</p>
             </Reveal>
           </div>
         </section>
@@ -341,7 +341,7 @@ export default function BobRides() {
         {/* SEC.04 — STRATEGY */}
         <section id="objectives-goals" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>04</b> — STRATEGY</Reveal>
+            <Reveal className="section-index">SEC.<b>04</b>: STRATEGY</Reveal>
             <Reveal as="h2">Objectives &amp; Goals</Reveal>
             <div className="feature-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
               {objectivesGoals.map((text, i) => (
@@ -356,7 +356,7 @@ export default function BobRides() {
         {/* SEC.05 — RESEARCH: Business Challenges */}
         <section id="business-challenges" className="section">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>05</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>05</b>: RESEARCH</Reveal>
             <Reveal as="h2">Business Challenges</Reveal>
             {businessChallenges.map((text, i) => (
               <Reveal key={i} variant="scale" className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
@@ -369,7 +369,7 @@ export default function BobRides() {
         {/* SEC.06 — RESEARCH: Research Approach */}
         <section id="research-approach" className="section">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>06</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>06</b>: RESEARCH</Reveal>
             <Reveal as="h2">Research Approach</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>To understand how users compare ride-hailing services and identify opportunities for product differentiation, I combined qualitative user research with competitive product analysis. Rather than relying on secondary sources, the research was grounded in direct conversations with riders and hands-on evaluation of existing ride-hailing platforms.</p>
@@ -409,7 +409,7 @@ export default function BobRides() {
         {/* SEC.07 — RESEARCH: Competitor Analysis */}
         <section id="competitor-analysis" className="section section--roomy bg-soft">
           <div className="wrap-wide" style={{ textAlign: 'center' }}>
-            <Reveal className="section-index">SEC.<b>07</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>07</b>: RESEARCH</Reveal>
             <Reveal as="h2">What every competitor got wrong</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>Competitors: OLA, Rapido, Uber, Namma Yatri</Reveal>
           </div>
@@ -426,7 +426,7 @@ export default function BobRides() {
         {/* SEC.08 — RESEARCH: Product Users */}
         <section id="product-users" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>08</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>08</b>: RESEARCH</Reveal>
             <Reveal as="h2">The user was never the hard part</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/product-users.webp" alt="Product Users" loading="lazy" decoding="async" />
@@ -437,7 +437,7 @@ export default function BobRides() {
         {/* SEC.09 — RESEARCH: User Persona */}
         <section id="user-persona" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>09</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>09</b>: RESEARCH</Reveal>
             <Reveal as="h2">Meet Rahul</Reveal>
             <Reveal as="p" className="sheet-subtitle" style={{ maxWidth: 640 }}>Note: This persona is a synthesis of recurring behaviours and patterns observed during user interviews. It represents the common needs and frustrations of frequent ride-hailing users rather than a single individual.</Reveal>
             <div style={{ marginTop: 'var(--space-6)', maxWidth: 640 }}>
@@ -457,7 +457,7 @@ export default function BobRides() {
               <Reveal className="problem-copy">
                 <p style={{ fontSize: '0.96rem' }}>Wastes 3–5 minutes every commute switching between apps to find the best fare</p>
                 <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Can't tell which vehicle icon belongs to which service tier without reading the label</p>
-                <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Existing apps feel visually identical — no sense of which one he's actually on</p>
+                <p style={{ fontSize: '0.96rem', marginTop: 'var(--space-2)' }}>Existing apps feel visually identical, no sense of which one he's actually on</p>
               </Reveal>
             </div>
           </div>
@@ -470,7 +470,7 @@ export default function BobRides() {
         {/* SEC.10 — RESEARCH: User Needs */}
         <section id="user-needs" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>10</b> — RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>10</b>: RESEARCH</Reveal>
             <Reveal as="h2">What riders actually needed</Reveal>
             {userNeeds.map((text, i) => (
               <Reveal key={i} variant="scale" className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
@@ -483,7 +483,7 @@ export default function BobRides() {
         {/* SEC.11 — DESIGN: Features & Functionalities */}
         <section id="features-functionalities" className="section bg-soft">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>11</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>11</b>: DESIGN</Reveal>
             <Reveal as="h2">Features &amp; Functionalities</Reveal>
             <Reveal as="p" className="sheet-subtitle">To resolve user needs</Reveal>
             <div className="feature-grid">
@@ -500,7 +500,7 @@ export default function BobRides() {
         {/* SEC.12 — DESIGN: Product User Challenges */}
         <section id="product-user-challenges" className="section">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>12</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>12</b>: DESIGN</Reveal>
             <Reveal as="h2">What was actually broken for users</Reveal>
             <div style={{ marginTop: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               {productUserChallenges.map((text, i) => (
@@ -516,7 +516,7 @@ export default function BobRides() {
         {/* SEC.13 — DESIGN: Unique Features */}
         <section id="unique-features" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>13</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>13</b>: DESIGN</Reveal>
             <Reveal as="h2">Unique Features</Reveal>
             {uniqueFeatures.map((text, i) => (
               <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
@@ -529,7 +529,7 @@ export default function BobRides() {
         {/* SEC.14 — DESIGN: Task Mapping */}
         <section id="task-mapping" className="section">
           <div className="wrap-wide cinema-head">
-            <Reveal className="section-index">SEC.<b>14</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>14</b>: DESIGN</Reveal>
             <Reveal as="h2">Every tap is a decision point</Reveal>
           </div>
           <div className="wrap-wide">
@@ -538,10 +538,10 @@ export default function BobRides() {
                 <thead>
                   <tr>
                     <th scope="col"></th>
-                    <th scope="col">Step 1 — Open App</th>
-                    <th scope="col">Step 2 — Find a Ride</th>
-                    <th scope="col">Step 3 — Select &amp; Book</th>
-                    <th scope="col">Step 4 — Complete Ride</th>
+                    <th scope="col">Step 1: Open App</th>
+                    <th scope="col">Step 2: Find a Ride</th>
+                    <th scope="col">Step 3: Select &amp; Book</th>
+                    <th scope="col">Step 4: Complete Ride</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -560,7 +560,7 @@ export default function BobRides() {
         {/* SEC.15 — DESIGN: Eisenhower Matrix */}
         <section id="eisenhower-matrix" className="section bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>15</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>15</b>: DESIGN</Reveal>
             <Reveal as="h2">Eisenhower Matrix</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/eisen-hover-matrix.webp" alt="Eisenhower Matrix" loading="lazy" decoding="async" />
@@ -571,7 +571,7 @@ export default function BobRides() {
         {/* SEC.16 — ANALYSIS: Three decisions that shaped the system */}
         <section id="key-decisions" className="section band bg-dark">
           <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>16</b> — ANALYSIS</Reveal>
+            <Reveal className="section-index">SEC.<b>16</b>: ANALYSIS</Reveal>
             <Reveal as="h2">Three decisions that shaped the system</Reveal>
             <div className="feature-grid">
               {decisions.map((d, i) => (
@@ -591,7 +591,7 @@ export default function BobRides() {
         {/* SEC.17 — DESIGN: Sketches */}
         <section id="sketches" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>17</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>17</b>: DESIGN</Reveal>
             <Reveal as="h2">Sketches</Reveal>
             <Reveal variant="rotate" className="media-frame" style={{ maxWidth: 880, marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/sketches.webp" alt="Sketches" loading="lazy" decoding="async" />
@@ -602,7 +602,7 @@ export default function BobRides() {
         {/* SEC.18 — DESIGN: Final Icons */}
         <section id="final-icons" className="section section--roomy band bg-dark">
           <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>18</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>18</b>: DESIGN</Reveal>
             <Reveal as="h2">Final Icons</Reveal>
             <div className="icons-row">
               <Reveal variant="scale" delay={staggerDelay(0)} className="icon-cell"><img src="/images/bob-images/Car.webp" alt="BOB Rides 3D cab icon" loading="lazy" decoding="async" /><span>Cab</span></Reveal>
@@ -615,10 +615,10 @@ export default function BobRides() {
         {/* SEC.19 — DESIGN SYSTEM */}
         <section id="icon-system" className="section section--roomy bg-paper">
           <div className="wrap cinema-head">
-            <Reveal className="section-index">SEC.<b>19</b> — DESIGN SYSTEM</Reveal>
+            <Reveal className="section-index">SEC.<b>19</b>: DESIGN SYSTEM</Reveal>
             <Reveal as="h2">Icon System</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>
-              The icon system spans two production generations — flat 2D isometric to full-colour 3D with cast shadows. View the full version history, evolution rationale, and spec documentation in Figma.
+              The icon system spans two production generations, flat 2D isometric to full-colour 3D with cast shadows. View the full version history, evolution rationale, and spec documentation in Figma.
             </Reveal>
             <Reveal style={{ marginTop: 'var(--space-7)' }}>
               <a className="preview-cta" href="https://www.figma.com/design/6doJgq0YhHNlCkv7mLwwLy/bob-UI-Sohum?node-id=732-1630" target="_blank" rel="noopener noreferrer">View Icon System in Figma →</a>
@@ -629,7 +629,7 @@ export default function BobRides() {
         {/* SEC.20 — DESIGN: Major Screens */}
         <section id="major-screens" className="section section--roomy band bg-dark">
           <div className="band-inner cinema-head">
-            <Reveal className="section-index">SEC.<b>20</b> — DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>20</b>: DESIGN</Reveal>
             <Reveal as="h2">Major Screens</Reveal>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)', marginTop: 'var(--space-7)', maxWidth: 1800, marginInline: 'auto', paddingInline: 'var(--space-5)' }}>
@@ -662,7 +662,7 @@ export default function BobRides() {
         {/* SEC.21 — OUTCOME */}
         <section id="what-we-built" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>21</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>21</b>: OUTCOME</Reveal>
             <Reveal as="h2">What We Built</Reveal>
             <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">First Indian ride app with 3D icon system</span><span className="meta-value">3D</span></div>
@@ -675,7 +675,7 @@ export default function BobRides() {
         {/* SEC.22 — OUTCOME: Validation */}
         <section id="validation" className="section section--tight bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>22</b> — OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>22</b>: OUTCOME</Reveal>
             <Reveal as="h2">Validation</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>Following implementation, the redesigned icon system and interface were released through the application's TestFlight beta programme before being promoted to production.</p>

@@ -28,8 +28,8 @@ const WORK_CARDS = [
     ratio: '16:9',
     num: '01',
     numLabel: '01 · 2025',
-    title: 'Bob Rides — a 3D vehicle icon system for ride-hailing.',
-    desc: 'A live ride-hailing aggregator that compares Uber, Ola, and Rapido in one screen — sole designer across a full 3D vehicle icon system and a dark-mode-native token system.',
+    title: 'Bob Rides: a 3D vehicle icon system for ride-hailing.',
+    desc: 'A live ride-hailing aggregator that compares Uber, Ola, and Rapido in one screen, sole designer across a full 3D vehicle icon system and a dark-mode-native token system.',
     tags: ['MOBILE UX', 'RIDE-HAILING', '3D ICONS'],
     tag: 'SHIPPED',
     url: ROUTES.bobRides,
@@ -41,7 +41,7 @@ const WORK_CARDS = [
     ratio: '3:2',
     num: '02',
     numLabel: '02 · 2025',
-    title: 'UUCMS Redesign — from 12 steps to 4 for Karnataka’s student portal.',
+    title: 'UUCMS Redesign: from 12 steps to 4 for Karnataka’s student portal.',
     desc: 'A redesign of UUCMS, the official student portal for Karnataka’s Department of Higher Education, used by students across the state each term.',
     tags: ['EDTECH', 'RESPONSIVE WEB', 'INFORMATION ARCHITECTURE'],
     tag: 'COMPLETED',
@@ -54,8 +54,8 @@ const WORK_CARDS = [
     ratio: '4:3',
     num: '03',
     numLabel: '03 · 2026',
-    title: 'Rewind — a hardware-inspired browser music player.',
-    desc: 'A nostalgic, hardware-inspired browser music player with spatial audio — built for the Figma Config Makeathon 2026 using the Web Audio API.',
+    title: 'Rewind: a hardware-inspired browser music player.',
+    desc: 'A nostalgic, hardware-inspired browser music player with spatial audio, built for the Figma Config Makeathon 2026 using the Web Audio API.',
     tags: ['HARDWARE UI', 'MAKEATHON', 'WEB AUDIO API'],
     tag: 'SUBMITTED',
     url: ROUTES.rewindCaseStudy,
@@ -68,13 +68,13 @@ const CHAPTERS = [
     num: '01',
     label: 'CH.01 · PRINCIPLE',
     title: 'Composition before decoration.',
-    body: 'Structure earns attention; ornament borrows it. Every layout is a lens choice — where the eye lands, what falls out of frame, what stays in focus. I begin with hierarchy and negative space, not with textures.',
+    body: 'Structure earns attention; ornament borrows it. Every layout is a lens choice: where the eye lands, what falls out of frame, what stays in focus. I begin with hierarchy and negative space, not with textures.',
   },
   {
     num: '02',
     label: 'CH.02 · METHOD',
     title: 'Exposure is a design decision.',
-    body: 'Interfaces, like photographs, are governed by contrast. What is loud, what is quiet, what is legible under low light. I treat typography, motion, and color as exposure controls — each one deliberately set, never automatic.',
+    body: 'Interfaces, like photographs, are governed by contrast. What is loud, what is quiet, what is legible under low light. I treat typography, motion, and color as exposure controls, each one deliberately set, never automatic.',
   },
   {
     num: '03',
@@ -146,14 +146,14 @@ export default function Viewfinder() {
             </h1>
             <p className="vf-hero-body">
               Multidisciplinary work spanning UI/UX, 3D visual production, brand design, and
-              AI-assisted workflows — I design complex digital products end-to-end, from the
+              AI-assisted workflows. I design complex digital products end-to-end, from the
               first sketch to the shipped system.
             </p>
             <div className="vf-hero-cta">
               <a className="vf-cta-pill" href="#work">FOCUS / SELECTED WORK →</a>
               <a className="vf-text-link" href="#contact">OR, GET IN TOUCH</a>
             </div>
-            <p className="vf-fold">—— SCROLL · SHUTTER OPEN</p>
+            <p className="vf-fold">SCROLL · SHUTTER OPEN</p>
           </div>
 
           <div className="vf-dial-col">
@@ -287,7 +287,7 @@ export default function Viewfinder() {
               </h2>
             </div>
             <p className="vf-section-caption">
-              Field studies from the workshop — camera parts, mechanical objects, and the
+              Field studies from the workshop: camera parts, mechanical objects, and the
               interfaces they inspire. Ongoing, never finished.
             </p>
           </div>
@@ -315,7 +315,7 @@ export default function Viewfinder() {
                 <div className="vf-plate-notes-head">PLATE 07 · NOTES</div>
                 <p className="vf-plate-quote">
                   "The click of a mechanical shutter is a design decision. It commits. Screens
-                  rarely do — I try to design interfaces that behave the same way."
+                  rarely do. I try to design interfaces that behave the same way."
                 </p>
               </div>
               <div className="vf-plate-specs">
