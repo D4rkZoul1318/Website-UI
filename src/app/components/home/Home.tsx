@@ -7,7 +7,7 @@ import { Manifesto } from './Manifesto';
 import { Footer } from './Footer';
 
 export default function Home() {
-  useEffect(() => { document.title = 'Sohum Bhatnagar — Designer, Photographer, Storyteller'; }, []);
+  useEffect(() => { document.title = 'Sohum Bhatnagar — Product Designer'; }, []);
 
   return (
     <div className="camera-theme vf-home" data-testid="home">

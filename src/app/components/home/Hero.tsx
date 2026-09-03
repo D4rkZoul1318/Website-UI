@@ -44,7 +44,7 @@ export function Hero() {
           <LineMask delay={180}>Portfolio</LineMask>
         </h1>
         <p className="vf-hero-tagline">
-          <LineMask delay={320}><span className="vf-italic">Designer by training. Naturalist by instinct.</span></LineMask>
+          <LineMask delay={320}><span className="vf-italic">Product designer who ships in React. Sole designer at Bob Rides, shipped to production.</span></LineMask>
         </p>
       </div>
 
