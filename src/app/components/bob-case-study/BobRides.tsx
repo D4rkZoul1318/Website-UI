@@ -287,9 +287,19 @@ export default function BobRides() {
               <span className="pipeline-tool">AI</span>
             </Reveal>
           </div>
-          <div className="wrap-wide" style={{ marginTop: 'var(--space-8)' }}>
-            <Reveal variant="zoom" className="media-frame" data-speed="0.85">
-              <img src="/images/bob-images/hero.webp" alt="BOB Rides Hero" />
+          <div className="wrap-wide" style={{ marginTop: 180 }}>
+            {/* marginTop is a fixed px value, not var(--space-8): the
+                data-speed parallax below pre-shifts this frame upward by
+                ~88px even at scroll position 0, which at the old spacing
+                token overlapped the pipeline row above. */}
+            <Reveal variant="zoom" className="media-frame hero-video-frame" data-speed="0.85">
+              <video
+                autoPlay loop muted playsInline
+                aria-label="BOB Rides hero walkthrough"
+                onLoadedMetadata={(e) => { e.currentTarget.playbackRate = 1.25; }}
+              >
+                <source src="/videos/bob-rides-preview.mp4" type="video/mp4" />
+              </video>
             </Reveal>
           </div>
         </section>
