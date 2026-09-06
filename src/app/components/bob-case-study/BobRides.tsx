@@ -287,11 +287,7 @@ export default function BobRides() {
               <span className="pipeline-tool">AI</span>
             </Reveal>
           </div>
-          <div className="wrap-wide" style={{ marginTop: 180 }}>
-            {/* marginTop is a fixed px value, not var(--space-8): the
-                data-speed parallax below pre-shifts this frame upward by
-                ~88px even at scroll position 0, which at the old spacing
-                token overlapped the pipeline row above. */}
+          <div className="wrap-wide" style={{ marginTop: 'var(--space-8)' }}>
             {/* hero-video-frame's own max-width (1280px, for Rewind's
                 landscape hero video) is way too wide for this portrait
                 416x816 recording — override down to 480, matching the
@@ -301,10 +297,18 @@ export default function BobRides() {
                 every plain-image frame on this page and Rewind's own
                 (landscape, edge-to-edge) hero video, and shouldn't gain a
                 phone-bezel treatment they weren't asked for. */}
+            {/* No data-speed here (unlike Rewind's hero video): the
+                parallax transform doesn't change this section's box
+                height, only the frame's visual position within it, and at
+                different scroll positions that shifted it enough to
+                overlap the pipeline row above (fixed once with a bigger
+                margin) and then, after this frame grew taller with
+                padding, the "At a Glance" section below (reported next).
+                Same root cause both times — removed rather than patched a
+                third time. */}
             <Reveal
               variant="zoom"
               className="media-frame hero-video-frame"
-              data-speed="0.85"
               style={{ maxWidth: 480, margin: '0 auto', padding: 'var(--space-4)', background: 'var(--screen-bg)' }}
             >
               <video
