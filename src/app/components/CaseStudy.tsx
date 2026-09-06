@@ -285,33 +285,24 @@ export default function CaseStudy() {
             <Reveal className="hero-tags">
               <span>15 min → 60 sec</span><span>2-click navigation</span><span>Student-first IA</span>
             </Reveal>
-            <Reveal className="pipeline-row">
-              <span className="pipeline-label">Pipeline</span>
-              <span className="pipeline-tool">Figma</span>
-              <span className="pipeline-arrow" aria-hidden="true">→</span>
-              <span className="pipeline-tool">Figma Make</span>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* PROJECT INFO — admissions-required metadata (author, date,
-            location, individual/group, context, year of study, supervisor).
-            Placed right after the hero, before the problem statement. */}
-        <section id="project-info" className="section section--tight">
-          <div className="wrap">
-            <Reveal className="section-index">PROJECT INFO</Reveal>
-            <Reveal variant="scale" className="spec-plate">
+            {/* Project info — admissions-required metadata (author, date,
+                location, context, year of study, supervisor, individual/group).
+                Compact spec-plate variant, same weight as the hero tags above
+                it; not a separate section. */}
+            <Reveal variant="scale" className="spec-plate spec-plate--compact">
               <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
               <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">February 2026</span></div>
               <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
               <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Self-initiated</span></div>
               <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Post-graduation</span></div>
               <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: self-initiated</span></div>
+              <div className="spec-row spec-row--wide"><span className="spec-label">Individual/group</span><span className="spec-value">Individual: research, IA &amp; UI design</span></div>
             </Reveal>
-            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
-              <p>This was individual work. I was solely responsible for the research, information architecture redesign, and interface design described below.</p>
-              <p style={{ marginTop: 'var(--space-3)' }}>This was a self-initiated, personal project, not a class assignment or professional engagement.</p>
-              <p style={{ marginTop: 'var(--space-3)' }}>No formal supervisor. Self-initiated project.</p>
+            <Reveal className="pipeline-row">
+              <span className="pipeline-label">Pipeline</span>
+              <span className="pipeline-tool">Figma</span>
+              <span className="pipeline-arrow" aria-hidden="true">→</span>
+              <span className="pipeline-tool">Figma Make</span>
             </Reveal>
           </div>
         </section>

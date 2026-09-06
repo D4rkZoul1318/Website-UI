@@ -268,6 +268,19 @@ export default function BobRides() {
             <Reveal className="hero-tags">
               <span>3D icon system</span><span>Dark-mode native</span><span>Multi-app aggregator</span>
             </Reveal>
+            {/* Project info — admissions-required metadata (author, date,
+                location, context, year of study, supervisor, individual/group).
+                Compact spec-plate variant, same weight as the hero tags above
+                it; not a separate section. */}
+            <Reveal variant="scale" className="spec-plate spec-plate--compact">
+              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
+              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">March 2025</span></div>
+              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
+              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Freelance</span></div>
+              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Year 4 (final year of B.Va)</span></div>
+              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: freelance</span></div>
+              <div className="spec-row spec-row--wide"><span className="spec-label">Individual/group</span><span className="spec-value">Individual: full design &amp; research</span></div>
+            </Reveal>
             <Reveal className="pipeline-row">
               <span className="pipeline-label">Pipeline</span>
               <span className="pipeline-tool">Figma</span><span className="pipeline-arrow" aria-hidden="true">→</span>
@@ -279,28 +292,6 @@ export default function BobRides() {
           <div className="wrap-wide" style={{ marginTop: 'var(--space-8)' }}>
             <Reveal variant="zoom" className="media-frame" data-speed="0.85">
               <img src="/images/bob-images/hero.webp" alt="BOB Rides Hero" />
-            </Reveal>
-          </div>
-        </section>
-
-        {/* PROJECT INFO — admissions-required metadata (author, date,
-            location, individual/group, context, year of study, supervisor).
-            Placed right after the hero, before the TL;DR. */}
-        <section id="project-info" className="section section--tight">
-          <div className="wrap">
-            <Reveal className="section-index">PROJECT INFO</Reveal>
-            <Reveal variant="scale" className="spec-plate">
-              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
-              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">March 2025</span></div>
-              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
-              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Freelance</span></div>
-              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Year 4 (final year of B.Va)</span></div>
-              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: freelance</span></div>
-            </Reveal>
-            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
-              <p>This was individual work. I was solely responsible for the research, 3D icon system design, and dark-mode UI decisions described below.</p>
-              <p style={{ marginTop: 'var(--space-3)' }}>This project was a professional freelance engagement for Bob Rides, not a class assignment or self-initiated project.</p>
-              <p style={{ marginTop: 'var(--space-3)' }}>No formal supervisor. Freelance project.</p>
             </Reveal>
           </div>
         </section>

@@ -227,6 +227,19 @@ export default function RewindCaseStudy() {
             <Reveal as="h1">REWIND</Reveal>
             <Reveal as="p" className="lede">A hardware-inspired music control interface for the browser (six disc slots, dedicated EQ knobs, physical faders, a click wheel) with real audio processing behind every control. Physical Interactions, V.01-Alpha.</Reveal>
             <Reveal className="hero-tags"><span>Hardware UI</span><span>Web Audio API</span><span>Makeathon 2026</span></Reveal>
+            {/* Project info — admissions-required metadata (author, date,
+                location, context, year of study, supervisor, individual/group).
+                Compact spec-plate variant, same weight as the hero tags above
+                it; not a separate section. */}
+            <Reveal variant="scale" className="spec-plate spec-plate--compact">
+              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
+              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">June 2026</span></div>
+              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
+              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Makeathon</span></div>
+              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Post-graduation</span></div>
+              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: makeathon</span></div>
+              <div className="spec-row spec-row--wide"><span className="spec-label">Individual/group</span><span className="spec-value">Individual: design &amp; front-end build</span></div>
+            </Reveal>
             <Reveal className="pipeline-row">
               <span className="pipeline-label">Pipeline</span>
               <span className="pipeline-tool">Figma Make</span><span className="pipeline-arrow">→</span>
@@ -242,28 +255,6 @@ export default function RewindCaseStudy() {
               <video autoPlay loop muted playsInline width={1280} height={720} aria-label="REWIND, device walkthrough: discs loading, EQ manipulation, fader control">
                 <source src="/videos/rewind-preview.mp4" type="video/mp4" />
               </video>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* PROJECT INFO — admissions-required metadata (author, date,
-            location, individual/group, context, year of study, supervisor).
-            Placed right after the hero, before the problem statement. */}
-        <section id="project-info" className="section section--tight">
-          <div className="wrap">
-            <Reveal className="section-index">PROJECT INFO</Reveal>
-            <Reveal variant="scale" className="spec-plate">
-              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
-              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">June 2026</span></div>
-              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
-              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Makeathon</span></div>
-              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Post-graduation</span></div>
-              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: makeathon</span></div>
-            </Reveal>
-            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
-              <p>This was individual work. I was solely responsible for the design and front-end build described below, including the Web Audio API integration.</p>
-              <p style={{ marginTop: 'var(--space-3)' }}>This was built for the Figma Config Makeathon, 2026, an external competition, not a class assignment or self-initiated project.</p>
-              <p style={{ marginTop: 'var(--space-3)' }}>No formal supervisor. Makeathon project.</p>
             </Reveal>
           </div>
         </section>
