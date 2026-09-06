@@ -291,10 +291,10 @@ export default function BobRides() {
             <Reveal className="section-index">PROJECT INFO</Reveal>
             <Reveal variant="scale" className="spec-plate">
               <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
-              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">[[TODO: month]] 2025</span></div>
-              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">[[TODO: city]]</span></div>
+              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">March 2025</span></div>
+              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
               <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Freelance</span></div>
-              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">[[TODO: year]]</span></div>
+              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Year 4 (final year of B.Va)</span></div>
               <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: freelance</span></div>
             </Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
@@ -702,7 +702,7 @@ export default function BobRides() {
             <Reveal as="h2">Validation</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>Following implementation, the redesigned icon system and interface were released through the application's TestFlight beta programme before being promoted to production.</p>
-              <p style={{ marginTop: 'var(--space-4)' }}>This beta release made the redesigned experience available to a substantial portion of the product's approximately 40,000 beta users [[TODO: confirm this figure is accurate and stateable]], allowing the team to observe real-world usage and gather feedback before production rollout.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>This beta release made the redesigned experience available to a substantial portion of the product's approximately 40,000 beta users, allowing the team to observe real-world usage and gather feedback before production rollout.</p>
               <p style={{ marginTop: 'var(--space-4)' }}>Feedback from the beta release was positive, supporting the decision to promote the redesigned experience to the live product.</p>
             </Reveal>
             <Reveal variant="scale" className="facts-row facts-row--four" style={{ marginTop: 'var(--space-7)' }}>

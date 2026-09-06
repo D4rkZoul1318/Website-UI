@@ -254,8 +254,8 @@ export default function RewindCaseStudy() {
             <Reveal className="section-index">PROJECT INFO</Reveal>
             <Reveal variant="scale" className="spec-plate">
               <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
-              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">[[TODO: month]] 2026</span></div>
-              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">[[TODO: city]]</span></div>
+              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">June 2026</span></div>
+              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
               <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Makeathon</span></div>
               <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Post-graduation</span></div>
               <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: makeathon</span></div>
