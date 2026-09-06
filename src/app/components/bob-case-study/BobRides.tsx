@@ -268,18 +268,16 @@ export default function BobRides() {
             <Reveal className="hero-tags">
               <span>3D icon system</span><span>Dark-mode native</span><span>Multi-app aggregator</span>
             </Reveal>
-            {/* Project info — admissions-required metadata (author, date,
-                location, context, year of study, supervisor, individual/group).
-                Compact spec-plate variant, same weight as the hero tags above
-                it; not a separate section. */}
-            <Reveal variant="scale" className="spec-plate spec-plate--compact">
-              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
-              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">March 2025</span></div>
-              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
-              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Freelance</span></div>
-              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Year 4 (final year of B.Va)</span></div>
-              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: freelance</span></div>
-              <div className="spec-row spec-row--wide"><span className="spec-label">Individual/group</span><span className="spec-value">Individual: full design &amp; research</span></div>
+            {/* Project info — admissions-required metadata (location, context,
+                individual/group, year of study, supervisor). Date is skipped:
+                already shown in the SEC.00 line above ("· 2025"). Second pill
+                row, identical shape to hero-tags, just visually quieter. */}
+            <Reveal className="hero-tags hero-tags--meta">
+              <span>Location: Bengaluru</span>
+              <span>Context: Freelance</span>
+              <span>Individual: design &amp; research</span>
+              <span>Final year, B.Va</span>
+              <span>No formal supervisor</span>
             </Reveal>
             <Reveal className="pipeline-row">
               <span className="pipeline-label">Pipeline</span>

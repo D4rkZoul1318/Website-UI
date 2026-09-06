@@ -227,18 +227,16 @@ export default function RewindCaseStudy() {
             <Reveal as="h1">REWIND</Reveal>
             <Reveal as="p" className="lede">A hardware-inspired music control interface for the browser (six disc slots, dedicated EQ knobs, physical faders, a click wheel) with real audio processing behind every control. Physical Interactions, V.01-Alpha.</Reveal>
             <Reveal className="hero-tags"><span>Hardware UI</span><span>Web Audio API</span><span>Makeathon 2026</span></Reveal>
-            {/* Project info — admissions-required metadata (author, date,
-                location, context, year of study, supervisor, individual/group).
-                Compact spec-plate variant, same weight as the hero tags above
-                it; not a separate section. */}
-            <Reveal variant="scale" className="spec-plate spec-plate--compact">
-              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
-              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">June 2026</span></div>
-              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
-              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Makeathon</span></div>
-              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Post-graduation</span></div>
-              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: makeathon</span></div>
-              <div className="spec-row spec-row--wide"><span className="spec-label">Individual/group</span><span className="spec-value">Individual: design &amp; front-end build</span></div>
+            {/* Project info — admissions-required metadata (location, context,
+                individual/group, year of study, supervisor). Date is skipped:
+                already shown in the SEC.00 line above ("· 2026"). Second pill
+                row, identical shape to hero-tags, just visually quieter. */}
+            <Reveal className="hero-tags hero-tags--meta">
+              <span>Location: Bengaluru</span>
+              <span>Context: Makeathon submission</span>
+              <span>Individual: design &amp; build</span>
+              <span>Post-graduation</span>
+              <span>No formal supervisor</span>
             </Reveal>
             <Reveal className="pipeline-row">
               <span className="pipeline-label">Pipeline</span>

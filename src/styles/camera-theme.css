@@ -261,18 +261,14 @@
 .camera-theme .spec-row:last-child { border-bottom: none; }
 .camera-theme .spec-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; max-width: 18ch; }
 .camera-theme .spec-value { font-family: var(--font-mono); font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.25rem); color: var(--ink); flex-shrink: 0; }
-/* Project Info strip: a compact 2-column variant of spec-plate for the
-   admissions metadata (author/date/location/context/year/supervisor),
-   sitting under the hero tags rather than as its own section. Same
-   label/value classes as the stat cards above, just denser and never
-   larger or bolder than that base .spec-value size. */
-.camera-theme .spec-plate--compact { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: var(--space-5); }
-.camera-theme .spec-plate--compact .spec-row { padding: var(--space-2) var(--space-4); gap: var(--space-3); }
-.camera-theme .spec-plate--compact .spec-row:nth-last-child(-n+2) { border-bottom: none; }
-.camera-theme .spec-plate--compact .spec-row--wide { grid-column: 1 / -1; }
-.camera-theme .spec-plate--compact .spec-label { max-width: none; flex-shrink: 0; }
-.camera-theme .spec-plate--compact .spec-value { font-size: 12.5px; font-weight: 500; text-align: right; flex-shrink: 1; min-width: 0; }
-@media (max-width: 560px) { .camera-theme .spec-plate--compact { grid-template-columns: 1fr; } .camera-theme .spec-plate--compact .spec-row:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); } .camera-theme .spec-plate--compact .spec-row:last-child { border-bottom: none; } }
+/* Project info pills: a second, visually quieter row of the exact same
+   .hero-tags pill (shape/border/padding/font untouched) directly under the
+   subject-tag row, for the admissions metadata (location, context,
+   individual/group, year of study, supervisor). Only the text/border color
+   is muted, using the existing --ink-faint/--line-soft tokens already used
+   elsewhere for de-emphasized text — no new color introduced. */
+.camera-theme .hero-tags--meta { margin-top: var(--space-2); }
+.camera-theme .hero-tags--meta span, .camera-theme .hero-tags--meta a { color: var(--ink-faint); border-color: var(--line-soft); text-decoration: none; }
 @media (max-width: 780px) { .camera-theme .problem-composition { grid-template-columns: 1fr; } }
 
 .camera-theme .moment { min-height: 44vh; display: flex; align-items: center; justify-content: center; padding: var(--space-7) var(--space-6); }

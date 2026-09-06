@@ -285,18 +285,16 @@ export default function CaseStudy() {
             <Reveal className="hero-tags">
               <span>15 min → 60 sec</span><span>2-click navigation</span><span>Student-first IA</span>
             </Reveal>
-            {/* Project info — admissions-required metadata (author, date,
-                location, context, year of study, supervisor, individual/group).
-                Compact spec-plate variant, same weight as the hero tags above
-                it; not a separate section. */}
-            <Reveal variant="scale" className="spec-plate spec-plate--compact">
-              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
-              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">February 2026</span></div>
-              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">Bengaluru</span></div>
-              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Self-initiated</span></div>
-              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Post-graduation</span></div>
-              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: self-initiated</span></div>
-              <div className="spec-row spec-row--wide"><span className="spec-label">Individual/group</span><span className="spec-value">Individual: research, IA &amp; UI design</span></div>
+            {/* Project info — admissions-required metadata (location, context,
+                individual/group, year of study, supervisor). Date is skipped:
+                already shown in the SEC.00 line above ("· 2026"). Second pill
+                row, identical shape to hero-tags, just visually quieter. */}
+            <Reveal className="hero-tags hero-tags--meta">
+              <span>Location: Bengaluru</span>
+              <span>Context: Self-initiated</span>
+              <span>Individual: research &amp; design</span>
+              <span>Post-graduation</span>
+              <span>No formal supervisor</span>
             </Reveal>
             <Reveal className="pipeline-row">
               <span className="pipeline-label">Pipeline</span>
