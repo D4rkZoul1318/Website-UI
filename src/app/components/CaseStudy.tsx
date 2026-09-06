@@ -280,7 +280,7 @@ export default function CaseStudy() {
             <Reveal className="section-index">SEC.<b>00</b>: UI/UX REDESIGN · 2025</Reveal>
             <div className="hero-primary">
               <Reveal as="h1">UUCMS Student Portal</Reveal>
-              <Reveal as="p" className="lede">Redesigning a government university portal to reduce task completion time from 15 minutes to under 60 seconds.</Reveal>
+              <Reveal as="p" className="lede">Redesigning UUCMS, Karnataka's Department of Higher Education student portal, to reduce task completion time from 15 minutes to under 60 seconds.</Reveal>
             </div>
             <Reveal className="hero-tags">
               <span>15 min → 60 sec</span><span>2-click navigation</span><span>Student-first IA</span>
@@ -290,6 +290,28 @@ export default function CaseStudy() {
               <span className="pipeline-tool">Figma</span>
               <span className="pipeline-arrow" aria-hidden="true">→</span>
               <span className="pipeline-tool">Figma Make</span>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* PROJECT INFO — admissions-required metadata (author, date,
+            location, individual/group, context, year of study, supervisor).
+            Placed right after the hero, before the problem statement. */}
+        <section id="project-info" className="section section--tight">
+          <div className="wrap">
+            <Reveal className="section-index">PROJECT INFO</Reveal>
+            <Reveal variant="scale" className="spec-plate">
+              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
+              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">[[TODO: month]] 2025</span></div>
+              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">[[TODO: city]]</span></div>
+              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Self-initiated</span></div>
+              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">[[TODO: year]]</span></div>
+              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: self-initiated</span></div>
+            </Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>This was individual work. I was solely responsible for the research, information architecture redesign, and interface design described below.</p>
+              <p style={{ marginTop: 'var(--space-3)' }}>This was a self-initiated, personal project, not a class assignment or professional engagement.</p>
+              <p style={{ marginTop: 'var(--space-3)' }}>No formal supervisor. Self-initiated project.</p>
             </Reveal>
           </div>
         </section>

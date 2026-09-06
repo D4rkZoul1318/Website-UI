@@ -142,7 +142,7 @@ const features = [
 ];
 
 const uniqueFeatures = [
-  'Custom 3D vehicle icons rendered in Blender, the only ride app icon system in the Indian market built with dimensional 3D models rather than flat vectors',
+  'Custom 3D vehicle icons rendered in Blender, a dimensional icon system built specifically for BOB Rides rather than flat vectors',
   'Dark-mode-native design system built from the ground up, not adapted from a light-mode base',
   'Cross-app price aggregation with a real-time "Best Price" indicator showing exact savings compared to individual app pricing',
 ];
@@ -279,6 +279,28 @@ export default function BobRides() {
           <div className="wrap-wide" style={{ marginTop: 'var(--space-8)' }}>
             <Reveal variant="zoom" className="media-frame" data-speed="0.85">
               <img src="/images/bob-images/hero.webp" alt="BOB Rides Hero" />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* PROJECT INFO — admissions-required metadata (author, date,
+            location, individual/group, context, year of study, supervisor).
+            Placed right after the hero, before the TL;DR. */}
+        <section id="project-info" className="section section--tight">
+          <div className="wrap">
+            <Reveal className="section-index">PROJECT INFO</Reveal>
+            <Reveal variant="scale" className="spec-plate">
+              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
+              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">[[TODO: month]] 2025</span></div>
+              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">[[TODO: city]]</span></div>
+              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Freelance</span></div>
+              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">[[TODO: year]]</span></div>
+              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: freelance</span></div>
+            </Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>This was individual work. I was solely responsible for the research, 3D icon system design, and dark-mode UI decisions described below.</p>
+              <p style={{ marginTop: 'var(--space-3)' }}>This project was a professional freelance engagement for Bob Rides, not a class assignment or self-initiated project.</p>
+              <p style={{ marginTop: 'var(--space-3)' }}>No formal supervisor. Freelance project.</p>
             </Reveal>
           </div>
         </section>
@@ -596,6 +618,7 @@ export default function BobRides() {
             <Reveal variant="rotate" className="media-frame" style={{ maxWidth: 880, marginTop: 'var(--space-6)' }}>
               <img src="/images/bob-images/sketches.webp" alt="Sketches" loading="lazy" decoding="async" />
             </Reveal>
+            <p className="meta-label" style={{ marginTop: 'var(--space-3)' }}>Original concept sketches: Sohum Bhatnagar</p>
           </div>
         </section>
 
@@ -665,7 +688,7 @@ export default function BobRides() {
             <Reveal className="section-index">SEC.<b>21</b>: OUTCOME</Reveal>
             <Reveal as="h2">What We Built</Reveal>
             <Reveal variant="scale" className="facts-row">
-              <div><span className="meta-label">First Indian ride app with 3D icon system</span><span className="meta-value">3D</span></div>
+              <div><span className="meta-label">3D vehicle icon system built for BOB Rides</span><span className="meta-value">3D</span></div>
               <div><span className="meta-label">Native dark-mode UI built from ground up</span><span className="meta-value">Dark</span></div>
               <div><span className="meta-label">Uber, Ola &amp; Rapido compared in one screen</span><span className="meta-value">1 app</span></div>
             </Reveal>
@@ -679,7 +702,7 @@ export default function BobRides() {
             <Reveal as="h2">Validation</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>Following implementation, the redesigned icon system and interface were released through the application's TestFlight beta programme before being promoted to production.</p>
-              <p style={{ marginTop: 'var(--space-4)' }}>This beta release made the redesigned experience available to a substantial portion of the product's approximately 40,000 beta users, allowing the team to observe real-world usage and gather feedback before production rollout.</p>
+              <p style={{ marginTop: 'var(--space-4)' }}>This beta release made the redesigned experience available to a substantial portion of the product's approximately 40,000 beta users [[TODO: confirm this figure is accurate and stateable]], allowing the team to observe real-world usage and gather feedback before production rollout.</p>
               <p style={{ marginTop: 'var(--space-4)' }}>Feedback from the beta release was positive, supporting the decision to promote the redesigned experience to the live product.</p>
             </Reveal>
             <Reveal variant="scale" className="facts-row facts-row--four" style={{ marginTop: 'var(--space-7)' }}>

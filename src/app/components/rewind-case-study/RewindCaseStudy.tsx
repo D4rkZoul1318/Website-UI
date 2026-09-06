@@ -246,6 +246,28 @@ export default function RewindCaseStudy() {
           </div>
         </section>
 
+        {/* PROJECT INFO — admissions-required metadata (author, date,
+            location, individual/group, context, year of study, supervisor).
+            Placed right after the hero, before the problem statement. */}
+        <section id="project-info" className="section section--tight">
+          <div className="wrap">
+            <Reveal className="section-index">PROJECT INFO</Reveal>
+            <Reveal variant="scale" className="spec-plate">
+              <div className="spec-row"><span className="spec-label">Author</span><span className="spec-value">Sohum Bhatnagar</span></div>
+              <div className="spec-row"><span className="spec-label">Date</span><span className="spec-value">[[TODO: month]] 2026</span></div>
+              <div className="spec-row"><span className="spec-label">Location</span><span className="spec-value">[[TODO: city]]</span></div>
+              <div className="spec-row"><span className="spec-label">Context</span><span className="spec-value">Makeathon</span></div>
+              <div className="spec-row"><span className="spec-label">Year of study</span><span className="spec-value">Post-graduation</span></div>
+              <div className="spec-row"><span className="spec-label">Supervisor</span><span className="spec-value">None: makeathon</span></div>
+            </Reveal>
+            <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
+              <p>This was individual work. I was solely responsible for the design and front-end build described below, including the Web Audio API integration.</p>
+              <p style={{ marginTop: 'var(--space-3)' }}>This was built for the Figma Config Makeathon, 2026, an external competition, not a class assignment or self-initiated project.</p>
+              <p style={{ marginTop: 'var(--space-3)' }}>No formal supervisor. Makeathon project.</p>
+            </Reveal>
+          </div>
+        </section>
+
         {/* SEC.01 — PROBLEM */}
         <section id="problem" className="section bg-soft">
           <div className="wrap">
