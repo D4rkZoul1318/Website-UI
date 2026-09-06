@@ -261,6 +261,10 @@
 .camera-theme .spec-row:last-child { border-bottom: none; }
 .camera-theme .spec-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; max-width: 18ch; }
 .camera-theme .spec-value { font-family: var(--font-mono); font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.25rem); color: var(--ink); flex-shrink: 0; }
+/* Project Info block only: full names/sentences read as too heavy at the
+   stat-card size/weight above (which is tuned for short numbers like "3+"
+   or "24px"), so scale both down proportionately just for this block. */
+.camera-theme #project-info .spec-value { font-weight: 500; font-size: clamp(1.3rem, 2.5vw, 1.875rem); }
 @media (max-width: 780px) { .camera-theme .problem-composition { grid-template-columns: 1fr; } }
 
 .camera-theme .moment { min-height: 44vh; display: flex; align-items: center; justify-content: center; padding: var(--space-7) var(--space-6); }
