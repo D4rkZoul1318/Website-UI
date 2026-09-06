@@ -296,12 +296,22 @@ export default function BobRides() {
                 landscape hero video) is way too wide for this portrait
                 416x816 recording — override down to 480, matching the
                 other portrait media-frame on this page (SEC.23, below). */}
-            <Reveal variant="zoom" className="media-frame hero-video-frame" data-speed="0.85" style={{ maxWidth: 480, margin: '0 auto' }}>
+            {/* Padding/background/radii are inline, not added to the shared
+                .media-frame / .hero-video-frame classes: those also style
+                every plain-image frame on this page and Rewind's own
+                (landscape, edge-to-edge) hero video, and shouldn't gain a
+                phone-bezel treatment they weren't asked for. */}
+            <Reveal
+              variant="zoom"
+              className="media-frame hero-video-frame"
+              data-speed="0.85"
+              style={{ maxWidth: 480, margin: '0 auto', padding: 'var(--space-4)', background: 'var(--screen-bg)' }}
+            >
               <video
                 autoPlay loop muted playsInline
                 width={416} height={816}
                 aria-label="BOB Rides hero walkthrough"
-                style={{ objectFit: 'contain', maxHeight: '80vh' }}
+                style={{ objectFit: 'contain', maxHeight: '80vh', borderRadius: 8, background: 'var(--screen-bg)' }}
                 onLoadedMetadata={(e) => { e.currentTarget.playbackRate = 1.25; }}
               >
                 <source src="/videos/bob-rides-preview.mp4" type="video/mp4" />
