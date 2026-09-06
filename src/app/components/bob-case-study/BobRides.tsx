@@ -292,10 +292,16 @@ export default function BobRides() {
                 data-speed parallax below pre-shifts this frame upward by
                 ~88px even at scroll position 0, which at the old spacing
                 token overlapped the pipeline row above. */}
-            <Reveal variant="zoom" className="media-frame hero-video-frame" data-speed="0.85">
+            {/* hero-video-frame's own max-width (1280px, for Rewind's
+                landscape hero video) is way too wide for this portrait
+                416x816 recording — override down to 480, matching the
+                other portrait media-frame on this page (SEC.23, below). */}
+            <Reveal variant="zoom" className="media-frame hero-video-frame" data-speed="0.85" style={{ maxWidth: 480, margin: '0 auto' }}>
               <video
                 autoPlay loop muted playsInline
+                width={416} height={816}
                 aria-label="BOB Rides hero walkthrough"
+                style={{ objectFit: 'contain', maxHeight: '80vh' }}
                 onLoadedMetadata={(e) => { e.currentTarget.playbackRate = 1.25; }}
               >
                 <source src="/videos/bob-rides-preview.mp4" type="video/mp4" />
