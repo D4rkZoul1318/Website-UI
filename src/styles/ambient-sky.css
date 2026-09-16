@@ -1,0 +1,41 @@
+/* Ambient time-of-day sky tint — a fixed, full-viewport overlay whose two
+   colors drift continuously with the real clock (see
+   src/app/lib/ambientSky.ts), sitting above regular page content so it
+   reads as ambient light in the room rather than a page background (every
+   section on this site paints its own opaque background, so a true
+   behind-content layer would never be visible). It stays below modal
+   surfaces (z-index 1000, see .camera-theme .live-tile/.live-viewer) so
+   full-screen photo/video viewing is never tinted. */
+@property --sky-top {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #656565;
+}
+
+@property --sky-bottom {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #020202;
+}
+
+#ambient-sky {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  pointer-events: none;
+  opacity: 0.14;
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+  transition: --sky-top 90s ease, --sky-bottom 90s ease;
+}
+
+@media (prefers-contrast: more) {
+  #ambient-sky {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  #ambient-sky {
+    opacity: 0.06;
+  }
+}

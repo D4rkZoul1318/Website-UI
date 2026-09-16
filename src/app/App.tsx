@@ -10,6 +10,7 @@ import { ROUTES } from "./routes";
 import { useEffect } from "react";
 import { SmoothScroll } from "./components/SmoothScroll";
 import { scrollToHashTarget } from "./lib/scrollToHash";
+import { startAmbientSky } from "./lib/ambientSky";
 
 // Handles a hash landing on a fresh page load (e.g. navigating in from
 // another page via a `/#work`-style link) — the effect's empty deps mean
@@ -40,6 +41,7 @@ function useHashScroll() {
 
 export default function App() {
   useHashScroll();
+  useEffect(() => startAmbientSky(), []);
   return (
     <BrowserRouter>
       <SmoothScroll>
