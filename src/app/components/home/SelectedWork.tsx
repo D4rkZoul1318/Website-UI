@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Reveal } from '../camera/Reveal';
 import { ROUTES } from '../../routes';
+import { MediaFallback } from './MediaFallback';
 
 type WorkProject = {
   frame: string;
@@ -44,6 +46,16 @@ const PROJECTS: WorkProject[] = [
   },
 ];
 
+function ProjectMedia({ project }: { project: WorkProject }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return <MediaFallback label={project.title} />;
+  return project.video ? (
+    <video src={project.video} autoPlay loop muted playsInline onError={() => setFailed(true)} />
+  ) : (
+    <img src={project.image} alt={project.title} loading="lazy" onError={() => setFailed(true)} />
+  );
+}
+
 export function SelectedWork() {
   return (
     <section id="work" className="vf-work" data-testid="work-section">
@@ -70,11 +82,7 @@ export function SelectedWork() {
               <a href={p.url} className="vf-project-frame viewfinder-frame">
                 <span className="tick-tr" aria-hidden="true"></span>
                 <span className="tick-bl" aria-hidden="true"></span>
-                {p.video ? (
-                  <video src={p.video} autoPlay loop muted playsInline />
-                ) : (
-                  <img src={p.image} alt={p.title} loading="lazy" />
-                )}
+                <ProjectMedia project={p} />
                 <span className="vf-project-num" aria-hidden="true">{p.n}</span>
                 <div className="vf-project-tag-tl">
                   <span className="vf-project-dot" aria-hidden="true"></span>
