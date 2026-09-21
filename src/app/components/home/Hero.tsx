@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { LineMask } from './LineMask';
+import { MediaFallback } from './MediaFallback';
 
 const HERO_PHOTOS = [
   { src: '/images/about-photos/rocks.webp', alt: 'Sohum relaxing by a rocky stream' },
@@ -7,13 +9,24 @@ const HERO_PHOTOS = [
   { src: '/images/about-photos/macaques.webp', alt: 'Macaques photographed on a riverside rock' },
 ];
 
+function HeroPhoto({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+  return (
+    <div className="vf-hero-photo">
+      {failed ? (
+        <MediaFallback label={alt} />
+      ) : (
+        <img src={src} alt={alt} loading="lazy" decoding="async" onError={() => setFailed(true)} />
+      )}
+    </div>
+  );
+}
+
 function HeroPhotos() {
   return (
     <div className="vf-hero-photo-grid">
       {HERO_PHOTOS.map((photo) => (
-        <div className="vf-hero-photo" key={photo.src}>
-          <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-        </div>
+        <HeroPhoto key={photo.src} src={photo.src} alt={photo.alt} />
       ))}
     </div>
   );
