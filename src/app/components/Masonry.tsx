@@ -175,6 +175,8 @@ const Masonry = ({
 
   const totalHeight = grid.length ? Math.max(...grid.map(i => i.y + i.h)) : 0;
 
+  const activate = (item: any) => onItemClick ? onItemClick(item) : item.url && window.open(item.url, '_blank', 'noopener');
+
   return (
     <div ref={containerRef} className="list" style={{ height: totalHeight }}>
       {grid.map(item => (
@@ -182,7 +184,13 @@ const Masonry = ({
           key={item.id}
           data-key={item.id}
           className="item-wrapper"
-          onClick={() => onItemClick ? onItemClick(item) : item.url && window.open(item.url, '_blank', 'noopener')}
+          role="button"
+          tabIndex={0}
+          aria-label={`${item.title}, ${item.category}`}
+          onClick={() => activate(item)}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(item); }
+          }}
           onMouseEnter={e => handleMouseEnter(e, item)}
           onMouseLeave={e => handleMouseLeave(e, item)}
         >
