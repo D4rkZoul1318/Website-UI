@@ -50,7 +50,7 @@ export function SelectedWork() {
       <div className="vf-section-head">
         <div className="vf-section-head-main">
           <div className="vf-section-head-eyebrow">
-            <span className="vf-meta-text">01 &middot; Selected / Work</span>
+            <span className="vf-eyebrow">01 &middot; Selected / Work</span>
             <span className="vf-meta-rule" style={{ maxWidth: 200 }} />
             <span className="vf-meta-text">3 Frames &middot; 2024–2026</span>
           </div>

@@ -27,7 +27,7 @@ export function Hero() {
       <div className="vf-wrap">
         <div className="vf-hero-meta-row">
           <div className="vf-hero-meta-left">
-            <span className="vf-meta-text">00 &nbsp;/&nbsp; HOME &nbsp;&middot;&nbsp; VIEWFINDER</span>
+            <span className="vf-eyebrow">00 &nbsp;/&nbsp; HOME &nbsp;&middot;&nbsp; VIEWFINDER</span>
             <span className="vf-meta-rule" />
             <span className="vf-meta-text">F/2.8 &middot; 1/250 &middot; ISO 200</span>
           </div>

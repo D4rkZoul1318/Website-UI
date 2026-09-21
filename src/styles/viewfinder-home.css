@@ -197,7 +197,8 @@
 .vf-home .vf-hero-meta-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; align-items: center; }
 .vf-home .vf-hero-meta-left { grid-column: span 12; display: flex; align-items: center; gap: 20px; }
 .vf-home .vf-hero-meta-right { grid-column: span 12; display: flex; align-items: center; gap: 12px; margin-top: 12px; }
-.vf-home .vf-meta-text { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-60); }
+.vf-home .vf-eyebrow { font-family: var(--font-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); }
+.vf-home .vf-meta-text { font-family: var(--font-mono); font-weight: 400; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-40); }
 .vf-home .vf-meta-rule { height: 1px; flex: 1; background: var(--hairline); max-width: 240px; }
 .vf-home .vf-hero-title-wrap { position: relative; z-index: 1; text-align: center; padding: 0 24px; margin-top: 32px; }
 .vf-home .vf-hero-headline {
@@ -336,10 +337,10 @@
 .vf-home .vf-chapter:last-child { border-bottom: 1px solid var(--hairline); }
 .vf-home .vf-chapter-num-col { grid-column: span 12; }
 .vf-home .vf-chapter-num-row { display: flex; align-items: baseline; gap: 16px; }
-.vf-home .vf-chapter-num { font-family: var(--font-display); font-weight: 700; line-height: 1; letter-spacing: -0.04em; font-size: clamp(4rem, 8vw, 8rem); }
+.vf-home .vf-chapter-num { font-family: var(--font-display); font-weight: 700; line-height: 1; letter-spacing: -0.04em; font-size: clamp(2.5rem, 4.5vw, 4rem); color: var(--ink-40); }
 .vf-home .vf-chapter-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-60); }
 .vf-home .vf-chapter-body-col { grid-column: span 12; }
-.vf-home .vf-chapter-title { font-family: var(--font-display); font-weight: 500; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; font-size: clamp(1.75rem, 3vw, 2.5rem); font-variation-settings: "opsz" 48; }
+.vf-home .vf-chapter-title { font-family: var(--font-display); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; font-size: clamp(1.75rem, 3vw, 2.5rem); font-variation-settings: "opsz" 48; }
 .vf-home .vf-chapter-text { font-family: var(--font-display); font-size: 1.125rem; color: var(--ink-90); line-height: 1.55; max-width: 52ch; }
 .vf-home .vf-chapter-side-col { display: none; grid-column: span 2; }
 .vf-home .vf-chapter-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
