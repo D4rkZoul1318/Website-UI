@@ -2,9 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { Reveal, staggerDelay } from './camera/Reveal';
+import { MediaFallback } from './camera/MediaFallback';
 import { Nav } from './home/Nav';
 import { Footer } from './home/Footer';
 import LineSidebar from './LineSidebar';
+
+function CompareImage({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return <MediaFallback label={alt} />;
+  return <img src={src} alt={alt} loading="lazy" decoding="async" onError={() => setFailed(true)} />;
+}
 
 function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
   e.preventDefault();
@@ -134,9 +141,9 @@ function CompareSlider() {
               else if (e.key === 'End') { setPct(100); e.preventDefault(); }
             }}
           >
-            <div className="compare-pane compare-before"><img src="/images/original-uucms.webp" alt="Original UUCMS portal" loading="lazy" decoding="async" /></div>
+            <div className="compare-pane compare-before"><CompareImage src="/images/original-uucms.webp" alt="Original UUCMS portal" /></div>
             <div className="compare-pane compare-after" style={{ clipPath: `inset(0 ${100 - pct}% 0 0)` }}>
-              <img src="/images/redesigned-dashboard.webp" alt="Redesigned UUCMS dashboard" loading="lazy" decoding="async" />
+              <CompareImage src="/images/redesigned-dashboard.webp" alt="Redesigned UUCMS dashboard" />
             </div>
             <div className="compare-label before">Before</div>
             <div className="compare-label after">After</div>
@@ -166,13 +173,28 @@ function CompareSlider() {
 
 function OutcomeCarousel() {
   const [active, setActive] = useState(0);
+  const [failed, setFailed] = useState<Record<string, boolean>>({});
   const slide = outcomeSlides[active];
   return (
     <Reveal variant="scale" className="outcome-carousel">
       <div className="device-frame">
-        {outcomeSlides.map((s, i) => (
-          <img key={s.src} className={`outcome-slide${i === active ? ' is-active' : ''}`} src={s.src} alt={s.alt} loading="lazy" decoding="async" />
-        ))}
+        {outcomeSlides.map((s, i) =>
+          failed[s.src] ? (
+            <div key={s.src} className={`outcome-slide${i === active ? ' is-active' : ''}`} style={{ position: 'absolute', inset: 0 }}>
+              <MediaFallback label={s.alt} />
+            </div>
+          ) : (
+            <img
+              key={s.src}
+              className={`outcome-slide${i === active ? ' is-active' : ''}`}
+              src={s.src}
+              alt={s.alt}
+              loading="lazy"
+              decoding="async"
+              onError={() => setFailed((f) => ({ ...f, [s.src]: true }))}
+            />
+          )
+        )}
         <button className="outcome-arrow outcome-arrow--prev" type="button" aria-label="Previous screen" onClick={() => setActive((a) => (a - 1 + outcomeSlides.length) % outcomeSlides.length)}>
           <span aria-hidden="true">←</span>
         </button>
@@ -199,7 +221,7 @@ function OutcomeCarousel() {
 }
 
 export default function CaseStudy() {
-  useEffect(() => { document.title = 'UUCMS Redesign , Sohum Bhatnagar'; }, []);
+  useEffect(() => { document.title = 'UUCMS Redesign, Sohum Bhatnagar'; }, []);
   const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
   const navOnDark = DARK_SECTION_IDS.has(activeSection);
 
@@ -280,10 +302,10 @@ export default function CaseStudy() {
             <Reveal className="section-index">SEC.<b>00</b>: UI/UX REDESIGN · 2026</Reveal>
             <div className="hero-primary">
               <Reveal as="h1">UUCMS Student Portal</Reveal>
-              <Reveal as="p" className="lede">Redesigning UUCMS, Karnataka's Department of Higher Education student portal, to reduce task completion time from 15 minutes to under 60 seconds.</Reveal>
+              <Reveal as="p" className="lede">Redesigning UUCMS, Karnataka's Department of Higher Education student portal, to cut task completion time from a measured 15 minutes down to a projected under 60 seconds via 2-click navigation.</Reveal>
             </div>
             <Reveal className="hero-tags">
-              <span>15 min → 60 sec</span><span>2-click navigation</span><span>Student-first IA</span>
+              <span>15 min → ~60 sec (projected)</span><span>2-click navigation</span><span>Student-first IA</span>
             </Reveal>
             {/* Project info — admissions-required metadata (location, context,
                 individual/group, year of study, supervisor). Date is skipped:
@@ -427,7 +449,7 @@ export default function CaseStudy() {
           <div className="wrap">
             <Reveal className="section-index">SEC.<b>07</b>: OUTCOME</Reveal>
             <Reveal as="h2">The Redesign</Reveal>
-            <Reveal as="p" className="lede">Task completion time dropped from 15 minutes to under 60 seconds.</Reveal>
+            <Reveal as="p" className="lede">Task completion time is projected to drop from a measured 15 minutes to under 60 seconds, based on the redesign's 2-click path to results.</Reveal>
             <OutcomeCarousel />
           </div>
         </section>
@@ -439,7 +461,7 @@ export default function CaseStudy() {
             <Reveal as="h2">What Changed</Reveal>
             <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">To access results from dashboard</span><span className="meta-value">2 clicks</span></div>
-              <div><span className="meta-label">Task completion time reduction</span><span className="meta-value">15 min → 60 sec</span></div>
+              <div><span className="meta-label">Projected time reduction</span><span className="meta-value">15 min → ~60 sec</span></div>
               <div><span className="meta-label">Student feedback</span><span className="meta-value">Positive validation</span></div>
             </Reveal>
           </div>

@@ -2,9 +2,16 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { Reveal, staggerDelay } from '../camera/Reveal';
+import { MediaFallback } from '../camera/MediaFallback';
 import { Nav } from '../home/Nav';
 import { Footer } from '../home/Footer';
 import LineSidebar from '../LineSidebar';
+
+function CaseImage({ src, alt, ratio }: { src: string; alt: string; ratio?: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return <MediaFallback label={alt} ratio={ratio} />;
+  return <img src={src} alt={alt} loading="lazy" decoding="async" onError={() => setFailed(true)} />;
+}
 
 function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
   e.preventDefault();
@@ -111,18 +118,50 @@ const processFeatures = [
   { ord: 'Claude Code', body: 'Audio engine integration: the node graph, drag physics on the wheel and faders, and interruption-safe state transitions.' },
 ];
 
+// The live prototype is a cross-origin iframe: a down/slow deployment
+// leaves it blank with no error event a browser will reliably fire, so
+// "did it load" is inferred from a load event racing a timeout instead.
+const LIVE_UNIT_TIMEOUT_MS = 8000;
+
 function LiveUnit() {
   const [powered, setPowered] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
+
+  useEffect(() => {
+    if (!powered || loaded) return;
+    const id = setTimeout(() => setTimedOut(true), LIVE_UNIT_TIMEOUT_MS);
+    return () => clearTimeout(id);
+  }, [powered, loaded]);
+
   return (
     <Reveal variant="scale" className="live-unit">
       <div className="live-unit__stage">
         {powered ? (
-          <iframe
-            src="https://rewind-it.vercel.app"
-            title="REWIND: live prototype"
-            loading="eager"
-            allow="autoplay"
-          />
+          <>
+            <iframe
+              src="https://rewind-it.vercel.app"
+              title="REWIND: live prototype"
+              loading="eager"
+              allow="autoplay"
+              onLoad={() => setLoaded(true)}
+              style={{ opacity: loaded ? 1 : 0 }}
+            />
+            {!loaded && (
+              <div className="live-unit__status" role="status">
+                {timedOut ? (
+                  <>
+                    <span>Live unit didn&rsquo;t respond</span>
+                    <a href="https://rewind-it.vercel.app" target="_blank" rel="noopener noreferrer">
+                      Open full screen instead ↗
+                    </a>
+                  </>
+                ) : (
+                  <span>Loading live unit…</span>
+                )}
+              </div>
+            )}
+          </>
         ) : (
           <button
             className="live-unit__cover"
@@ -145,9 +184,10 @@ function LiveUnit() {
 }
 
 export default function RewindCaseStudy() {
-  useEffect(() => { document.title = 'REWIND , Sohum Bhatnagar'; }, []);
+  useEffect(() => { document.title = 'REWIND, Sohum Bhatnagar'; }, []);
   const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
   const navOnDark = DARK_SECTION_IDS.has(activeSection);
+  const [heroVideoFailed, setHeroVideoFailed] = useState(false);
 
   return (
     <div className="camera-theme">
@@ -250,9 +290,17 @@ export default function RewindCaseStudy() {
             <Reveal variant="zoom" className="media-frame hero-video-frame" data-speed="0.85">
               {/* Native 1280×720, streamed from the same source the homepage uses.
                   Untouched file: no re-encode, no crop; display capped at source width. */}
-              <video autoPlay loop muted playsInline width={1280} height={720} aria-label="REWIND, device walkthrough: discs loading, EQ manipulation, fader control">
-                <source src="/videos/rewind-preview.mp4" type="video/mp4" />
-              </video>
+              {heroVideoFailed ? (
+                <MediaFallback label="REWIND device walkthrough" ratio="1280/720" />
+              ) : (
+                <video
+                  autoPlay loop muted playsInline width={1280} height={720}
+                  aria-label="REWIND, device walkthrough: discs loading, EQ manipulation, fader control"
+                  onError={() => setHeroVideoFailed(true)}
+                >
+                  <source src="/videos/rewind-preview.mp4" type="video/mp4" />
+                </video>
+              )}
             </Reveal>
           </div>
         </section>
@@ -324,7 +372,7 @@ export default function RewindCaseStudy() {
             <Reveal as="h2">The Instrument</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>A 6-disc slot system modeled after CD changers. A glass carriage that slides between discs. Dedicated rotary EQ knobs per channel, vertical faders for master and pan, an iPod-style click wheel for navigation. Each control does one thing and feels distinct.</Reveal>
             <Reveal variant="zoom" className="media-frame" style={{ marginTop: 'var(--space-7)', maxWidth: 839, marginInline: 'auto', borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}>
-              <img src="/images/rewind/instrument.webp" alt="REWIND: the six-disc instrument body, glass carriage, EQ knobs, and faders" loading="lazy" decoding="async" />
+              <CaseImage src="/images/rewind/instrument.webp" alt="REWIND: the six-disc instrument body, glass carriage, EQ knobs, and faders" />
             </Reveal>
           </div>
         </section>

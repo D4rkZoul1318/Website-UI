@@ -25,7 +25,7 @@ export function Manifesto() {
   return (
     <section id="about" className="vf-manifesto" data-testid="manifesto-section">
       <div className="vf-manifesto-head">
-        <span className="vf-meta-text">02 &middot; About / Manifesto</span>
+        <span className="vf-eyebrow">02 &middot; About / Manifesto</span>
         <span className="vf-meta-rule" style={{ maxWidth: 'none' }} />
         <span className="vf-meta-text">Three chapters &middot; Read 90s</span>
       </div>

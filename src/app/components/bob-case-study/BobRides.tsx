@@ -4,9 +4,16 @@ import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { LuUsers, LuCar, LuWallet, LuArrowRight } from 'react-icons/lu';
 import { Reveal, staggerDelay } from '../camera/Reveal';
 import { CountUp } from '../camera/CountUp';
+import { MediaFallback } from '../camera/MediaFallback';
 import { Nav } from '../home/Nav';
 import { Footer } from '../home/Footer';
 import LineSidebar from '../LineSidebar';
+
+function CaseImage({ src, alt, ratio }: { src: string; alt: string; ratio?: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return <MediaFallback label={alt} ratio={ratio} />;
+  return <img src={src} alt={alt} loading="lazy" decoding="async" onError={() => setFailed(true)} />;
+}
 
 // Anchor links don't work under ScrollSmoother: it fixes #smooth-wrapper in
 // place and drives scroll entirely through a transform on #smooth-content,
@@ -32,26 +39,25 @@ const NAV_SECTIONS = [
   { id: 'at-a-glance', num: 'TL;DR', title: 'At a Glance', category: 'Overview' },
   { id: 'the-challenge', num: '01', title: 'The Challenge', category: 'Discovery' },
   { id: 'problem-statement', num: '02', title: 'Problem Statement', category: 'Discovery' },
-  { id: 'objectives-goals', num: '04', title: 'Objectives & Goals', category: 'Discovery' },
-  { id: 'business-challenges', num: '05', title: 'Business Challenges', category: 'Discovery' },
-  { id: 'research-approach', num: '06', title: 'Research Approach', category: 'Discovery' },
-  { id: 'competitor-analysis', num: '07', title: 'Competitor Analysis', category: 'Discovery' },
-  { id: 'product-users', num: '08', title: 'Product Users', category: 'Research' },
-  { id: 'user-persona', num: '09', title: 'User Persona', category: 'Research' },
-  { id: 'user-needs', num: '10', title: 'User Needs', category: 'Research' },
-  { id: 'features-functionalities', num: '11', title: 'Features & Functionalities', category: 'Design Process' },
-  { id: 'product-user-challenges', num: '12', title: 'Product User Challenges', category: 'Design Process' },
-  { id: 'unique-features', num: '13', title: 'Unique Features', category: 'Design Process' },
-  { id: 'task-mapping', num: '14', title: 'Task Mapping', category: 'Design Process' },
-  { id: 'eisenhower-matrix', num: '15', title: 'Eisenhower Matrix', category: 'Design Process' },
-  { id: 'key-decisions', num: '16', title: 'Three Decisions', category: 'Design Process' },
-  { id: 'sketches', num: '17', title: 'Sketches', category: 'Execution' },
-  { id: 'final-icons', num: '18', title: 'Final Icons', category: 'Execution' },
-  { id: 'icon-system', num: '19', title: 'Icon System', category: 'Execution' },
-  { id: 'major-screens', num: '20', title: 'Major Screens', category: 'Execution' },
-  { id: 'what-we-built', num: '21', title: 'What We Built', category: 'Outcome' },
-  { id: 'validation', num: '22', title: 'Validation', category: 'Outcome' },
-  { id: 'close', num: '23', title: 'Close', category: 'Outcome' },
+  { id: 'objectives-goals', num: '03', title: 'Objectives & Goals', category: 'Discovery' },
+  { id: 'research-approach', num: '04', title: 'Research Approach', category: 'Discovery' },
+  { id: 'competitor-analysis', num: '05', title: 'Competitor Analysis', category: 'Discovery' },
+  { id: 'product-users', num: '06', title: 'Product Users', category: 'Research' },
+  { id: 'user-persona', num: '07', title: 'User Persona', category: 'Research' },
+  { id: 'user-needs', num: '08', title: 'User Needs', category: 'Research' },
+  { id: 'features-functionalities', num: '09', title: 'Features & Functionalities', category: 'Design Process' },
+  { id: 'product-user-challenges', num: '10', title: 'Product User Challenges', category: 'Design Process' },
+  { id: 'unique-features', num: '11', title: 'Unique Features', category: 'Design Process' },
+  { id: 'task-mapping', num: '12', title: 'Task Mapping', category: 'Design Process' },
+  { id: 'eisenhower-matrix', num: '13', title: 'Eisenhower Matrix', category: 'Design Process' },
+  { id: 'key-decisions', num: '14', title: 'Three Decisions', category: 'Design Process' },
+  { id: 'sketches', num: '15', title: 'Sketches', category: 'Execution' },
+  { id: 'final-icons', num: '16', title: 'Final Icons', category: 'Execution' },
+  { id: 'icon-system', num: '17', title: 'Icon System', category: 'Execution' },
+  { id: 'major-screens', num: '18', title: 'Major Screens', category: 'Execution' },
+  { id: 'what-we-built', num: '19', title: 'What We Built', category: 'Outcome' },
+  { id: 'validation', num: '20', title: 'Validation', category: 'Outcome' },
+  { id: 'close', num: '21', title: 'Close', category: 'Outcome' },
 ] as const;
 
 // Maps the first index of each new category to its heading, for
@@ -87,13 +93,6 @@ function useActiveSection(ids: readonly string[]) {
 const objectivesGoals = [
   'Design a 3D vehicle icon system (bike, auto, cab) that is instantly legible at small UI sizes and visually distinct from every competitor in the Indian ride-hailing market',
   'Build icons for a dark-mode-native UI for a ride aggregator that consolidates multiple taxi apps like Rapido, Uber, and Ola into a single booking interface',
-];
-
-const businessChallenges = [
-  'Existing ride-hailing apps in India use flat, generic vehicle icons that offer no brand differentiation',
-  'No established design reference for 3D vehicle icons in a dark-mode mobile context',
-  'Icons had to remain legible at 24px (tab navigation size) while retaining dimensional depth',
-  'The aggregator model required a single visual system that could represent competing brands (Rapido, Uber, Ola) without visual conflict',
 ];
 
 const productUserChallenges = [
@@ -143,8 +142,6 @@ const features = [
 
 const uniqueFeatures = [
   'Custom 3D vehicle icons rendered in Blender, a dimensional icon system built specifically for BOB Rides rather than flat vectors',
-  'Dark-mode-native design system built from the ground up, not adapted from a light-mode base',
-  'Cross-app price aggregation with a real-time "Best Price" indicator showing exact savings compared to individual app pricing',
 ];
 
 const taskMappingRows: { label: string; cells: string[] }[] = [
@@ -184,9 +181,10 @@ const researchGoals = [
 ];
 
 export default function BobRides() {
-  useEffect(() => { document.title = 'BOB Rides , Sohum Bhatnagar'; }, []);
+  useEffect(() => { document.title = 'BOB Rides, Sohum Bhatnagar'; }, []);
   const activeSection = useActiveSection(NAV_SECTIONS.map((s) => s.id));
   const navOnDark = DARK_SECTION_IDS.has(activeSection);
+  const [heroVideoFailed, setHeroVideoFailed] = useState(false);
 
   return (
     <div className="camera-theme">
@@ -291,7 +289,7 @@ export default function BobRides() {
             {/* hero-video-frame's own max-width (1280px, for Rewind's
                 landscape hero video) is way too wide for this portrait
                 416x816 recording — override down to 480, matching the
-                other portrait media-frame on this page (SEC.23, below). */}
+                other portrait media-frame on this page (SEC.21, below). */}
             {/* Padding/background/radii are inline, not added to the shared
                 .media-frame / .hero-video-frame classes: those also style
                 every plain-image frame on this page and Rewind's own
@@ -311,15 +309,20 @@ export default function BobRides() {
               className="media-frame hero-video-frame"
               style={{ maxWidth: 480, margin: '0 auto', padding: 'var(--space-4)', background: 'var(--screen-bg)' }}
             >
-              <video
-                autoPlay loop muted playsInline
-                width={416} height={816}
-                aria-label="BOB Rides hero walkthrough"
-                style={{ objectFit: 'contain', maxHeight: '80vh', borderRadius: 8, background: 'var(--screen-bg)' }}
-                onLoadedMetadata={(e) => { e.currentTarget.playbackRate = 1.25; }}
-              >
-                <source src="/videos/bob-rides-preview.mp4" type="video/mp4" />
-              </video>
+              {heroVideoFailed ? (
+                <MediaFallback label="BOB Rides hero walkthrough" ratio="416/816" />
+              ) : (
+                <video
+                  autoPlay loop muted playsInline
+                  width={416} height={816}
+                  aria-label="BOB Rides hero walkthrough"
+                  style={{ objectFit: 'contain', maxHeight: '80vh', borderRadius: 8, background: 'var(--screen-bg)' }}
+                  onLoadedMetadata={(e) => { e.currentTarget.playbackRate = 1.25; }}
+                  onError={() => setHeroVideoFailed(true)}
+                >
+                  <source src="/videos/bob-rides-preview.mp4" type="video/mp4" />
+                </video>
+              )}
             </Reveal>
           </div>
         </section>
@@ -379,10 +382,10 @@ export default function BobRides() {
           <p>How do you create 3D vehicle icons that feel familiar enough for a user to identify at a glance, while being visually distinctive enough that the app they appear in could not be mistaken for any competitor?</p>
         </Reveal>
 
-        {/* SEC.04 — STRATEGY */}
+        {/* SEC.03 — STRATEGY */}
         <section id="objectives-goals" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>04</b>: STRATEGY</Reveal>
+            <Reveal className="section-index">SEC.<b>03</b>: STRATEGY</Reveal>
             <Reveal as="h2">Objectives &amp; Goals</Reveal>
             <div className="feature-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
               {objectivesGoals.map((text, i) => (
@@ -394,23 +397,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.05 — RESEARCH: Business Challenges */}
-        <section id="business-challenges" className="section">
-          <div className="wrap">
-            <Reveal className="section-index">SEC.<b>05</b>: RESEARCH</Reveal>
-            <Reveal as="h2">Business Challenges</Reveal>
-            {businessChallenges.map((text, i) => (
-              <Reveal key={i} variant="scale" className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
-                <span className="ord">{String(i + 1).padStart(2, '0')}</span><p>{text}</p>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        {/* SEC.06 — RESEARCH: Research Approach */}
+        {/* SEC.04 — RESEARCH: Research Approach */}
         <section id="research-approach" className="section">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>06</b>: RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>04</b>: RESEARCH</Reveal>
             <Reveal as="h2">Research Approach</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>To understand how users compare ride-hailing services and identify opportunities for product differentiation, I combined qualitative user research with competitive product analysis. Rather than relying on secondary sources, the research was grounded in direct conversations with riders and hands-on evaluation of existing ride-hailing platforms.</p>
@@ -447,10 +437,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.07 — RESEARCH: Competitor Analysis */}
+        {/* SEC.05 — RESEARCH: Competitor Analysis */}
         <section id="competitor-analysis" className="section section--roomy bg-soft">
           <div className="wrap-wide" style={{ textAlign: 'center' }}>
-            <Reveal className="section-index">SEC.<b>07</b>: RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>05</b>: RESEARCH</Reveal>
             <Reveal as="h2">What every competitor got wrong</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>Competitors: OLA, Rapido, Uber, Namma Yatri</Reveal>
           </div>
@@ -464,21 +454,21 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.08 — RESEARCH: Product Users */}
+        {/* SEC.06 — RESEARCH: Product Users */}
         <section id="product-users" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>08</b>: RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>06</b>: RESEARCH</Reveal>
             <Reveal as="h2">The user was never the hard part</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/product-users.webp" alt="Product Users" loading="lazy" decoding="async" />
+              <CaseImage src="/images/bob-images/product-users.webp" alt="Product Users" />
             </Reveal>
           </div>
         </section>
 
-        {/* SEC.09 — RESEARCH: User Persona */}
+        {/* SEC.07 — RESEARCH: User Persona */}
         <section id="user-persona" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>09</b>: RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>07</b>: RESEARCH</Reveal>
             <Reveal as="h2">Meet Rahul</Reveal>
             <Reveal as="p" className="sheet-subtitle" style={{ maxWidth: 640 }}>Note: This persona is a synthesis of recurring behaviours and patterns observed during user interviews. It represents the common needs and frustrations of frequent ride-hailing users rather than a single individual.</Reveal>
             <div style={{ marginTop: 'var(--space-6)', maxWidth: 640 }}>
@@ -508,10 +498,10 @@ export default function BobRides() {
           <p>"I just want to see all my options in one place and book the cheapest one. Why do I have to open three apps for that?"</p>
         </Reveal>
 
-        {/* SEC.10 — RESEARCH: User Needs */}
+        {/* SEC.08 — RESEARCH: User Needs */}
         <section id="user-needs" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>10</b>: RESEARCH</Reveal>
+            <Reveal className="section-index">SEC.<b>08</b>: RESEARCH</Reveal>
             <Reveal as="h2">What riders actually needed</Reveal>
             {userNeeds.map((text, i) => (
               <Reveal key={i} variant="scale" className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
@@ -521,10 +511,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.11 — DESIGN: Features & Functionalities */}
+        {/* SEC.09 — DESIGN: Features & Functionalities */}
         <section id="features-functionalities" className="section bg-soft">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>11</b>: DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>09</b>: DESIGN</Reveal>
             <Reveal as="h2">Features &amp; Functionalities</Reveal>
             <Reveal as="p" className="sheet-subtitle">To resolve user needs</Reveal>
             <div className="feature-grid">
@@ -538,10 +528,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.12 — DESIGN: Product User Challenges */}
+        {/* SEC.10 — DESIGN: Product User Challenges */}
         <section id="product-user-challenges" className="section">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>12</b>: DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>10</b>: DESIGN</Reveal>
             <Reveal as="h2">What was actually broken for users</Reveal>
             <div style={{ marginTop: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               {productUserChallenges.map((text, i) => (
@@ -554,10 +544,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.13 — DESIGN: Unique Features */}
+        {/* SEC.11 — DESIGN: Unique Features */}
         <section id="unique-features" className="section bg-paper">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>13</b>: DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>11</b>: DESIGN</Reveal>
             <Reveal as="h2">Unique Features</Reveal>
             {uniqueFeatures.map((text, i) => (
               <Reveal key={i} className="feature-cell" style={{ marginTop: i === 0 ? 'var(--space-6)' : 'var(--space-5)', maxWidth: '56ch' }}>
@@ -567,10 +557,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.14 — DESIGN: Task Mapping */}
+        {/* SEC.12 — DESIGN: Task Mapping */}
         <section id="task-mapping" className="section">
           <div className="wrap-wide cinema-head">
-            <Reveal className="section-index">SEC.<b>14</b>: DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>12</b>: DESIGN</Reveal>
             <Reveal as="h2">Every tap is a decision point</Reveal>
           </div>
           <div className="wrap-wide">
@@ -598,21 +588,21 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.15 — DESIGN: Eisenhower Matrix */}
+        {/* SEC.13 — DESIGN: Eisenhower Matrix */}
         <section id="eisenhower-matrix" className="section bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>15</b>: DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>13</b>: DESIGN</Reveal>
             <Reveal as="h2">Eisenhower Matrix</Reveal>
             <Reveal variant="scale" className="media-frame" style={{ marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/eisen-hover-matrix.webp" alt="Eisenhower Matrix" loading="lazy" decoding="async" />
+              <CaseImage src="/images/bob-images/eisen-hover-matrix.webp" alt="Eisenhower Matrix" />
             </Reveal>
           </div>
         </section>
 
-        {/* SEC.16 — ANALYSIS: Three decisions that shaped the system */}
+        {/* SEC.14 — ANALYSIS: Three decisions that shaped the system */}
         <section id="key-decisions" className="section band bg-dark">
           <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>16</b>: ANALYSIS</Reveal>
+            <Reveal className="section-index">SEC.<b>14</b>: ANALYSIS</Reveal>
             <Reveal as="h2">Three decisions that shaped the system</Reveal>
             <div className="feature-grid">
               {decisions.map((d, i) => (
@@ -629,35 +619,35 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.17 — DESIGN: Sketches */}
+        {/* SEC.15 — DESIGN: Sketches */}
         <section id="sketches" className="section bg-paper">
           <div className="wrap-wide">
-            <Reveal className="section-index">SEC.<b>17</b>: DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>15</b>: DESIGN</Reveal>
             <Reveal as="h2">Sketches</Reveal>
             <Reveal variant="rotate" className="media-frame" style={{ maxWidth: 880, marginTop: 'var(--space-6)' }}>
-              <img src="/images/bob-images/sketches.webp" alt="Sketches" loading="lazy" decoding="async" />
+              <CaseImage src="/images/bob-images/sketches.webp" alt="Sketches" ratio="880/500" />
             </Reveal>
             <p className="meta-label" style={{ marginTop: 'var(--space-3)' }}>Original concept sketches: Sohum Bhatnagar</p>
           </div>
         </section>
 
-        {/* SEC.18 — DESIGN: Final Icons */}
+        {/* SEC.16 — DESIGN: Final Icons */}
         <section id="final-icons" className="section section--roomy band bg-dark">
           <div className="band-inner wrap-wide">
-            <Reveal className="section-index">SEC.<b>18</b>: DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>16</b>: DESIGN</Reveal>
             <Reveal as="h2">Final Icons</Reveal>
             <div className="icons-row">
-              <Reveal variant="scale" delay={staggerDelay(0)} className="icon-cell"><img src="/images/bob-images/Car.webp" alt="BOB Rides 3D cab icon" loading="lazy" decoding="async" /><span>Cab</span></Reveal>
-              <Reveal variant="scale" delay={staggerDelay(1)} className="icon-cell"><img src="/images/bob-images/Bike.webp" alt="BOB Rides 3D bike icon" loading="lazy" decoding="async" /><span>Bike</span></Reveal>
-              <Reveal variant="scale" delay={staggerDelay(2)} className="icon-cell"><img src="/images/bob-images/Auto.webp" alt="BOB Rides 3D auto-rickshaw icon" loading="lazy" decoding="async" /><span>Auto</span></Reveal>
+              <Reveal variant="scale" delay={staggerDelay(0)} className="icon-cell"><CaseImage src="/images/bob-images/Car.webp" alt="BOB Rides 3D cab icon" ratio="1/1" /><span>Cab</span></Reveal>
+              <Reveal variant="scale" delay={staggerDelay(1)} className="icon-cell"><CaseImage src="/images/bob-images/Bike.webp" alt="BOB Rides 3D bike icon" ratio="1/1" /><span>Bike</span></Reveal>
+              <Reveal variant="scale" delay={staggerDelay(2)} className="icon-cell"><CaseImage src="/images/bob-images/Auto.webp" alt="BOB Rides 3D auto-rickshaw icon" ratio="1/1" /><span>Auto</span></Reveal>
             </div>
           </div>
         </section>
 
-        {/* SEC.19 — DESIGN SYSTEM */}
+        {/* SEC.17 — DESIGN SYSTEM */}
         <section id="icon-system" className="section section--roomy bg-paper">
           <div className="wrap cinema-head">
-            <Reveal className="section-index">SEC.<b>19</b>: DESIGN SYSTEM</Reveal>
+            <Reveal className="section-index">SEC.<b>17</b>: DESIGN SYSTEM</Reveal>
             <Reveal as="h2">Icon System</Reveal>
             <Reveal as="p" className="lede" style={{ marginInline: 'auto' }}>
               The icon system spans two production generations, flat 2D isometric to full-colour 3D with cast shadows. View the full version history, evolution rationale, and spec documentation in Figma.
@@ -668,10 +658,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.20 — DESIGN: Major Screens */}
+        {/* SEC.18 — DESIGN: Major Screens */}
         <section id="major-screens" className="section section--roomy band bg-dark">
           <div className="band-inner cinema-head">
-            <Reveal className="section-index">SEC.<b>20</b>: DESIGN</Reveal>
+            <Reveal className="section-index">SEC.<b>18</b>: DESIGN</Reveal>
             <Reveal as="h2">Major Screens</Reveal>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)', marginTop: 'var(--space-7)', maxWidth: 1800, marginInline: 'auto', paddingInline: 'var(--space-5)' }}>
@@ -694,17 +684,17 @@ export default function BobRides() {
                   className="media-frame"
                   style={{ borderColor: 'rgba(244,243,240,0.12)', background: 'var(--screen-bg)' }}
                 >
-                  <img src={`/images/bob-images/major-screens-${name}.webp`} alt={label} loading="lazy" decoding="async" />
+                  <CaseImage src={`/images/bob-images/major-screens-${name}.webp`} alt={label} ratio="9/19.5" />
                 </Reveal>
               </div>
             ))}
           </div>
         </section>
 
-        {/* SEC.21 — OUTCOME */}
+        {/* SEC.19 — OUTCOME */}
         <section id="what-we-built" className="section section--tight">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>21</b>: OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>19</b>: OUTCOME</Reveal>
             <Reveal as="h2">What We Built</Reveal>
             <Reveal variant="scale" className="facts-row">
               <div><span className="meta-label">3D vehicle icon system built for BOB Rides</span><span className="meta-value">3D</span></div>
@@ -714,10 +704,10 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.22 — OUTCOME: Validation */}
+        {/* SEC.20 — OUTCOME: Validation */}
         <section id="validation" className="section section--tight bg-soft">
           <div className="wrap">
-            <Reveal className="section-index">SEC.<b>22</b>: OUTCOME</Reveal>
+            <Reveal className="section-index">SEC.<b>20</b>: OUTCOME</Reveal>
             <Reveal as="h2">Validation</Reveal>
             <Reveal className="problem-copy" style={{ marginTop: 'var(--space-5)' }}>
               <p>Following implementation, the redesigned icon system and interface were released through the application's TestFlight beta programme before being promoted to production.</p>
@@ -733,11 +723,11 @@ export default function BobRides() {
           </div>
         </section>
 
-        {/* SEC.23 — CLOSE */}
+        {/* SEC.21 — CLOSE */}
         <section id="close" className="section section--roomy bg-paper">
           <div className="wrap" style={{ display: 'flex', justifyContent: 'center' }}>
             <Reveal className="media-frame" style={{ maxWidth: 480 }}>
-              <img src="/images/bob-images/thank-you.webp" alt="Thank You" loading="lazy" decoding="async" />
+              <CaseImage src="/images/bob-images/thank-you.webp" alt="Thank You" />
             </Reveal>
           </div>
         </section>

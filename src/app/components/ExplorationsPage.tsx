@@ -211,7 +211,7 @@ export function ExplorationsPage() {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [activeLive, setActiveLive] = useState<LiveKind | null>(null);
 
-  useEffect(() => { document.title = 'Explorations , Sohum Bhatnagar'; }, []);
+  useEffect(() => { document.title = 'Explorations, Sohum Bhatnagar'; }, []);
 
   const filtered = active === 'All' ? allItems : allItems.filter(i => i.category === active);
 

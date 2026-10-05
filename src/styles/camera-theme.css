@@ -393,6 +393,12 @@
 .camera-theme .live-unit__cover:active .power-ring { transform: scale(0.95); }
 .camera-theme .live-unit__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(244, 243, 240, 0.6); text-transform: uppercase; }
 .camera-theme .live-unit__sub { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; color: rgba(244, 243, 240, 0.35); text-transform: uppercase; }
+.camera-theme .live-unit__status {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--space-3); background: var(--screen-bg); text-align: center; padding: var(--space-6);
+}
+.camera-theme .live-unit__status span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: rgba(244, 243, 240, 0.6); text-transform: uppercase; }
+.camera-theme .live-unit__status a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; text-decoration: underline; text-underline-offset: 3px; }
 .camera-theme .live-unit__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-3) var(--space-5); background: #1a1a1a; }
 .camera-theme .live-unit__bar span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(244, 243, 240, 0.55); text-transform: uppercase; }
 .camera-theme .live-unit__bar a, .camera-theme .live-unit__bar button {
@@ -499,4 +505,10 @@
 @media (prefers-reduced-motion: reduce) {
   .camera-theme .retro-grid__lines { animation: none; }
 }
+
+/* ---- MEDIA FALLBACK ---- */
+.camera-theme .media-fallback { width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; background: var(--cream); }
+.camera-theme .media-fallback-text { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); }
+.uucms .device-frame .media-fallback { position: absolute; inset: 0; aspect-ratio: auto; }
+.camera-theme .icon-cell .media-fallback { width: clamp(120px, 16vw, 190px); aspect-ratio: 1; background: transparent; }
 
