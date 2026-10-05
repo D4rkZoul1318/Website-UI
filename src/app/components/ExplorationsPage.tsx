@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Masonry from './Masonry';
 import { ScrollToTop } from './ScrollToTop';
 import { PhotoBurst } from './PhotoBurst';
@@ -52,10 +53,21 @@ function LiveProjectPanel({ kind, onClose }: { kind: LiveKind; onClose: () => vo
   // Lock the page behind the overlay while it's open — otherwise dragging
   // inside it (e.g. tilting the holographic card on a touch device) also
   // pans the page underneath via ScrollSmoother's touch normalization.
+  // Pausing the smoother alone isn't enough: ScrollTrigger.normalizeScroll
+  // keeps its own document-level touch listener running and racing with
+  // the card's own listener for the same gesture, which is what made the
+  // card's touch-drag tilt fire inconsistently. Fully killing the
+  // normalizer removes that competing listener for as long as the panel
+  // is open, then restores it with the same options SmoothScroll created
+  // it with.
   useEffect(() => {
     const smoother = ScrollSmoother.get();
     smoother?.paused(true);
-    return () => smoother?.paused(false);
+    ScrollTrigger.normalizeScroll(false);
+    return () => {
+      smoother?.paused(false);
+      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+    };
   }, []);
 
   return createPortal(
