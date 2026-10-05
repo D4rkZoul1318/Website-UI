@@ -205,7 +205,7 @@ export function HolographicCard() {
       {/* ── Perspective wrapper ── */}
       <div
         ref={wrapperRef}
-        style={{ perspective: '1200px' }}
+        style={{ perspective: '1200px', touchAction: 'none' }}
         onMouseMove={onMouseMove}
         onMouseEnter={onEnter}
         onMouseLeave={onLeave}

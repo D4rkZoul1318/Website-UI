@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import Masonry from './Masonry';
 import { ScrollToTop } from './ScrollToTop';
 import { PhotoBurst } from './PhotoBurst';
@@ -47,6 +48,16 @@ function FitToFrame({ width, height, children }: { width: number; height: number
  * the page flow (below the grid) rather than fixed over the viewport. */
 function LiveProjectPanel({ kind, onClose }: { kind: LiveKind; onClose: () => void }) {
   const label = kind === 'rewind' ? 'Rewind · Live Prototype' : 'Octopus Holographic Card · Interactive Component';
+
+  // Lock the page behind the overlay while it's open — otherwise dragging
+  // inside it (e.g. tilting the holographic card on a touch device) also
+  // pans the page underneath via ScrollSmoother's touch normalization.
+  useEffect(() => {
+    const smoother = ScrollSmoother.get();
+    smoother?.paused(true);
+    return () => smoother?.paused(false);
+  }, []);
+
   return createPortal(
     <div className="explore-live-overlay" onClick={onClose}>
       <Reveal variant="scale" className="live-tile" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
