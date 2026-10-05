@@ -144,6 +144,50 @@ export function HolographicCard() {
   const onEnter = () => { s.current.hovering = true; };
   const onLeave = () => { s.current.hovering = false; s.current.mouseX = 0; s.current.mouseY = 0; };
 
+  // Touch: mouse events never fire on a phone, so without this the card
+  // only ever registers the brief synthetic hover/click a tap produces,
+  // never a continuous drag. Mirrors onMouseMove's math exactly, as
+  // native listeners (not JSX onTouch* props) so touchmove can call
+  // preventDefault — needed to stop the page scrolling under the finger
+  // while dragging the card instead of tilting it.
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const updateFromPoint = (clientX: number, clientY: number) => {
+      const r = el.getBoundingClientRect();
+      s.current.mouseX = (clientX - r.left - r.width / 2) / (r.width / 2);
+      s.current.mouseY = (clientY - r.top - r.height / 2) / (r.height / 2);
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      s.current.hovering = true;
+      const t = e.touches[0];
+      if (t) updateFromPoint(t.clientX, t.clientY);
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      e.preventDefault();
+      updateFromPoint(t.clientX, t.clientY);
+    };
+    const onTouchEnd = () => {
+      s.current.hovering = false;
+      s.current.mouseX = 0;
+      s.current.mouseY = 0;
+    };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+    el.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('touchcancel', onTouchEnd);
+    };
+  }, []);
+
   // ── Shared absolute styles ──
   const abs: React.CSSProperties = { position: 'absolute' };
   const noPtr: React.CSSProperties = { pointerEvents: 'none' };
