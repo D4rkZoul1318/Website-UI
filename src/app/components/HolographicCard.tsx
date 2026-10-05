@@ -135,64 +135,44 @@ export function HolographicCard() {
   }, [reduced]);
 
   // ── Event handlers ──
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Pointer events unify mouse, touch and pen into one gesture model.
+  // Raw touch events don't guarantee this element keeps receiving a
+  // gesture once it starts — a drag that strays near another layer or
+  // hits a quirky region of the card could get its touchmove stream cut
+  // short mid-drag (hovering/scale stays on, but position stops updating).
+  // setPointerCapture pins this element as the exclusive recipient of the
+  // gesture for as long as the pointer is down, regardless of where it
+  // moves, which raw touch listeners can't guarantee.
+  const updateFromPoint = (clientX: number, clientY: number) => {
     const r = wrapperRef.current?.getBoundingClientRect();
     if (!r) return;
-    s.current.mouseX = (e.clientX - r.left - r.width / 2) / (r.width / 2);
-    s.current.mouseY = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+    s.current.mouseX = (clientX - r.left - r.width / 2) / (r.width / 2);
+    s.current.mouseY = (clientY - r.top - r.height / 2) / (r.height / 2);
   };
-  const onEnter = () => { s.current.hovering = true; };
-  const onLeave = () => { s.current.hovering = false; s.current.mouseX = 0; s.current.mouseY = 0; };
-
-  // Touch: mouse events never fire on a phone, so without this the card
-  // only ever registers the brief synthetic hover/click a tap produces,
-  // never a continuous drag. Mirrors onMouseMove's math exactly, as
-  // native listeners (not JSX onTouch* props) so touchmove can call
-  // preventDefault — needed to stop the page scrolling under the finger
-  // while dragging the card instead of tilting it. stopPropagation is
-  // also required: GSAP's ScrollSmoother normalizeScroll listens for
-  // touch gestures on the document and pans the page from the bubbled
-  // event regardless of preventDefault, which without this made the
-  // background visibly drag along with the card.
-  useEffect(() => {
-    const el = wrapperRef.current;
-    if (!el) return;
-
-    const updateFromPoint = (clientX: number, clientY: number) => {
-      const r = el.getBoundingClientRect();
-      s.current.mouseX = (clientX - r.left - r.width / 2) / (r.width / 2);
-      s.current.mouseY = (clientY - r.top - r.height / 2) / (r.height / 2);
-    };
-    const onTouchStart = (e: TouchEvent) => {
-      e.stopPropagation();
-      s.current.hovering = true;
-      const t = e.touches[0];
-      if (t) updateFromPoint(t.clientX, t.clientY);
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      const t = e.touches[0];
-      if (!t) return;
-      e.preventDefault();
-      e.stopPropagation();
-      updateFromPoint(t.clientX, t.clientY);
-    };
-    const onTouchEnd = () => {
-      s.current.hovering = false;
-      s.current.mouseX = 0;
-      s.current.mouseY = 0;
-    };
-
-    el.addEventListener('touchstart', onTouchStart, { passive: true });
-    el.addEventListener('touchmove', onTouchMove, { passive: false });
-    el.addEventListener('touchend', onTouchEnd, { passive: true });
-    el.addEventListener('touchcancel', onTouchEnd, { passive: true });
-    return () => {
-      el.removeEventListener('touchstart', onTouchStart);
-      el.removeEventListener('touchmove', onTouchMove);
-      el.removeEventListener('touchend', onTouchEnd);
-      el.removeEventListener('touchcancel', onTouchEnd);
-    };
-  }, []);
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    updateFromPoint(e.clientX, e.clientY);
+  };
+  const onPointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'mouse') s.current.hovering = true;
+  };
+  const onPointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    s.current.hovering = false;
+    s.current.mouseX = 0;
+    s.current.mouseY = 0;
+  };
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'mouse') return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    s.current.hovering = true;
+    updateFromPoint(e.clientX, e.clientY);
+  };
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'mouse') return;
+    s.current.hovering = false;
+    s.current.mouseX = 0;
+    s.current.mouseY = 0;
+  };
 
   // ── Shared absolute styles ──
   const abs: React.CSSProperties = { position: 'absolute' };
@@ -206,9 +186,12 @@ export function HolographicCard() {
       <div
         ref={wrapperRef}
         style={{ perspective: '1200px', touchAction: 'none' }}
-        onMouseMove={onMouseMove}
-        onMouseEnter={onEnter}
-        onMouseLeave={onLeave}
+        onPointerMove={onPointerMove}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
         {/* ── Card shell ── */}
         <div
