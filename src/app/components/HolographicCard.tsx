@@ -149,7 +149,11 @@ export function HolographicCard() {
   // never a continuous drag. Mirrors onMouseMove's math exactly, as
   // native listeners (not JSX onTouch* props) so touchmove can call
   // preventDefault — needed to stop the page scrolling under the finger
-  // while dragging the card instead of tilting it.
+  // while dragging the card instead of tilting it. stopPropagation is
+  // also required: GSAP's ScrollSmoother normalizeScroll listens for
+  // touch gestures on the document and pans the page from the bubbled
+  // event regardless of preventDefault, which without this made the
+  // background visibly drag along with the card.
   useEffect(() => {
     const el = wrapperRef.current;
     if (!el) return;
@@ -160,6 +164,7 @@ export function HolographicCard() {
       s.current.mouseY = (clientY - r.top - r.height / 2) / (r.height / 2);
     };
     const onTouchStart = (e: TouchEvent) => {
+      e.stopPropagation();
       s.current.hovering = true;
       const t = e.touches[0];
       if (t) updateFromPoint(t.clientX, t.clientY);
@@ -168,6 +173,7 @@ export function HolographicCard() {
       const t = e.touches[0];
       if (!t) return;
       e.preventDefault();
+      e.stopPropagation();
       updateFromPoint(t.clientX, t.clientY);
     };
     const onTouchEnd = () => {
